@@ -9,6 +9,8 @@ import org.reflections.Reflections;
 
 import java.util.*;
 
+import static edu.cad.utils.hibernateutils.NativeQueryExecutor.executeQueryWithinTransaction;
+
 public class DatabaseCloner {
     private static final String FK_CHECKS_0_QUERY = "SET FOREIGN_KEY_CHECKS=0";
     private static final String FK_CHECKS_1_QUERY = "SET FOREIGN_KEY_CHECKS=1";
@@ -32,33 +34,18 @@ public class DatabaseCloner {
         oldSession.close();
 
         // copy all except groups
-        executeQuery(FK_CHECKS_0_QUERY);
+        executeQueryWithinTransaction(FK_CHECKS_0_QUERY);
         for (Class<? extends IDatabaseEntity> classObj : entityMap.keySet()) {
             cloneAllEntriesOfEntity(classObj, entityMap.get(classObj));
         }
 
         //handle groups
         rewriteGroups();
-        executeQuery(FK_CHECKS_1_QUERY);
+        executeQueryWithinTransaction(FK_CHECKS_1_QUERY);
     }
 
-    private static void executeQuery(String query) {
-        HibernateSession.getInstance()
-                .createSQLQuery(query).executeUpdate();
-    }
 
     private static List<Class<? extends IDatabaseEntity>> getEntityClasses() {
-        /*EntityManagerFactory emf =
-        Persistence.createEntityManagerFactory("documentation");
-        //get all entity types of @entity annotated classes
-        Set<EntityType<?>> entities = emf.getMetamodel().getEntities();
-        //get all 
-        List<Class<? extends IDatabaseEntity>> classes = new ArrayList<>();
-        for (EntityType<?> e : entities) {
-            classes.add((Class<? extends IDatabaseEntity>)e.getJavaType());
-        }
-
-        return classes;*/
         Set<Class<? extends IDatabaseEntity>> set =
                 new Reflections("edu.cad.entities")
                         .getSubTypesOf(IDatabaseEntity.class);

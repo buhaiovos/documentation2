@@ -2,7 +2,6 @@ package edu.cad.utils.databaseutils;
 
 import edu.cad.utils.Utils;
 import edu.cad.utils.hibernateutils.HibernateSession;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 
@@ -10,6 +9,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static edu.cad.utils.hibernateutils.NativeQueryExecutor.executeQueryWithinTransaction;
 
 public class DatabaseSwitcher {
 
@@ -43,7 +44,7 @@ public class DatabaseSwitcher {
             }
 
             String sql = "DROP DATABASE cad_database_" + year;
-            executeSQLQuery(sql);
+            executeQueryWithinTransaction(sql);
 
             DatabaseYears.deleteYear(year);
         }
@@ -114,11 +115,6 @@ public class DatabaseSwitcher {
 
     private static void createDatabase(int year){
         String sql = "CREATE SCHEMA cad_database_" + year;
-        executeSQLQuery(sql);
-    }
-
-    private static void executeSQLQuery(String sql){
-        SQLQuery query = HibernateSession.getInstance().createSQLQuery(sql);
-        query.executeUpdate();
+        executeQueryWithinTransaction(sql);
     }
 }

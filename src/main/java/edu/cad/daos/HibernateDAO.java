@@ -4,59 +4,57 @@ import edu.cad.entities.Curriculum;
 import edu.cad.entities.Workplan;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.utils.hibernateutils.HibernateSession;
-import java.util.Iterator;
-import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
+
 @SuppressWarnings("unchecked")
-public class HibernateDAO<T extends IDatabaseEntity> implements IDAO<T>{	
-    private final Class<T> typeParameterClass;
+public class HibernateDAO<Entity extends IDatabaseEntity> implements IDAO<Entity> {
+    private final Class<Entity> typeParameterClass;
     private final Session session;
-    
-    public HibernateDAO(Class<T> typeParameterClass){
+
+    public HibernateDAO(Class<Entity> typeParameterClass) {
         this.typeParameterClass = typeParameterClass;
         this.session = HibernateSession.getInstance();
     }
 
-    public HibernateDAO(Class<T> typeParameterClass, Session session){
+    public HibernateDAO(Class<Entity> typeParameterClass, Session session) {
         this.typeParameterClass = typeParameterClass;
         this.session = session;
     }
     
     @Override
-    public List<T> getAll() {
-	//Session session = factory.openSession();
-        List<T> list = session.createCriteria(typeParameterClass).list();
-        
-        
+    public List<Entity> getAll() {
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Entity> query = criteriaBuilder.createQuery(typeParameterClass);
+        Root<Entity> fromT = query.from(typeParameterClass);
+        query.select(fromT);
+        TypedQuery<Entity> typedQuery = session.createQuery(query);
+        List<Entity> resultList = typedQuery.getResultList();
+
         if(typeParameterClass.equals(Curriculum.class)){
-            Iterator<T> iterator = list.iterator();
-            while(iterator.hasNext()){
-                T element = iterator.next();
-                if(element instanceof Workplan){
-                    iterator.remove();
-                }
-            }
+            resultList.removeIf(element -> element instanceof Workplan);
         }
-        
-        //session.close();
-        
-        
-        return list;
+
+        return resultList;
     }
 
     @Override
-    public T get(int id) {
+    public Entity get(int id) {
         //Session session = factory.openSession(); 
-	T instance = (T) session.get(typeParameterClass, id);
+        Entity instance = session.get(typeParameterClass, id);
 	//session.close();
 		
 	return instance;
     }
 
     @Override
-    public T update(T instance) {
+    public Entity update(Entity instance) {
         //Session session = factory.openSession();  
         Transaction transaction = session.beginTransaction();  
         
@@ -74,7 +72,7 @@ public class HibernateDAO<T extends IDatabaseEntity> implements IDAO<T>{
     }
 
     @Override
-    public boolean create(T instance) {
+    public boolean create(Entity instance) {
 	//Session session = factory.openSession();  
         Transaction transaction = session.beginTransaction();  
         try {
@@ -102,7 +100,7 @@ public class HibernateDAO<T extends IDatabaseEntity> implements IDAO<T>{
         Transaction transaction = session.beginTransaction(); 
         
         try {
-            T instance = (T) session.load(typeParameterClass, id);
+            Entity instance = (Entity) session.load(typeParameterClass, id);
             session.delete(instance);
             transaction.commit();
         } catch(RuntimeException e) {
