@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Шаблони</title>
+    <!-- jTable Metro styles. -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="css/metro/blue/jtable.css" rel="stylesheet" type="text/css" />
+    <link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
+    <!-- jTable script file. -->
+    <script src="js/jquery-1.8.2.js" type="text/javascript"></script>
+    <script src="js/jquery-ui-1.10.3.custom.js" type="text/javascript"></script>
+    <script src="js/jquery.jtable.min.js" type="text/javascript"></script>
+    <script src="js/jquery.jtable.editinline.js" type="text/javascript"></script>
+    <!-- User Defined Jtable js file -->
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+        function div_show(value, button) {  
+            $('#fileForm input[name="template"]').val(value);
+            $('#fileForm').insertAfter(button.closest('form'));
+            $('#fileForm').css("display", "block");
+        }
+        function div_hide(){
+            $('#fileForm').css("display", "none");
+        }
+        function toggle(value, button){
+            if($('#fileForm').css('display') === 'none' 
+                    || $('#fileForm input[name="template"]').val() !== value)
+                div_show(value, button);
+            else
+                div_hide();
+        }
+    </script>
+</head>
+<body>
+    <!-- MENU -->
+    <header id="header"></header>
+    <script type="text/javascript">
+    $(function() {
+        $( "#header" ).load( "menu.html" );
+    });
+    </script>
+    <!-- MENU -->
+    <div id="templateWrapper">
+            <form action="DownloadController">
+                <input type="hidden" name="template" value="curriculum">
+                <span>Навчальний план</span>
+                <span><input type="submit" name="downloadTemplate" value="Отримати шаблон"></span>
+                <span><button type=button onclick="toggle('curriculum', this)">Оновити шаблон</button></span>
+            </form>
+            <form action="DownloadController">  
+                <input type="hidden" name="template" value="workplan">
+                <span>Робочий навчальний план</span>
+                <span><input type="submit" name="downloadTemplate" value="Отримати шаблон"></span>
+                <span><button type=button onclick="toggle('workplan', this)">Оновити шаблон</button></span>             
+            </form>
+            <form action="DownloadController">  
+                <input type="hidden" name="template" value="k3form">
+                <span>Форма К-3</span>
+                <span><input type="submit" name="downloadTemplate" value="Отримати шаблон"></span>
+                <span><button type=button onclick="toggle('k3form', this)">Оновити шаблон</button></span>             
+            </form>
+    </div>   
+        
+    <div id="fileForm">
+        <form action="DownloadController" method="post" enctype="multipart/form-data">        
+            <input type="hidden" name="template"/>
+            <span><input type="file" accept=".xls" name="file"></span>
+            <span><input type="submit" name="uploadTemplate" value="Оновити"></span>
+        </form>
+    </div>
+</body>
+</html>

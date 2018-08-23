@@ -1,0 +1,2 @@
+# This allows us to use JPA-style annotation on entities, such as @PostLoad
+org.hibernate.jpa.event.spi.JpaIntegrator
