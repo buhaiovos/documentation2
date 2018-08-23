@@ -2,15 +2,14 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import java.io.Serializable;
-import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "academic_group")
-public class AcademicGroup implements IDatabaseEntity, Serializable, 
-        Comparable<AcademicGroup> {
-    
+public class AcademicGroup implements IDatabaseEntity, Serializable, Comparable<AcademicGroup> {
     @Expose
     @Id
     @GenericGenerator(
