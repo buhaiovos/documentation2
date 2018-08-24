@@ -2,6 +2,7 @@ package edu.cad.utils.hibernateutils;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.cfgxml.spi.LoadedConfig;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -27,9 +28,11 @@ public class HibernateSession {
     }
 
     private static synchronized SessionFactory getSessionFactory() {
+        final LoadedConfig aggregatedCfgXml = configuration.getStandardServiceRegistryBuilder().getAggregatedCfgXml();
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                .configure(configuration.getStandardServiceRegistryBuilder().getAggregatedCfgXml())
-                .applySettings(configuration.getProperties()).build();
+                .configure(aggregatedCfgXml)
+                .applySettings(configuration.getProperties())
+                .build();
         return configuration.buildSessionFactory(serviceRegistry);
     }
 
