@@ -3,9 +3,10 @@ package edu.cad.entities;
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.utils.Utils;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.*;
 
 @Entity
 @Table(name = "curriculum_subject")
@@ -103,7 +104,7 @@ public class CurriculumSubject implements IDatabaseEntity, Serializable,
     @Override
     public int compareTo(CurriculumSubject other) {
         if(pk.getCurriculum() instanceof Workplan){
-            if(Utils.isParseable(cipher) && Utils.isParseable(other.getCipher())){
+            if (Utils.isNumber(cipher) && Utils.isNumber(other.getCipher())) {
                 return Integer.parseInt(cipher) - Integer.parseInt(other.getCipher());
             }
         }

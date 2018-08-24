@@ -2,8 +2,8 @@ package edu.cad.documentelements.k3columns;
 
 import edu.cad.documentelements.columns.AbstractColumn;
 import edu.cad.entities.CurriculumSubject;
-import edu.cad.utils.k3.K3SubjectEntity;
 import edu.cad.utils.Utils;
+import edu.cad.utils.k3.K3SubjectEntity;
 import org.apache.poi.ss.usermodel.Row;
 
 public abstract class AbstractK3Column extends AbstractColumn{
@@ -21,8 +21,8 @@ public abstract class AbstractK3Column extends AbstractColumn{
     
     public void fill(Row row, K3SubjectEntity subject, String value){
         value = getValue(subject);
-        
-        if(!Utils.isParseable(value)){
+
+        if (!Utils.isNumber(value)) {
             System.err.println("No no no");
             return;
         }

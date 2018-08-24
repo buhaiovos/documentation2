@@ -9,10 +9,11 @@ import edu.cad.entities.DiplomaPreparation;
 import edu.cad.entities.WorkType;
 import edu.cad.entities.Workplan;
 import edu.cad.utils.Utils;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DiplomaPreparationArea extends AbstractDocumentArea{
     private final Map<String, AbstractColumn> columns;
@@ -57,8 +58,8 @@ public class DiplomaPreparationArea extends AbstractDocumentArea{
         
         String cellContent = row.getCell(columnNumber).getStringCellValue();
         String workId = cellContent.replaceAll("#work", "");
-        
-        if(!Utils.isParseable(workId))
+
+        if (!Utils.isNumber(workId))
             return null;
 
         return workTypeDAO.get(Integer.parseInt(workId));

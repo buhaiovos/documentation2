@@ -4,11 +4,12 @@ import edu.cad.daos.HibernateDAO;
 import edu.cad.documentelements.areas.CurriculumSubjectList;
 import edu.cad.entities.Curriculum;
 import edu.cad.utils.Utils;
-import java.io.IOException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+
+import java.io.IOException;
 
 public class CurriculumGenerator implements IDocumentGenerator {
     
@@ -43,7 +44,7 @@ public class CurriculumGenerator implements IDocumentGenerator {
             return 0;
         
         value = value.substring(token.length() + 1);
-        if(!Utils.isParseable(value))
+        if (!Utils.isNumber(value))
             return 0;
         
         return Integer.parseInt(value);      

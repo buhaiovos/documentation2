@@ -4,14 +4,15 @@ import com.google.gson.Gson;
 import edu.cad.utils.Utils;
 import edu.cad.utils.databaseutils.DatabaseSwitcher;
 import edu.cad.utils.databaseutils.DatabaseYears;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Set;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Set;
 
 @WebServlet("/YearChangeController")
 public class YearChangeController extends HttpServlet {
@@ -60,7 +61,7 @@ public class YearChangeController extends HttpServlet {
         
         String yearStr = request.getParameter("years");
         if (yearStr != null) {
-            if (Utils.isParseable(yearStr)) {
+            if (Utils.isNumber(yearStr)) {
                 DatabaseSwitcher.switchDatabase(Integer.parseInt(yearStr));
             }   
         }

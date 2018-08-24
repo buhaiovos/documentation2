@@ -16,13 +16,13 @@ public class ControlCounterFactory {
         ColumnTokenStringSplitter splitter = new ColumnTokenStringSplitter(cell.getStringCellValue()); 
         if(!splitter.getType().equals("semcontrol"))
             return null;
-        
-        if(splitter.getFirstNumString() == null || !Utils.isParseable(splitter.getFirstNumString()))
+
+        if (splitter.getFirstNumString() == null || !Utils.isNumber(splitter.getFirstNumString()))
             return null;
         
         int controlType = Integer.parseInt(splitter.getFirstNumString());
         ControlDictionary control = new HibernateDAO<>(ControlDictionary.class).get(controlType);
-        if(splitter.getSecondNumString() == null || !Utils.isParseable(splitter.getSecondNumString()))
+        if (splitter.getSecondNumString() == null || !Utils.isNumber(splitter.getSecondNumString()))
             return new ControlCounter(cell, control);
 
         int semester = Integer.parseInt(splitter.getSecondNumString());

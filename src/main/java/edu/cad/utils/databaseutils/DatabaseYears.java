@@ -1,41 +1,33 @@
 package edu.cad.utils.databaseutils;
 
-import edu.cad.utils.Utils;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class DatabaseYears {
-    private static String FILE = "WEB-INF/classes/DatabaseYears.txt";
+    private static String FILE = "DatabaseYears.txt";
     
     public static void setYearsFilePath(String path) {
         FILE = path;
     }
     
     public static Set<Integer> getAllYears(){
-        Set<Integer> years = new TreeSet<>();
-        
-        try (BufferedReader in = new BufferedReader(new FileReader(FILE))) {
-            String line;
-            while ((line = in.readLine()) != null) {
-                if(Utils.isParseable(line)){
-                    years.add(Integer.parseInt(line));
-                }
-            }
+        final Path pathToYearsTrackingFile = Paths.get(FILE);
+        try {
+            return Files.lines(pathToYearsTrackingFile)
+                    .mapToInt(Integer::valueOf)
+                    .boxed()
+                    .collect(Collectors.toCollection(TreeSet::new));
         } catch (IOException e) {
-            System.out.println(e);
-        } 
-
-        return years;
+            throw new RuntimeException("Failed to read existing database years from tracking file", e);
+        }
     }
-    
-    public static void addYear(int year){
+
+    public static void addYearToYearsTrackingFile(int year) {
         try(PrintWriter out = new PrintWriter(new BufferedWriter(
                 new FileWriter(FILE, true)))) {
             out.println();
@@ -51,7 +43,7 @@ public class DatabaseYears {
         
         for(int element : years){
             if(element != year){
-                addYear(element);
+                addYearToYearsTrackingFile(element);
             }
         }  
     }

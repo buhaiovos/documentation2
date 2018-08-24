@@ -12,17 +12,14 @@ import edu.cad.utils.documentutils.RowInserter;
 import edu.cad.utils.k3.K3SubjectEntity;
 import edu.cad.utils.k3.K3SubjectListCreator;
 import edu.cad.utils.k3.SourceOfFinancing;
+import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
+import org.apache.poi.ss.usermodel.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 
 public class FormK3Generator implements IDocumentGenerator{
     private final Department department;
@@ -125,7 +122,7 @@ public class FormK3Generator implements IDocumentGenerator{
             return 0;
         
         value = value.substring(token.length() + 1);
-        if(!Utils.isParseable(value))
+        if (!Utils.isNumber(value))
             return 0;
         
         return Integer.parseInt(value);
