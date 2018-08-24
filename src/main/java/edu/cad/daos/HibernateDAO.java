@@ -3,7 +3,7 @@ package edu.cad.daos;
 import edu.cad.entities.Curriculum;
 import edu.cad.entities.Workplan;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import edu.cad.utils.hibernateutils.HibernateSession;
+import edu.cad.utils.hibernateutils.HibernateSessionHolder;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -20,7 +20,7 @@ public class HibernateDAO<Entity extends IDatabaseEntity> implements IDAO<Entity
 
     public HibernateDAO(Class<Entity> typeParameterClass) {
         this.typeParameterClass = typeParameterClass;
-        this.session = HibernateSession.getInstance();
+        this.session = HibernateSessionHolder.INSTANCE.getSession();
     }
 
     public HibernateDAO(Class<Entity> typeParameterClass, Session session) {

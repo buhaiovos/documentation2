@@ -54,16 +54,16 @@ public class ColumnTokenStringSplitter {
                     secondNumString = null;
                     break;
                 case 2:
-                    if (Utils.isParseable(parts[1].trim())) {
+                    if (Utils.isNumber(parts[1].trim())) {
                         firstNumString = parts[1].trim();
                     }
                     secondNumString = null;
                     break;
                 default:
-                    if (Utils.isParseable(parts[1].trim())) {
+                    if (Utils.isNumber(parts[1].trim())) {
                         firstNumString = parts[1].trim();
                     }
-                    if (Utils.isParseable(parts[2].trim())) {
+                    if (Utils.isNumber(parts[2].trim())) {
                         secondNumString = parts[2].trim();
                     }
                     break;

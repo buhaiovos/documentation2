@@ -3,7 +3,7 @@ package edu.cad.utils.databaseutils;
 import edu.cad.daos.HibernateDAO;
 import edu.cad.entities.AcademicGroup;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import edu.cad.utils.hibernateutils.HibernateSession;
+import edu.cad.utils.hibernateutils.HibernateSessionHolder;
 import org.hibernate.Session;
 import org.reflections.Reflections;
 
@@ -22,7 +22,7 @@ public class DatabaseCloner {
     private static int newYear;
 
     public static void cloneDatabase(Session oldSession) {
-        //get Class objects of all @Entity classes
+        //getSession Class objects of all @Entity classes
         entityClasses = getEntityClasses();
         // saveOldData();
         for (Class<? extends IDatabaseEntity> classObj : entityClasses) {
@@ -63,7 +63,7 @@ public class DatabaseCloner {
 
     private static void cloneAllEntriesOfEntity(Class<? extends IDatabaseEntity> classObj,
                                                 List<? extends IDatabaseEntity> list) {
-        Session currentSession = HibernateSession.getInstance();
+        Session currentSession = HibernateSessionHolder.INSTANCE.getSession();
         HibernateDAO<IDatabaseEntity> destDAO = new HibernateDAO(classObj, currentSession);
 
         for (IDatabaseEntity entry : list) {

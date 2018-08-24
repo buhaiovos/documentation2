@@ -1,14 +1,13 @@
 package edu.cad.utils;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 public class Utils {
-    
-    public static boolean isParseable(String value){
-        try{
-            Double.parseDouble(value);
-        } catch(NumberFormatException ex) {
-            return false;
-        }
-        
-        return true;
+    private Utils() {
+        // utility classes should not be instantiated.
+    }
+
+    public static boolean isNumber(String value) {
+        return NumberUtils.isParsable(value);
     }
 }

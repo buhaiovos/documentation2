@@ -6,11 +6,12 @@ import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.CurriculumSubject;
 import edu.cad.entities.Subject;
 import edu.cad.utils.Utils;
+import org.apache.poi.ss.usermodel.Row;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
-import org.apache.poi.ss.usermodel.Row;
 
 public class ControlColumn extends AbstractColumn{
     private final ControlDictionary control;
@@ -52,8 +53,8 @@ public class ControlColumn extends AbstractColumn{
 
         StringBuilder value = new StringBuilder();
         value.append(iterator.next().toString());
-            
-        if(controls.size() == 1 && Utils.isParseable(value.toString())){
+
+        if (controls.size() == 1 && Utils.isNumber(value.toString())) {
             fill(row, Integer.parseInt(value.toString()));
             return;
         }

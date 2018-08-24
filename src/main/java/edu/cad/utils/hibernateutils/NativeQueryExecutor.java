@@ -10,7 +10,7 @@ public class NativeQueryExecutor {
     }
 
     public static void executeQueryWithinTransaction(final String sql) {
-        final Session session = HibernateSession.getInstance();
+        final Session session = HibernateSessionHolder.INSTANCE.getSession();
         final Transaction transaction = session.beginTransaction();
         final NativeQuery query = session.createNativeQuery(sql);
 
