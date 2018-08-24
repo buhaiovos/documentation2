@@ -9,7 +9,7 @@ public class NativeQueryExecutor {
         //this is a utility method thus it should not have  public constructor
     }
 
-    public static void executeQueryWithinTransaction(String sql) {
+    public static void executeQueryWithinTransaction(final String sql) {
         final Session session = HibernateSession.getInstance();
         final Transaction transaction = session.beginTransaction();
         final NativeQuery query = session.createNativeQuery(sql);
