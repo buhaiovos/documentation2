@@ -7,7 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-public enum HibernateSessionHolder {
+public enum HibernateSessionManagerImpl implements HibernateSessionManager {
     INSTANCE;
 
     private static final String HIBERNATE_CFG_XML = "hibernate.cfg.xml";
@@ -15,8 +15,8 @@ public enum HibernateSessionHolder {
     private Session session;
     private Configuration configuration;
 
-
-    public synchronized Session getSession() {
+    @Override
+    public synchronized Session getCurrentSession() {
         if ((session == null) || !session.isOpen()) {
             openSession();
         }
@@ -38,11 +38,13 @@ public enum HibernateSessionHolder {
         return configuration.buildSessionFactory(serviceRegistry);
     }
 
-    public synchronized void openNewConfiguredSession(Configuration configuration) {
+    @Override
+    public synchronized void configureNewSession(Configuration configuration) {
         this.configuration = configuration;
         this.session = getSessionFactory().openSession();
     }
 
+    @Override
     public Configuration getConfiguration() {
         return configuration;
     }
