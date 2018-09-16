@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 @SuppressWarnings("unchecked")
 public class HibernateDAO<Entity extends IDatabaseEntity> implements IDAO<Entity> {
@@ -47,6 +48,11 @@ public class HibernateDAO<Entity extends IDatabaseEntity> implements IDAO<Entity
     @Override
     public Entity get(int id) {
         return session.get(typeParameterClass, id);
+    }
+
+    @Override
+    public Optional<Entity> getById(int id) {
+        return Optional.ofNullable(get(id));
     }
 
     @Override

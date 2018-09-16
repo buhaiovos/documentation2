@@ -47,7 +47,7 @@ public class ColumnTokenStringSplitter {
 
     private void setNumStrings() {
         String[] parts = token.split("_");
-        if (parts != null && parts.length > 0) {
+        if (parts.length > 0) {
             switch (parts.length) {
                 case 1:
                     firstNumString = null;
