@@ -32,6 +32,4 @@ public abstract class AbstractDocumentElement {
         
         return null;
     }
-    
-    
 }

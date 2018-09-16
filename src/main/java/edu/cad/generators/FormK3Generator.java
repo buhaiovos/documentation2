@@ -60,7 +60,7 @@ public class FormK3Generator implements IDocumentGenerator{
     }
     
     @Override
-    public Workbook getWorkbook(){
+    public Workbook getTemplate() {
         return null;
     }
     

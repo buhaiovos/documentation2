@@ -40,5 +40,4 @@ public class ControlCounterFactory {
         
         return true;
     }
-    
 }

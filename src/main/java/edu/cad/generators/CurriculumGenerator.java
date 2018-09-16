@@ -9,55 +9,85 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import java.io.IOException;
+import java.util.Optional;
+
+import static java.lang.String.format;
 
 public class CurriculumGenerator implements IDocumentGenerator {
-    
-    protected Workbook template;
-    
+    private static final int CURRICULUM_ID_ROW_NUM = 0;
+    private static final int CURRICULUM_ID_CELL_NUM = 0;
+    private static final String BLANK_STRING = "";
+    private static final String CURRICULUM_ID_MARKER = "#curriculum_";
+
+    private final Workbook template;
+
     public CurriculumGenerator(Workbook template) {
         this.template = template;
     }
 
     @Override
-    public void generate() throws IOException {
-        for(int i = 0; i < template.getNumberOfSheets(); i++){
-            generateSheet(template.getSheetAt(i));
+    public void generate() {
+        for (int i = 0; i < template.getNumberOfSheets(); i++) {
+            fillInSheet(template.getSheetAt(i));
         }
     }
-    
-    @Override
-    public Workbook getWorkbook(){
-        return template;
-    }
-    
-    protected int getCurriculumId(Sheet sheet, String token){
-        String value;
-        Cell cell = sheet.getRow(0).getCell(0);
-        
-        if(cell == null || !cell.getCellTypeEnum().equals(CellType.STRING))
-            return 0;
-        
-        value = sheet.getRow(0).getCell(0).getStringCellValue();
-        cell.setCellType(CellType.BLANK);
-        if(!value.contains(token))
-            return 0;
-        
-        value = value.substring(token.length() + 1);
-        if (!Utils.isNumber(value))
-            return 0;
-        
-        return Integer.parseInt(value);      
-    }
-    
-    private void generateSheet(Sheet sheet) {
-        int id = getCurriculumId(sheet, "#curriculum");
-        CurriculumSubjectList subjectList = new CurriculumSubjectList(sheet, 0);       
-        Curriculum curriculum = new HibernateDAO<>(Curriculum.class).get(id);
-        
-        if(curriculum == null)
-            return;
 
-        subjectList.fill(curriculum);
+    private void fillInSheet(final Sheet sheet) {
+        final int id = extractCurriculumId(sheet, CURRICULUM_ID_MARKER);
+        final Curriculum curriculum = findCurriculum(id);
+        fillCurriculumSheetWithSubjectList(sheet, curriculum);
+    }
+
+    int extractCurriculumId(final Sheet sheet, final String curriculumIdMarker) {
+        return getCellWhichHoldsCurriculumIdToken(sheet)
+                .filter(this::isCellOfValidType)
+                .map(this::toCurriculumIdTokenWithCleanUp)
+                .filter(token -> token.contains(curriculumIdMarker))
+                .map(this::toCurriculumId)
+                .orElseThrow(() -> new RuntimeException("Unable to get Curriculum id."));
+    }
+
+    private Optional<Cell> getCellWhichHoldsCurriculumIdToken(final Sheet sheet) {
+        return Optional.ofNullable(
+                sheet.getRow(CURRICULUM_ID_ROW_NUM).getCell(CURRICULUM_ID_CELL_NUM)
+        );
+    }
+
+    private boolean isCellOfValidType(Cell cell) {
+        return cell.getCellTypeEnum().equals(CellType.STRING);
+    }
+
+    private String toCurriculumIdTokenWithCleanUp(Cell curriculumIdHolder) {
+        final String curriculumIdToken = curriculumIdHolder.getStringCellValue();
+        clearCell(curriculumIdHolder);
+        return curriculumIdToken;
+    }
+
+    private void clearCell(Cell curriculumIdHolder) {
+        curriculumIdHolder.setCellType(CellType.BLANK); // also makes it empty
+    }
+
+    private Integer toCurriculumId(String curriculumIdToken) {
+        final String id = curriculumIdToken.replaceFirst(CURRICULUM_ID_MARKER, BLANK_STRING);
+        if (Utils.isNumber(id)) {
+            return Integer.valueOf(id);
+        } else {
+            throw new RuntimeException(format("Broken curriculum id token: <%s>. Should contain id of Curriculum.", curriculumIdToken));
+        }
+    }
+
+    private Curriculum findCurriculum(final int id) {
+        return new HibernateDAO<>(Curriculum.class)
+                .getById(id)
+                .orElseThrow(() -> new RuntimeException(format("Curriculum with id <%d> is not found", id)));
+    }
+
+    private void fillCurriculumSheetWithSubjectList(final Sheet sheet, final Curriculum curriculum) {
+        new CurriculumSubjectList(sheet, 0).fill(curriculum);
+    }
+
+    @Override
+    public Workbook getTemplate() {
+        return template;
     }
 }
