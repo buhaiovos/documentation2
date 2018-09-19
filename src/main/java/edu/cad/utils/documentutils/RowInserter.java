@@ -1,13 +1,13 @@
 package edu.cad.utils.documentutils;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RowInserter {
     
@@ -32,8 +32,6 @@ public class RowInserter {
             Cell newCell = newRow.createCell(i);
 
             newCell.setCellStyle(oldCell.getCellStyle());
-            newCell.getCellStyle().setBorderTop(BorderStyle.THIN);
-            
             if(oldCell.getCellTypeEnum().equals(CellType.FORMULA)){
                 FormulaCopier.copyFormula(sheet, oldCell, newCell);
             }
