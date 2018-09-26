@@ -5,10 +5,10 @@ import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.Curriculum;
 import org.apache.poi.ss.usermodel.Cell;
 
-public class SemesterControlCounter extends ControlCounter{
-    private final int semester; 
-    
-    public SemesterControlCounter(Cell cell, ControlDictionary control, int semester){
+public class SemesterControlCounter extends ControlCounter {
+    private final int semester;
+
+    public SemesterControlCounter(Cell cell, ControlDictionary control, int semester) {
         super(cell, control);
         this.semester = semester;
     }
@@ -17,28 +17,21 @@ public class SemesterControlCounter extends ControlCounter{
     public void fill(Curriculum curriculum) {
         StringBuilder value = new StringBuilder();
         int count = curriculum.countControlsByType(semester, control);
-        
-        if(control.getId() == 2){
-            ControlDictionary diff = new HibernateDAO<>(ControlDictionary.class).get(9); 
+
+        if (control.getId() == 2) {
+            ControlDictionary diff = new HibernateDAO<>(ControlDictionary.class).get(9);
             int diffCount = curriculum.countControlsByType(semester, diff);
-            
-            if(diffCount > 0){
-                value.append(diffCount);
-                value.append('д');
-                
-                if(count > 0){
-                    value.append('+');
-                }
-            } 
+
+            buildDifferentiatedCreditValuePart(value, count > 0, diffCount);
         }
-        
-        if(count > 0)
+
+        if (count > 0)
             value.append(count);
-        
-        if(value.length() > 0){
+
+        if (value.length() > 0) {
             cell.setCellValue(value.toString());
-        }  
+        }
     }
-    
-    
+
+
 }
