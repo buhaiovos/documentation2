@@ -1,9 +1,9 @@
 (function ($) {
 	var base={
 		_createCellForRecordField:$.hik.jtable.prototype._createCellForRecordField,
-		_updateRowTexts:$.hik.jtable.prototype._updateRowTexts	
+		_updateRowTexts:$.hik.jtable.prototype._updateRowTexts
 
-	}
+    };
     $.extend(true, $.hik.jtable.prototype, {
 		options: {
 			editinline:{enable:false,img:""}
@@ -75,7 +75,7 @@
 			var field = this.options.fields[fieldName];
 			if(typeof field.edit === 'undefined'){
 				field.edit = true;
-			};
+            }
             var $inputhtml = $('<select></select>');
 			$inputhtml.css('background-repeat','no-repeat');
 			$inputhtml.css('background-position','right center');
@@ -120,8 +120,8 @@
 				var field = this.options.fields[fieldName];
 				if(typeof field.edit === 'undefined'){
 					field.edit = true;
-				};
-    	        var fieldValue = record[fieldName];
+                }
+            var fieldValue = record[fieldName];
 				var displayFormat = field.displayFormat || this.options.defaultDateFormat;
 				var defaultval = (fieldValue) ? fieldValue :'&nbsp;&nbsp;&nbsp;';  
         		var $txt = $('<span>' + defaultval + '</span>');
@@ -159,8 +159,8 @@
 				var field = this.options.fields[fieldName];
 				if(typeof field.edit === 'undefined'){
 					field.edit = true;
-				};
-    	        var fieldValue = record[fieldName];
+                }
+            var fieldValue = record[fieldName];
 				var $imgnoedit = (fieldValue != 0) ? $('<img val="1" style="cursor:pointer;" src="' + this.options.editinline.img + 'apply.png"></img>') : $('<img val="0" style="cursor:pointer;" src="' + this.options.editinline.img + 'cross.png"></img>');      
 				var $img = (fieldValue != 0) ? $('<img val="1" style="cursor:pointer;" src="' + this.options.editinline.img + 'apply.png"></img>') : $('<img val="0" style="cursor:pointer;" src="' + this.options.editinline.img + 'cross.png"></img>');
 				$img.click(function(){
@@ -195,8 +195,8 @@
 				var field = this.options.fields[fieldName];
 				if(typeof field.edit === 'undefined'){
 					field.edit = true;
-				};
-    	        var fieldValue = record[fieldName];
+                }
+            var fieldValue = record[fieldName];
 				var defaultval = (fieldValue) ? fieldValue :'&nbsp;&nbsp;&nbsp;';  
 				var $txt = $('<span>' + defaultval + '</span>');
 				$txt.click(function(){
@@ -233,8 +233,8 @@
 				var field = this.options.fields[fieldName];
 				if(typeof field.edit === 'undefined'){
 					field.edit = true;
-				};
-    	        var fieldValue = record[fieldName];
+                }
+            var fieldValue = record[fieldName];
 				var defaultval = (fieldValue) ? fieldValue :'&nbsp;&nbsp;&nbsp;';  
 				var $txt = $('<span>' + defaultval + '</span>');
 				$txt.click(function(){
