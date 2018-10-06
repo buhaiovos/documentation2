@@ -26,9 +26,7 @@ public class WorkTypeController extends AbstractEntityController<WorkType> {
     }
 
     @Override
-    protected void getDropDownList(HttpServletResponse response) 
-            throws IOException {
-        
+    protected void getDropDownList(HttpServletResponse response) throws IOException {
         super.getDropDownList(WorkType::getDenotation, false, response);
     }    
 }

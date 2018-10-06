@@ -17,47 +17,47 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/subject-dictionary")
-public class SubjectDictionaryController extends AbstractEntityController<SubjectDictionary>{
+public class SubjectDictionaryController extends AbstractEntityController<SubjectDictionary> {
 
     public SubjectDictionaryController() {
         super(SubjectDictionary.class);
     }
-    
+
     @Override
     protected GsonBuilder createGsonBuilder() {
-        return super.createGsonBuilder().registerTypeAdapter(SubjectDictionary.class, 
-                new SubjectDictionarySerializer());
+        return super.createGsonBuilder()
+                .registerTypeAdapter(SubjectDictionary.class, new SubjectDictionarySerializer());
     }
 
     @Override
     protected SubjectDictionary getInstance(HttpServletRequest request) {
         SubjectDictionary subjectDictionary = new SubjectDictionary();
         subjectDictionary = initializeInstance(subjectDictionary, request);
-        
-        
+
+
         setStringProperty(request, "denotation", subjectDictionary::setDenotation);
-        setObjectProperty(request, "superSubject", subjectDictionary::setSuperSubject, 
+        setObjectProperty(request, "superSubject", subjectDictionary::setSuperSubject,
                 SubjectDictionary.class);
-        setObjectProperty(request, "department", subjectDictionary::setDepartment, 
+        setObjectProperty(request, "department", subjectDictionary::setDepartment,
                 Department.class);
         setObjectProperty(request, "curriculumSection", subjectDictionary::setCurriculumSection, Section.class);
         setObjectProperty(request, "workplanSection", subjectDictionary::setWorkplanSection, Section.class);
         setObjectProperty(request, "type", subjectDictionary::setType, SubjectType.class);
-        
+
         return subjectDictionary;
     }
-    
+
     @Override
     protected void getDropDownList(HttpServletResponse response) throws IOException {
         super.getDropDownList(SubjectDictionary::getDenotation, true, response);
     }
-    
+
     @Override
-    protected List<SubjectDictionary> getList(){
+    protected List<SubjectDictionary> getList() {
         List<SubjectDictionary> subjects = dao.getAll();
         Collections.sort(subjects);
-        
+
         return subjects;
     }
-    
+
 }

@@ -47,8 +47,7 @@ public class DiplomaPreparationController extends AbstractEntityController<Diplo
     }
     
     @Override
-    protected void getDependencyList(HttpServletRequest request, 
-            HttpServletResponse response) throws IOException {
+    protected void getDependencyList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
         if (request.getParameter("id") != null) {
             int id = Integer.parseInt(request.getParameter("id"));  

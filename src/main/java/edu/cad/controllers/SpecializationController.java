@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/specialization")
-public class SpecializationController extends AbstractEntityController<Specialization>{
+public class SpecializationController extends AbstractEntityController<Specialization> {
 
     public SpecializationController() {
         super(Specialization.class);
@@ -24,10 +24,10 @@ public class SpecializationController extends AbstractEntityController<Specializ
     protected Specialization getInstance(HttpServletRequest request) {
         Specialization specialization = new Specialization();
         specialization = initializeInstance(specialization, request);
-        
+
         setStringProperty(request, "denotation", specialization::setDenotation);
         setObjectProperty(request, "department", specialization::setDepartment, Department.class);
-        
+
         return specialization;
     }
 
@@ -35,22 +35,19 @@ public class SpecializationController extends AbstractEntityController<Specializ
     protected void getDropDownList(HttpServletResponse response) throws IOException {
         super.getDropDownList(Specialization::getDenotation, false, response);
     }
-    
+
     @Override
     protected GsonBuilder createGsonBuilder() {
-        return super.createGsonBuilder().registerTypeAdapter(Specialization.class, 
-                new SpecializationSerializer());
+        return super.createGsonBuilder().registerTypeAdapter(Specialization.class, new SpecializationSerializer());
     }
-    
+
     @Override
-    protected void getDependencyList(HttpServletRequest request, 
-            HttpServletResponse response) throws IOException {
-        
+    protected void getDependencyList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (request.getParameter("id") != null) {
-            int id = Integer.parseInt(request.getParameter("id"));  
+            int id = Integer.parseInt(request.getParameter("id"));
             list.clear();
             list.addAll(new HibernateDAO<>(Department.class).get(id).getSpecializations());
-            
+
             putOk();
             content.put("Records", list);
             writeResponse(response);

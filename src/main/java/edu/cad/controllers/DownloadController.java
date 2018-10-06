@@ -30,12 +30,12 @@ public class DownloadController extends HttpServlet {
     private static final String K3FORM_PATH = "/WEB-INF/classes/templates/K3FormTemplate.xls";
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         doPost(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         try {
             handle(request, response);
         } catch (IOException | ServletException | RuntimeException e) {
@@ -83,8 +83,8 @@ public class DownloadController extends HttpServlet {
                 + URLEncoder.encode(filename, StandardCharsets.UTF_8));
     }
 
-    private void downloadGeneratedDocument(IDocumentGenerator generator, String filename, HttpServletResponse response)
-            throws IOException {
+    private void downloadGeneratedDocument(IDocumentGenerator generator, String filename,
+                                           HttpServletResponse response) throws IOException {
         addHeaders(response, filename);
         generator.generate();
         generator.getTemplate().write(response.getOutputStream());

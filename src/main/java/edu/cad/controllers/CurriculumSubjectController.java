@@ -16,7 +16,7 @@ import java.util.Collections;
 
 @RestController
 @RequestMapping("/curriculum-subject")
-public class CurriculumSubjectController extends AbstractEntityController<CurriculumSubject>{
+public class CurriculumSubjectController extends AbstractEntityController<CurriculumSubject> {
 
     public CurriculumSubjectController() {
         super(CurriculumSubject.class);
@@ -24,41 +24,39 @@ public class CurriculumSubjectController extends AbstractEntityController<Curric
 
     @Override
     protected GsonBuilder createGsonBuilder() {
-        return super.createGsonBuilder().registerTypeAdapter(CurriculumSubject.class, 
-                new CurriculumSubjectSerializer());
+        return super.createGsonBuilder()
+                .registerTypeAdapter(CurriculumSubject.class, new CurriculumSubjectSerializer());
     }
 
     @Override
     protected CurriculumSubject getInstance(HttpServletRequest request) {
         CurriculumSubject curriculumSubject = new CurriculumSubject();
         curriculumSubject = initializeInstance(curriculumSubject, request);
-        
+
         setStringProperty(request, "cipher", curriculumSubject::setCipher);
         setObjectProperty(request, "curriculum", curriculumSubject::setCurriculum, Curriculum.class);
         setObjectProperty(request, "subject", curriculumSubject::setSubject, Subject.class);
-        
+
         return curriculumSubject;
     }
-    
+
     @Override
     protected void getDropDownList(HttpServletResponse response) throws IOException {
         super.getDropDownList(CurriculumSubject::toString, false, response);
     }
-    
+
     @Override
-    protected void getDependencyList(HttpServletRequest request, 
-            HttpServletResponse response) throws IOException {
-        
+    protected void getDependencyList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (request.getParameter("id") != null) {
-            int id = Integer.parseInt(request.getParameter("id"));  
+            int id = Integer.parseInt(request.getParameter("id"));
             list.clear();
             list.addAll(new HibernateDAO<>(Curriculum.class).get(id).getCurriculumSubjects());
             Collections.sort(list);
-            
+
             putOk();
             content.put("Records", list);
             writeResponse(response);
         }
     }
-    
+
 }

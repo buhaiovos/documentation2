@@ -26,9 +26,7 @@ public class SubjectTypeController extends AbstractEntityController<SubjectType>
     }
     
     @Override
-    protected void getDropDownList(HttpServletResponse response) 
-            throws IOException {
-        
+    protected void getDropDownList(HttpServletResponse response) throws IOException {
         super.getDropDownList(SubjectType::getDenotation, false, response);
     }
     

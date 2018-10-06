@@ -10,8 +10,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/control-dictionary")
-public class ControlDictionaryController 
-        extends AbstractEntityController<ControlDictionary> {
+public class ControlDictionaryController extends AbstractEntityController<ControlDictionary> {
 
     public ControlDictionaryController() {
         super(ControlDictionary.class);
@@ -22,7 +21,7 @@ public class ControlDictionaryController
         ControlDictionary instance = new ControlDictionary();
         instance = initializeInstance(instance, request);
         setStringProperty(request, "denotation", instance::setDenotation);
-        
+
         return instance;
     }
 
@@ -30,5 +29,5 @@ public class ControlDictionaryController
     protected void getDropDownList(HttpServletResponse response) throws IOException {
         super.getDropDownList(ControlDictionary::getDenotation, false, response);
     }
-    
+
 }

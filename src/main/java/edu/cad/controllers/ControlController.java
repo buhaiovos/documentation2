@@ -45,8 +45,7 @@ public class ControlController extends AbstractEntityController<Control>{
     }
     
     @Override
-    protected void getDependencyList(HttpServletRequest request, 
-            HttpServletResponse response) throws IOException {
+    protected void getDependencyList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
         if (request.getParameter("id") != null) {
             int id = Integer.parseInt(request.getParameter("id"));  

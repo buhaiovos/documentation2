@@ -46,9 +46,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
 
     protected abstract T getInstance(HttpServletRequest request);
 
-    private void processAction(HttpServletRequest request,
-                               HttpServletResponse response) throws IOException {
-
+    private void processAction(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (action != null) {
             try {
                 switch (action) {
@@ -98,17 +96,15 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         content.put("Result", "OK");
     }
 
-    protected void setStringProperty(HttpServletRequest request,
-                                     String requestParamString, StringPropertySetter propSetter) {
-
+    protected void setStringProperty(HttpServletRequest request, String requestParamString,
+                                     StringPropertySetter propSetter) {
         String param = request.getParameter(requestParamString);
         if (param != null) {
             propSetter.setProperty(param);
         }
     }
 
-    void setIntProperty(HttpServletRequest request,
-                        String requestParamString, IntPropertySetter propSetter) {
+    void setIntProperty(HttpServletRequest request, String requestParamString, IntPropertySetter propSetter) {
 
         String numString = request.getParameter(requestParamString);
         if (numString != null) {
@@ -117,9 +113,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         }
     }
 
-    void setBooleanProperty(HttpServletRequest request,
-                            String requestParamString, BooleanPropertySetter propSetter) {
-
+    void setBooleanProperty(HttpServletRequest request, String requestParamString, BooleanPropertySetter propSetter) {
         String booleanValueString = request.getParameter(requestParamString);
         if (booleanValueString != null) {
             boolean value = Boolean.parseBoolean(booleanValueString);
@@ -127,9 +121,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         }
     }
 
-    void setFloatProperty(HttpServletRequest request,
-                          String requestParamString, FloatPropertySetter propSetter) {
-
+    void setFloatProperty(HttpServletRequest request, String requestParamString, FloatPropertySetter propSetter) {
         String numString = request.getParameter(requestParamString);
         if (numString != null) {
             float value = Float.parseFloat(numString);
@@ -137,9 +129,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         }
     }
 
-    void setDateProperty(HttpServletRequest request,
-                         String requestParamString, DatePropertySetter propSetter) {
-
+    void setDateProperty(HttpServletRequest request, String requestParamString, DatePropertySetter propSetter) {
         String dateString = request.getParameter(requestParamString);
         if (dateString != null) {
             Date date = gson.fromJson(dateString, Date.class);
@@ -150,9 +140,8 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
     }
 
     protected <E extends IDatabaseEntity>
-    void setObjectProperty(HttpServletRequest request, String requestParamString,
-                           ObjectPropertySetter<E> propSetter, Class<E> propertyObjClass) {
-
+    void setObjectProperty(HttpServletRequest request, String requestParamString, ObjectPropertySetter<E> propSetter,
+                           Class<E> propertyObjClass) {
         String entityIdStr = request.getParameter(requestParamString);
         if (entityIdStr != null) {
             int id = Integer.parseInt(entityIdStr.trim());
