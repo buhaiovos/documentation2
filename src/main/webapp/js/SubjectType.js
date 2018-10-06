@@ -3,10 +3,10 @@ $(document).ready(function() {
             title : 'Типи предметів',
             editinline: { enable : true },
             actions : {
-                listAction : 'SubjectTypeController?action=list',
-                createAction : 'SubjectTypeController?action=create',
-                updateAction : 'SubjectTypeController?action=update',
-                deleteAction : 'SubjectTypeController?action=delete'
+                listAction: 'subject-types?action=list',
+                createAction: 'subject-types?action=create',
+                updateAction: 'subject-types?action=update',
+                deleteAction: 'subject-types?action=delete'
             },
             fields : {
                 id : {

@@ -1,12 +1,15 @@
-package edu.cad.servlets;
+package edu.cad.controllers;
 
 import edu.cad.entities.WorkType;
-import java.io.IOException;
-import javax.servlet.annotation.WebServlet;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-@WebServlet("/WorkTypeController")
+@RestController
+@RequestMapping("/work-type")
 public class WorkTypeController extends AbstractEntityController<WorkType> {
 
     public WorkTypeController() {

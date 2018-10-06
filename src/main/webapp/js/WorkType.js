@@ -3,10 +3,10 @@ $(document).ready(function() {
             title : 'Види робіт з підготовки дипломного проекту',
             editinline: { enable : true },
             actions : {
-                listAction : 'WorkTypeController?action=list',
-                createAction : 'WorkTypeController?action=create',
-                updateAction : 'WorkTypeController?action=update',
-                deleteAction : 'WorkTypeController?action=delete'
+                listAction: 'work-type?action=list',
+                createAction: 'work-type?action=create',
+                updateAction: 'work-type?action=update',
+                deleteAction: 'work-type?action=delete'
             },
             fields : {
                 id : {

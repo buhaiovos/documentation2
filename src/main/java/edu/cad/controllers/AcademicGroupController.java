@@ -3,7 +3,6 @@ package edu.cad.controllers;
 import com.google.gson.GsonBuilder;
 import edu.cad.entities.*;
 import edu.cad.utils.gson.AcademicGroupSerializer;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,11 +16,6 @@ public class AcademicGroupController extends AbstractEntityController<AcademicGr
 
     public AcademicGroupController() {
         super(AcademicGroup.class);
-    }
-
-    @PostMapping
-    public void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        super.processRequest(request, response);
     }
 
     @Override

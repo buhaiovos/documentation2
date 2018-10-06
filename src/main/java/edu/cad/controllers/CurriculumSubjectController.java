@@ -1,4 +1,4 @@
-package edu.cad.servlets;
+package edu.cad.controllers;
 
 import com.google.gson.GsonBuilder;
 import edu.cad.daos.HibernateDAO;
@@ -6,13 +6,16 @@ import edu.cad.entities.Curriculum;
 import edu.cad.entities.CurriculumSubject;
 import edu.cad.entities.Subject;
 import edu.cad.utils.gson.CurriculumSubjectSerializer;
-import java.io.IOException;
-import java.util.Collections;
-import javax.servlet.annotation.WebServlet;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collections;
 
-@WebServlet("/CurriculumSubjectController")
+@RestController
+@RequestMapping("/curriculum-subject")
 public class CurriculumSubjectController extends AbstractEntityController<CurriculumSubject>{
 
     public CurriculumSubjectController() {

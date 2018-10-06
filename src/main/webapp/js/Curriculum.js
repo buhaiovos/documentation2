@@ -3,10 +3,10 @@ $(document).ready(function() {
             title : 'Навчальні плани',
             editinline: { enable : true },
             actions : {
-                listAction : 'CurriculumController?action=list',
-                createAction : 'CurriculumController?action=create',
-                updateAction : 'CurriculumController?action=update',
-                deleteAction : 'CurriculumController?action=delete'
+                listAction: 'curriculum?action=list',
+                createAction: 'curriculum?action=create',
+                updateAction: 'curriculum?action=update',
+                deleteAction: 'curriculum?action=delete'
             },
             fields : {
                 curriculumSubjects: {
@@ -24,10 +24,10 @@ $(document).ready(function() {
                                     {
                                     title: data.record.denotation + ' - предмети',
                                     actions: {
-                                        listAction: 'CurriculumSubjectController?action=dependencylist&id=' + data.record.id,
-                                        deleteAction: 'CurriculumSubjectController?action=delete',
-                                        updateAction: 'CurriculumSubjectController?action=update',
-                                        createAction: 'CurriculumSubjectController?action=create'
+                                        listAction: 'curriculum-subject?action=dependencylist&id=' + data.record.id,
+                                        deleteAction: 'curriculum-subject?action=delete',
+                                        updateAction: 'curriculum-subject?action=update',
+                                        createAction: 'curriculum-subject?action=create'
                                     },
                                     fields: {
                                         id : {
@@ -47,7 +47,7 @@ $(document).ready(function() {
                                         },
                                         subject : {
                                             title : 'Предмет',
-                                            options: 'SubjectController?action=dropdownlist',
+                                            options: 'subjects?action=dropdownlist',
                                             edit : true
                                         }
                                     }

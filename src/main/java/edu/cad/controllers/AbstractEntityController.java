@@ -8,6 +8,7 @@ import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.servlets.interfaces.*;
 import edu.cad.utils.gson.HibernateProxyTypeAdapter;
 import edu.cad.utils.gson.Option;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,13 +17,13 @@ import java.util.*;
 
 public abstract class AbstractEntityController<T extends IDatabaseEntity> {
 
-    protected IDAO<T> dao;
-    protected Gson gson;
-    protected Map<String, Object> content;
-    protected List<T> list;
-
     private String action;
     private final Class<T> typeParameterClass;
+
+    IDAO<T> dao;
+    Gson gson;
+    Map<String, Object> content;
+    List<T> list;
 
     public AbstractEntityController(Class<T> typeParameterClass) {
         this.typeParameterClass = typeParameterClass;
@@ -30,10 +31,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         list = new ArrayList<>();
     }
 
-    protected abstract void getDropDownList(HttpServletResponse response) throws IOException;
-
-    protected abstract T getInstance(HttpServletRequest request);
-
+    @PostMapping
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         createGson();
@@ -43,6 +41,10 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         setResponseSettings(response);
         processAction(request, response);
     }
+
+    protected abstract void getDropDownList(HttpServletResponse response) throws IOException;
+
+    protected abstract T getInstance(HttpServletRequest request);
 
     private void processAction(HttpServletRequest request,
                                HttpServletResponse response) throws IOException {
@@ -84,7 +86,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         return builder;
     }
 
-    protected void writeResponse(HttpServletResponse response) throws IOException {
+    void writeResponse(HttpServletResponse response) throws IOException {
         String jsonArray = gson.toJson(content);
 
         System.out.println(jsonArray);
@@ -92,7 +94,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         response.getWriter().print(jsonArray);
     }
 
-    protected void putOk() {
+    void putOk() {
         content.put("Result", "OK");
     }
 
@@ -105,8 +107,8 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         }
     }
 
-    protected void setIntProperty(HttpServletRequest request,
-                                  String requestParamString, IntPropertySetter propSetter) {
+    void setIntProperty(HttpServletRequest request,
+                        String requestParamString, IntPropertySetter propSetter) {
 
         String numString = request.getParameter(requestParamString);
         if (numString != null) {
@@ -115,8 +117,8 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         }
     }
 
-    protected void setBooleanProperty(HttpServletRequest request,
-                                      String requestParamString, BooleanPropertySetter propSetter) {
+    void setBooleanProperty(HttpServletRequest request,
+                            String requestParamString, BooleanPropertySetter propSetter) {
 
         String booleanValueString = request.getParameter(requestParamString);
         if (booleanValueString != null) {
@@ -125,8 +127,8 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         }
     }
 
-    protected void setFloatProperty(HttpServletRequest request,
-                                    String requestParamString, FloatPropertySetter propSetter) {
+    void setFloatProperty(HttpServletRequest request,
+                          String requestParamString, FloatPropertySetter propSetter) {
 
         String numString = request.getParameter(requestParamString);
         if (numString != null) {
@@ -135,8 +137,8 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         }
     }
 
-    protected void setDateProperty(HttpServletRequest request,
-                                   String requestParamString, DatePropertySetter propSetter) {
+    void setDateProperty(HttpServletRequest request,
+                         String requestParamString, DatePropertySetter propSetter) {
 
         String dateString = request.getParameter(requestParamString);
         if (dateString != null) {

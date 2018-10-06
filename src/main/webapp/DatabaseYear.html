@@ -23,7 +23,7 @@
         </script>
         <!-- MENU END -->
         <div id="dbSwitch">
-            <form action="YearChangeController" id="form" method="get">
+            <form action="year-change" id="form" method="get">
                 <input type="hidden" name="action" value="switch">
                 <select name="years" id="years"></select>
                 <input type="submit" value="Вибрати">
@@ -44,7 +44,7 @@
 
             <script type="text/javascript">
                 $(document).ready(function () {
-                    $.get("YearChangeController?action=currentYear", function (responseJson) {
+                    $.get("year-change?action=currentYear", function (responseJson) {
                         var $select = $("#currentYear");
                         $select.text(responseJson.year);
                     });

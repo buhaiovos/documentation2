@@ -1,12 +1,15 @@
-package edu.cad.servlets;
+package edu.cad.controllers;
 
 import edu.cad.entities.Qualification;
-import java.io.IOException;
-import javax.servlet.annotation.WebServlet;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-@WebServlet("/QualificationController")
+@RestController
+@RequestMapping("/qualification")
 public class QualificationController 
         extends AbstractEntityController<Qualification> {
 

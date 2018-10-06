@@ -1,4 +1,4 @@
-package edu.cad.servlets;
+package edu.cad.controllers;
 
 import com.google.gson.GsonBuilder;
 import edu.cad.entities.Department;
@@ -6,14 +6,17 @@ import edu.cad.entities.Section;
 import edu.cad.entities.SubjectDictionary;
 import edu.cad.entities.SubjectType;
 import edu.cad.utils.gson.SubjectDictionarySerializer;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/SubjectDictionaryController")
+@RestController
+@RequestMapping("/subject-dictionary")
 public class SubjectDictionaryController extends AbstractEntityController<SubjectDictionary>{
 
     public SubjectDictionaryController() {

@@ -41,19 +41,19 @@
     </script>
     <!-- MENU -->
     <div id="templateWrapper">
-            <form action="DownloadController">
+        <form action="templates">
                 <input type="hidden" name="template" value="curriculum">
                 <span>Навчальний план</span>
                 <span><input type="submit" name="downloadTemplate" value="Отримати шаблон"></span>
                 <span><button type=button onclick="toggle('curriculum', this)">Оновити шаблон</button></span>
             </form>
-            <form action="DownloadController">  
+        <form action="templates">
                 <input type="hidden" name="template" value="workplan">
                 <span>Робочий навчальний план</span>
                 <span><input type="submit" name="downloadTemplate" value="Отримати шаблон"></span>
                 <span><button type=button onclick="toggle('workplan', this)">Оновити шаблон</button></span>             
             </form>
-            <form action="DownloadController">  
+        <form action="templates">
                 <input type="hidden" name="template" value="k3form">
                 <span>Форма К-3</span>
                 <span><input type="submit" name="downloadTemplate" value="Отримати шаблон"></span>
@@ -62,7 +62,7 @@
     </div>   
         
     <div id="fileForm">
-        <form action="DownloadController" method="post" enctype="multipart/form-data">        
+        <form action="templates" method="post" enctype="multipart/form-data">
             <input type="hidden" name="template"/>
             <span><input type="file" accept=".xls" name="file"></span>
             <span><input type="submit" name="uploadTemplate" value="Оновити"></span>

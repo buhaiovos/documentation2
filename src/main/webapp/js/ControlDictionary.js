@@ -3,10 +3,10 @@ $(document).ready(function() {
             title : 'Словник контрольних заходів',
             editinline: { enable : true },
             actions : {
-                listAction : 'ControlDictionaryController?action=list',
-                createAction : 'ControlDictionaryController?action=create',
-                updateAction : 'ControlDictionaryController?action=update',
-                deleteAction : 'ControlDictionaryController?action=delete'
+                listAction: 'control-dictionary?action=list',
+                createAction: 'control-dictionary?action=create',
+                updateAction: 'control-dictionary?action=update',
+                deleteAction: 'control-dictionary?action=delete'
             },
             fields : {
                 id : {

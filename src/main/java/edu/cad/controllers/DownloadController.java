@@ -1,13 +1,13 @@
-package edu.cad.servlets;
+package edu.cad.controllers;
 
 import edu.cad.generators.CurriculumGenerator;
 import edu.cad.generators.IDocumentGenerator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +22,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-@MultipartConfig
-@WebServlet("/DownloadController")
+@RestController
+@RequestMapping("/templates")
 public class DownloadController extends HttpServlet {
     private static final String CURRICULUM_PATH = "/WEB-INF/classes/templates/CurriculumTemplate.xls";
     private static final String WORKPLAN_PATH = "/WEB-INF/classes/templates/WorkplanTemplate.xls";

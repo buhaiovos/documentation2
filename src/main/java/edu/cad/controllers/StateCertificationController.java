@@ -1,15 +1,17 @@
-package edu.cad.servlets;
+package edu.cad.controllers;
 
 import com.google.gson.GsonBuilder;
 import edu.cad.entities.StateCertification;
-import java.io.IOException;
-import javax.servlet.annotation.WebServlet;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-@WebServlet("/StateCertificationController")
-public class StateCertificationController extends 
-        AbstractEntityController<StateCertification> {
+@RestController
+@RequestMapping("/state-certification")
+public class StateCertificationController extends AbstractEntityController<StateCertification> {
 
     public StateCertificationController() {
         super(StateCertification.class);

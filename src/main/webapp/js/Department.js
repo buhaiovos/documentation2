@@ -3,10 +3,10 @@ $(document).ready(function() {
             title : 'Кафедри',
             editinline: { enable : true },
             actions : {
-                listAction : 'DepartmentController?action=list',
-                createAction : 'DepartmentController?action=create',
-                updateAction : 'DepartmentController?action=update',
-                deleteAction : 'DepartmentController?action=delete'
+                listAction: 'department?action=list',
+                createAction: 'department?action=create',
+                updateAction: 'department?action=update',
+                deleteAction: 'department?action=delete'
             },
             fields : {
                 id : {
@@ -31,10 +31,10 @@ $(document).ready(function() {
                                     {
                                     title: data.record.denotation + ' - спеціалізації',
                                     actions: {
-                                        listAction: 'SpecializationController?action=dependencylist&id=' + data.record.id,
-                                        deleteAction: 'SpecializationController?action=delete',
-                                        updateAction: 'SpecializationController?action=update',
-                                        createAction: 'SpecializationController?action=create'
+                                        listAction: 'specialization?action=dependencylist&id=' + data.record.id,
+                                        deleteAction: 'specialization?action=delete',
+                                        updateAction: 'specialization?action=update',
+                                        createAction: 'specialization?action=create'
                                     },
                                     fields: {
                                         id : {

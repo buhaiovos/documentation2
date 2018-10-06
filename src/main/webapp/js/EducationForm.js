@@ -3,10 +3,10 @@ $(document).ready(function() {
             title : 'Форми навчання',
             editinline: { enable : true },
             actions : {
-                listAction : 'EducationFormController?action=list',
-                createAction : 'EducationFormController?action=create',
-                updateAction : 'EducationFormController?action=update',
-                deleteAction : 'EducationFormController?action=delete'
+                listAction: 'form-of-education?action=list',
+                createAction: 'form-of-education?action=create',
+                updateAction: 'form-of-education?action=update',
+                deleteAction: 'form-of-education?action=delete'
             },
             fields : {
                 id : {

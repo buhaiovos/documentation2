@@ -3,10 +3,10 @@ $(document).ready(function() {
             title : 'Розділи предметів',
             editinline: { enable : true },
             actions : {
-                listAction : 'CycleController?action=list',
-                createAction : 'CycleController?action=create',
-                updateAction : 'CycleController?action=update',
-                deleteAction : 'CycleController?action=delete'
+                listAction: 'cycle?action=list',
+                createAction: 'cycle?action=create',
+                updateAction: 'cycle?action=update',
+                deleteAction: 'cycle?action=delete'
             },
             fields : {
                 id : {
@@ -31,10 +31,10 @@ $(document).ready(function() {
                                     {
                                     title: data.record.denotation + ' - підрозділи',
                                     actions: {
-                                        listAction: 'SectionController?action=dependencylist&id=' + data.record.id,
-                                        deleteAction: 'SectionController?action=delete',
-                                        updateAction: 'SectionController?action=update',
-                                        createAction: 'SectionController?action=create'
+                                        listAction: 'section?action=dependencylist&id=' + data.record.id,
+                                        deleteAction: 'section?action=delete',
+                                        updateAction: 'section?action=update',
+                                        createAction: 'section?action=create'
                                     },
                                     fields: {
                                         id : {

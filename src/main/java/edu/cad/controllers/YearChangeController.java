@@ -1,4 +1,4 @@
-package edu.cad.servlets;
+package edu.cad.controllers;
 
 import com.google.gson.Gson;
 import edu.cad.utils.Utils;
@@ -6,9 +6,10 @@ import edu.cad.utils.databaseutils.DatabaseCloner;
 import edu.cad.utils.databaseutils.DatabaseSwitcher;
 import edu.cad.utils.databaseutils.DatabaseYears;
 import edu.cad.utils.hibernateutils.HibernateSessionManager;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 
-@WebServlet("/YearChangeController")
+@RestController
+@RequestMapping("/year-change")
 public class YearChangeController extends HttpServlet {
     private DatabaseSwitcher databaseSwitcher;
 

@@ -3,10 +3,10 @@ $(document).ready(function() {
             title : 'Предмети',
             editinline: { enable : true },
             actions : {
-                listAction : 'SubjectDictionaryController?action=list',
-                createAction : 'SubjectDictionaryController?action=create',
-                updateAction : 'SubjectDictionaryController?action=update',
-                deleteAction : 'SubjectDictionaryController?action=delete'
+                listAction: 'subject-dictionary?action=list',
+                createAction: 'subject-dictionary?action=create',
+                updateAction: 'subject-dictionary?action=update',
+                deleteAction: 'subject-dictionary?action=delete'
             },
             fields : {
                 id : {
@@ -31,10 +31,10 @@ $(document).ready(function() {
                                     {
                                     title: data.record.denotation + ' - предмети',
                                     actions: {
-                                        listAction: 'SubjectController?action=dependencylist&id=' + data.record.id,
-                                        deleteAction: 'SubjectController?action=delete',
-                                        updateAction: 'SubjectController?action=update',
-                                        createAction: 'SubjectController?action=create'
+                                        listAction: 'subjects?action=dependencylist&id=' + data.record.id,
+                                        deleteAction: 'subjects?action=delete',
+                                        updateAction: 'subjects?action=update',
+                                        createAction: 'subjects?action=create'
                                     },
                                     fields: {
                                         id : {
@@ -59,10 +59,10 @@ $(document).ready(function() {
                                                             {
                                                             title: data.record.denotation + ' - контрольні заходи',
                                                             actions: {
-                                                                listAction: 'ControlController?action=dependencylist&id=' + childData.record.id,
-                                                                deleteAction: 'ControlController?action=delete',
-                                                                updateAction: 'ControlController?action=update',
-                                                                createAction: 'ControlController?action=create'
+                                                                listAction: 'control?action=dependencylist&id=' + childData.record.id,
+                                                                deleteAction: 'control?action=delete',
+                                                                updateAction: 'control?action=update',
+                                                                createAction: 'control?action=create'
                                                             },
                                                             fields: {
                                                                 id : {
@@ -78,7 +78,7 @@ $(document).ready(function() {
                                                                 },
                                                                 type : {
                                                                     title : 'Тип контрольного заходу',
-                                                                    options: 'ControlDictionaryController?action=dropdownlist',
+                                                                    options: 'control-dictionary?action=dropdownlist',
                                                                     edit : true
                                                                 },
                                                                 semester : {
@@ -137,29 +137,29 @@ $(document).ready(function() {
                 },
                 department : {
                     title : 'Кафедра',
-                    options: 'DepartmentController?action=dropdownlist',
+                    options: 'department?action=dropdownlist',
                     edit : true
                 },
                 superSubject : {
                     title : 'Загальний предмет',
-                    options: 'SubjectDictionaryController?action=dropdownlist',
+                    options: 'subject-dictionary?action=dropdownlist',
                     edit : true,
                     defaultValue: ''
                 },
                 curriculumSection : {
                     title : 'Розділ у навчальному плані',
-                    options: 'SectionController?action=dropdownlist',
+                    options: 'section?action=dropdownlist',
                     edit : true
                 },
                 workplanSection : {
                     title : 'Розділ у робочому навчальному плані',
-                    options: 'SectionController?action=dropdownlist',
+                    options: 'section?action=dropdownlist',
                     edit : true,
                     defaultValue: ''
                 },
                 type : {
                     title : 'Тип',
-                    options: 'SubjectTypeController?action=dropdownlist',
+                    options: 'subject-types?action=dropdownlist',
                     edit : true
                 }
             }

@@ -3,10 +3,10 @@ $(document).ready(function() {
             title : 'Освітньо-кваліфікаційні рівні',
             editinline: { enable : true },
             actions : {
-                listAction : 'PracticeController?action=list',
-                createAction : 'PracticeController?action=create',
-                updateAction : 'PracticeController?action=update',
-                deleteAction : 'PracticeController?action=delete'
+                listAction: 'practice?action=list',
+                createAction: 'practice?action=create',
+                updateAction: 'practice?action=update',
+                deleteAction: 'practice?action=delete'
             },
             fields : {
                 id : {

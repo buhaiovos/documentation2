@@ -1,4 +1,4 @@
-package edu.cad.servlets;
+package edu.cad.controllers;
 
 import com.google.gson.GsonBuilder;
 import edu.cad.daos.HibernateDAO;
@@ -6,12 +6,15 @@ import edu.cad.entities.Control;
 import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.Subject;
 import edu.cad.utils.gson.ControlSerializer;
-import java.io.IOException;
-import javax.servlet.annotation.WebServlet;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-@WebServlet("/ControlController")
+@RestController
+@RequestMapping("/control")
 public class ControlController extends AbstractEntityController<Control>{
 
     public ControlController() {

@@ -3,10 +3,10 @@ $(document).ready(function() {
             title : 'Робочі навчальні плани',
             editinline: { enable : true },
             actions : {
-                listAction : 'WorkplanController?action=list',
-                createAction : 'WorkplanController?action=create',
-                updateAction : 'WorkplanController?action=update',
-                deleteAction : 'WorkplanController?action=delete'
+                listAction: 'workplans?action=list',
+                createAction: 'workplans?action=create',
+                updateAction: 'workplans?action=update',
+                deleteAction: 'workplans?action=delete'
             },
             fields : {
                 id : {
@@ -31,10 +31,10 @@ $(document).ready(function() {
                                     {
                                     title: data.record.denotation + ' - предмети',
                                     actions: {
-                                        listAction: 'CurriculumSubjectController?action=dependencylist&id=' + data.record.id,
-                                        deleteAction: 'CurriculumSubjectController?action=delete',
-                                        updateAction: 'CurriculumSubjectController?action=update',
-                                        createAction: 'CurriculumSubjectController?action=create'
+                                        listAction: 'curriculum-subject?action=dependencylist&id=' + data.record.id,
+                                        deleteAction: 'curriculum-subject?action=delete',
+                                        updateAction: 'curriculum-subject?action=update',
+                                        createAction: 'curriculum-subject?action=create'
                                     },
                                     fields: {
                                         id : {
@@ -54,7 +54,7 @@ $(document).ready(function() {
                                         },
                                         subject : {
                                             title : 'Предмет',
-                                            options: 'SubjectController?action=dropdownlist',
+                                            options: 'subjects?action=dropdownlist',
                                             edit : true
                                         }
                                     }
@@ -81,10 +81,10 @@ $(document).ready(function() {
                                     {
                                     title: data.record.denotation + ' - підготовка дипломного проекту',
                                     actions: {
-                                        listAction: 'DiplomaPreparationController?action=dependencylist&id=' + data.record.id,
-                                        deleteAction: 'DiplomaPreparationController?action=delete',
-                                        updateAction: 'DiplomaPreparationController?action=update',
-                                        createAction: 'DiplomaPreparationController?action=create'
+                                        listAction: 'diploma-preparation?action=dependencylist&id=' + data.record.id,
+                                        deleteAction: 'diploma-preparation?action=delete',
+                                        updateAction: 'diploma-preparation?action=update',
+                                        createAction: 'diploma-preparation?action=create'
                                     },
                                     fields: {
                                         id : {
@@ -100,7 +100,7 @@ $(document).ready(function() {
                                         },
                                         workType : {
                                             title : 'Вид роботи',
-                                            options: 'WorkTypeController?action=dropdownlist',
+                                            options: 'work-type?action=dropdownlist',
                                             edit : true
                                         },
                                         norm : {
@@ -109,7 +109,7 @@ $(document).ready(function() {
                                         },
                                         department : {
                                             title : 'Кафедра',
-                                            options: 'DepartmentController?action=dropdownlist',
+                                            options: 'department?action=dropdownlist',
                                             edit : true
                                         }
                                     }
@@ -127,17 +127,17 @@ $(document).ready(function() {
                 },
                 curriculum : {
                     title : 'Навчальний план',
-                    options: 'CurriculumController?action=dropdownlist',
+                    options: 'curriculum?action=dropdownlist',
                     edit : true
                 },
                 practice : {
                     title : 'Практика',
-                    options: 'PracticeController?action=dropdownlist',
+                    options: 'practice?action=dropdownlist',
                     edit : true
                 },
                 stateCertification : {
                     title : 'Державна атестація',
-                    options: 'StateCertificationController?action=dropdownlist',
+                    options: 'state-certification?action=dropdownlist',
                     edit : true
                 }
             }
