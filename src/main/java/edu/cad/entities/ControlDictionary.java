@@ -2,24 +2,34 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import java.io.Serializable;
-import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "dict_control")
-public class ControlDictionary implements IDatabaseEntity, Serializable{
-    
+public class ControlDictionary implements IDatabaseEntity, Serializable {
+    public static final int EXAM_ID = 1;
+    public static final int CREDIT_ID = 2;
+    public static final int MODULES_AND_TESTS_ID = 3;
+    public static final int COURSE_PROJECT = 4;
+    public static final int COURSE_WORK = 5;
+    public static final int CALCULATIONAL_GRAPHIC_ASSIGNMENT = 6;
+    public static final int STATE_TEST = 7;
+    public static final int ESSAY = 8;
+    public static final int DIFFERENTIATED_CREDIT_ID = 9;
+
     @Expose
     @Id
     @GenericGenerator(
-        name = "assigned-identity", 
-        strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
+            name = "assigned-identity",
+            strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
     )
     @GeneratedValue(generator = "assigned-identity")
     @Column(name = "id", unique = true, nullable = false)
     private int id;
-    
+
     @Expose
     @Column(name = "denotation")
     private String denotation;
@@ -65,20 +75,17 @@ public class ControlDictionary implements IDatabaseEntity, Serializable{
         if (obj == null) {
             return false;
         }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
         final ControlDictionary other = (ControlDictionary) obj;
         if (this.id != other.getId()) {
             return false;
         }
         return true;
-    } 
+    }
 
     @Override
     public String toString() {
         return "ControlDictionary{denotation=" + denotation + '}';
     }
-    
-    
+
+
 }
