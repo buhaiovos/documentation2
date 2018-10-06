@@ -1,4 +1,4 @@
-package edu.cad.servlets;
+package edu.cad.controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,19 +9,18 @@ import edu.cad.servlets.interfaces.*;
 import edu.cad.utils.gson.HibernateProxyTypeAdapter;
 import edu.cad.utils.gson.Option;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-public abstract class AbstractEntityController<T extends IDatabaseEntity> extends HttpServlet {
+public abstract class AbstractEntityController<T extends IDatabaseEntity> {
 
     protected IDAO<T> dao;
-    protected Gson gson;   
+    protected Gson gson;
     protected Map<String, Object> content;
     protected List<T> list;
-    
+
     private String action;
     private final Class<T> typeParameterClass;
 
@@ -32,17 +31,10 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> extend
     }
 
     protected abstract void getDropDownList(HttpServletResponse response) throws IOException;
-    
+
     protected abstract T getInstance(HttpServletRequest request);
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-            doPost(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         createGson();
         dao = new HibernateDAO<>(typeParameterClass);
@@ -52,7 +44,9 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> extend
         processAction(request, response);
     }
 
-    private void processAction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void processAction(HttpServletRequest request,
+                               HttpServletResponse response) throws IOException {
+
         if (action != null) {
             try {
                 switch (action) {
@@ -86,64 +80,64 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> extend
         builder.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
         builder.excludeFieldsWithoutExposeAnnotation();
         builder.setPrettyPrinting();
-        
+
         return builder;
-    }  
+    }
 
     protected void writeResponse(HttpServletResponse response) throws IOException {
         String jsonArray = gson.toJson(content);
-        
+
         System.out.println(jsonArray);
-        
+
         response.getWriter().print(jsonArray);
     }
-    
+
     protected void putOk() {
         content.put("Result", "OK");
     }
-    
-    protected void setStringProperty(HttpServletRequest request, 
-            String requestParamString, StringPropertySetter propSetter) {
-        
+
+    protected void setStringProperty(HttpServletRequest request,
+                                     String requestParamString, StringPropertySetter propSetter) {
+
         String param = request.getParameter(requestParamString);
         if (param != null) {
             propSetter.setProperty(param);
         }
     }
-    
+
     protected void setIntProperty(HttpServletRequest request,
-            String requestParamString, IntPropertySetter propSetter) {
-        
+                                  String requestParamString, IntPropertySetter propSetter) {
+
         String numString = request.getParameter(requestParamString);
         if (numString != null) {
             int value = Integer.parseInt(numString.trim());
             propSetter.setProperty(value);
         }
     }
-    
+
     protected void setBooleanProperty(HttpServletRequest request,
-            String requestParamString, BooleanPropertySetter propSetter) {
-        
+                                      String requestParamString, BooleanPropertySetter propSetter) {
+
         String booleanValueString = request.getParameter(requestParamString);
         if (booleanValueString != null) {
             boolean value = Boolean.parseBoolean(booleanValueString);
             propSetter.setProperty(value);
         }
     }
-    
+
     protected void setFloatProperty(HttpServletRequest request,
-            String requestParamString, FloatPropertySetter propSetter) {
-        
+                                    String requestParamString, FloatPropertySetter propSetter) {
+
         String numString = request.getParameter(requestParamString);
         if (numString != null) {
             float value = Float.parseFloat(numString);
             propSetter.setProperty(value);
         }
     }
-    
+
     protected void setDateProperty(HttpServletRequest request,
-            String requestParamString, DatePropertySetter propSetter) {
-        
+                                   String requestParamString, DatePropertySetter propSetter) {
+
         String dateString = request.getParameter(requestParamString);
         if (dateString != null) {
             Date date = gson.fromJson(dateString, Date.class);
@@ -152,11 +146,11 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> extend
             }
         }
     }
-    
-    protected <E extends IDatabaseEntity> 
-        void setObjectProperty(HttpServletRequest request, String requestParamString, 
-            ObjectPropertySetter<E> propSetter, Class<E> propertyObjClass) {
-        
+
+    protected <E extends IDatabaseEntity>
+    void setObjectProperty(HttpServletRequest request, String requestParamString,
+                           ObjectPropertySetter<E> propSetter, Class<E> propertyObjClass) {
+
         String entityIdStr = request.getParameter(requestParamString);
         if (entityIdStr != null) {
             int id = Integer.parseInt(entityIdStr.trim());
@@ -164,57 +158,57 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> extend
         }
     }
 
-    protected T initializeInstance(T instance, HttpServletRequest request){
+    protected T initializeInstance(T instance, HttpServletRequest request) {
         if (request.getParameter("id") != null) {
             int id = Integer.parseInt(request.getParameter("id"));
-            
+
             T found = dao.get(id);
-            
-            if(found != null) 
+
+            if (found != null)
                 return found;
-                
-            instance.setId(id);      
+
+            instance.setId(id);
         }
-        
-        return  instance;
+
+        return instance;
     }
 
     protected void getDropDownList(StringProperty<T> property, boolean addNull,
-            HttpServletResponse response) throws IOException {
+                                   HttpServletResponse response) throws IOException {
         List<Option> options = new ArrayList();
 
-        if(addNull){
+        if (addNull) {
             options.add(new Option("-", 0));
         }
-        
-        for(T instance : getList()){
+
+        for (T instance : getList()) {
             options.add(new Option(property.getValue(instance), instance.getId()));
         }
- 
+
         putOk();
         content.put("Options", options);
         writeResponse(response);
     }
-    
-    protected void getDependencyList(HttpServletRequest request, 
-            HttpServletResponse response) throws IOException{
+
+    protected void getDependencyList(HttpServletRequest request,
+                                     HttpServletResponse response) throws IOException {
         processListAction(response);
     }
-    
-    protected List<T> getList(){
+
+    protected List<T> getList() {
         return dao.getAll();
     }
-    
+
     private void setResponseSettings(HttpServletResponse response) {
         response.setContentType("application/json");
         response.setHeader("Content-type", "text/html;charset=UTF-8");
     }
-    
-    private void createGson() {       
+
+    private void createGson() {
         gson = createGsonBuilder().create();
     }
 
-    private void processListAction(HttpServletResponse response) 
+    private void processListAction(HttpServletResponse response)
             throws IOException {
         list = getList();
 
@@ -223,9 +217,8 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> extend
         writeResponse(response);
     }
 
-    private void processCreateUpdateAction(HttpServletRequest request, 
-            HttpServletResponse response) throws IOException {
-        
+    private void processCreateUpdateAction(HttpServletRequest request,
+                                           HttpServletResponse response) throws IOException {
         T instance = getInstance(request);
         if (action.equals("create")) {
             dao.create(instance);
@@ -237,10 +230,10 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> extend
         content.put("Record", instance);
         writeResponse(response);
     }
-    
-    private void processDeleteAction(HttpServletRequest request, 
-            HttpServletResponse response) throws IOException {
-        
+
+    private void processDeleteAction(HttpServletRequest request,
+                                     HttpServletResponse response) throws IOException {
+
         if (request.getParameter("id") != null) {
             int id = Integer.parseInt(request.getParameter("id"));
             dao.delete(id);
@@ -249,5 +242,5 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> extend
             writeResponse(response);
         }
     }
-        
+
 }
