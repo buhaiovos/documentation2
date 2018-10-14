@@ -1,0 +1,6 @@
+cad:
+  generation:
+    path:
+      workplan: /WEB-INF/classes/templates/WorkplanTemplate.xls
+      curriculum: /WEB-INF/classes/templates/CurriculumTemplate.xls
+      k3: /WEB-INF/classes/templates/K3FormTemplate.xls

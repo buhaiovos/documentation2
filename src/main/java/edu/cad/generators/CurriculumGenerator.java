@@ -7,32 +7,19 @@ import edu.cad.utils.Utils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 
 import java.util.Optional;
 
 import static java.lang.String.format;
 
-public class CurriculumGenerator implements IDocumentGenerator {
+class CurriculumGenerator extends DocumentGenerator {
     private static final int CURRICULUM_ID_ROW_NUM = 0;
     private static final int CURRICULUM_ID_CELL_NUM = 0;
     private static final String BLANK_STRING = "";
     private static final String CURRICULUM_ID_MARKER = "#curriculum_";
 
-    private final Workbook template;
-
-    public CurriculumGenerator(Workbook template) {
-        this.template = template;
-    }
-
     @Override
-    public void generate() {
-        for (int i = 0; i < template.getNumberOfSheets(); i++) {
-            fillInSheet(template.getSheetAt(i));
-        }
-    }
-
-    private void fillInSheet(final Sheet sheet) {
+    void fillInSheet(final Sheet sheet) {
         final int id = extractCurriculumId(sheet, CURRICULUM_ID_MARKER);
         final Curriculum curriculum = findCurriculum(id);
         fillCurriculumSheetWithSubjectList(sheet, curriculum);
@@ -84,10 +71,5 @@ public class CurriculumGenerator implements IDocumentGenerator {
 
     private void fillCurriculumSheetWithSubjectList(final Sheet sheet, final Curriculum curriculum) {
         new CurriculumSubjectList(sheet, 0).fill(curriculum);
-    }
-
-    @Override
-    public Workbook getTemplate() {
-        return template;
     }
 }
