@@ -11,6 +11,7 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import static java.lang.String.format;
 
 @Service
 @Primary
+@Slf4j
 public class GoogleDriveStorageService implements StorageService {
     /**
      * Be sure to specify the name of your application. If the application name is {@code null} or
@@ -48,6 +50,7 @@ public class GoogleDriveStorageService implements StorageService {
 
     @PostConstruct
     public void init() {
+        log.info("Initializing...");
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
             Credential credential = authorize();
@@ -58,6 +61,7 @@ public class GoogleDriveStorageService implements StorageService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to initialize Google Drive connection.", e);
         }
+        log.info("...Done");
     }
 
     /**
