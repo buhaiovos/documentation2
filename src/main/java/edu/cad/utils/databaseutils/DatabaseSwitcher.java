@@ -47,8 +47,8 @@ public class DatabaseSwitcher {
 
     private void switchDbSessionToSelectedYear(int year) {
         if (!isCurrent(year)) {
-            Session previousSelectedYearSession = switchDatabaseAndReturnPreviousSession(year);
-            previousSelectedYearSession.close();
+            Session dbSessionForPreviousActiveYear = switchDatabaseAndReturnPreviousSession(year);
+            dbSessionForPreviousActiveYear.close();
         }
     }
 
@@ -59,14 +59,18 @@ public class DatabaseSwitcher {
     }
 
     private int extractDatabaseYearFromConnectionUrl(String url) {
-        final Matcher databaseNameMatcher = EXTRACT_DATABASE_YEAR_PATTERN.matcher(url);
-        Optional<String> databaseName = databaseNameMatcher.find() ? Optional.ofNullable(databaseNameMatcher.group())
-                : Optional.empty();
-        Optional<String> databaseYear = databaseName.map(name -> name.substring(name.length() - 4));
+        Optional<String> databaseName = getDbNameFromConnectionUrl(url);
 
-        return Integer.parseInt(
-                databaseYear.orElseThrow(() -> new RuntimeException("Invalid database url! Check your configuration"))
-        );
+        return databaseName
+                .map(name -> name.substring(name.length() - 4))
+                .map(Integer::parseInt)
+                .orElseThrow(() -> new RuntimeException("Invalid database url! Check your configuration"));
+    }
+
+    private Optional<String> getDbNameFromConnectionUrl(String url) {
+        final Matcher databaseNameMatcher = EXTRACT_DATABASE_YEAR_PATTERN.matcher(url);
+        return databaseNameMatcher.find() ? Optional.ofNullable(databaseNameMatcher.group())
+                : Optional.empty();
     }
 
     private boolean exist(int year) {

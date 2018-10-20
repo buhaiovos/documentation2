@@ -1,5 +1,6 @@
 cad:
   generation:
+    templates-extension: .xls
     path:
       workplan: /WEB-INF/classes/templates/WorkplanTemplate.xls
       curriculum: /WEB-INF/classes/templates/CurriculumTemplate.xls

@@ -2,6 +2,8 @@ package edu.cad.services;
 
 import edu.cad.Document;
 import edu.cad.generators.DocumentGenerator;
+import edu.cad.services.filenames.FileNameResolvingService;
+import edu.cad.services.storage.StorageService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Service;
@@ -14,31 +16,31 @@ import java.io.IOException;
 @Slf4j
 public class DocumentGenerationService {
     private final StorageService storageService;
-    private final DocumentFileNameResolvingService nameResolvingService;
+    private final FileNameResolvingService nameResolvingService;
 
-    public DocumentGenerationService(StorageService storageService, DocumentFileNameResolvingService nameResolvingService) {
+    public DocumentGenerationService(StorageService storageService, FileNameResolvingService nameResolvingService) {
         this.storageService = storageService;
         this.nameResolvingService = nameResolvingService;
     }
 
     public byte[] generateDocument(Document document) {
-        final String fileName = nameResolvingService.getFileName(document);
-        final byte[] file = storageService.getFile(fileName);
+        final String templateFileName = nameResolvingService.resolveForDocument(document);
+        final byte[] template = storageService.getFile(templateFileName);
 
-        return generateDocument(document, file);
+        return generateDocument(document, template);
     }
 
-    private byte[] generateDocument(Document document, byte[] file) {
+    private byte[] generateDocument(Document document, byte[] templateBytes) {
         DocumentGenerator generator = DocumentGenerator.forDocumentType(document);
 
-        try (var template = new ByteArrayInputStream(file);
-             var output = new ByteArrayOutputStream()) {
+        try (var template = new ByteArrayInputStream(templateBytes);
+             var output = new ByteArrayOutputStream()
+        ) {
             Workbook generated = generator.generate(template);
             generated.write(output);
             return output.toByteArray();
         } catch (IOException e) {
-            log.error("IO exception during document generation", e);
-            throw new RuntimeException(e);
+            throw new RuntimeException("IO exception during document generation", e);
         }
     }
 

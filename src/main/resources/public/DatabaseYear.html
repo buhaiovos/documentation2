@@ -23,16 +23,16 @@
         </script>
         <!-- MENU END -->
         <div id="dbSwitch">
-            <form action="year-change" id="form" method="get">
+            <form action="/years" method="post" id="form">
                 <input type="hidden" name="action" value="switch">
-                <select name="years" id="years"></select>
+                <select name="selected-year" id="years"></select>
                 <input type="submit" value="Вибрати">
                 <p>Поточний рік БД: <b><span id="currentYear"></span></b></p>
             </form>
 
             <script type="text/javascript">
             $(document).ready( function() {                      // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-                $.get("YearChangeController?action=list", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+                $.get("years/all", function (responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
                     var $select = $("#years");                           // Locate HTML DOM element with ID "someselect".
                     $select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
                     $.each(responseJson, function(index, element){         // Iterate over the JSON object.
@@ -44,7 +44,7 @@
 
             <script type="text/javascript">
                 $(document).ready(function () {
-                    $.get("year-change?action=currentYear", function (responseJson) {
+                    $.get("years/current", function (responseJson) {
                         var $select = $("#currentYear");
                         $select.text(responseJson.year);
                     });

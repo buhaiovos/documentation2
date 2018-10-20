@@ -2,10 +2,10 @@ package edu.cad.controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import edu.cad.controllers.functional.interfaces.*;
 import edu.cad.daos.HibernateDAO;
 import edu.cad.daos.IDAO;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import edu.cad.servlets.interfaces.*;
 import edu.cad.utils.gson.HibernateProxyTypeAdapter;
 import edu.cad.utils.gson.Option;
 import org.springframework.web.bind.annotation.PostMapping;

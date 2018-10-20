@@ -1,4 +1,4 @@
-package edu.cad.services;
+package edu.cad.services.filenames;
 
 import edu.cad.Document;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.ServletContext;
 
 @Service
-public class FileSystemDocumentNameResolver implements DocumentFileNameResolvingService {
+public class FileSystemNameResolver implements FileNameResolvingService {
     @Value("${cad.generation.path.curriculum}")
     private String curriculumPath;
     @Value("${cad.generation.path.workplan}")
@@ -17,12 +17,12 @@ public class FileSystemDocumentNameResolver implements DocumentFileNameResolving
 
     private final ServletContext servletContext;
 
-    public FileSystemDocumentNameResolver(ServletContext servletContext) {
+    public FileSystemNameResolver(ServletContext servletContext) {
         this.servletContext = servletContext;
     }
 
     @Override
-    public String getFileName(Document document) {
+    public String resolveForDocument(Document document) {
         switch (document) {
             case CURRICULUM:
                 return this.servletContext.getRealPath(curriculumPath);
@@ -33,5 +33,10 @@ public class FileSystemDocumentNameResolver implements DocumentFileNameResolving
             default:
                 throw new RuntimeException("Invalid document type");
         }
+    }
+
+    @Override
+    public String resolveForDatabaseYearsFile() {
+        throw new UnsupportedOperationException();
     }
 }

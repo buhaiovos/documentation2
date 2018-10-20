@@ -1,4 +1,4 @@
-package edu.cad.servlets.interfaces;
+package edu.cad.controllers.functional.interfaces;
 
 @FunctionalInterface
 public interface BooleanPropertySetter {
