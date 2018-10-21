@@ -2,8 +2,10 @@ package edu.cad.services.years;
 
 import edu.cad.services.filenames.FileNameResolvingService;
 import edu.cad.services.storage.StorageService;
+import edu.cad.utils.databaseutils.DatabaseSwitcher;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,27 +13,46 @@ import java.nio.file.Files;
 import java.util.Set;
 
 @Component
-public class DbYearsTrackingServiceImpl implements DbYearsTrackingService {
+class DbYearsTrackingServiceImpl implements DbYearsTrackingService {
     private static final String TEMP_FILE_PREFIX = "years";
-    private static final String TEMP_FILE_SUFFIX = ".docmentation";
+    private static final String TEMP_FILE_SUFFIX = ".documentation";
 
     private final FileNameResolvingService fileNameResolvingService;
     private final StorageService storageService;
     private final YearsFileHandler yearsFileHandler;
+    private final DatabaseSwitcher databaseSwitcher;
 
-    public DbYearsTrackingServiceImpl(FileNameResolvingService fileNameResolvingService, StorageService storageService) {
+    public DbYearsTrackingServiceImpl(FileNameResolvingService fileNameResolvingService,
+                                      StorageService storageService, DatabaseSwitcher databaseSwitcher) {
         this.fileNameResolvingService = fileNameResolvingService;
         this.storageService = storageService;
+        this.databaseSwitcher = databaseSwitcher;
+
         this.yearsFileHandler = new YearsFileHandler();
+    }
+
+    @PostConstruct
+    private void init() {
+        String yearsFileName = fileNameResolvingService.resolveForDatabaseYearsFile();
+        if (!storageService.exists(yearsFileName)) {
+            createYearsFileWithCurrentYear();
+        }
+    }
+
+    private void createYearsFileWithCurrentYear() {
+        final int databaseYear = databaseSwitcher.getDatabaseYear();
+        final File yearsFile = prepareTempFile();
+        yearsFileHandler.addYearToFile(databaseYear, yearsFile);
+        storageService.uploadFile(fileNameResolvingService.resolveForDatabaseYearsFile(), yearsFile);
     }
 
     @Override
     public Set<Integer> getAll() {
-        final File yearsFile = getYearsFIle();
+        final File yearsFile = getYearsFile();
         return yearsFileHandler.readYearsFromFile(yearsFile);
     }
 
-    private File getYearsFIle() {
+    private File getYearsFile() {
         final byte[] yearsFileContent = getYearsFileBytes();
         return getTempFileFromBytes(yearsFileContent);
     }
@@ -64,7 +85,7 @@ public class DbYearsTrackingServiceImpl implements DbYearsTrackingService {
 
     @Override
     public void registerNewYear(int year) {
-        final File yearsFile = getYearsFIle();
+        final File yearsFile = getYearsFile();
         yearsFileHandler.addYearToFile(year, yearsFile);
         saveUpdateYearsFile(yearsFile);
     }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.ServletContext;
 
 @Service
+@Deprecated
 public class FileSystemNameResolver implements FileNameResolvingService {
     @Value("${cad.generation.path.curriculum}")
     private String curriculumPath;

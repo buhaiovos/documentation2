@@ -73,6 +73,11 @@ public class GoogleDriveStorageService implements StorageService {
                 .createScoped(Collections.singleton(DriveScopes.DRIVE_FILE));
     }
 
+    @Override
+    public boolean exists(String fileName) {
+        return getFileIdByName(fileName).isPresent();
+    }
+
 
     @Override
     public byte[] getFile(String fileName) {
@@ -113,6 +118,15 @@ public class GoogleDriveStorageService implements StorageService {
             return drive.files().list().execute();
         } catch (IOException e) {
             throw new RuntimeException("Failed to call Drive.files().list()", e);
+        }
+    }
+
+    @Override
+    public void uploadFile(String fileName, java.io.File file) {
+        try {
+            this.uploadFile(fileName, java.nio.file.Files.readAllBytes(file.toPath()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

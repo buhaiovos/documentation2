@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 
 @Service
 @Slf4j
+@Deprecated
 public class FileSystemStorageService implements StorageService {
     @Override
     public byte[] getFile(String fileName) {
@@ -36,6 +37,16 @@ public class FileSystemStorageService implements StorageService {
         }
         final Path filePath = createNewBlankFileAndReturnPath(fileName);
         storeDocument(fileData, filePath);
+    }
+
+    @Override
+    public void uploadFile(String fileName, File file) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean exists(String fileName) {
+        throw new UnsupportedOperationException();
     }
 
     private void storeDocument(byte[] fileData, Path filePath) {

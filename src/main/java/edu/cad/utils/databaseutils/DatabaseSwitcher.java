@@ -26,7 +26,7 @@ public class DatabaseSwitcher {
         this.databaseCloner = databaseCloner;
     }
 
-    public void switchDatabase(int year) {
+    public void switchDatabaseForYear(int year) {
         if (exist(year)) {
             switchDbSessionToSelectedYear(year);
             return;
