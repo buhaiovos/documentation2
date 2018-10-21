@@ -45,6 +45,11 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
+    public void deleteAllFiles() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean exists(String fileName) {
         throw new UnsupportedOperationException();
     }

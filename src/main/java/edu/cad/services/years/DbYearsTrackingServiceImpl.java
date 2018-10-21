@@ -3,7 +3,8 @@ package edu.cad.services.years;
 import edu.cad.services.filenames.FileNameResolvingService;
 import edu.cad.services.storage.StorageService;
 import edu.cad.utils.databaseutils.DatabaseSwitcher;
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -12,7 +13,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Set;
 
-@Component
+@Service
+@Slf4j
 class DbYearsTrackingServiceImpl implements DbYearsTrackingService {
     private static final String TEMP_FILE_PREFIX = "years";
     private static final String TEMP_FILE_SUFFIX = ".documentation";
@@ -33,10 +35,15 @@ class DbYearsTrackingServiceImpl implements DbYearsTrackingService {
 
     @PostConstruct
     private void init() {
+        log.info("Initializing...");
+
         String yearsFileName = fileNameResolvingService.resolveForDatabaseYearsFile();
         if (!storageService.exists(yearsFileName)) {
+            log.info("No years file is found storage. Creating new...");
             createYearsFileWithCurrentYear();
         }
+
+        log.info("...Done");
     }
 
     private void createYearsFileWithCurrentYear() {
@@ -87,10 +94,10 @@ class DbYearsTrackingServiceImpl implements DbYearsTrackingService {
     public void registerNewYear(int year) {
         final File yearsFile = getYearsFile();
         yearsFileHandler.addYearToFile(year, yearsFile);
-        saveUpdateYearsFile(yearsFile);
+        saveUpdatedYearsFile(yearsFile);
     }
 
-    private void saveUpdateYearsFile(File yearsFile) {
+    private void saveUpdatedYearsFile(File yearsFile) {
         final String dbYearsFileName = fileNameResolvingService.resolveForDatabaseYearsFile();
         try {
             final byte[] bytes = Files.readAllBytes(yearsFile.toPath());

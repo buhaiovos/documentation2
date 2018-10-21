@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -19,8 +21,16 @@ public class YearChangeController {
     }
 
     @GetMapping("/all")
-    public Set<Integer> getAllYears() {
-        return dbYearsService.getAll();
+    public List<Integer> getAllYears() {
+        final Set<Integer> allYears = dbYearsService.getAll();
+        return listOfYearsPlusOne(allYears);
+    }
+
+    private List<Integer> listOfYearsPlusOne(Set<Integer> allYears) {
+        final ArrayList<Integer> existingYears = new ArrayList<>(allYears);
+        final int greatestYear = existingYears.get(existingYears.size() - 1);
+        existingYears.add(greatestYear + 1);
+        return existingYears;
     }
 
     @GetMapping("/current")
@@ -30,7 +40,7 @@ public class YearChangeController {
     }
 
     @PostMapping
-    public void switchYear(@RequestParam("selected-year") int year) {
+    public void switchYear(@RequestParam("selected_year") int year) {
         dbYearsService.switchToYear(year);
     }
 

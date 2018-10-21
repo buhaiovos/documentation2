@@ -131,6 +131,15 @@ public class GoogleDriveStorageService implements StorageService {
     }
 
     @Override
+    public void deleteAllFiles() {
+        final FileList files = getFilesListQuietly();
+        for (File file : files.getFiles()) {
+            String id = file.getId();
+            deleteFileByIdQuietly(id);
+        }
+    }
+
+    @Override
     public void uploadFile(String fileName, byte[] fileData) {
         getFileIdByName(fileName).ifPresent(this::deleteFileByIdQuietly);
         uploadFileQuietly(fileName, fileData);

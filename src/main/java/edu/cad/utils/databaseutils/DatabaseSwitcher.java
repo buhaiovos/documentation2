@@ -1,5 +1,6 @@
 package edu.cad.utils.databaseutils;
 
+import edu.cad.services.years.DbYearsTrackingService;
 import edu.cad.utils.hibernateutils.HibernateSessionManager;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
@@ -20,10 +21,13 @@ public class DatabaseSwitcher {
 
     private final HibernateSessionManager sessionManager;
     private final DatabaseCloner databaseCloner;
+    private final DbYearsTrackingService yearsTrackingService;
 
-    public DatabaseSwitcher(HibernateSessionManager sessionManager, DatabaseCloner databaseCloner) {
+    public DatabaseSwitcher(HibernateSessionManager sessionManager, DatabaseCloner databaseCloner,
+                            DbYearsTrackingService yearsTrackingService) {
         this.sessionManager = sessionManager;
         this.databaseCloner = databaseCloner;
+        this.yearsTrackingService = yearsTrackingService;
     }
 
     public void switchDatabaseForYear(int year) {
@@ -74,7 +78,7 @@ public class DatabaseSwitcher {
     }
 
     private boolean exist(int year) {
-        Set<Integer> years = DatabaseYears.getAllYears();
+        Set<Integer> years = yearsTrackingService.getAll();
         return years.contains(year);
     }
 
@@ -101,6 +105,6 @@ public class DatabaseSwitcher {
     private void createDatabase(int year) {
         String sql = "CREATE SCHEMA cad_database_" + year;
         executeQueryWithinTransaction(sql);
-        DatabaseYears.addYearToYearsTrackingFile(year);
+        yearsTrackingService.registerNewYear(year);
     }
 }

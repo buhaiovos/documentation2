@@ -25,7 +25,7 @@
         <div id="dbSwitch">
             <form action="/years" method="post" id="form">
                 <input type="hidden" name="action" value="switch">
-                <select name="selected-year" id="years"></select>
+                <select name="selected_year" id="years"></select>
                 <input type="submit" value="Вибрати">
                 <p>Поточний рік БД: <b><span id="currentYear"></span></b></p>
             </form>
@@ -46,7 +46,7 @@
                 $(document).ready(function () {
                     $.get("years/current", function (responseJson) {
                         var $select = $("#currentYear");
-                        $select.text(responseJson.year);
+                        $select.text(responseJson.current_year);
                     });
                 });
             </script>
