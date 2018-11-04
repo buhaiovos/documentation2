@@ -4,12 +4,13 @@ import edu.cad.documentelements.columns.AbstractColumn;
 import edu.cad.documentelements.columns.SimpleColumn;
 import edu.cad.entities.Curriculum;
 import edu.cad.entities.StateCertification;
-import edu.cad.entities.Workplan;
+import edu.cad.entities.WorkingPlan;
 import edu.cad.utils.documentutils.DateIntervalStringCreator;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StateCertificationArea extends AbstractDocumentArea {
     
@@ -31,7 +32,7 @@ public class StateCertificationArea extends AbstractDocumentArea {
 
     @Override
     public void fill(Curriculum curriculum) {
-        StateCertification sc = ((Workplan)curriculum).getStateCertification();
+        StateCertification sc = ((WorkingPlan) curriculum).getStateCertification();
         fillColumns(sc);
     }
     

@@ -21,7 +21,7 @@ public class RowInserter {
         sheet.shiftRows(position, totalRows, 1, true, false); 
         Row newRow = sheet.getRow(position);
         copyRow(sheet, oldRow, newRow);
-        shiftMergedRegions(sheet, addresses, oldRow);
+        shiftMergedRegions(sheet, addresses);
     }
     
     private static void copyRow(Sheet sheet, Row oldRow, Row newRow){
@@ -39,8 +39,8 @@ public class RowInserter {
             FormulaExtender.extendFormula(sheet, oldCell, newCell);
         }
     }
-    
-    private static void shiftMergedRegions(Sheet sheet, List<CellRangeAddress> addresses, Row oldRow){ 
+
+    private static void shiftMergedRegions(Sheet sheet, List<CellRangeAddress> addresses) {
         for (CellRangeAddress cellRangeAddress : addresses) {
             int firstColumn = cellRangeAddress.getFirstColumn();
             int lastColumn = cellRangeAddress.getLastColumn();

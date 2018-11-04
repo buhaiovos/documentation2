@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder;
 import edu.cad.entities.Curriculum;
 import edu.cad.entities.Practice;
 import edu.cad.entities.StateCertification;
-import edu.cad.entities.Workplan;
+import edu.cad.entities.WorkingPlan;
 import edu.cad.utils.gson.WorkplanSerializer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,22 +15,22 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/workplans")
-public class WorkplanController extends AbstractEntityController<Workplan>{
+public class WorkplanController extends AbstractEntityController<WorkingPlan> {
 
     public WorkplanController() {
-        super(Workplan.class);
+        super(WorkingPlan.class);
     }
     
     @Override
     protected GsonBuilder createGsonBuilder() {
-        return super.createGsonBuilder().registerTypeAdapter(Workplan.class, 
+        return super.createGsonBuilder().registerTypeAdapter(WorkingPlan.class,
                 new WorkplanSerializer());
     }
 
 
     @Override
-    protected Workplan getInstance(HttpServletRequest request) {
-        Workplan workplan = new Workplan();
+    protected WorkingPlan getInstance(HttpServletRequest request) {
+        WorkingPlan workplan = new WorkingPlan();
         workplan = initializeInstance(workplan, request);
         
         setStringProperty(request, "denotation", workplan::setDenotation);
@@ -43,6 +43,6 @@ public class WorkplanController extends AbstractEntityController<Workplan>{
     
     @Override
     protected void getDropDownList(HttpServletResponse response) throws IOException {
-        super.getDropDownList(Workplan::getDenotation, false, response);
+        super.getDropDownList(WorkingPlan::getDenotation, false, response);
     }
 }

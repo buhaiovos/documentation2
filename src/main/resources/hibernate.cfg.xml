@@ -30,6 +30,6 @@
     <mapping class="edu.cad.entities.SubjectDictionary" />
     <mapping class="edu.cad.entities.SubjectType" />
     <mapping class="edu.cad.entities.WorkType" />
-    <mapping class="edu.cad.entities.Workplan" />
+    <mapping class="edu.cad.entities.WorkingPlan"/>
   </session-factory>
 </hibernate-configuration>

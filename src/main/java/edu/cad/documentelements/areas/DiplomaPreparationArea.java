@@ -7,7 +7,7 @@ import edu.cad.documentelements.columns.SimpleColumn;
 import edu.cad.entities.Curriculum;
 import edu.cad.entities.DiplomaPreparation;
 import edu.cad.entities.WorkType;
-import edu.cad.entities.Workplan;
+import edu.cad.entities.WorkingPlan;
 import edu.cad.utils.Utils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -39,8 +39,8 @@ public class DiplomaPreparationArea extends AbstractDocumentArea{
         WorkType workType = getWorkType(currentRow, workColumnNumber);
         if(workType == null)
             return;
-        
-        for(DiplomaPreparation preparation : ((Workplan)curriculum).getDiplomaPreparations()){
+
+        for (DiplomaPreparation preparation : ((WorkingPlan) curriculum).getDiplomaPreparations()) {
             if(preparation.getWorkType().equals(workType)){
                 fillColumns(preparation);
                 filled = true;
@@ -76,7 +76,7 @@ public class DiplomaPreparationArea extends AbstractDocumentArea{
     
     private void fillColumns(DiplomaPreparation preparation){
         Row row = sheet.getRow(rowNumber);
-        Workplan workplan = (Workplan)preparation.getWorkplan();
+        WorkingPlan workplan = preparation.getWorkingPlan();
         
         columns.get("norm").fill(row, preparation.getNorm());
         columns.get("department").fill(row, preparation.getDepartment().getDenotation());

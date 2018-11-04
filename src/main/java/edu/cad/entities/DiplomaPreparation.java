@@ -2,9 +2,10 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import java.io.Serializable;
-import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "diploma_preparation")
@@ -34,18 +35,18 @@ public class DiplomaPreparation implements IDatabaseEntity, Serializable{
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_curriculum")
-    private Workplan workplan;
+    private WorkingPlan workingPlan;
 
     public DiplomaPreparation() {
     }
 
-    public DiplomaPreparation(int id, float norm, WorkType workType, 
-            Department department, Workplan workplan) {
+    public DiplomaPreparation(int id, float norm, WorkType workType,
+                              Department department, WorkingPlan workingPlan) {
         this.id = id;
         this.norm = norm;
         this.workType = workType;
         this.department = department;
-        this.workplan = workplan;
+        this.workingPlan = workingPlan;
     }
 
     @Override
@@ -82,12 +83,12 @@ public class DiplomaPreparation implements IDatabaseEntity, Serializable{
         this.department = department;
     }
 
-    public Workplan getWorkplan() {
-        return workplan;
+    public WorkingPlan getWorkingPlan() {
+        return workingPlan;
     }
 
-    public void setWorkplan(Workplan workplan) {
-        this.workplan = workplan;
+    public void setWorkingPlan(WorkingPlan workingPlan) {
+        this.workingPlan = workingPlan;
     }
     
     @Override
@@ -109,9 +110,6 @@ public class DiplomaPreparation implements IDatabaseEntity, Serializable{
             return false;
         }*/
         final DiplomaPreparation other = (DiplomaPreparation) obj;
-        if (this.id != other.getId()) {
-            return false;
-        }
-        return true;
+        return this.id == other.getId();
     }
 }

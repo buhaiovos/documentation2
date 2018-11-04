@@ -34,8 +34,7 @@ public class DocumentGenerationService {
         DocumentGenerator generator = DocumentGenerator.forDocumentType(document);
 
         try (var template = new ByteArrayInputStream(templateBytes);
-             var output = new ByteArrayOutputStream()
-        ) {
+             var output = new ByteArrayOutputStream()) {
             Workbook generated = generator.generate(template);
             generated.write(output);
             return output.toByteArray();

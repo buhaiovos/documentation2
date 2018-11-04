@@ -34,23 +34,20 @@ public class FormK3Generator extends DocumentGenerator {
 
     @Override
     void fillInSheet(Sheet sheet) {
-        setEdFormAndSource(sheet, "#edform", "#source");
+        setEducationFormAndSource(sheet, "#edform", "#source");
 
         List<K3SubjectEntity> firstSemSubjects =
                 K3SubjectListCreator.createList(educationForm, source, department, 1);
         Map<Class, List<AbstractK3Column>> columnsMap = getInitializedMap();
 
         Row firstSemRow = K3SemesterStartRowFinder.findSemesterStartRow(sheet, 1);
-
         addColumnsToMap(columnsMap, firstSemRow);
-        fill(sheet, firstSemSubjects, columnsMap.get(AbstractK3Column.class),
-                firstSemRow.getRowNum());
+        fill(sheet, firstSemSubjects, columnsMap.get(AbstractK3Column.class), firstSemRow.getRowNum());
 
         List<K3SubjectEntity> secondSemSubjects =
                 K3SubjectListCreator.createList(educationForm, source, department, 2);
         Row secondSemRow = K3SemesterStartRowFinder.findSemesterStartRow(sheet, 2);
-        fill(sheet, secondSemSubjects, columnsMap.get(AbstractK3Column.class),
-                secondSemRow.getRowNum());
+        fill(sheet, secondSemSubjects, columnsMap.get(AbstractK3Column.class), secondSemRow.getRowNum());
     }
 
     private Map<Class, List<AbstractK3Column>> getInitializedMap() {
@@ -67,9 +64,10 @@ public class FormK3Generator extends DocumentGenerator {
         }
     }
 
-    private void fill(Sheet sheet, List<K3SubjectEntity> subjects,
-                      List<AbstractK3Column> columns, int rowNumber) {
-
+    private void fill(final Sheet sheet,
+                      final List<K3SubjectEntity> subjects,
+                      final List<AbstractK3Column> columns,
+                      int rowNumber) {
         boolean first = true;
 
         for (K3SubjectEntity subject : subjects) {
@@ -80,18 +78,17 @@ public class FormK3Generator extends DocumentGenerator {
             }
 
             for (AbstractK3Column column : columns) {
-                if (column != null)
+                if (column != null) {
                     column.fill(sheet.getRow(rowNumber), subject, "");
+                }
             }
             HSSFFormulaEvaluator.evaluateAllFormulaCells(sheet.getWorkbook());
             rowNumber++;
         }
     }
 
-    private void setEdFormAndSource(Sheet sheet, String edFormToken,
-                                    String sourceToken) {
-
-        int id = getId(sheet, 0, 0, edFormToken);
+    private void setEducationFormAndSource(Sheet sheet, String educationFormToken, String sourceToken) {
+        int id = getId(sheet, 0, 0, educationFormToken);
         educationForm = new HibernateDAO<>(EducationForm.class).get(id);
 
         id = getId(sheet, 0, 1, sourceToken);

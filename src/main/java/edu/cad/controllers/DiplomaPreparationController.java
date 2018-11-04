@@ -5,7 +5,7 @@ import edu.cad.daos.HibernateDAO;
 import edu.cad.entities.Department;
 import edu.cad.entities.DiplomaPreparation;
 import edu.cad.entities.WorkType;
-import edu.cad.entities.Workplan;
+import edu.cad.entities.WorkingPlan;
 import edu.cad.utils.gson.DiplomaPreparationSerializer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +40,7 @@ public class DiplomaPreparationController extends AbstractEntityController<Diplo
         
         setFloatProperty(request, "norm", diplomaPreparation::setNorm);
         setObjectProperty(request, "workType", diplomaPreparation::setWorkType, WorkType.class);
-        setObjectProperty(request, "workplan", diplomaPreparation::setWorkplan, Workplan.class);
+        setObjectProperty(request, "workplan", diplomaPreparation::setWorkingPlan, WorkingPlan.class);
         setObjectProperty(request, "department", diplomaPreparation::setDepartment, Department.class);
         
         return diplomaPreparation;
@@ -52,7 +52,7 @@ public class DiplomaPreparationController extends AbstractEntityController<Diplo
         if (request.getParameter("id") != null) {
             int id = Integer.parseInt(request.getParameter("id"));  
             list.clear();
-            list.addAll(new HibernateDAO<>(Workplan.class).get(id).getDiplomaPreparations());
+            list.addAll(new HibernateDAO<>(WorkingPlan.class).get(id).getDiplomaPreparations());
             
             putOk();
             content.put("Records", list);

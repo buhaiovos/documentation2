@@ -37,8 +37,8 @@ public class AcademicGroupController extends AbstractEntityController<AcademicGr
         setObjectProperty(request, "educationForm", group::setEducationForm,
                 EducationForm.class);
 
-        setObjectProperty(request, "workplan", group::setWorkplan,
-                Workplan.class);
+        setObjectProperty(request, "workplan", group::setWorkingPlan,
+                WorkingPlan.class);
         return group;
     }
 

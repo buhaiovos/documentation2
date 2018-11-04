@@ -1,7 +1,7 @@
 package edu.cad.daos;
 
 import edu.cad.entities.Curriculum;
-import edu.cad.entities.Workplan;
+import edu.cad.entities.WorkingPlan;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.utils.hibernateutils.HibernateSessionManager;
 import org.hibernate.Session;
@@ -39,7 +39,7 @@ public class HibernateDAO<Entity extends IDatabaseEntity> implements IDAO<Entity
         List<Entity> resultList = typedQuery.getResultList();
 
         if (typeParameterClass.equals(Curriculum.class)) {
-            resultList.removeIf(element -> element instanceof Workplan);
+            resultList.removeIf(element -> element instanceof WorkingPlan);
         }
 
         return resultList;

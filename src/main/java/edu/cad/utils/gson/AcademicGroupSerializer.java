@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
 import edu.cad.entities.AcademicGroup;
+
 import java.lang.reflect.Type;
 
 public class AcademicGroupSerializer extends AbstractEntitySerializer<AcademicGroup>{
@@ -17,7 +18,7 @@ public class AcademicGroupSerializer extends AbstractEntitySerializer<AcademicGr
         addProperty(jsonElement, "specialization", instance.getSpecialization(), false);
         addProperty(jsonElement, "qualification", instance.getQualification(), false);
         addProperty(jsonElement, "educationForm", instance.getEducationForm(), false);
-        addProperty(jsonElement, "workplan", instance.getWorkplan(), false);
+        addProperty(jsonElement, "workplan", instance.getWorkingPlan(), false);
        
         return jsonElement.getAsJsonObject();
     }

@@ -1,12 +1,12 @@
 package edu.cad.entities;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("workplan")
-public class Workplan extends Curriculum implements Comparable<Workplan>{
+public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_practice")
@@ -22,18 +22,18 @@ public class Workplan extends Curriculum implements Comparable<Workplan>{
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.curriculum", cascade = CascadeType.MERGE)
     private Set<CurriculumSubject> workplanSubjects = new HashSet<>();
-    
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "workplan")
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "workingPlan")
     private Set<DiplomaPreparation> diplomaPreparations = new HashSet<>();
-    
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "workplan")
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "workingPlan")
     private Set<AcademicGroup> groups = new HashSet<>();
 
-    public Workplan() {
+    public WorkingPlan() {
     }
 
-    public Workplan(int id, Practice practice, 
-            StateCertification stateCertification, Curriculum curriculum) {
+    public WorkingPlan(int id, Practice practice,
+                       StateCertification stateCertification, Curriculum curriculum) {
         super(id);
         this.practice = practice;
         this.stateCertification = stateCertification;
@@ -137,7 +137,7 @@ public class Workplan extends Curriculum implements Comparable<Workplan>{
     }
 
     @Override
-    public int compareTo(Workplan o) {
+    public int compareTo(WorkingPlan o) {
         if(!getEducationForm().equals(o.getEducationForm()))
             return getEducationForm().getId() - o.getEducationForm().getId();
         

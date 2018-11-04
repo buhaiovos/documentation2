@@ -1,13 +1,12 @@
 package edu.cad.entities.listeners;
 
-import edu.cad.entities.Curriculum;
-import edu.cad.entities.CurriculumSubject;
-import edu.cad.entities.Subject;
-import edu.cad.entities.SubjectDictionary;
-import edu.cad.entities.Workplan;
+import edu.cad.entities.*;
+
+import javax.persistence.PostLoad;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
 
 public class SubjectListener {
 
@@ -29,8 +28,8 @@ public class SubjectListener {
     private void updateGroups(Subject subject){
         for(CurriculumSubject curriculumSubject : subject.getCurriculumSubjects()){
             Curriculum curriculum = curriculumSubject.getCurriculum();
-            if(curriculum instanceof Workplan){
-                subject.getGroups().addAll(((Workplan) curriculum).getGroups());
+            if (curriculum instanceof WorkingPlan) {
+                subject.getGroups().addAll(((WorkingPlan) curriculum).getGroups());
             }
             
         }
@@ -39,8 +38,8 @@ public class SubjectListener {
     private Set<Subject> findSubSubjects(Subject subject, Curriculum curriculum){
         Set<Subject> subjects = new HashSet<>();
         subjects.add(subject);
-        
-        if(curriculum instanceof Workplan)
+
+        if (curriculum instanceof WorkingPlan)
             return subjects;
         
         for(SubjectDictionary dictionary : subject.getSubject().getSubSubjects()){

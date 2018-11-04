@@ -2,12 +2,13 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import org.hibernate.annotations.DiscriminatorOptions;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import org.hibernate.annotations.DiscriminatorOptions;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "curriculum")
@@ -35,7 +36,7 @@ public class Curriculum implements IDatabaseEntity, Serializable{
     private Set<CurriculumSubject> curriculumSubjects = new HashSet<>();
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "curriculum")
-    private Set<Workplan> workplans = new HashSet<>();
+    private Set<WorkingPlan> workingPlans = new HashSet<>();
 
     public Curriculum() {
     }
@@ -71,17 +72,17 @@ public class Curriculum implements IDatabaseEntity, Serializable{
         this.curriculumSubjects.addAll(curriculumSubjects);
     }
 
-    public Set<Workplan> getWorkplans() {
-        return workplans;
+    public Set<WorkingPlan> getWorkingPlans() {
+        return workingPlans;
     }
 
-    public void setWorkplans(Set<Workplan> workplans) {
-        this.workplans.clear();
-        this.workplans.addAll(workplans);
+    public void setWorkingPlans(Set<WorkingPlan> workingPlans) {
+        this.workingPlans.clear();
+        this.workingPlans.addAll(workingPlans);
     }
     
     public Qualification getQualification() {
-        return workplans.iterator().next().getQualification();
+        return workingPlans.iterator().next().getQualification();
     }
 
     @Override
@@ -103,14 +104,11 @@ public class Curriculum implements IDatabaseEntity, Serializable{
             return false;
         }*/
         final Curriculum other = (Curriculum) obj;
-        if (this.id != other.getId()) {
-            return false;
-        }
-        return true;
+        return this.id == other.getId();
     }
     
     public boolean contains(Subject subject){
-        for(Workplan plan : getWorkplans()){
+        for (WorkingPlan plan : getWorkingPlans()) {
             for(CurriculumSubject currSubject : plan.getCurriculumSubjects()){
                 if(currSubject.getSubject().equals(subject)){
                     return true;

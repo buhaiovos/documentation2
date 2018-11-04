@@ -2,7 +2,7 @@ package edu.cad.generators;
 
 import edu.cad.daos.HibernateDAO;
 import edu.cad.documentelements.areas.*;
-import edu.cad.entities.Workplan;
+import edu.cad.entities.WorkingPlan;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ class WorkplanGenerator extends CurriculumGenerator {
         int id = extractCurriculumId(sheet, WORK_PLAN_ID_MARKER);
         CurriculumSubjectList subjectList = new CurriculumSubjectList(sheet, 0);
         addWorkPlanSpecificAreas(sheet, subjectList);
-        Workplan workplan = new HibernateDAO<>(Workplan.class).get(id);
+        WorkingPlan workplan = new HibernateDAO<>(WorkingPlan.class).get(id);
 
         if (workplan == null)
             return;
@@ -36,7 +36,7 @@ class WorkplanGenerator extends CurriculumGenerator {
 
     }
 
-    private void fillWorkPlanSpecificAreas(Workplan workplan) {
+    private void fillWorkPlanSpecificAreas(WorkingPlan workplan) {
         for (AbstractDocumentArea area : workPlanSpecificAreas) {
             area.fill(workplan);
         }
