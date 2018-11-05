@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Optional;
 
 import static java.lang.String.format;
@@ -69,7 +70,9 @@ public class GoogleDriveStorageService implements StorageService {
      */
     private Credential authorize() throws Exception {
         return GoogleCredential
-                .fromStream(GoogleDriveStorageService.class.getResourceAsStream("/kpi-cad-documentation-42eb34ecb6a0.json"))
+                .fromStream(
+                        GoogleDriveStorageService.class.getResourceAsStream("/kpi-cad-documentation-42eb34ecb6a0.json")
+                )
                 .createScoped(Collections.singleton(DriveScopes.DRIVE_FILE));
     }
 
@@ -81,10 +84,15 @@ public class GoogleDriveStorageService implements StorageService {
 
     @Override
     public byte[] getFile(String fileName) {
+        log.debug("Downloading file {}...", fileName);
+
         final String id = getFileIdByName(fileName).orElseThrow(
                 () -> new RuntimeException(format("File with given name: <%s> is not found", fileName))
         );
-        return downloadFileByIdQuietly(id);
+        byte[] fileBytes = downloadFileByIdQuietly(id);
+
+        log.debug("...File {} downloaded. Size: {} bytes", fileName, fileBytes);
+        return fileBytes;
     }
 
     private Optional<String> getFileIdByName(String fileName) {
@@ -100,7 +108,7 @@ public class GoogleDriveStorageService implements StorageService {
 
     private byte[] downloadFileByIdQuietly(String id) {
         try {
-            return downloadFileById(id);
+            return Objects.requireNonNull(downloadFileById(id));
         } catch (IOException e) {
             throw new RuntimeException(format("Failed to download file with id: <%s>", e));
         }
@@ -132,25 +140,37 @@ public class GoogleDriveStorageService implements StorageService {
 
     @Override
     public void deleteAllFiles() {
+        log.debug("Deleting all files...");
+
         final FileList files = getFilesListQuietly();
         for (File file : files.getFiles()) {
             String id = file.getId();
             deleteFileByIdQuietly(id);
         }
+
+        log.debug("...All files deleted");
     }
 
     @Override
     public void uploadFile(String fileName, byte[] fileData) {
+        log.debug("Uploading file {}...", fileName);
+
         getFileIdByName(fileName).ifPresent(this::deleteFileByIdQuietly);
         uploadFileQuietly(fileName, fileData);
+
+        log.debug("...Done uploading file {}", fileName);
     }
 
     private void deleteFileByIdQuietly(String id) {
+        log.debug("Deleting file with id {}...", id);
+
         try {
             drive.files().delete(id).execute();
         } catch (IOException e) {
             throw new RuntimeException(format("Failed to delete file with id: <%s>", id));
         }
+
+        log.debug("...File with id {} deleted", id);
     }
 
     private void uploadFileQuietly(String fileName, byte[] fileData) {

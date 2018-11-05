@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 public class FormK3Generator extends DocumentGenerator {
+    private static final String EDUCATION_FORM_TOKEN_BEGINNING = "#edform";
+    private static final String FINANCE_SOURCE_TOKEN_BEGINNING = "#source";
     private final Department department;
     private EducationForm educationForm;
     private SourceOfFinancing source;
@@ -34,7 +36,43 @@ public class FormK3Generator extends DocumentGenerator {
 
     @Override
     void fillInSheet(Sheet sheet) {
-        setEducationFormAndSource(sheet, "#edform", "#source");
+        if (currentSheetNeedsToBeFilled(sheet)) {
+            fill(sheet);
+        }
+    }
+
+    private boolean currentSheetNeedsToBeFilled(Sheet sheet) {
+        return areEducationFormAndSourceTokenPresent(sheet);
+    }
+
+    private boolean areEducationFormAndSourceTokenPresent(Sheet sheet) {
+        boolean educationFormIsPresent = false;
+        boolean financialSourceIsPresent = false;
+
+        final Row firstRow = sheet.getRow(0);
+        for (int cellNumber = 0; cellNumber < sheet.getLastRowNum(); cellNumber++) {
+            Cell cell = firstRow.getCell(cellNumber);
+            if (cell != null && cell.getStringCellValue() != null) {
+                String cellValue = cell.getStringCellValue();
+                if (cellValue.contains(EDUCATION_FORM_TOKEN_BEGINNING)) {
+                    educationFormIsPresent = true;
+                    cell.setCellValue(cellValue);
+                    cell.setCellType(CellType.STRING);
+                }
+                if (cellValue.contains(FINANCE_SOURCE_TOKEN_BEGINNING)) {
+                    financialSourceIsPresent = true;
+                    cell.setCellValue(cellValue);
+                    cell.setCellType(CellType.STRING);
+                }
+
+            }
+        }
+
+        return educationFormIsPresent && financialSourceIsPresent;
+    }
+
+    private void fill(Sheet sheet) {
+        setEducationFormAndSource(sheet, EDUCATION_FORM_TOKEN_BEGINNING, FINANCE_SOURCE_TOKEN_BEGINNING);
 
         List<K3SubjectEntity> firstSemSubjects =
                 K3SubjectListCreator.createList(educationForm, source, department, 1);

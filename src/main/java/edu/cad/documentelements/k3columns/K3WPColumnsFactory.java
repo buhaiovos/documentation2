@@ -11,16 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 
 import static edu.cad.documentelements.k3columns.K3WPColumnTokens.*;
+import static edu.cad.utils.documentutils.ColumnTokenStringSplitter.K3_WP_TOKEN_BEGINNING;
 import static java.lang.String.format;
 
 @Slf4j
 public class K3WPColumnsFactory {
-    private static final String TOKEN_BEGINNING =
-            ColumnTokenStringSplitter.K3_WP_TOKEN_BEGINNING;
-
     public static AbstractK3Column createColumn(Cell cell, SourceOfFinancing mainSource) {
         if (cell != null) {
-            String cellContent = CellWithTokenValidator.getContentIfCellValid(cell, TOKEN_BEGINNING);
+            String cellContent = CellWithTokenValidator.getContentIfCellValid(cell, K3_WP_TOKEN_BEGINNING);
             if (cellContent != null) {
                 ColumnTokenStringSplitter ctss = new ColumnTokenStringSplitter(cellContent);
 
@@ -47,8 +45,7 @@ public class K3WPColumnsFactory {
 
         switch (typeStr) {
             case SEM_HOURS:
-                return new HoursK3Column(columnIndex,
-                        Subject::getEctsHoursWithoutExam);
+                return new HoursK3Column(columnIndex, Subject::getEctsHoursWithoutExam);
             case LECTIONS:
                 return new HoursK3Column(columnIndex, Subject::getLections);
             case PRACTICE:
@@ -56,7 +53,7 @@ public class K3WPColumnsFactory {
             case LABS:
                 return new HoursK3Column(columnIndex, Subject::getLabs);
             case INDIVIDUALS: // <<<<<<<=================================== NOT SUPPORTED
-                log.info("Creating individuals column with index {}", columnIndex);
+                log.info("Creating individuals dummy column with index {}", columnIndex);
                 return new DummyColumn(columnIndex);
             case EXAMS:
                 return new ControlK3Column(columnIndex, controlDAO.get(1));

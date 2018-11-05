@@ -8,7 +8,6 @@ public class DummyColumn extends AbstractK3Column {
 
     public DummyColumn(int columnNumber) {
         super(columnNumber);
-        log.info("creating dummy column with index {}", columnNumber);
     }
 
     @Override
