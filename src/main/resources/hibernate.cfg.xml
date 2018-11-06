@@ -2,34 +2,31 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-  <session-factory>
-      <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-      <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/cad_database_2016?characterEncoding=utf8&amp;serverTimezone=UTC</property>
-    <property name="hibernate.connection.username">caduser</property>
-    <property name="hibernate.connection.password">cadkat$</property>
-    <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.hbm2ddl.auto">update</property>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
-    <mapping class="edu.cad.entities.AcademicGroup" />
-    <mapping class="edu.cad.entities.Control" />
-    <mapping class="edu.cad.entities.ControlDictionary" />
-    <mapping class="edu.cad.entities.Curriculum" />
-    <mapping class="edu.cad.entities.CurriculumSubject" />
-    <mapping class="edu.cad.entities.Cycle" />
-    <mapping class="edu.cad.entities.Department" />  
-    <mapping class="edu.cad.entities.DiplomaPreparation" />
-    <mapping class="edu.cad.entities.EducationForm" />
-    <mapping class="edu.cad.entities.Practice" />
-    <mapping class="edu.cad.entities.Qualification" />
-    <mapping class="edu.cad.entities.Section" />
-    <mapping class="edu.cad.entities.Specialization" />  
-    <mapping class="edu.cad.entities.StateCertification" />
-    <mapping class="edu.cad.entities.StudyLoadResults" />
-    <mapping class="edu.cad.entities.Subject" />
-    <mapping class="edu.cad.entities.SubjectDictionary" />
-    <mapping class="edu.cad.entities.SubjectType" />
-    <mapping class="edu.cad.entities.WorkType" />
-    <mapping class="edu.cad.entities.WorkingPlan"/>
-  </session-factory>
+        <mapping class="edu.cad.entities.AcademicGroup"/>
+        <mapping class="edu.cad.entities.Control"/>
+        <mapping class="edu.cad.entities.ControlDictionary"/>
+        <mapping class="edu.cad.entities.Curriculum"/>
+        <mapping class="edu.cad.entities.CurriculumSubject"/>
+        <mapping class="edu.cad.entities.Cycle"/>
+        <mapping class="edu.cad.entities.Department"/>
+        <mapping class="edu.cad.entities.DiplomaPreparation"/>
+        <mapping class="edu.cad.entities.EducationForm"/>
+        <mapping class="edu.cad.entities.Practice"/>
+        <mapping class="edu.cad.entities.Qualification"/>
+        <mapping class="edu.cad.entities.Section"/>
+        <mapping class="edu.cad.entities.Specialization"/>
+        <mapping class="edu.cad.entities.StateCertification"/>
+        <mapping class="edu.cad.entities.StudyLoadResults"/>
+        <mapping class="edu.cad.entities.Subject"/>
+        <mapping class="edu.cad.entities.SubjectDictionary"/>
+        <mapping class="edu.cad.entities.SubjectType"/>
+        <mapping class="edu.cad.entities.WorkType"/>
+        <mapping class="edu.cad.entities.WorkingPlan"/>
+    </session-factory>
 </hibernate-configuration>
