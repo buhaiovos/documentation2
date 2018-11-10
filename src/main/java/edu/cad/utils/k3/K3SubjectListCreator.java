@@ -91,15 +91,15 @@ public class K3SubjectListCreator {
     private static void addClones(Map<SubjectDictionary, List<Subject>> subjectMap,
                                   Subject subject,
                                   int position,
-                                  Map<Department, List<AcademicGroup>> map) {
-        if (map.isEmpty())
+                                  Map<Department, List<AcademicGroup>> departmentToGroups) {
+        if (departmentToGroups.isEmpty())
             return;
 
-        for (Department key : map.keySet()) {
+        for (Department department : departmentToGroups.keySet()) {
             Subject clone = EntityCloner.clone(Subject.class, subject);
             clone.getGroups().clear();
 
-            for (AcademicGroup group : map.get(key)) {
+            for (AcademicGroup group : departmentToGroups.get(department)) {
                 clone.getGroups().add(group);
             }
 

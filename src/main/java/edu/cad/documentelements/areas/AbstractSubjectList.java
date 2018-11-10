@@ -94,7 +94,7 @@ public abstract class AbstractSubjectList extends AbstractDocumentArea {
                 continue;
 
             if (!first) {
-                RowInserter.insertRow(sheet, rowNumber);
+                RowInserter.insertRow(sheet.getRow(rowNumber));
             } else {
                 first = false;
             }

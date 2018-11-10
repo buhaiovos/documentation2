@@ -7,6 +7,7 @@ import edu.cad.documentelements.k3columns.StudyLoadColumn;
 import edu.cad.entities.Department;
 import edu.cad.entities.EducationForm;
 import edu.cad.utils.Utils;
+import edu.cad.utils.documentutils.FormulaCopier;
 import edu.cad.utils.documentutils.K3SemesterStartRowFinder;
 import edu.cad.utils.documentutils.RowInserter;
 import edu.cad.utils.k3.K3SubjectEntity;
@@ -26,9 +27,14 @@ import java.util.Map;
 public class FormK3Generator extends DocumentGenerator {
     private static final String EDUCATION_FORM_TOKEN_BEGINNING = "#edform";
     private static final String FINANCE_SOURCE_TOKEN_BEGINNING = "#source";
+    private static final int FIRST = 1;
+    private static final int SECOND = 2;
+
     private final Department department;
+
     private EducationForm educationForm;
     private SourceOfFinancing source;
+    private Map<Class, List<AbstractK3Column>> columnClassToListOfColumns;
 
     FormK3Generator() {
         this.department = new HibernateDAO<>(Department.class).get(1);
@@ -64,7 +70,6 @@ public class FormK3Generator extends DocumentGenerator {
                     cell.setCellValue(cellValue);
                     cell.setCellType(CellType.STRING);
                 }
-
             }
         }
 
@@ -72,64 +77,23 @@ public class FormK3Generator extends DocumentGenerator {
     }
 
     private void fill(Sheet sheet) {
-        setEducationFormAndSource(sheet, EDUCATION_FORM_TOKEN_BEGINNING, FINANCE_SOURCE_TOKEN_BEGINNING);
-
-        List<K3SubjectEntity> firstSemSubjects =
-                K3SubjectListCreator.createList(educationForm, source, department, 1);
-        Map<Class, List<AbstractK3Column>> columnsMap = getInitializedMap();
-
-        Row firstSemRow = K3SemesterStartRowFinder.findSemesterStartRow(sheet, 1);
-        addColumnsToMap(columnsMap, firstSemRow);
-        fill(sheet, firstSemSubjects, columnsMap.get(AbstractK3Column.class), firstSemRow.getRowNum());
-
-        List<K3SubjectEntity> secondSemSubjects =
-                K3SubjectListCreator.createList(educationForm, source, department, 2);
-        Row secondSemRow = K3SemesterStartRowFinder.findSemesterStartRow(sheet, 2);
-        fill(sheet, secondSemSubjects, columnsMap.get(AbstractK3Column.class), secondSemRow.getRowNum());
+        initializeColumnsMap();
+        setEducationFormAndSource(sheet);
+        fillSemester(sheet, FIRST);
+        fillSemester(sheet, SECOND);
     }
 
-    private Map<Class, List<AbstractK3Column>> getInitializedMap() {
-        Map<Class, List<AbstractK3Column>> map = new HashMap<>();
-        map.put(AbstractK3Column.class, new ArrayList<>());
-        map.put(StudyLoadColumn.class, new ArrayList<>());
-        return map;
+    private void initializeColumnsMap() {
+        this.columnClassToListOfColumns = new HashMap<>();
+        columnClassToListOfColumns.put(AbstractK3Column.class, new ArrayList<>());
+        columnClassToListOfColumns.put(StudyLoadColumn.class, new ArrayList<>());
     }
 
-    private void addColumnsToMap(Map<Class, List<AbstractK3Column>> map, Row row) {
-        for (int i = 0; i <= row.getLastCellNum(); i++) {
-            Cell cell = row.getCell(i);
-            AllK3ColumnsFactory.createAndAddColumn(map, cell, source);
-        }
-    }
-
-    private void fill(final Sheet sheet,
-                      final List<K3SubjectEntity> subjects,
-                      final List<AbstractK3Column> columns,
-                      int rowNumber) {
-        boolean first = true;
-
-        for (K3SubjectEntity subject : subjects) {
-            if (!first) {
-                RowInserter.insertRow(sheet, rowNumber);
-            } else {
-                first = false;
-            }
-
-            for (AbstractK3Column column : columns) {
-                if (column != null) {
-                    column.fill(sheet.getRow(rowNumber), subject, "");
-                }
-            }
-            HSSFFormulaEvaluator.evaluateAllFormulaCells(sheet.getWorkbook());
-            rowNumber++;
-        }
-    }
-
-    private void setEducationFormAndSource(Sheet sheet, String educationFormToken, String sourceToken) {
-        int id = getId(sheet, 0, 0, educationFormToken);
+    private void setEducationFormAndSource(Sheet sheet) {
+        int id = getId(sheet, 0, 0, EDUCATION_FORM_TOKEN_BEGINNING);
         educationForm = new HibernateDAO<>(EducationForm.class).get(id);
 
-        id = getId(sheet, 0, 1, sourceToken);
+        id = getId(sheet, 0, 1, FINANCE_SOURCE_TOKEN_BEGINNING);
         source = SourceOfFinancing.values()[id];
     }
 
@@ -150,6 +114,70 @@ public class FormK3Generator extends DocumentGenerator {
             return 0;
 
         return Integer.parseInt(value);
+    }
+
+    private void fillSemester(final Sheet sheet, final int semester) {
+        Row semesterStartRow = K3SemesterStartRowFinder.findSemesterStartRow(sheet, semester);
+        recordColumnsForCurrentSemesterPart(semesterStartRow);
+
+        List<K3SubjectEntity> subjects = K3SubjectListCreator.createList(educationForm, source, department, semester);
+
+        boolean needToFixFormulas = (semester == SECOND);
+        fillRows(semesterStartRow, subjects, columnClassToListOfColumns.get(AbstractK3Column.class), needToFixFormulas);
+
+        clearRecordedColumns();
+    }
+
+    private void recordColumnsForCurrentSemesterPart(Row row) {
+        for (int i = 0; i <= row.getLastCellNum(); i++) {
+            Cell cell = row.getCell(i);
+            AllK3ColumnsFactory.createAndAddColumn(columnClassToListOfColumns, cell, source);
+        }
+    }
+
+    private void clearRecordedColumns() {
+        columnClassToListOfColumns.get(AbstractK3Column.class).clear();
+        columnClassToListOfColumns.get(StudyLoadColumn.class).clear();
+    }
+
+    private void fillRows(final Row firstRowOfSemesterSection,
+                          final List<K3SubjectEntity> subjects,
+                          final List<AbstractK3Column> columns,
+                          final boolean needToFixFormulas) {
+        K3SubjectEntity firstSubject = subjects.get(0);
+        if (needToFixFormulas) {
+            fixShiftedFormulas(firstRowOfSemesterSection, columnClassToListOfColumns.get(StudyLoadColumn.class));
+        }
+        fillColumns(firstRowOfSemesterSection, columns, firstSubject);
+
+        Row nextRow = getNextRowForGiven(firstRowOfSemesterSection);
+
+        for (K3SubjectEntity subject : subjects.subList(1, subjects.size())) {
+            RowInserter.insertRow(nextRow);
+            fillColumns(nextRow, columns, subject);
+            HSSFFormulaEvaluator.evaluateAllFormulaCells(nextRow.getSheet().getWorkbook());
+            nextRow = getNextRowForGiven(nextRow);
+        }
+    }
+
+    private void fixShiftedFormulas(Row row, List<AbstractK3Column> abstractK3Columns) {
+        abstractK3Columns.forEach(
+                column -> FormulaCopier.correctFormula(row.getSheet(), row.getCell(column.getColumnNumber()))
+        );
+    }
+
+    private void fillColumns(Row row, List<AbstractK3Column> columns, K3SubjectEntity subject) {
+        for (AbstractK3Column column : columns) {
+            if (column != null) {
+                column.fill(row, subject, "");
+            }
+        }
+    }
+
+    private Row getNextRowForGiven(Row firstRowOfSemesterSection) {
+        int rowNum = firstRowOfSemesterSection.getRowNum();
+        Sheet sheet1 = firstRowOfSemesterSection.getSheet();
+        return sheet1.getRow(rowNum + 1);
     }
 
 }

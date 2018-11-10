@@ -10,16 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RowInserter {
-    
-    public static void insertRow(Sheet sheet, int position){
+
+    public static void insertRow(Row row) {
+        Sheet sheet = row.getSheet();
+        int rowNum = row.getRowNum();
         int totalRows = sheet.getLastRowNum();
-       
-        Row oldRow = sheet.getRow(position - 1);
+
+        Row oldRow = sheet.getRow(rowNum - 1);
 
         List<CellRangeAddress> addresses = getMergedRegions(sheet, oldRow);
-        
-        sheet.shiftRows(position, totalRows, 1, true, false); 
-        Row newRow = sheet.getRow(position);
+
+        sheet.shiftRows(rowNum, totalRows, 1, true, false);
+        Row newRow = sheet.getRow(rowNum);
         copyRow(sheet, oldRow, newRow);
         shiftMergedRegions(sheet, addresses);
     }
