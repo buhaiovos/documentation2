@@ -11,16 +11,21 @@ import java.util.Objects;
 @Entity
 @Table(name = "curriculum_subject")
 @AssociationOverrides({
-    @AssociationOverride(name = "pk.curriculum",
-	joinColumns = @JoinColumn(name = "id_curriculum")),
-    @AssociationOverride(name = "pk.subject",
-	joinColumns = @JoinColumn(name = "id_subject")) })
+        @AssociationOverride(
+                name = "pk.curriculum",
+                joinColumns = @JoinColumn(name = "id_curriculum")
+        ),
+        @AssociationOverride(
+                name = "pk.subject",
+                joinColumns = @JoinColumn(name = "id_subject")
+        )
+})
 public class CurriculumSubject implements IDatabaseEntity, Serializable,
         Comparable<CurriculumSubject> {
-    
+
     @EmbeddedId
     private CurriculumSubjectId pk = new CurriculumSubjectId();
-    
+
     @Expose
     @Column(name = "cipher")
     private String cipher;
@@ -31,17 +36,17 @@ public class CurriculumSubject implements IDatabaseEntity, Serializable,
     public CurriculumSubject(String cipher) {
         this.cipher = cipher;
     }
-    
+
     @Override
-    public int getId(){ 
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public int getId() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public void setId(int id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     public CurriculumSubjectId getPk() {
         return pk;
     }
@@ -49,25 +54,25 @@ public class CurriculumSubject implements IDatabaseEntity, Serializable,
     public void setPk(CurriculumSubjectId pk) {
         this.pk = pk;
     }
-    
+
     @Transient
     public Curriculum getCurriculum() {
         return pk.getCurriculum();
     }
-    
+
     public void setCurriculum(Curriculum curriculum) {
         pk.setCurriculum(curriculum);
     }
-    
+
     @Transient
     public Subject getSubject() {
         return pk.getSubject();
     }
-    
+
     public void setSubject(Subject subject) {
         pk.setSubject(subject);
     }
-    
+
     public String getCipher() {
         return cipher;
     }
@@ -95,20 +100,17 @@ public class CurriculumSubject implements IDatabaseEntity, Serializable,
             return false;
         }*/
         final CurriculumSubject other = (CurriculumSubject) obj;
-        if (this.pk != other.getPk()) {
-            return false;
-        }
-        return true;
+        return this.pk == other.getPk();
     }
 
     @Override
     public int compareTo(CurriculumSubject other) {
-        if(pk.getCurriculum() instanceof Workplan){
+        if (pk.getCurriculum() instanceof WorkingPlan) {
             if (Utils.isNumber(cipher) && Utils.isNumber(other.getCipher())) {
                 return Integer.parseInt(cipher) - Integer.parseInt(other.getCipher());
             }
         }
-        
+
         return cipher.compareTo(other.getCipher());
     }
 }

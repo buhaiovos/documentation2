@@ -10,8 +10,7 @@ public class CellWithTokenValidator {
         if (cell != null) {
             if (cell.getCellTypeEnum() == CellType.STRING) {
                 String cellContent = cell.getStringCellValue();
-                if ( (cellContent != null) 
-                        && (cellContent.contains(tokenBeginning)) ) {
+                if ((cellContent != null) && (cellContent.contains(tokenBeginning))) {
                     return cellContent;
                 }
             }

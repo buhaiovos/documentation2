@@ -26,6 +26,7 @@ public enum HibernateSessionManagerImpl implements HibernateSessionManager {
     private synchronized void openSession() {
         this.configuration = new Configuration();
         this.configuration.configure(HIBERNATE_CFG_XML);
+        this.configuration.addProperties(System.getProperties());
         this.session = getSessionFactory().openSession();
     }
 

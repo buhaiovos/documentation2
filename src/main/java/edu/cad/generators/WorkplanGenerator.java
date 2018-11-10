@@ -2,59 +2,44 @@ package edu.cad.generators;
 
 import edu.cad.daos.HibernateDAO;
 import edu.cad.documentelements.areas.*;
-import edu.cad.entities.Workplan;
+import edu.cad.entities.WorkingPlan;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkplanGenerator extends CurriculumGenerator {
+class WorkplanGenerator extends CurriculumGenerator {
 
-    private static final String WORKPLAN_ID_MARKER = "#workplan_";
-    private List<AbstractDocumentArea> workplanSpecificAreas = new ArrayList<>();
-
-    public WorkplanGenerator(Workbook template) {
-        super(template);
-
-    }
+    private static final String WORK_PLAN_ID_MARKER = "#workplan_";
+    private List<AbstractDocumentArea> workPlanSpecificAreas = new ArrayList<>();
 
     @Override
-    public void generate() {
-        final Workbook template = getTemplate();
-        for (int i = 0; i < template.getNumberOfSheets(); i++) {
-            generateSheet(template.getSheetAt(i));
-        }
-    }
-
-    private void addWorkplanSpecificAreas(Sheet sheet,
-                                          CurriculumSubjectList subjectList) {
-
-        int startPos = subjectList.getRowNumer();
-        workplanSpecificAreas.clear();
-        workplanSpecificAreas.add(new PracticeArea(sheet, startPos));
-        workplanSpecificAreas.add(new StateCertificationArea(sheet, startPos));
-        workplanSpecificAreas.add(new DiplomaPreparationArea(sheet, startPos));
-
-    }
-
-    private void fillWorkplanSpecificAreas(Workplan workplan) {
-        for (AbstractDocumentArea area : workplanSpecificAreas) {
-            area.fill(workplan);
-        }
-    }
-
-    private void generateSheet(Sheet sheet) {
-        int id = extractCurriculumId(sheet, WORKPLAN_ID_MARKER);
+    void fillInSheet(Sheet sheet) {
+        int id = extractCurriculumId(sheet, WORK_PLAN_ID_MARKER);
         CurriculumSubjectList subjectList = new CurriculumSubjectList(sheet, 0);
-        addWorkplanSpecificAreas(sheet, subjectList);
-        Workplan workplan = new HibernateDAO<>(Workplan.class).get(id);
+        addWorkPlanSpecificAreas(sheet, subjectList);
+        WorkingPlan workplan = new HibernateDAO<>(WorkingPlan.class).get(id);
 
         if (workplan == null)
             return;
 
         subjectList.fill(workplan);
-        fillWorkplanSpecificAreas(workplan);
+        fillWorkPlanSpecificAreas(workplan);
+    }
+
+    private void addWorkPlanSpecificAreas(Sheet sheet, CurriculumSubjectList subjectList) {
+        int startPos = subjectList.getRowNumer();
+        workPlanSpecificAreas.clear();
+        workPlanSpecificAreas.add(new PracticeArea(sheet, startPos));
+        workPlanSpecificAreas.add(new StateCertificationArea(sheet, startPos));
+        workPlanSpecificAreas.add(new DiplomaPreparationArea(sheet, startPos));
+
+    }
+
+    private void fillWorkPlanSpecificAreas(WorkingPlan workplan) {
+        for (AbstractDocumentArea area : workPlanSpecificAreas) {
+            area.fill(workplan);
+        }
     }
 
 }

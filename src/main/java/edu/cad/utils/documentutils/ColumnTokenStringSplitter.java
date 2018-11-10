@@ -3,38 +3,34 @@ package edu.cad.utils.documentutils;
 import edu.cad.utils.Utils;
 
 /**
- *
  * @author Олександр
  */
 public class ColumnTokenStringSplitter {
-    
+
     public static final String CURRICULUM_TOKEN_BEGINNING = "#";
     public static final String K3_ST_LOAD_TOKEN_BEGINNING = "k3(SL)";
-    public static final String      K3_WP_TOKEN_BEGINNING = "k3(WP)";
-    
+    public static final String K3_WP_TOKEN_BEGINNING = "k3(WP)";
+
     private final String token;
-    
+
     private String type;
     private String formula;
     private String firstNumString;
     private String secondNumString;
-    
+
     public ColumnTokenStringSplitter(String token) {
         this.token = token.trim();
         split();
     }
 
     private void split() {
-        if ( ( ! token.contains(K3_ST_LOAD_TOKEN_BEGINNING))
-                && ( ! token.contains(K3_WP_TOKEN_BEGINNING)) ) {
+        if ((!token.contains(K3_ST_LOAD_TOKEN_BEGINNING)) && (!token.contains(K3_WP_TOKEN_BEGINNING))) {
             setType();
             setNumStrings();
-        }
-        else if (token.contains(K3_ST_LOAD_TOKEN_BEGINNING)){
+        } else if (token.contains(K3_ST_LOAD_TOKEN_BEGINNING)) {
             setType();
             setFormula();
-        }
-        else {
+        } else {
             setType();
         }
     }
@@ -68,14 +64,13 @@ public class ColumnTokenStringSplitter {
                     }
                     break;
             }
-        }
-        else {
+        } else {
             firstNumString = null;
             secondNumString = null;
         }
-                    
+
     }
-    
+
     private void setFormula() {
         formula = token.substring(token.indexOf('_') + 1).replaceAll(",", ".").replaceAll(";", ",");
     }
@@ -87,7 +82,7 @@ public class ColumnTokenStringSplitter {
     public String getFormula() {
         return formula;
     }
-    
+
     public String getFirstNumString() {
         return firstNumString;
     }
@@ -95,5 +90,5 @@ public class ColumnTokenStringSplitter {
     public String getSecondNumString() {
         return secondNumString;
     }
-    
+
 }

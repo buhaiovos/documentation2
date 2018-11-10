@@ -5,6 +5,8 @@
  */
 package edu.cad.documentelements.k3columns;
 
+import static java.lang.String.format;
+
 /**
  *
  * @author Олександр
@@ -26,8 +28,8 @@ public enum StudyLoadType {
     CONSULTATIONS("k3(SL)consult");
     
     private final String token;
-    
-    private StudyLoadType(String token) {
+
+    StudyLoadType(String token) {
         this.token = token;
     }
     
@@ -37,7 +39,9 @@ public enum StudyLoadType {
             if (value.token.equals(token))
                 return value;
         }
-        return null;
+        throw new IllegalArgumentException(
+                format("Given token: %s does not correspond to any of supported study load types.", token)
+        );
     }
     
     public String getToken() {

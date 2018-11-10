@@ -7,10 +7,13 @@ import edu.cad.entities.Curriculum;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 
-public class ControlCounter extends AbstractDocumentElement{
+import static edu.cad.entities.ControlDictionary.CREDIT_ID;
+import static edu.cad.entities.ControlDictionary.DIFFERENTIATED_CREDIT_ID;
+
+public class ControlCounter extends AbstractDocumentElement {
     protected final Cell cell;
     protected final ControlDictionary control;
-    
+
     public ControlCounter(Cell cell, ControlDictionary control) {
         this.cell = cell;
         this.control = control;
@@ -19,30 +22,36 @@ public class ControlCounter extends AbstractDocumentElement{
     public void fill(Curriculum curriculum) {
         StringBuilder value = new StringBuilder();
         int count = curriculum.countControlsByType(control);
-        
-        if(control.getId() == 2){
-            ControlDictionary diff = new HibernateDAO<>(ControlDictionary.class).get(9); 
-            int diffCount = curriculum.countControlsByType(diff);
-            
-            if(diffCount > 0){
-                value.append(count);
-                value.append('д');
-                
-                if(count > 0){
-                    value.append('+');
-                }   
-            } 
+
+        if (control.getId() == CREDIT_ID) {
+            ControlDictionary differentiatedCredit =
+                    new HibernateDAO<>(ControlDictionary.class).get(DIFFERENTIATED_CREDIT_ID);
+            int numberOfDifferentiatedCredits = curriculum.countControlsByType(differentiatedCredit);
+
+            buildDifferentiatedCreditValuePart(value, count > 0, numberOfDifferentiatedCredits);
         }
 
-        if(count > 0)
+        if (count > 0)
             value.append(count);
-        
-        if(value.length() > 0){
+
+        if (value.length() > 0) {
             cell.setCellValue(value.toString());
         }
     }
-    
-    public void clear(){
+
+    protected void buildDifferentiatedCreditValuePart(StringBuilder value, boolean regularCreditsArePresent,
+                                                      int numberOfDifferentiatedCredits) {
+        if (numberOfDifferentiatedCredits > 0) {
+            value.append(numberOfDifferentiatedCredits);
+            value.append('д');
+
+            if (regularCreditsArePresent) {
+                value.append('+');
+            }
+        }
+    }
+
+    public void clear() {
         cell.setCellType(CellType.BLANK);
     }
 }

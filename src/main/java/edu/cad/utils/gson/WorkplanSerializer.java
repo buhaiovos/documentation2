@@ -4,13 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
-import edu.cad.entities.Workplan;
+import edu.cad.entities.WorkingPlan;
+
 import java.lang.reflect.Type;
 
-public class WorkplanSerializer extends AbstractEntitySerializer<Workplan>{
+public class WorkplanSerializer extends AbstractEntitySerializer<WorkingPlan> {
 
     @Override
-    public JsonElement serialize(Workplan instance, Type type, JsonSerializationContext jsc) {
+    public JsonElement serialize(WorkingPlan instance, Type type, JsonSerializationContext jsc) {
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         JsonElement jsonElement = gson.toJsonTree(instance);
         

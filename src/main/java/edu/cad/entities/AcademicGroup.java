@@ -50,15 +50,15 @@ public class AcademicGroup implements IDatabaseEntity, Serializable, Comparable<
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_workplan")
-    private Workplan workplan;
+    private WorkingPlan workingPlan;
 
     public AcademicGroup() {
     }
 
-    public AcademicGroup(int id, String cipher, int budgetaryStudents, 
-            int contractStudents, int startYear, Specialization specialization, 
-            Qualification qualification, EducationForm educationForm,
-            Workplan workplan) {
+    public AcademicGroup(int id, String cipher, int budgetaryStudents,
+                         int contractStudents, int startYear, Specialization specialization,
+                         Qualification qualification, EducationForm educationForm,
+                         WorkingPlan workingPlan) {
         this.id = id;
         this.cipher = cipher;
         this.budgetaryStudents = budgetaryStudents;
@@ -67,7 +67,7 @@ public class AcademicGroup implements IDatabaseEntity, Serializable, Comparable<
         this.specialization = specialization;
         this.qualification = qualification;
         this.educationForm = educationForm;
-        this.workplan = workplan;
+        this.workingPlan = workingPlan;
     }
     
     @Override
@@ -136,12 +136,12 @@ public class AcademicGroup implements IDatabaseEntity, Serializable, Comparable<
         this.educationForm = educationForm;
     }
 
-    public Workplan getWorkplan() {
-        return workplan;
+    public WorkingPlan getWorkingPlan() {
+        return workingPlan;
     }
 
-    public void setWorkplan(Workplan workplan) {
-        this.workplan = workplan;
+    public void setWorkingPlan(WorkingPlan workingPlan) {
+        this.workingPlan = workingPlan;
     }
 
     public Department getDepartment() {
@@ -153,10 +153,8 @@ public class AcademicGroup implements IDatabaseEntity, Serializable, Comparable<
     }
     
     public boolean isBudgetary(){
-        if(budgetaryStudents > 0)
-            return true;
-            
-        return false;
+        return budgetaryStudents > 0;
+
     }
 
     @Override
@@ -178,10 +176,7 @@ public class AcademicGroup implements IDatabaseEntity, Serializable, Comparable<
             return false;
         }*/
         final AcademicGroup other = (AcademicGroup) obj;
-        if (this.id != other.getId()) {
-            return false;
-        }
-        return true;
+        return this.id == other.getId();
     }    
 
     @Override

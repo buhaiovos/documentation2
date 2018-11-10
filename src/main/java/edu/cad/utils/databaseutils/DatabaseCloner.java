@@ -129,7 +129,7 @@ public class DatabaseCloner {
             newGroup.setQualification(oldGroup.getQualification());
             newGroup.setEducationForm(oldGroup.getEducationForm());
             newGroup.setStartYear(newYear);
-            newGroup.setWorkplan(oldGroup.getWorkplan());
+            newGroup.setWorkingPlan(oldGroup.getWorkingPlan());
 
             newGroups.add(newGroup);
         }
@@ -155,13 +155,13 @@ public class DatabaseCloner {
                 if (group.getStartYear() > oldestBachelorGroupsStartYear) {
                     AcademicGroup olderGroup = findSameOneYearOlderGroup(group);
                     if (olderGroup != null)
-                        group.setWorkplan(olderGroup.getWorkplan());
+                        group.setWorkingPlan(olderGroup.getWorkingPlan());
                 }
             } else {
                 if (group.getStartYear() > oldestMagGroupStartYear) {
                     AcademicGroup olderGroup = findSameOneYearOlderGroup(group);
                     if (olderGroup != null)
-                        group.setWorkplan(olderGroup.getWorkplan());
+                        group.setWorkingPlan(olderGroup.getWorkingPlan());
                 }
             }
         }
