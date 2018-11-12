@@ -15,29 +15,28 @@ public class RowInserter {
         Sheet sheet = row.getSheet();
         int rowNum = row.getRowNum();
         int totalRows = sheet.getLastRowNum();
-
         Row oldRow = sheet.getRow(rowNum - 1);
-
         List<CellRangeAddress> addresses = getMergedRegions(sheet, oldRow);
 
-        sheet.shiftRows(rowNum, totalRows, 1, true, false);
+        sheet.shiftRows(rowNum, totalRows, 1);
+        shiftMergedRegions(sheet, addresses);
+
         Row newRow = sheet.getRow(rowNum);
         copyRow(sheet, oldRow, newRow);
-        shiftMergedRegions(sheet, addresses);
     }
-    
-    private static void copyRow(Sheet sheet, Row oldRow, Row newRow){
+
+    private static void copyRow(Sheet sheet, Row oldRow, Row newRow) {
         newRow.setHeight(oldRow.getHeight());
-        
-        for(int i = 0; i < oldRow.getLastCellNum(); i++){
+
+        for (int i = 0; i < oldRow.getLastCellNum(); i++) {
             Cell oldCell = oldRow.getCell(i);
             Cell newCell = newRow.createCell(i);
 
             newCell.setCellStyle(oldCell.getCellStyle());
-            if(oldCell.getCellTypeEnum().equals(CellType.FORMULA)){
+            if (oldCell.getCellTypeEnum().equals(CellType.FORMULA)) {
                 FormulaCopier.copyFormula(sheet, oldCell, newCell);
             }
-           
+
             FormulaExtender.extendFormula(sheet, oldCell, newCell);
         }
     }
@@ -49,24 +48,21 @@ public class RowInserter {
             int firstRow = cellRangeAddress.getFirstRow() + 1;
             int lastRow = cellRangeAddress.getLastRow() + 1;
 
-            CellRangeAddress address = new CellRangeAddress(firstRow, lastRow,
-                    firstColumn, lastColumn);
-                
+            var address = new CellRangeAddress(firstRow, lastRow, firstColumn, lastColumn);
             sheet.addMergedRegion(address);
         }
     }
-    
-    private static List<CellRangeAddress> getMergedRegions(Sheet sheet, Row firstRow){
+
+    private static List<CellRangeAddress> getMergedRegions(Sheet sheet, Row firstRow) {
         List<CellRangeAddress> addresses = new ArrayList<>();
-        
+
         for (int i = 0; i < sheet.getNumMergedRegions(); i++) {
             CellRangeAddress cellRangeAddress = sheet.getMergedRegion(i);
-
             if (cellRangeAddress.getFirstRow() >= firstRow.getRowNum()) {
                 addresses.add(cellRangeAddress.copy());
-                if(cellRangeAddress.getFirstRow() != firstRow.getRowNum()){
+                if (cellRangeAddress.getFirstRow() != firstRow.getRowNum()) {
                     sheet.removeMergedRegion(i--);
-                }  
+                }
             }
         }
 

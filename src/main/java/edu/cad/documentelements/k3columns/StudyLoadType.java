@@ -15,7 +15,7 @@ public enum StudyLoadType {
     LECTURES("k3(SL)lectures"),
     PRACTICES("k3(SL)practice"),
     LABS("k3(SL)lab"),
-    INDIVIDUALS("k3(SL)individual"),
+    INDIVIDUALS("k3(SL)individuals"),
     EXAMS("k3(SL)exam"),
     CREDITS("k3(SL)credit"),
     CONTROL_WORKS("k3(SL)contrwork"),

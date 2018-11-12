@@ -90,7 +90,7 @@ public class K3WPColumnsFactory {
             case STREAM:
                 return new K3StreamColumn(columnIndex);
             default:
-                throw new IllegalArgumentException(format("Unsupported column type: ", typeStr));
+                throw new IllegalArgumentException(format("Unsupported column type: %s", typeStr));
         }
     }
 

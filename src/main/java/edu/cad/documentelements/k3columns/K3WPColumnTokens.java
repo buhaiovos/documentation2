@@ -7,10 +7,10 @@ final class K3WPColumnTokens {
 
     static final String FULL_TITLE = TOKEN_BEGINNING + "fulltitle";
     static final String SEM_HOURS = TOKEN_BEGINNING + "semhours";
-    static final String LECTURES = TOKEN_BEGINNING + "lection";
+    static final String LECTURES = TOKEN_BEGINNING + "lectures";
     static final String PRACTICE = TOKEN_BEGINNING + "practice";
     static final String LABS = TOKEN_BEGINNING + "lab";
-    static final String INDIVIDUALS = TOKEN_BEGINNING + "individual";
+    static final String INDIVIDUALS = TOKEN_BEGINNING + "individuals";
 
     static final String EXAMS = TOKEN_BEGINNING + "exam";
     static final String CREDITS = TOKEN_BEGINNING + "credit";
