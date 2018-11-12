@@ -1,8 +1,9 @@
 package edu.cad.entities;
 
+import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.*;
 
 @Embeddable
 public class CurriculumSubjectId implements Serializable{
@@ -11,14 +12,14 @@ public class CurriculumSubjectId implements Serializable{
     private Curriculum curriculum;
     
     @ManyToOne
-    private Subject subject;
+    private SubjectInfo subjectInfo;
 
     public CurriculumSubjectId() {
     }
 
-    public CurriculumSubjectId(Curriculum curriculum, Subject subject) {
+    public CurriculumSubjectId(Curriculum curriculum, SubjectInfo subjectInfo) {
         this.curriculum = curriculum;
-        this.subject = subject;
+        this.subjectInfo = subjectInfo;
     }
 
     public Curriculum getCurriculum() {
@@ -29,19 +30,19 @@ public class CurriculumSubjectId implements Serializable{
         this.curriculum = curriculum;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public SubjectInfo getSubjectInfo() {
+        return subjectInfo;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setSubjectInfo(SubjectInfo subjectInfo) {
+        this.subjectInfo = subjectInfo;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.curriculum);
-        hash = 97 * hash + Objects.hashCode(this.subject);
+        hash = 97 * hash + Objects.hashCode(this.subjectInfo);
         return hash;
     }
 
@@ -53,16 +54,10 @@ public class CurriculumSubjectId implements Serializable{
         if (obj == null) {
             return false;
         }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
         final CurriculumSubjectId other = (CurriculumSubjectId) obj;
         if (!this.curriculum.equals(other.getCurriculum())) {
             return false;
         }
-        if (!this.subject.equals(other.getSubject())) {
-            return false;
-        }
-        return true;
+        return this.subjectInfo.equals(other.getSubjectInfo());
     }   
 }

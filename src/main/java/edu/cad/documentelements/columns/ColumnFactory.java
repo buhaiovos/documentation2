@@ -2,10 +2,13 @@ package edu.cad.documentelements.columns;
 
 import edu.cad.daos.HibernateDAO;
 import edu.cad.entities.ControlDictionary;
-import edu.cad.entities.Subject;
+import edu.cad.entities.SubjectInfo;
+import edu.cad.entities.interfaces.SubjectProperty;
 import edu.cad.utils.documentutils.CellWithTokenValidator;
 import edu.cad.utils.documentutils.ColumnTokenStringSplitter;
 import org.apache.poi.ss.usermodel.Cell;
+
+import static java.lang.String.format;
 
 public class ColumnFactory {
 
@@ -28,37 +31,54 @@ public class ColumnFactory {
             case "cipher":
                 return new CipherColumn(columnNumber);
             case "control":
-                int id = Integer.parseInt(tokenStringSplitter.getFirstNumString());
-                ControlDictionary cd = new HibernateDAO<>(ControlDictionary.class).get(id);
-                return new ControlColumn(columnNumber, cd);
+                return controlColumn(columnNumber, tokenStringSplitter);
             case "department":
                 return new DepartmentColumn(columnNumber);
             case "ects":
-                return new HoursColumn(columnNumber, Subject::getEcts);
+                return new HoursColumn(columnNumber, SubjectInfo::getEcts);
             case "labs":
-                return new HoursColumn(columnNumber, Subject::getLabs);
-            case "lections":
-                return new HoursColumn(columnNumber, Subject::getLections);
+                return new HoursColumn(columnNumber, SubjectInfo::getLabs);
+            case "lectures":
+                return new HoursColumn(columnNumber, SubjectInfo::getLectures);
             case "practices":
-                return new HoursColumn(columnNumber, Subject::getPractices);
+                return new HoursColumn(columnNumber, SubjectInfo::getPractices);
+            case "actlabs":
+                return new HoursColumn(columnNumber, SubjectInfo::getActualLabs);
+            case "actlectures":
+                return new HoursColumn(columnNumber, SubjectInfo::getActualLectures);
+            case "actpractices":
+                return new HoursColumn(columnNumber, SubjectInfo::getActualPractices);
+            case "individuals":
+                return new HoursColumn(columnNumber, SubjectInfo::getIndividualHours);
             case "section":
                 return new TitleColumn(columnNumber);
             case "semester":
-                return new SemesterColumn(columnNumber,
-                        Integer.parseInt(tokenStringSplitter.getFirstNumString()), // semester
-                        Integer.parseInt(tokenStringSplitter.getSecondNumString()), // weeks
-                        Subject::getTotalHours);
+                return semesterColumn(columnNumber, tokenStringSplitter, SubjectInfo::getTotalHours);
             case "semlabs":
-                return new SemesterColumn(columnNumber, Integer.parseInt(tokenStringSplitter.getFirstNumString()),
-                        Integer.parseInt(tokenStringSplitter.getSecondNumString()), Subject::getLabs);
-            case "semlections":
-                return new SemesterColumn(columnNumber, Integer.parseInt(tokenStringSplitter.getFirstNumString()),
-                        Integer.parseInt(tokenStringSplitter.getSecondNumString()), Subject::getLections);
+                return semesterColumn(columnNumber, tokenStringSplitter, SubjectInfo::getLabs);
+            case "semlectures":
+                return semesterColumn(columnNumber, tokenStringSplitter, SubjectInfo::getLectures);
             case "sempractices":
-                return new SemesterColumn(columnNumber, Integer.parseInt(tokenStringSplitter.getFirstNumString()),
-                        Integer.parseInt(tokenStringSplitter.getSecondNumString()), Subject::getPractices);
+                return semesterColumn(columnNumber, tokenStringSplitter, SubjectInfo::getPractices);
             default:
-                return null;
+                throw new IllegalArgumentException(format("Unsupported column type: <%s>",
+                        tokenStringSplitter.getType()));
         }
+    }
+
+    private static AbstractColumn controlColumn(int columnNumber, ColumnTokenStringSplitter tokenStringSplitter) {
+        int id = Integer.parseInt(tokenStringSplitter.getFirstNumString());
+        ControlDictionary cd = new HibernateDAO<>(ControlDictionary.class).get(id);
+        return new ControlColumn(columnNumber, cd);
+    }
+
+    private static SemesterColumn semesterColumn(int columnNumber, ColumnTokenStringSplitter tokenStringSplitter,
+                                                 SubjectProperty property) {
+        return new SemesterColumn(
+                columnNumber,
+                Integer.parseInt(tokenStringSplitter.getFirstNumString()), // semester
+                Integer.parseInt(tokenStringSplitter.getSecondNumString()), // weeks
+                property
+        );
     }
 }

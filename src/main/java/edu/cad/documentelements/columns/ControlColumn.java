@@ -4,7 +4,7 @@ import edu.cad.daos.HibernateDAO;
 import edu.cad.entities.Control;
 import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.CurriculumSubject;
-import edu.cad.entities.Subject;
+import edu.cad.entities.SubjectInfo;
 import edu.cad.utils.Utils;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -37,8 +37,8 @@ public class ControlColumn extends AbstractColumn{
     
     public Set<Control> getSubjectControls(CurriculumSubject record, ControlDictionary type){
         Set<Control> result = new HashSet<>();
-        
-        for(Subject element : record.getSubject().getSubSubjects(record.getCurriculum())){
+
+        for (SubjectInfo element : record.getSubjectInfo().getSubSubjects(record.getCurriculum())) {
             result.addAll(element.getControlsByType(type));
         }
         

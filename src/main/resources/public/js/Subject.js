@@ -3,10 +3,10 @@ $(document).ready(function() {
             title : 'Предмети',
             editinline: { enable : true },
             actions : {
-                listAction: 'subject-dictionary?action=list',
-                createAction: 'subject-dictionary?action=create',
-                updateAction: 'subject-dictionary?action=update',
-                deleteAction: 'subject-dictionary?action=delete'
+                listAction: 'subject-headers?action=list',
+                createAction: 'subject-headers?action=create',
+                updateAction: 'subject-headers?action=update',
+                deleteAction: 'subject-headers?action=delete'
             },
             fields : {
                 id : {
@@ -31,10 +31,10 @@ $(document).ready(function() {
                                     {
                                     title: data.record.denotation + ' - предмети',
                                     actions: {
-                                        listAction: 'subjects?action=dependencylist&id=' + data.record.id,
-                                        deleteAction: 'subjects?action=delete',
-                                        updateAction: 'subjects?action=update',
-                                        createAction: 'subjects?action=create'
+                                        listAction: 'subject-info?action=dependencylist&id=' + data.record.id,
+                                        deleteAction: 'subject-info?action=delete',
+                                        updateAction: 'subject-info?action=update',
+                                        createAction: 'subject-info?action=create'
                                     },
                                     fields: {
                                         id : {
@@ -110,17 +110,29 @@ $(document).ready(function() {
                                             title : 'ECTS',
                                             edit : true
                                         },
-                                        lections : {
+                                        lectures: {
                                             title : 'Лекції',
                                             edit : true
+                                        },
+                                        actual_lectures: {
+                                            title: 'Факт. лекції',
+                                            edit: true
                                         },
                                         labs : {
                                             title : 'Лабораторні',
                                             edit : true
                                         },
+                                        actual_labs: {
+                                            title: 'Факт. лаб.',
+                                            edit: true
+                                        },
                                         practices : {
                                             title : 'Практичні',
                                             edit : true
+                                        },
+                                        actual_practices: {
+                                            title: 'Факт. практ.',
+                                            edit: true
                                         }
                                     }
                                 }, function (data) { //opened handler
@@ -142,7 +154,7 @@ $(document).ready(function() {
                 },
                 superSubject : {
                     title : 'Загальний предмет',
-                    options: 'subject-dictionary?action=dropdownlist',
+                    options: 'subject-headers?action=dropdownlist',
                     edit : true,
                     defaultValue: ''
                 },

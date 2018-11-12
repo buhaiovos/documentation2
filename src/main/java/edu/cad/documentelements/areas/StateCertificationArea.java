@@ -40,7 +40,6 @@ public class StateCertificationArea extends AbstractDocumentArea {
         Row row = sheet.getRow(rowNumber);
         columns.get(0).fill(row, 1);
         columns.get(1).fill(row, sc.getForm());
-        columns.get(2).fill(row, DateIntervalStringCreator.getDatesString(
-            sc.getStart(), sc.getFinish()));
+        columns.get(2).fill(row, DateIntervalStringCreator.getDatesString(sc.getStart(), sc.getFinish()));
     }
 }

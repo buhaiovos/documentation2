@@ -106,11 +106,11 @@ public class Curriculum implements IDatabaseEntity, Serializable{
         final Curriculum other = (Curriculum) obj;
         return this.id == other.getId();
     }
-    
-    public boolean contains(Subject subject){
+
+    public boolean contains(SubjectInfo subjectInfo) {
         for (WorkingPlan plan : getWorkingPlans()) {
             for(CurriculumSubject currSubject : plan.getCurriculumSubjects()){
-                if(currSubject.getSubject().equals(subject)){
+                if (currSubject.getSubjectInfo().equals(subjectInfo)) {
                     return true;
                 }
             }
@@ -123,8 +123,8 @@ public class Curriculum implements IDatabaseEntity, Serializable{
         int total = 0;
         
         for(CurriculumSubject curriculumSubject : getCurriculumSubjects()){
-            for(Subject subject : curriculumSubject.getSubject().getSubSubjects(this)){
-                for(Control control : subject.getControlsByType(type)){
+            for (SubjectInfo subjectInfo : curriculumSubject.getSubjectInfo().getSubSubjects(this)) {
+                for (Control control : subjectInfo.getControlsByType(type)) {
                     if(control.getSemester() == semester){
                         total++;
                     }
@@ -139,8 +139,8 @@ public class Curriculum implements IDatabaseEntity, Serializable{
         int total = 0;
         
         for(CurriculumSubject curriculumSubject : getCurriculumSubjects()){
-            for(Subject subject : curriculumSubject.getSubject().getSubSubjects(this)){
-                total += subject.getControlsByType(type).size();
+            for (SubjectInfo subjectInfo : curriculumSubject.getSubjectInfo().getSubSubjects(this)) {
+                total += subjectInfo.getControlsByType(type).size();
             } 
         }
         

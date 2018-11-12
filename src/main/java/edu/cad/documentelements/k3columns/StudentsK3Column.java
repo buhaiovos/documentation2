@@ -18,8 +18,8 @@ public class StudentsK3Column extends AbstractK3Column{
     @Override
     public String getValue(K3SubjectEntity subject) {
         int total = 0;
-        
-        for(AcademicGroup group : subject.getSubject().getGroups()){
+
+        for (AcademicGroup group : subject.getSubjectInfo().getGroups()) {
             if(groupSource.sourceEquals(group)){
                 total += studentSource.getStudents(group);
             }
@@ -31,5 +31,4 @@ public class StudentsK3Column extends AbstractK3Column{
         
         return "0";
     }
-    
 }

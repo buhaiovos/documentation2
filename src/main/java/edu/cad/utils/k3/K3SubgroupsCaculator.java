@@ -1,20 +1,21 @@
 package edu.cad.utils.k3;
 
 import edu.cad.entities.AcademicGroup;
-import edu.cad.entities.Subject;
+import edu.cad.entities.SubjectInfo;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class K3SubgroupsCaculator {
-    
-    public static List<K3SubjectEntity> calculateList(List<Subject> subjects,
-            SourceOfFinancing source){
-        removeEmptySubjects(subjects, source);
-        if(subjects.isEmpty())
+
+    public static List<K3SubjectEntity> calculateList(List<SubjectInfo> subjectDetails,
+                                                      SourceOfFinancing source){
+        removeEmptySubjects(subjectDetails, source);
+        if (subjectDetails.isEmpty())
             return new ArrayList<>();
-        
-        List<K3SubjectEntity> entities = createList(subjects);
+
+        List<K3SubjectEntity> entities = createList(subjectDetails);
         
         for(TypeOfGroupWork type : TypeOfGroupWork.values()){
             calculateSubgroups(entities, type, source);
@@ -24,20 +25,20 @@ public class K3SubgroupsCaculator {
         
         return entities;
     }
-    
-    private static List<K3SubjectEntity> createList(List<Subject> subjects){
+
+    private static List<K3SubjectEntity> createList(List<SubjectInfo> subjectDetails) {
         List<K3SubjectEntity> entities = new ArrayList<>();
-        
-        for(Subject subject : subjects){
-            entities.add(new K3SubjectEntity(subject));
+
+        for (SubjectInfo info : subjectDetails) {
+            entities.add(new K3SubjectEntity(info));
         }
         
         return entities;
     }
-    
-    private static void removeEmptySubjects(List<Subject> subjects, 
-            SourceOfFinancing source){
-        Iterator<Subject> iterator = subjects.iterator();
+
+    private static void removeEmptySubjects(List<SubjectInfo> subjectDetails,
+                                            SourceOfFinancing source){
+        Iterator<SubjectInfo> iterator = subjectDetails.iterator();
         
         while (iterator.hasNext()) {
             int total = 0;
@@ -67,17 +68,17 @@ public class K3SubgroupsCaculator {
         
         List<Integer> subgroups = new ArrayList<>();
         for(K3SubjectEntity subjectEntity : subjects){
-            Subject subject = subjectEntity.getSubject();
-            
-            List<Integer> current = addToPrevSubject(type, subject, subgroups);
+            SubjectInfo subjectDetails = subjectEntity.getSubjectInfo();
+
+            List<Integer> current = addToPrevSubject(type, subjectDetails, subgroups);
             
             if(current.isEmpty()){  
                 currentSubject.addSubgroups(type, subgroups.size());
-                subgroups = createSubgroupsList(type, subject);
+                subgroups = createSubgroupsList(type, subjectDetails);
                 currentSubject = subjectEntity;
             } else {
                 subgroups = current;
-                resetHours(type, subject);
+                resetHours(type, subjectDetails);
             }
         } 
 
@@ -87,7 +88,7 @@ public class K3SubgroupsCaculator {
     private static void calculateAcademicGroups(List<K3SubjectEntity> subjects,
             SourceOfFinancing source){
         for(K3SubjectEntity subject : subjects){
-            for(AcademicGroup group : subject.getSubject().getGroups()){
+            for (AcademicGroup group : subject.getSubjectInfo().getGroups()) {
                 if(source.sourceEquals(group)){
                     subject.addSubgroups(TypeOfGroupWork.Academic, 1);
                 } else {
@@ -96,17 +97,17 @@ public class K3SubgroupsCaculator {
             }
             
             if(subjects.indexOf(subject) != 0){
-                resetHours(TypeOfGroupWork.Academic, subject.getSubject());
+                resetHours(TypeOfGroupWork.Academic, subject.getSubjectInfo());
             }
         } 
     }
-    
-    private static List<Integer> addToPrevSubject(TypeOfGroupWork type, Subject subject, 
-            List<Integer> subgroups){      
+
+    private static List<Integer> addToPrevSubject(TypeOfGroupWork type, SubjectInfo subjectDetails,
+                                                  List<Integer> subgroups){
         List<Integer> result = new ArrayList<>();
         result.addAll(subgroups);
-        
-        for(AcademicGroup group : subject.getGroups()){
+
+        for (AcademicGroup group : subjectDetails.getGroups()) {
             if(!addToList(type, group, result)){
                 return new ArrayList<>();
             }
@@ -114,11 +115,11 @@ public class K3SubgroupsCaculator {
         
         return result;
     }
-    
-    private static List<Integer> createSubgroupsList(TypeOfGroupWork type, Subject subject){
+
+    private static List<Integer> createSubgroupsList(TypeOfGroupWork type, SubjectInfo subjectDetails) {
         List<Integer> result = new ArrayList<>();
-        
-        for(AcademicGroup group : subject.getGroups()){
+
+        for (AcademicGroup group : subjectDetails.getGroups()) {
             if(!addToList(type, group, result)){
                 int total = calculateSubgroups(type, group.getTotalStudents());
                 
@@ -154,14 +155,17 @@ public class K3SubgroupsCaculator {
         
         return group.getTotalStudents() + total <= type.getMaxStudents();
     }
-    
-    private static void resetHours(TypeOfGroupWork type, Subject subject){
+
+    private static void resetHours(TypeOfGroupWork type, SubjectInfo subjectDetails) {
         switch(type){
-            case Academic   :   subject.setLections(0);
+            case Academic:
+                subjectDetails.setLectures(0);
                                 break;
-            case Practice   :   subject.setPractices(0);
+            case Practice:
+                subjectDetails.setPractices(0);
                                 break;
-            case Lab        :   subject.setLabs(0);
+            case Lab:
+                subjectDetails.setLabs(0);
                                 break;
         }
     }

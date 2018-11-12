@@ -13,7 +13,6 @@ public class HoursK3Column extends AbstractK3Column{
 
     @Override
     public String getValue(K3SubjectEntity subject) {
-        return Double.toString(property.getValue(subject.getSubject()));
-        //fill(row, property.getValue(subject));
+        return Double.toString(property.getValue(subject.getSubjectInfo()));
     }
 }

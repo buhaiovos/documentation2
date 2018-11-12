@@ -2,9 +2,10 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import java.io.Serializable;
-import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "control")
@@ -31,17 +32,16 @@ public class Control implements IDatabaseEntity, Serializable,
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_subject")
-    private Subject subject;
+    private SubjectInfo subjectInfo;
 
     public Control() {
     }
 
-    public Control(int id, int semester, ControlDictionary type, 
-            Subject subject) {
+    public Control(int id, int semester, ControlDictionary type, SubjectInfo subjectInfo) {
         this.id = id;
         this.semester = semester;
         this.type = type;
-        this.subject = subject;
+        this.subjectInfo = subjectInfo;
     }
     
     @Override
@@ -70,12 +70,12 @@ public class Control implements IDatabaseEntity, Serializable,
         this.type = type;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public SubjectInfo getSubjectInfo() {
+        return subjectInfo;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setSubjectInfo(SubjectInfo subjectInfo) {
+        this.subjectInfo = subjectInfo;
     }
     
     @Override
@@ -93,14 +93,8 @@ public class Control implements IDatabaseEntity, Serializable,
         if (obj == null) {
             return false;
         }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
         final Control other = (Control) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
+        return this.id == other.id;
     }   
 
     @Override

@@ -12,8 +12,7 @@ import static java.lang.String.format;
  * @author Олександр
  */
 public enum StudyLoadType {
-    
-    LECTIONS("k3(SL)lection"), 
+    LECTURES("k3(SL)lectures"),
     PRACTICES("k3(SL)practice"),
     LABS("k3(SL)lab"),
     INDIVIDUALS("k3(SL)individual"),

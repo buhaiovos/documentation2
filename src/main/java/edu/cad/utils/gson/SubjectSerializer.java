@@ -4,19 +4,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
-import edu.cad.entities.Subject;
+import edu.cad.entities.SubjectInfo;
+
 import java.lang.reflect.Type;
 
-public class SubjectSerializer extends AbstractEntitySerializer<Subject>{
+public class SubjectSerializer extends AbstractEntitySerializer<SubjectInfo> {
 
     @Override
-    public JsonElement serialize(Subject instance, Type type, JsonSerializationContext jsc) {
+    public JsonElement serialize(SubjectInfo instance, Type type, JsonSerializationContext jsc) {
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         JsonElement jsonElement = gson.toJsonTree(instance);
-        
-        addProperty(jsonElement, "subject", instance.getSubject(), false);
-       
+
+        addProperty(jsonElement, "subjectDetails", instance.getSubjectHeader(), false);
+
         return jsonElement.getAsJsonObject();
     }
-    
 }

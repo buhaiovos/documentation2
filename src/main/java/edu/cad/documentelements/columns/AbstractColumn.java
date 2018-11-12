@@ -2,6 +2,7 @@ package edu.cad.documentelements.columns;
 
 import edu.cad.documentelements.AbstractDocumentElement;
 import edu.cad.entities.CurriculumSubject;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -22,12 +23,14 @@ public abstract class AbstractColumn extends AbstractDocumentElement {
     public abstract void fill(Row row, CurriculumSubject record);
     
     public void fill(Row row, String value){
-        row.getCell(columnNumber).setCellValue(value);
+        Cell cell = row.getCell(columnNumber);
+        cell.setCellValue(value);
     }
     
     public void fill(Row row, double value){
-        row.getCell(columnNumber).setCellValue(value);
-        row.getCell(columnNumber).setCellType(CellType.NUMERIC);
+        Cell cell = row.getCell(columnNumber);
+        cell.setCellValue(value);
+        cell.setCellType(CellType.NUMERIC);
     }
     
     public double getNumericCellValue(Row row){

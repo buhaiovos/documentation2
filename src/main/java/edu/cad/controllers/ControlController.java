@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder;
 import edu.cad.daos.HibernateDAO;
 import edu.cad.entities.Control;
 import edu.cad.entities.ControlDictionary;
-import edu.cad.entities.Subject;
+import edu.cad.entities.SubjectInfo;
 import edu.cad.utils.gson.ControlSerializer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +27,7 @@ public class ControlController extends AbstractEntityController<Control>{
         control = initializeInstance(control, request);
         
         setIntProperty(request, "semester", control::setSemester);
-        setObjectProperty(request, "subject", control::setSubject, Subject.class);
+        setObjectProperty(request, "subject_info", control::setSubjectInfo, SubjectInfo.class);
         setObjectProperty(request, "type", control::setType, ControlDictionary.class);
         
         return control;
@@ -50,7 +50,7 @@ public class ControlController extends AbstractEntityController<Control>{
         if (request.getParameter("id") != null) {
             int id = Integer.parseInt(request.getParameter("id"));  
             list.clear();
-            list.addAll(new HibernateDAO<>(Subject.class).get(id).getControls());
+            list.addAll(new HibernateDAO<>(SubjectInfo.class).get(id).getControls());
             
             putOk();
             content.put("Records", list);

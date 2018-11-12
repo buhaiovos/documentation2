@@ -1,7 +1,8 @@
 package edu.cad.entities.interfaces;
 
-import edu.cad.entities.Subject;
+import edu.cad.entities.SubjectInfo;
 
+@FunctionalInterface
 public interface SubjectProperty {
-    public double getValue(Subject subject);
+    double getValue(SubjectInfo subjectDetails);
 }

@@ -24,7 +24,7 @@ public abstract class DocumentGenerator {
             case CURRICULUM:
                 return new CurriculumGenerator();
             case WORK_PLAN:
-                return new WorkplanGenerator();
+                return new WorkingPlanGenerator();
             case K3:
                 return new FormK3Generator();
             default:

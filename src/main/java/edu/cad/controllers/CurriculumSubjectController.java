@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder;
 import edu.cad.daos.HibernateDAO;
 import edu.cad.entities.Curriculum;
 import edu.cad.entities.CurriculumSubject;
-import edu.cad.entities.Subject;
+import edu.cad.entities.SubjectInfo;
 import edu.cad.utils.gson.CurriculumSubjectSerializer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +35,7 @@ public class CurriculumSubjectController extends AbstractEntityController<Curric
 
         setStringProperty(request, "cipher", curriculumSubject::setCipher);
         setObjectProperty(request, "curriculum", curriculumSubject::setCurriculum, Curriculum.class);
-        setObjectProperty(request, "subject", curriculumSubject::setSubject, Subject.class);
+        setObjectProperty(request, "subject_info", curriculumSubject::setSubjectInfo, SubjectInfo.class);
 
         return curriculumSubject;
     }

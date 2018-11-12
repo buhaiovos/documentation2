@@ -5,6 +5,9 @@ import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.Curriculum;
 import org.apache.poi.ss.usermodel.Cell;
 
+import static edu.cad.entities.ControlDictionary.CREDIT_ID;
+import static edu.cad.entities.ControlDictionary.DIFFERENTIATED_CREDIT_ID;
+
 public class SemesterControlCounter extends ControlCounter {
     private final int semester;
 
@@ -18,8 +21,8 @@ public class SemesterControlCounter extends ControlCounter {
         StringBuilder value = new StringBuilder();
         int count = curriculum.countControlsByType(semester, control);
 
-        if (control.getId() == 2) {
-            ControlDictionary diff = new HibernateDAO<>(ControlDictionary.class).get(9);
+        if (control.getId() == CREDIT_ID) {
+            ControlDictionary diff = new HibernateDAO<>(ControlDictionary.class).get(DIFFERENTIATED_CREDIT_ID);
             int diffCount = curriculum.countControlsByType(semester, diff);
 
             buildDifferentiatedCreditValuePart(value, count > 0, diffCount);

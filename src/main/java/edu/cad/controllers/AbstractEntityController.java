@@ -105,7 +105,6 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
     }
 
     void setIntProperty(HttpServletRequest request, String requestParamString, IntPropertySetter propSetter) {
-
         String numString = request.getParameter(requestParamString);
         if (numString != null) {
             int value = Integer.parseInt(numString.trim());
@@ -125,6 +124,14 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         String numString = request.getParameter(requestParamString);
         if (numString != null) {
             float value = Float.parseFloat(numString);
+            propSetter.setProperty(value);
+        }
+    }
+
+    void setDoubleProperty(HttpServletRequest request, String requestParamString, DoublePropertySetter propSetter) {
+        String numString = request.getParameter(requestParamString);
+        if (numString != null) {
+            double value = Double.parseDouble(numString);
             propSetter.setProperty(value);
         }
     }

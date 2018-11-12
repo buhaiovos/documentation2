@@ -9,7 +9,7 @@ import edu.cad.documentelements.controlcounters.ControlCounterFactory;
 import edu.cad.entities.Curriculum;
 import edu.cad.entities.CurriculumSubject;
 import edu.cad.entities.Section;
-import edu.cad.entities.SubjectDictionary;
+import edu.cad.entities.SubjectHeader;
 import edu.cad.utils.documentutils.RowInserter;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
@@ -37,8 +37,9 @@ public abstract class AbstractSubjectList extends AbstractDocumentArea {
         while (true) {
             DocumentSection documentSection = new DocumentSection(sheet, rowNumber);
 
-            if (documentSection.getRowNumber() < 0)
+            if (documentSection.getRowNumber() < 0) {
                 break;
+            }
 
             rowNumber = documentSection.getRowNumber();
             Section section = documentSection.getSection();
@@ -88,7 +89,7 @@ public abstract class AbstractSubjectList extends AbstractDocumentArea {
         boolean first = true;
 
         for (CurriculumSubject record : records) {
-            SubjectDictionary subject = record.getSubject().getSubject();
+            SubjectHeader subject = record.getSubjectInfo().getSubjectHeader();
 
             if (!subjectSection.get(subject).equals(section))
                 continue;
@@ -113,6 +114,6 @@ public abstract class AbstractSubjectList extends AbstractDocumentArea {
     }
 
     protected interface SubjectSection {
-        Section get(SubjectDictionary subject);
+        Section get(SubjectHeader subject);
     }
 }

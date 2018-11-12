@@ -2,12 +2,13 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "section")
@@ -37,10 +38,10 @@ public class Section implements IDatabaseEntity, Serializable{
     private Cycle cycle;
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "curriculumSection")
-    private Set<SubjectDictionary> curriculumSubjects = new HashSet<>();
-    
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "workplanSection")
-    private Set<SubjectDictionary> workplanSubjects = new HashSet<>();
+    private Set<SubjectHeader> curriculumSubjects = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "workingPlanSection")
+    private Set<SubjectHeader> workingPlanSubjects = new HashSet<>();
 
     public Section() {
     }
@@ -86,22 +87,22 @@ public class Section implements IDatabaseEntity, Serializable{
         this.cycle = cycle;
     }
 
-    public Set<SubjectDictionary> getCurriculumSubjects() {
+    public Set<SubjectHeader> getCurriculumSubjects() {
         return curriculumSubjects;
     }
 
-    public void setCurriculumSubjects(Set<SubjectDictionary> curriculumSubjects) {
+    public void setCurriculumSubjects(Set<SubjectHeader> curriculumSubjects) {
         this.curriculumSubjects.clear();
         this.curriculumSubjects.addAll(curriculumSubjects);
     }
 
-    public Set<SubjectDictionary> getWorkplanSubjects() {
-        return workplanSubjects;
+    public Set<SubjectHeader> getWorkingPlanSubjects() {
+        return workingPlanSubjects;
     }
 
-    public void setWorkplanSubjects(Set<SubjectDictionary> workplanSubjects) {
-        this.workplanSubjects.clear();
-        this.workplanSubjects.addAll(workplanSubjects);
+    public void setWorkingPlanSubjects(Set<SubjectHeader> workingPlanSubjects) {
+        this.workingPlanSubjects.clear();
+        this.workingPlanSubjects.addAll(workingPlanSubjects);
     }
     
     @Override
@@ -119,13 +120,7 @@ public class Section implements IDatabaseEntity, Serializable{
         if (obj == null) {
             return false;
         }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
         final Section other = (Section) obj;
-        if (this.id != other.getId()) {
-            return false;
-        }
-        return true;
+        return this.id == other.getId();
     }
 }

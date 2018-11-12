@@ -1,17 +1,18 @@
 package edu.cad.utils.k3;
 
-import edu.cad.entities.Subject;
+import edu.cad.entities.SubjectInfo;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class K3SubjectEntity {
     
     private int number;
-    private final Subject subject;
+    private final SubjectInfo subjectInfo;
     private final Map<TypeOfGroupWork, Integer> subgroups;
-    
-    public K3SubjectEntity(Subject subject){
-        this.subject = subject;
+
+    public K3SubjectEntity(SubjectInfo subjectInfo) {
+        this.subjectInfo = subjectInfo;
         subgroups = new HashMap<>();
         
         for(TypeOfGroupWork type : TypeOfGroupWork.values()){
@@ -26,9 +27,9 @@ public class K3SubjectEntity {
     public void setNumber(int number) {
         this.number = number;
     }
-    
-    public Subject getSubject(){
-        return subject;
+
+    public SubjectInfo getSubjectInfo() {
+        return subjectInfo;
     }
     
     public int getSubgroup(TypeOfGroupWork type){

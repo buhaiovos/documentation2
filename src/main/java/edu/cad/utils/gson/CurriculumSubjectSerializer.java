@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
 import edu.cad.entities.CurriculumSubject;
+
 import java.lang.reflect.Type;
 
 public class CurriculumSubjectSerializer extends AbstractEntitySerializer<CurriculumSubject>{
@@ -15,7 +16,7 @@ public class CurriculumSubjectSerializer extends AbstractEntitySerializer<Curric
         JsonElement jsonElement = gson.toJsonTree(instance);
         
         addProperty(jsonElement, "curriculum", instance.getCurriculum(), false);
-        addProperty(jsonElement, "subject", instance.getSubject(), false);
+        addProperty(jsonElement, "subject", instance.getSubjectInfo(), false);
        
         return jsonElement.getAsJsonObject();
     }

@@ -2,27 +2,22 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "subject_type")
-public class SubjectType implements IDatabaseEntity, Serializable{
-    
+public class SubjectType implements IDatabaseEntity, Serializable {
+
     @Expose
     @Id
     @GenericGenerator(
-        name = "assigned-identity", 
-        strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
+            name = "assigned-identity",
+            strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
     )
     @GeneratedValue(generator = "assigned-identity")
     @Column(name = "id", unique = true, nullable = false)
@@ -31,9 +26,9 @@ public class SubjectType implements IDatabaseEntity, Serializable{
     @Expose
     @Column(name = "denotation")
     private String denotation;
-    
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "type")
-    private Set<SubjectDictionary> subjects = new HashSet<>();
+    private Set<SubjectHeader> subjects = new HashSet<>();
 
     public SubjectType() {
     }
@@ -61,15 +56,15 @@ public class SubjectType implements IDatabaseEntity, Serializable{
         this.denotation = denotation;
     }
 
-    public Set<SubjectDictionary> getSubjects() {
+    public Set<SubjectHeader> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(Set<SubjectDictionary> subjects) {
+    public void setSubjects(Set<SubjectHeader> subjects) {
         this.subjects.clear();
         this.subjects.addAll(subjects);
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -85,13 +80,7 @@ public class SubjectType implements IDatabaseEntity, Serializable{
         if (obj == null) {
             return false;
         }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
         final SubjectType other = (SubjectType) obj;
-        if (this.id != other.getId()) {
-            return false;
-        }
-        return true;
-    }  
+        return this.id == other.getId();
+    }
 }

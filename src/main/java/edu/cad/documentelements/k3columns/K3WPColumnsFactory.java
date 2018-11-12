@@ -2,7 +2,7 @@ package edu.cad.documentelements.k3columns;
 
 import edu.cad.daos.HibernateDAO;
 import edu.cad.entities.ControlDictionary;
-import edu.cad.entities.Subject;
+import edu.cad.entities.SubjectInfo;
 import edu.cad.utils.documentutils.CellWithTokenValidator;
 import edu.cad.utils.documentutils.ColumnTokenStringSplitter;
 import edu.cad.utils.k3.SourceOfFinancing;
@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 
 import static edu.cad.documentelements.k3columns.K3WPColumnTokens.*;
+import static edu.cad.entities.ControlDictionary.*;
 import static edu.cad.utils.documentutils.ColumnTokenStringSplitter.K3_WP_TOKEN_BEGINNING;
 import static java.lang.String.format;
 
@@ -45,32 +46,31 @@ public class K3WPColumnsFactory {
 
         switch (typeStr) {
             case SEM_HOURS:
-                return new HoursK3Column(columnIndex, Subject::getEctsHoursWithoutExam);
-            case LECTIONS:
-                return new HoursK3Column(columnIndex, Subject::getLections);
+                return new HoursK3Column(columnIndex, SubjectInfo::getEctsHoursWithoutExam);
+            case LECTURES:
+                return new HoursK3Column(columnIndex, SubjectInfo::getLectures);
             case PRACTICE:
-                return new HoursK3Column(columnIndex, Subject::getPractices);
+                return new HoursK3Column(columnIndex, SubjectInfo::getPractices);
             case LABS:
-                return new HoursK3Column(columnIndex, Subject::getLabs);
-            case INDIVIDUALS: // <<<<<<<=================================== NOT SUPPORTED
-                log.info("Creating individuals dummy column with index {}", columnIndex);
-                return new DummyColumn(columnIndex);
+                return new HoursK3Column(columnIndex, SubjectInfo::getLabs);
+            case INDIVIDUALS:
+                return new HoursK3Column(columnIndex, SubjectInfo::getIndividualHours);
             case EXAMS:
-                return new ControlK3Column(columnIndex, controlDAO.get(1));
+                return new ControlK3Column(columnIndex, controlDAO.get(EXAM_ID));
             case CREDITS:
-                return new ControlK3Column(columnIndex, controlDAO.get(2));
+                return new ControlK3Column(columnIndex, controlDAO.get(CREDIT_ID));
             case CONTROL_WORKS:
-                return new ControlK3Column(columnIndex, controlDAO.get(3));
+                return new ControlK3Column(columnIndex, controlDAO.get(MODULES_AND_TESTS_ID));
             case COURSE_PROJS:
-                return new ControlK3Column(columnIndex, controlDAO.get(4));
+                return new ControlK3Column(columnIndex, controlDAO.get(COURSE_PROJECT));
             case COURSE_WORKS:
-                return new ControlK3Column(columnIndex, controlDAO.get(5));
+                return new ControlK3Column(columnIndex, controlDAO.get(COURSE_WORK));
             case RGRS:
-                return new ControlK3Column(columnIndex, controlDAO.get(6));
+                return new ControlK3Column(columnIndex, controlDAO.get(CALCULATION_GRAPHIC_ASSIGNMENT));
             case DKR:
-                return new ControlK3Column(columnIndex, controlDAO.get(7));
+                return new ControlK3Column(columnIndex, controlDAO.get(STATE_TEST));
             case REFERATS:
-                return new ControlK3Column(columnIndex, controlDAO.get(8));
+                return new ControlK3Column(columnIndex, controlDAO.get(ESSAY));
             case AC_GROUPS:
                 return new GroupsK3Column(columnIndex, mainSource, TypeOfGroupWork.Academic);
             case SUBGR_PRACT:

@@ -54,7 +54,7 @@ $(document).ready(function() {
                                         },
                                         subject : {
                                             title : 'Предмет',
-                                            options: 'subjects?action=dropdownlist',
+                                            options: 'subject-info?action=dropdownlist',
                                             edit : true
                                         }
                                     }

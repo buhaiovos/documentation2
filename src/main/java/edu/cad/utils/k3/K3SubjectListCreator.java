@@ -13,32 +13,32 @@ public class K3SubjectListCreator {
                                                    final Department department,
                                                    final int semester) {
         Set<WorkingPlan> includedWorkingPlans = createWorkPlanSet(educationForm);
-        Set<Subject> subjectSet = createSubjectSet(includedWorkingPlans, department, semester);
+        Set<SubjectInfo> subjectDetailsSet = createSubjectSet(includedWorkingPlans, department, semester);
 
-        Map<SubjectDictionary, List<Subject>> subjectMap = new LinkedHashMap<>();
+        Map<SubjectHeader, List<SubjectInfo>> subjectMap = new LinkedHashMap<>();
 
-        for (Subject subject : subjectSet) {
-            int position = findPosition(subjectMap, subject);
+        for (SubjectInfo subjectDetails : subjectDetailsSet) {
+            int position = findPosition(subjectMap, subjectDetails);
             Map<Department, List<AcademicGroup>> map = new HashMap<>();
 
-            for (AcademicGroup group : subject.getGroups()) {
+            for (AcademicGroup group : subjectDetails.getGroups()) {
                 if (!group.getEducationForm().equals(educationForm)) {
-                    subject.getGroups().remove(group);
+                    subjectDetails.getGroups().remove(group);
                     continue;
                 }
 
                 if (!group.getDepartment().equals(department)) {
                     addToMap(map, group);
-                    subject.getGroups().remove(group);
+                    subjectDetails.getGroups().remove(group);
                 }
             }
 
-            subjectMap.get(subject.getSubject()).add(position++, subject);
-            addClones(subjectMap, subject, position, map);
+            subjectMap.get(subjectDetails.getSubjectHeader()).add(position++, subjectDetails);
+            addClones(subjectMap, subjectDetails, position, map);
         }
 
         List<K3SubjectEntity> entities = new ArrayList<>();
-        for (SubjectDictionary dictionary : subjectMap.keySet()) {
+        for (SubjectHeader dictionary : subjectMap.keySet()) {
             entities.addAll(K3SubgroupsCaculator.calculateList(subjectMap.get(dictionary), source));
         }
 
@@ -57,27 +57,27 @@ public class K3SubjectListCreator {
         return new TreeSet<>(workingPlans);
     }
 
-    private static Set<Subject> createSubjectSet(Set<WorkingPlan> workingPlans, Department department, int semester) {
+    private static Set<SubjectInfo> createSubjectSet(Set<WorkingPlan> workingPlans, Department department, int semester) {
         int modulo = semester % 2;
-        Set<Subject> subjects = new LinkedHashSet<>();
+        Set<SubjectInfo> subjectDetails = new LinkedHashSet<>();
 
         for (WorkingPlan workingPlan : workingPlans) {
             Set<CurriculumSubject> workingPlanSubjects = new TreeSet<>();
             workingPlanSubjects.addAll(workingPlan.getCurriculumSubjects());
 
             for (CurriculumSubject curriculumSubject : workingPlanSubjects) {
-                Subject subject = curriculumSubject.getSubject();
+                SubjectInfo info = curriculumSubject.getSubjectInfo();
 
-                if (subject.getSubject().getDepartment().equals(department)) {
-                    if (subject.isCourseWork() || subject.getSemester() % 2 != modulo)
+                if (info.getSubjectHeader().getDepartment().equals(department)) {
+                    if (info.isCourseWork() || info.getSemester() % 2 != modulo)
                         continue;
 
-                    subjects.add(subject);
+                    subjectDetails.add(info);
                 }
             }
         }
 
-        return subjects;
+        return subjectDetails;
     }
 
     private static void addToMap(Map<Department, List<AcademicGroup>> map, AcademicGroup group) {
@@ -88,35 +88,35 @@ public class K3SubjectListCreator {
         map.get(group.getDepartment()).add(group);
     }
 
-    private static void addClones(Map<SubjectDictionary, List<Subject>> subjectMap,
-                                  Subject subject,
+    private static void addClones(Map<SubjectHeader, List<SubjectInfo>> subjectMap,
+                                  SubjectInfo subjectDetails,
                                   int position,
                                   Map<Department, List<AcademicGroup>> departmentToGroups) {
         if (departmentToGroups.isEmpty())
             return;
 
         for (Department department : departmentToGroups.keySet()) {
-            Subject clone = EntityCloner.clone(Subject.class, subject);
+            SubjectInfo clone = EntityCloner.clone(SubjectInfo.class, subjectDetails);
             clone.getGroups().clear();
 
             for (AcademicGroup group : departmentToGroups.get(department)) {
                 clone.getGroups().add(group);
             }
 
-            subjectMap.get(subject.getSubject()).add(position++, clone);
+            subjectMap.get(subjectDetails.getSubjectHeader()).add(position++, clone);
         }
     }
 
-    private static int findPosition(Map<SubjectDictionary, List<Subject>> subjectMap, Subject subject) {
-        if (!subjectMap.containsKey(subject.getSubject())) {
-            subjectMap.put(subject.getSubject(), new ArrayList<>());
+    private static int findPosition(Map<SubjectHeader, List<SubjectInfo>> subjectMap, SubjectInfo subjectDetails) {
+        if (!subjectMap.containsKey(subjectDetails.getSubjectHeader())) {
+            subjectMap.put(subjectDetails.getSubjectHeader(), new ArrayList<>());
             return 0;
         }
 
         int index = 0;
-        for (Subject element : subjectMap.get(subject.getSubject())) {
-            if (element.getEctsHours() < subject.getEctsHours()) {
-                index = subjectMap.get(subject.getSubject()).indexOf(element) + 1;
+        for (SubjectInfo element : subjectMap.get(subjectDetails.getSubjectHeader())) {
+            if (element.getEctsHours() < subjectDetails.getEctsHours()) {
+                index = subjectMap.get(subjectDetails.getSubjectHeader()).indexOf(element) + 1;
             }
         }
 

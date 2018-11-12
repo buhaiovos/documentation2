@@ -2,11 +2,12 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "department")
@@ -79,13 +80,7 @@ public class Department implements IDatabaseEntity, Serializable{
         if (obj == null) {
             return false;
         }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
         final Department other = (Department) obj;
-        if (this.id != other.getId()) {
-            return false;
-        }
-        return true;
+        return this.id == other.getId();
     }  
 }

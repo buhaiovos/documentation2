@@ -16,7 +16,7 @@ import java.util.Objects;
                 joinColumns = @JoinColumn(name = "id_curriculum")
         ),
         @AssociationOverride(
-                name = "pk.subject",
+                name = "pk.subjectInfo",
                 joinColumns = @JoinColumn(name = "id_subject")
         )
 })
@@ -65,12 +65,12 @@ public class CurriculumSubject implements IDatabaseEntity, Serializable,
     }
 
     @Transient
-    public Subject getSubject() {
-        return pk.getSubject();
+    public SubjectInfo getSubjectInfo() {
+        return pk.getSubjectInfo();
     }
 
-    public void setSubject(Subject subject) {
-        pk.setSubject(subject);
+    public void setSubjectInfo(SubjectInfo subjectInfo) {
+        pk.setSubjectInfo(subjectInfo);
     }
 
     public String getCipher() {

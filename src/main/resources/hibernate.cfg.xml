@@ -23,8 +23,8 @@
         <mapping class="edu.cad.entities.Specialization"/>
         <mapping class="edu.cad.entities.StateCertification"/>
         <mapping class="edu.cad.entities.StudyLoadResults"/>
-        <mapping class="edu.cad.entities.Subject"/>
-        <mapping class="edu.cad.entities.SubjectDictionary"/>
+        <mapping class="edu.cad.entities.SubjectInfo"/>
+        <mapping class="edu.cad.entities.SubjectHeader"/>
         <mapping class="edu.cad.entities.SubjectType"/>
         <mapping class="edu.cad.entities.WorkType"/>
         <mapping class="edu.cad.entities.WorkingPlan"/>

@@ -13,60 +13,60 @@ public class SubjectListener {
     @PostLoad
     @PostPersist
     @PostUpdate
-    public void update(Subject subject){
-        updateSubSubjects(subject);
-        updateGroups(subject);
-    }   
-    
-    private void updateSubSubjects(Subject subject){
-        for(CurriculumSubject curriculumSubject : subject.getCurriculumSubjects()){
+    public void update(SubjectInfo subjectDetails) {
+        updateSubSubjects(subjectDetails);
+        updateGroups(subjectDetails);
+    }
+
+    private void updateSubSubjects(SubjectInfo subjectDetails) {
+        for (CurriculumSubject curriculumSubject : subjectDetails.getCurriculumSubjects()) {
             Curriculum curriculum = curriculumSubject.getCurriculum();
-            subject.setSubSubjects(curriculum, findSubSubjects(subject, curriculum));
+            subjectDetails.setSubSubjects(curriculum, findSubSubjects(subjectDetails, curriculum));
         }
     }
-    
-    private void updateGroups(Subject subject){
-        for(CurriculumSubject curriculumSubject : subject.getCurriculumSubjects()){
+
+    private void updateGroups(SubjectInfo subjectDetails) {
+        for (CurriculumSubject curriculumSubject : subjectDetails.getCurriculumSubjects()) {
             Curriculum curriculum = curriculumSubject.getCurriculum();
             if (curriculum instanceof WorkingPlan) {
-                subject.getGroups().addAll(((WorkingPlan) curriculum).getGroups());
+                subjectDetails.getGroups().addAll(((WorkingPlan) curriculum).getGroups());
             }
             
         }
     }
-    
-    private Set<Subject> findSubSubjects(Subject subject, Curriculum curriculum){
-        Set<Subject> subjects = new HashSet<>();
-        subjects.add(subject);
+
+    private Set<SubjectInfo> findSubSubjects(SubjectInfo info, Curriculum curriculum) {
+        Set<SubjectInfo> subjectDetails = new HashSet<>();
+        subjectDetails.add(info);
 
         if (curriculum instanceof WorkingPlan)
-            return subjects;
-        
-        for(SubjectDictionary dictionary : subject.getSubject().getSubSubjects()){
+            return subjectDetails;
+
+        for (SubjectHeader dictionary : info.getSubjectHeader().getSubSubjects()) {
             boolean contains = false;
-            
-            for(Subject element : dictionary.getAcademicSubjects()){  
+
+            for (SubjectInfo element : dictionary.getSubjectInfo()) {
                 if(curriculum.contains(element)){
-                    subjects.add(element);
+                    subjectDetails.add(element);
                     if(element.getSubSubjects(curriculum) != null)
-                        subjects.addAll(element.getSubSubjects(curriculum));
+                        subjectDetails.addAll(element.getSubSubjects(curriculum));
                     contains = true;
                     break;
                 }  
             }
             
             if(!contains){
-                Subject appropriate = dictionary.findAppropriate(curriculum);
+                SubjectInfo appropriate = dictionary.findAppropriate(curriculum);
                 
                 if(appropriate == null)
                     continue;
 
-                subjects.add(appropriate);
+                subjectDetails.add(appropriate);
                 if(appropriate.getSubSubjects(curriculum) != null)
-                    subjects.addAll(appropriate.getSubSubjects(curriculum));
+                    subjectDetails.addAll(appropriate.getSubSubjects(curriculum));
             }
         }
-        
-        return subjects;
+
+        return subjectDetails;
     }
 }

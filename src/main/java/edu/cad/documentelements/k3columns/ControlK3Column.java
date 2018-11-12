@@ -15,18 +15,18 @@ public class ControlK3Column extends AbstractK3Column{
     @Override
     public String getValue(K3SubjectEntity subject) {
         if(control.getId() == 5){
-            if(subject.getSubject().hasCourseWork()){
+            if (subject.getSubjectInfo().hasCourseWork()) {
                 return "3";
             }
         }
-        
-        if(subject.getSubject().hasControlOfType(control)){
+
+        if (subject.getSubjectInfo().hasControlOfType(control)) {
             return "1";
         }
         
         if(control.getId() == 2){
             ControlDictionary diff = new HibernateDAO<>(ControlDictionary.class).get(9);
-            if(subject.getSubject().hasControlOfType(diff)){
+            if (subject.getSubjectInfo().hasControlOfType(diff)) {
                 return "1";
             }
         }

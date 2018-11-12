@@ -15,7 +15,7 @@ public class ControlDictionary implements IDatabaseEntity, Serializable {
     public static final int MODULES_AND_TESTS_ID = 3;
     public static final int COURSE_PROJECT = 4;
     public static final int COURSE_WORK = 5;
-    public static final int CALCULATIONAL_GRAPHIC_ASSIGNMENT = 6;
+    public static final int CALCULATION_GRAPHIC_ASSIGNMENT = 6;
     public static final int STATE_TEST = 7;
     public static final int ESSAY = 8;
     public static final int DIFFERENTIATED_CREDIT_ID = 9;
@@ -76,10 +76,7 @@ public class ControlDictionary implements IDatabaseEntity, Serializable {
             return false;
         }
         final ControlDictionary other = (ControlDictionary) obj;
-        if (this.id != other.getId()) {
-            return false;
-        }
-        return true;
+        return this.id == other.getId();
     }
 
     @Override

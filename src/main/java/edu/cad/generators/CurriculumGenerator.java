@@ -30,7 +30,7 @@ class CurriculumGenerator extends DocumentGenerator {
                 .filter(this::isCellOfValidType)
                 .map(this::toCurriculumIdTokenWithCleanUp)
                 .filter(token -> token.contains(curriculumIdMarker))
-                .map(this::toCurriculumId)
+                .map(token -> toCurriculumId(token, curriculumIdMarker))
                 .orElseThrow(() -> new RuntimeException("Unable to get Curriculum id."));
     }
 
@@ -54,8 +54,8 @@ class CurriculumGenerator extends DocumentGenerator {
         curriculumIdHolder.setCellType(CellType.BLANK); // also makes it empty
     }
 
-    private Integer toCurriculumId(String curriculumIdToken) {
-        final String id = curriculumIdToken.replaceFirst(CURRICULUM_ID_MARKER, BLANK_STRING);
+    private Integer toCurriculumId(String curriculumIdToken, String curriculumIdMarker) {
+        final String id = curriculumIdToken.replaceFirst(curriculumIdMarker, BLANK_STRING);
         if (Utils.isNumber(id)) {
             return Integer.valueOf(id);
         } else {
