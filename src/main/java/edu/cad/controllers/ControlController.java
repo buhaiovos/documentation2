@@ -1,7 +1,7 @@
 package edu.cad.controllers;
 
 import com.google.gson.GsonBuilder;
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.Control;
 import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.SubjectInfo;
@@ -50,7 +50,7 @@ public class ControlController extends AbstractEntityController<Control>{
         if (request.getParameter("id") != null) {
             int id = Integer.parseInt(request.getParameter("id"));  
             list.clear();
-            list.addAll(new HibernateDAO<>(SubjectInfo.class).get(id).getControls());
+            list.addAll(new HibernateDao<>(SubjectInfo.class).get(id).getControls());
             
             putOk();
             content.put("Records", list);

@@ -1,6 +1,6 @@
 package edu.cad.utils.k3;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.*;
 import edu.cad.utils.hibernateutils.EntityCloner;
 
@@ -48,7 +48,7 @@ public class K3SubjectListCreator {
     }
 
     private static Set<WorkingPlan> createWorkPlanSet(EducationForm educationForm) {
-        List<WorkingPlan> workingPlans = new HibernateDAO<>(WorkingPlan.class).getAll();
+        List<WorkingPlan> workingPlans = new HibernateDao<>(WorkingPlan.class).getAll();
 
         workingPlans.removeIf(
                 workPlan -> !workPlan.getEducationForm().equals(educationForm)

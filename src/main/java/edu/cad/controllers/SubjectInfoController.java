@@ -1,7 +1,7 @@
 package edu.cad.controllers;
 
 import com.google.gson.GsonBuilder;
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.SubjectHeader;
 import edu.cad.entities.SubjectInfo;
 import edu.cad.utils.gson.SubjectSerializer;
@@ -57,7 +57,7 @@ public class SubjectInfoController extends AbstractEntityController<SubjectInfo>
         if (request.getParameter("id") != null) {
             int id = Integer.parseInt(request.getParameter("id"));
             list.clear();
-            list.addAll(new HibernateDAO<>(SubjectHeader.class).get(id).getSubjectInfo());
+            list.addAll(new HibernateDao<>(SubjectHeader.class).get(id).getSubjectInfo());
 
             putOk();
             content.put("Records", list);

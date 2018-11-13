@@ -3,7 +3,7 @@ package edu.cad.controllers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import edu.cad.controllers.functional.interfaces.*;
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.daos.IDAO;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.utils.gson.HibernateProxyTypeAdapter;
@@ -27,7 +27,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
 
     public AbstractEntityController(Class<T> typeParameterClass) {
         this.typeParameterClass = typeParameterClass;
-        dao = new HibernateDAO<>(typeParameterClass);
+        dao = new HibernateDao<>(typeParameterClass);
         list = new ArrayList<>();
     }
 
@@ -35,7 +35,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         createGson();
-        dao = new HibernateDAO<>(typeParameterClass);
+        dao = new HibernateDao<>(typeParameterClass);
         action = request.getParameter("action");
         content = new HashMap<>();
         setResponseSettings(response);
@@ -152,7 +152,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         String entityIdStr = request.getParameter(requestParamString);
         if (entityIdStr != null) {
             int id = Integer.parseInt(entityIdStr.trim());
-            propSetter.setProperty(new HibernateDAO<>(propertyObjClass).get(id));
+            propSetter.setProperty(new HibernateDao<>(propertyObjClass).get(id));
         }
     }
 

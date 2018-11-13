@@ -12,9 +12,7 @@ import static edu.cad.utils.documentutils.ColumnTokenStringSplitter.K3_WP_TOKEN_
 
 public class AllK3ColumnsFactory {
 
-    public static void createAndAddColumn(Map<Class, List<AbstractK3Column>> dest,
-            Cell cell, SourceOfFinancing mainSource) {
-
+    public static void createAndAddColumn(Map<Class, List<AbstractK3Column>> dest, Cell cell, SourceOfFinancing mainSource) {
         if (null != CellWithTokenValidator.getContentIfCellValid(cell, K3_WP_TOKEN_BEGINNING)) {
             dest.get(AbstractK3Column.class)
                     .add(K3WPColumnsFactory.createColumn(cell, mainSource));

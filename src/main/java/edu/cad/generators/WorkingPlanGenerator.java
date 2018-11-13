@@ -1,6 +1,6 @@
 package edu.cad.generators;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.documentelements.areas.*;
 import edu.cad.entities.WorkingPlan;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -17,7 +17,7 @@ class WorkingPlanGenerator extends CurriculumGenerator {
     void fillInSheet(Sheet sheet) {
         int id = extractCurriculumId(sheet, WORK_PLAN_ID_MARKER);
         WorkingPlanSubjectList subjectList = new WorkingPlanSubjectList(sheet, 0);
-        WorkingPlan workplan = new HibernateDAO<>(WorkingPlan.class).get(id);
+        WorkingPlan workplan = new HibernateDao<>(WorkingPlan.class).get(id);
 
         if (workplan == null) {
             return;

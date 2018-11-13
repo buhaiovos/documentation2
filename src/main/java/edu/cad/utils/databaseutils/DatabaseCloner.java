@@ -1,6 +1,6 @@
 package edu.cad.utils.databaseutils;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.AcademicGroup;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.utils.hibernateutils.HibernateSessionManager;
@@ -62,7 +62,7 @@ public class DatabaseCloner {
     }
 
     private List<IDatabaseEntity> fill(Class<? extends IDatabaseEntity> classObj, Session oldSession) {
-        HibernateDAO<IDatabaseEntity> sourceDAO = new HibernateDAO(classObj, oldSession);
+        HibernateDao<IDatabaseEntity> sourceDAO = new HibernateDao(classObj, oldSession);
         List<IDatabaseEntity> allEntries = sourceDAO.getAll();
 
         return allEntries;
@@ -71,7 +71,7 @@ public class DatabaseCloner {
     private void cloneAllEntriesOfEntity(Class<? extends IDatabaseEntity> classObj,
                                          List<? extends IDatabaseEntity> list) {
         Session currentSession = sessionManager.getCurrentSession();
-        HibernateDAO<IDatabaseEntity> destDAO = new HibernateDAO(classObj, currentSession);
+        HibernateDao<IDatabaseEntity> destDAO = new HibernateDao(classObj, currentSession);
 
         for (IDatabaseEntity entry : list) {
             destDAO.create(entry);
@@ -203,8 +203,8 @@ public class DatabaseCloner {
     }
 
     private void saveAllGroups() {
-        HibernateDAO<AcademicGroup> groupsDAO =
-                new HibernateDAO<>(AcademicGroup.class);
+        HibernateDao<AcademicGroup> groupsDAO =
+                new HibernateDao<>(AcademicGroup.class);
 
         for (AcademicGroup oldGroup : oldGroups) {
             groupsDAO.update(oldGroup);

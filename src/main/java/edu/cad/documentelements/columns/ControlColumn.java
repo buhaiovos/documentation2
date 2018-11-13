@@ -1,6 +1,6 @@
 package edu.cad.documentelements.columns;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.Control;
 import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.CurriculumSubject;
@@ -28,7 +28,7 @@ public class ControlColumn extends AbstractColumn{
         controls.addAll(getSubjectControls(record, control));
 
         if(control.getId() == 2){
-            ControlDictionary diff = new HibernateDAO<>(ControlDictionary.class).get(9);
+            ControlDictionary diff = new HibernateDao<>(ControlDictionary.class).get(9);
             controls.addAll(getSubjectControls(record, diff));
         }
 

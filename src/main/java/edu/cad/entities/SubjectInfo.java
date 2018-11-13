@@ -1,7 +1,7 @@
 package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.entities.interfaces.SubjectProperty;
 import edu.cad.entities.listeners.SubjectListener;
@@ -203,7 +203,7 @@ public class SubjectInfo implements IDatabaseEntity, Serializable {
     }
 
     public boolean hasCourseWork() {
-        ControlDictionary courseWork = new HibernateDAO<>(ControlDictionary.class).get(5);
+        ControlDictionary courseWork = new HibernateDao<>(ControlDictionary.class).get(5);
 
         for (SubjectHeader subjectHeader : subjectHeader.getSubSubjects()) {
             for (SubjectInfo element : subjectHeader.getSubjectInfo()) {
@@ -217,7 +217,7 @@ public class SubjectInfo implements IDatabaseEntity, Serializable {
     }
 
     public boolean isCourseWork() {
-        ControlDictionary courseWork = new HibernateDAO<>(ControlDictionary.class).get(5);
+        ControlDictionary courseWork = new HibernateDao<>(ControlDictionary.class).get(5);
 
         return hasControlOfType(courseWork);
     }

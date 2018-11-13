@@ -1,7 +1,7 @@
 package edu.cad.controllers;
 
 import com.google.gson.GsonBuilder;
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.Department;
 import edu.cad.entities.Specialization;
 import edu.cad.utils.gson.SpecializationSerializer;
@@ -46,7 +46,7 @@ public class SpecializationController extends AbstractEntityController<Specializ
         if (request.getParameter("id") != null) {
             int id = Integer.parseInt(request.getParameter("id"));
             list.clear();
-            list.addAll(new HibernateDAO<>(Department.class).get(id).getSpecializations());
+            list.addAll(new HibernateDao<>(Department.class).get(id).getSpecializations());
 
             putOk();
             content.put("Records", list);
