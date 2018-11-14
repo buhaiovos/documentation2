@@ -3,6 +3,7 @@ package edu.cad.documentelements.k3columns;
 import edu.cad.entities.StudyLoadResults;
 import edu.cad.utils.k3.K3SubjectEntity;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.util.function.BiConsumer;
@@ -35,8 +36,16 @@ public class StudyLoadColumn extends AbstractK3Column {
 
     public void setFormulaResultValueToStudyLoadResultObj(Row row, StudyLoadResults results) {
         Cell currentCell = row.getCell(columnNumber);
-        double cellValue = currentCell.getNumericCellValue();
+        double cellValue = getValue(currentCell);
         propertySetter.accept(results, cellValue);
+    }
+
+    private double getValue(Cell currentCell) {
+        if (currentCell.getCachedFormulaResultTypeEnum().equals(CellType.STRING)) {
+            return 0;
+        } else {
+            return currentCell.getNumericCellValue();
+        }
     }
 
 }
