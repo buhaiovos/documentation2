@@ -196,6 +196,7 @@ public class FormK3Generator extends DocumentGenerator {
                 column.setFormulaResultValueToStudyLoadResultObj(row, results);
             }
         }
+        results.setSubjectInfo(subject.getSubjectInfo());
 
         studyLoadResultsDao.create(results);
     }

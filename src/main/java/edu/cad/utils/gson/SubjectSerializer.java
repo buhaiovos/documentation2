@@ -15,7 +15,7 @@ public class SubjectSerializer extends AbstractEntitySerializer<SubjectInfo> {
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         JsonElement jsonElement = gson.toJsonTree(instance);
 
-        addProperty(jsonElement, "subjectDetails", instance.getSubjectHeader(), false);
+        addProperty(jsonElement, "subjectInfo", instance.getSubjectHeader(), false);
 
         return jsonElement.getAsJsonObject();
     }

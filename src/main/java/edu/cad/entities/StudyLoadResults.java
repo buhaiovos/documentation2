@@ -36,7 +36,7 @@ public class StudyLoadResults implements IDatabaseEntity, Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_academic_subject")
-    private SubjectInfo subjectDetails;
+    private SubjectInfo subjectInfo;
 
     @Column(name = "lectures")
     private double lectures;

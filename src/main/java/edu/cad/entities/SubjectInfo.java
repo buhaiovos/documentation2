@@ -205,7 +205,7 @@ public class SubjectInfo implements IDatabaseEntity, Serializable {
     public boolean hasCourseWork() {
         ControlDictionary courseWork = new HibernateDao<>(ControlDictionary.class).get(5);
 
-        for (SubjectHeader subjectHeader : subjectHeader.getSubSubjects()) {
+        for (SubjectHeader subjectHeader : getSubjectHeader().getSubSubjects()) {
             for (SubjectInfo element : subjectHeader.getSubjectInfo()) {
                 if (element.hasControlOfType(courseWork)) {
                     return true;
