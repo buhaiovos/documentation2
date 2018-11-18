@@ -26,15 +26,7 @@ public class K3WPColumnsFactory {
                 if (ctss.getType().equals(FULL_TITLE)) {
                     return createTitleColumn(cell);
                 } else {
-                    AbstractK3Column column = createColumn(cell.getColumnIndex(), ctss.getType(), mainSource);
-
-                    if (column == null) {
-                        column = new FullTitleColumn(cell.getColumnIndex(), "");
-                        column.clear(cell.getRow());
-                        return null;
-                    }
-
-                    return column;
+                    return createColumn(cell.getColumnIndex(), ctss.getType(), mainSource);
                 }
             }
         }
@@ -45,6 +37,8 @@ public class K3WPColumnsFactory {
         HibernateDao<ControlDictionary> controlDAO = new HibernateDao<>(ControlDictionary.class);
 
         switch (typeStr) {
+            case ORDER_NUM:
+                return new NumberK3Column(columnIndex);
             case SEM_HOURS:
                 return new HoursK3Column(columnIndex, SubjectInfo::getEctsHoursWithoutExam);
             case LECTURES:

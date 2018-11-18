@@ -5,6 +5,7 @@ import edu.cad.utils.documentutils.ColumnTokenStringSplitter;
 final class K3WPColumnTokens {
     private static final String TOKEN_BEGINNING = ColumnTokenStringSplitter.K3_WP_TOKEN_BEGINNING;
 
+    static final String ORDER_NUM = TOKEN_BEGINNING + "sem";
     static final String FULL_TITLE = TOKEN_BEGINNING + "fulltitle";
     static final String SEM_HOURS = TOKEN_BEGINNING + "semhours";
     static final String LECTURES = TOKEN_BEGINNING + "lectures";

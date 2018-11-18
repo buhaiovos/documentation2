@@ -28,7 +28,6 @@ public class K3SemesterStartRowFinder {
                 Cell currentCell = currentRow.getCell(columnIndex);
                 String content = CellWithTokenValidator.getContentIfCellValid(currentCell, token);
                 if ((content != null) && content.equals(token)) {
-                    currentCell.setCellValue(1);
                     return currentRow;
                 }
             }
