@@ -1,6 +1,6 @@
 package edu.cad.documentelements.controlcounters;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.ControlDictionary;
 import edu.cad.utils.Utils;
 import edu.cad.utils.documentutils.ColumnTokenStringSplitter;
@@ -21,7 +21,7 @@ public class ControlCounterFactory {
             return null;
         
         int controlType = Integer.parseInt(splitter.getFirstNumString());
-        ControlDictionary control = new HibernateDAO<>(ControlDictionary.class).get(controlType);
+        ControlDictionary control = new HibernateDao<>(ControlDictionary.class).get(controlType);
         if (splitter.getSecondNumString() == null || !Utils.isNumber(splitter.getSecondNumString()))
             return new ControlCounter(cell, control);
 
@@ -34,10 +34,7 @@ public class ControlCounterFactory {
             return false;
         
         String value = cell.getStringCellValue();
-        
-        if(!value.startsWith("#") || !value.contains("_"))
-            return false;
-        
-        return true;
+
+        return value.startsWith("#") && value.contains("_");
     }
 }

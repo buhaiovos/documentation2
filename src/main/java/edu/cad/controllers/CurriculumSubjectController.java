@@ -1,7 +1,7 @@
 package edu.cad.controllers;
 
 import com.google.gson.GsonBuilder;
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.Curriculum;
 import edu.cad.entities.CurriculumSubject;
 import edu.cad.entities.SubjectInfo;
@@ -50,7 +50,7 @@ public class CurriculumSubjectController extends AbstractEntityController<Curric
         if (request.getParameter("id") != null) {
             int id = Integer.parseInt(request.getParameter("id"));
             list.clear();
-            list.addAll(new HibernateDAO<>(Curriculum.class).get(id).getCurriculumSubjects());
+            list.addAll(new HibernateDao<>(Curriculum.class).get(id).getCurriculumSubjects());
             Collections.sort(list);
 
             putOk();

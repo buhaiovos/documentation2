@@ -15,16 +15,16 @@ import java.util.List;
 import java.util.Optional;
 
 @SuppressWarnings("unchecked")
-public class HibernateDAO<Entity extends IDatabaseEntity> implements IDAO<Entity> {
+public class HibernateDao<Entity extends IDatabaseEntity> implements IDAO<Entity> {
     private final Class<Entity> typeParameterClass;
     private final Session session;
 
-    public HibernateDAO(Class<Entity> typeParameterClass) {
+    public HibernateDao(Class<Entity> typeParameterClass) {
         this.typeParameterClass = typeParameterClass;
         this.session = HibernateSessionManager.getInstance().getCurrentSession();
     }
 
-    public HibernateDAO(Class<Entity> typeParameterClass, Session session) {
+    public HibernateDao(Class<Entity> typeParameterClass, Session session) {
         this.typeParameterClass = typeParameterClass;
         this.session = session;
     }
@@ -73,22 +73,16 @@ public class HibernateDAO<Entity extends IDatabaseEntity> implements IDAO<Entity
 
     @Override
     public boolean create(Entity instance) {
-        //Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
             session.save(instance);
             session.flush();
             transaction.commit();
-            //session.flush();
             session.clear();
-            //session.flush();
         } catch (RuntimeException e) {
             System.out.println(e);
             transaction.rollback();
             return false;
-        } finally {
-            //session.flush();
-            //session.close();
         }
 
         return true;

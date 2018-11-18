@@ -1,6 +1,6 @@
 package edu.cad.documentelements.k3columns;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.SubjectInfo;
 import edu.cad.utils.documentutils.CellWithTokenValidator;
@@ -42,7 +42,7 @@ public class K3WPColumnsFactory {
     }
 
     private static AbstractK3Column createColumn(int columnIndex, String typeStr, SourceOfFinancing mainSource) {
-        HibernateDAO<ControlDictionary> controlDAO = new HibernateDAO<>(ControlDictionary.class);
+        HibernateDao<ControlDictionary> controlDAO = new HibernateDao<>(ControlDictionary.class);
 
         switch (typeStr) {
             case SEM_HOURS:

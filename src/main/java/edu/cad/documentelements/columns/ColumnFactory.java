@@ -1,6 +1,6 @@
 package edu.cad.documentelements.columns;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.SubjectInfo;
 import edu.cad.entities.interfaces.SubjectProperty;
@@ -68,7 +68,7 @@ public class ColumnFactory {
 
     private static AbstractColumn controlColumn(int columnNumber, ColumnTokenStringSplitter tokenStringSplitter) {
         int id = Integer.parseInt(tokenStringSplitter.getFirstNumString());
-        ControlDictionary cd = new HibernateDAO<>(ControlDictionary.class).get(id);
+        ControlDictionary cd = new HibernateDao<>(ControlDictionary.class).get(id);
         return new ControlColumn(columnNumber, cd);
     }
 

@@ -1,6 +1,6 @@
 package edu.cad.documentelements.k3columns;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.ControlDictionary;
 import edu.cad.utils.k3.K3SubjectEntity;
 
@@ -25,7 +25,7 @@ public class ControlK3Column extends AbstractK3Column{
         }
         
         if(control.getId() == 2){
-            ControlDictionary diff = new HibernateDAO<>(ControlDictionary.class).get(9);
+            ControlDictionary diff = new HibernateDao<>(ControlDictionary.class).get(9);
             if (subject.getSubjectInfo().hasControlOfType(diff)) {
                 return "1";
             }

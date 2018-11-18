@@ -1,7 +1,7 @@
 package edu.cad.controllers;
 
 import com.google.gson.GsonBuilder;
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.Cycle;
 import edu.cad.entities.Section;
 import edu.cad.utils.gson.SectionSerializer;
@@ -49,7 +49,7 @@ public class SectionController extends AbstractEntityController<Section> {
         if (request.getParameter("id") != null) {
             int id = Integer.parseInt(request.getParameter("id"));
             list.clear();
-            list.addAll(new HibernateDAO<>(Cycle.class).get(id).getSections());
+            list.addAll(new HibernateDao<>(Cycle.class).get(id).getSections());
 
             putOk();
             content.put("Records", list);

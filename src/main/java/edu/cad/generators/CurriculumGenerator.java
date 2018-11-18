@@ -1,6 +1,6 @@
 package edu.cad.generators;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.documentelements.areas.CurriculumSubjectList;
 import edu.cad.entities.Curriculum;
 import edu.cad.utils.Utils;
@@ -64,7 +64,7 @@ class CurriculumGenerator extends DocumentGenerator {
     }
 
     private Curriculum findCurriculum(final int id) {
-        return new HibernateDAO<>(Curriculum.class)
+        return new HibernateDao<>(Curriculum.class)
                 .getById(id)
                 .orElseThrow(() -> new RuntimeException(format("Curriculum with id <%d> is not found", id)));
     }

@@ -1,6 +1,6 @@
 package edu.cad.documentelements.areas;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.daos.IDAO;
 import edu.cad.documentelements.columns.AbstractColumn;
 import edu.cad.documentelements.columns.SimpleColumn;
@@ -66,7 +66,7 @@ public class DiplomaPreparationArea extends AbstractDocumentArea {
     }
 
     private WorkType getWorkType(Row row, int columnNumber) {
-        IDAO<WorkType> workTypeDAO = new HibernateDAO(WorkType.class);
+        IDAO<WorkType> workTypeDAO = new HibernateDao(WorkType.class);
 
         String cellContent = row.getCell(columnNumber).getStringCellValue();
         String workId = cellContent.replaceAll("#work", "");

@@ -1,6 +1,6 @@
 package edu.cad.documentelements.controlcounters;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.documentelements.AbstractDocumentElement;
 import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.Curriculum;
@@ -25,7 +25,7 @@ public class ControlCounter extends AbstractDocumentElement {
 
         if (control.getId() == CREDIT_ID) {
             ControlDictionary differentiatedCredit =
-                    new HibernateDAO<>(ControlDictionary.class).get(DIFFERENTIATED_CREDIT_ID);
+                    new HibernateDao<>(ControlDictionary.class).get(DIFFERENTIATED_CREDIT_ID);
             int numberOfDifferentiatedCredits = curriculum.countControlsByType(differentiatedCredit);
 
             buildDifferentiatedCreditValuePart(value, count > 0, numberOfDifferentiatedCredits);

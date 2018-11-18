@@ -1,6 +1,6 @@
 package edu.cad.documentelements;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.Section;
 import edu.cad.utils.Utils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -44,7 +44,7 @@ public class DocumentSection extends AbstractDocumentElement{
     
     private void setSection(int id) {
         if (id > 0) {
-            section = new HibernateDAO<>(Section.class).get(id);
+            section = new HibernateDao<>(Section.class).get(id);
         } else {
             section = null;
         }

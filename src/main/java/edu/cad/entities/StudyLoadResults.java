@@ -16,7 +16,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "study_load_results")
 public class StudyLoadResults implements IDatabaseEntity, Serializable {
-
     @Id
     @GenericGenerator(
             name = "assigned-identity",
@@ -31,12 +30,12 @@ public class StudyLoadResults implements IDatabaseEntity, Serializable {
     private EducationForm educationForm;
 
     @Column(name = "financing")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private SourceOfFinancing sourceOfFinancing;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_academic_subject")
-    private SubjectInfo subjectDetails;
+    private SubjectInfo subjectInfo;
 
     @Column(name = "lectures")
     private double lectures;
@@ -62,7 +61,7 @@ public class StudyLoadResults implements IDatabaseEntity, Serializable {
     @Column(name = "course_projs")
     private double courseProjects;
 
-    @Column(name = "cource_works")
+    @Column(name = "course_works")
     private double courseWorks;
 
     @Column(name = "rgr")

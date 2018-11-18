@@ -1,6 +1,6 @@
 package edu.cad.documentelements.controlcounters;
 
-import edu.cad.daos.HibernateDAO;
+import edu.cad.daos.HibernateDao;
 import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.Curriculum;
 import org.apache.poi.ss.usermodel.Cell;
@@ -22,7 +22,7 @@ public class SemesterControlCounter extends ControlCounter {
         int count = curriculum.countControlsByType(semester, control);
 
         if (control.getId() == CREDIT_ID) {
-            ControlDictionary diff = new HibernateDAO<>(ControlDictionary.class).get(DIFFERENTIATED_CREDIT_ID);
+            ControlDictionary diff = new HibernateDao<>(ControlDictionary.class).get(DIFFERENTIATED_CREDIT_ID);
             int diffCount = curriculum.countControlsByType(semester, diff);
 
             buildDifferentiatedCreditValuePart(value, count > 0, diffCount);
