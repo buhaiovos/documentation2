@@ -2,30 +2,31 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "form_of_education")
-public class EducationForm implements IDatabaseEntity, Serializable{
-    
+public class EducationForm implements IDatabaseEntity, Serializable {
+
     @Expose
     @Id
     @GenericGenerator(
-        name = "assigned-identity", 
-        strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
+            name = "assigned-identity",
+            strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
     )
     @GeneratedValue(generator = "assigned-identity")
     @Column(name = "id", unique = true, nullable = false)
     private int id;
-    
+
     @Expose
     @Column(name = "denotation")
     private String denotation;
-    
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "educationForm")
     private Set<AcademicGroup> academicGroups = new HashSet<>(0);
 
@@ -79,20 +80,12 @@ public class EducationForm implements IDatabaseEntity, Serializable{
         if (obj == null) {
             return false;
         }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
         final EducationForm other = (EducationForm) obj;
-        if (this.id != other.getId()) {
-            return false;
-        }
-        return true;
+        return this.id == other.getId();
     }
 
     @Override
     public String toString() {
         return denotation;
     }
-    
-    
 }

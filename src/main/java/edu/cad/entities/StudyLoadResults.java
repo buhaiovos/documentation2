@@ -16,7 +16,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "study_load_results")
 public class StudyLoadResults implements IDatabaseEntity, Serializable {
-
     @Id
     @GenericGenerator(
             name = "assigned-identity",
@@ -31,7 +30,7 @@ public class StudyLoadResults implements IDatabaseEntity, Serializable {
     private EducationForm educationForm;
 
     @Column(name = "financing")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private SourceOfFinancing sourceOfFinancing;
 
     @ManyToOne(fetch = FetchType.LAZY)

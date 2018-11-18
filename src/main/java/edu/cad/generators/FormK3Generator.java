@@ -197,6 +197,8 @@ public class FormK3Generator extends DocumentGenerator {
             }
         }
         results.setSubjectInfo(subject.getSubjectInfo());
+        results.setEducationForm(this.educationForm);
+        results.setSourceOfFinancing(this.source);
 
         studyLoadResultsDao.create(results);
     }

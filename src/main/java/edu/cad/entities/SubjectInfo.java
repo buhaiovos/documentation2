@@ -253,6 +253,7 @@ public class SubjectInfo implements IDatabaseEntity, Serializable {
     public String toString() {
         StringBuilder value = new StringBuilder();
         value.append(subjectHeader.getDenotation())
+                .append("[ ").append(semester).append("-й семестр ]")
                 .append(" [")
                 .append(" ECTS : ").append(ects)
                 .append(" лекції : ").append(lectures)
