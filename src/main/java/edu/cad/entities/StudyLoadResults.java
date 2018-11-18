@@ -62,7 +62,7 @@ public class StudyLoadResults implements IDatabaseEntity, Serializable {
     @Column(name = "course_projs")
     private double courseProjects;
 
-    @Column(name = "cource_works")
+    @Column(name = "course_works")
     private double courseWorks;
 
     @Column(name = "rgr")

@@ -51,7 +51,7 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public boolean exists(String fileName) {
-        throw new UnsupportedOperationException();
+        return true;
     }
 
     private void storeDocument(byte[] fileData, Path filePath) {

@@ -38,6 +38,6 @@ public class FileSystemNameResolver implements FileNameResolvingService {
 
     @Override
     public String resolveForDatabaseYearsFile() {
-        throw new UnsupportedOperationException();
+        return "blah";
     }
 }
