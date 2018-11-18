@@ -173,7 +173,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
 
     protected void getDropDownList(StringProperty<T> property, boolean addNull,
                                    HttpServletResponse response) throws IOException {
-        List<Option> options = new ArrayList();
+        List<Option> options = new ArrayList<>();
 
         if (addNull) {
             options.add(new Option("-", 0));

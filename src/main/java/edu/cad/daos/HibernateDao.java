@@ -105,4 +105,8 @@ public class HibernateDao<Entity extends IDatabaseEntity> implements IDAO<Entity
 
         return true;
     }
+
+    Session getSession() {
+        return this.session;
+    }
 }

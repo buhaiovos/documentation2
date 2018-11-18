@@ -5,11 +5,11 @@ import edu.cad.utils.k3.SourceOfFinancing;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Getter
 @Setter
 @ToString
@@ -17,12 +17,7 @@ import java.io.Serializable;
 @Table(name = "study_load_results")
 public class StudyLoadResults implements IDatabaseEntity, Serializable {
     @Id
-    @GenericGenerator(
-            name = "assigned-identity",
-            strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
-    )
-    @GeneratedValue(generator = "assigned-identity")
-    @Column(name = "id", unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
