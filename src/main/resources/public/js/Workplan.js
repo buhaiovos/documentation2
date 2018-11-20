@@ -139,6 +139,11 @@ $(document).ready(function() {
                     title : 'Державна атестація',
                     options: 'state-certification?action=dropdownlist',
                     edit : true
+                },
+                scientific_subject: {
+                    title: 'Предмет по науковій підготовці',
+                    options: 'subject-info?action=dropdownlist',
+                    edit: true
                 }
             }
         });

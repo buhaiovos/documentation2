@@ -14,8 +14,8 @@ import java.io.Serializable;
 @Setter
 @ToString
 @Entity
-@Table(name = "study_load_results")
-public class StudyLoadResults implements IDatabaseEntity, Serializable {
+@Table(name = "subject_study_load")
+public class SubjectStudyLoad implements IDatabaseEntity, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -96,7 +96,7 @@ public class StudyLoadResults implements IDatabaseEntity, Serializable {
         if (obj == null) {
             return false;
         }
-        final StudyLoadResults other = (StudyLoadResults) obj;
+        final SubjectStudyLoad other = (SubjectStudyLoad) obj;
         return this.id == other.getId();
     }
 

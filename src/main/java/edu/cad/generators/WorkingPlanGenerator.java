@@ -14,7 +14,7 @@ class WorkingPlanGenerator extends CurriculumGenerator {
     private List<AbstractDocumentArea> workPlanSpecificAreas = new ArrayList<>();
 
     @Override
-    void fillInSheet(Sheet sheet) {
+    public void fillInSheet(Sheet sheet) {
         int id = extractCurriculumId(sheet, WORK_PLAN_ID_MARKER);
         WorkingPlanSubjectList subjectList = new WorkingPlanSubjectList(sheet, 0);
         WorkingPlan workplan = new HibernateDao<>(WorkingPlan.class).get(id);

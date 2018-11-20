@@ -1,6 +1,7 @@
 package edu.cad.utils.databaseutils;
 
 import edu.cad.daos.HibernateDao;
+import edu.cad.domain.FormOfEducation;
 import edu.cad.entities.AcademicGroup;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.utils.hibernateutils.HibernateSessionManager;
@@ -9,6 +10,8 @@ import org.reflections.Reflections;
 
 import java.util.*;
 
+import static edu.cad.domain.FormOfEducation.*;
+import static edu.cad.domain.QualificationLevel.BACHELOR;
 import static edu.cad.utils.hibernateutils.NativeQueryExecutor.executeQueryWithinTransaction;
 
 public class DatabaseCloner {
@@ -131,13 +134,20 @@ public class DatabaseCloner {
     }
 
     private void setCipher(AcademicGroup newGroup, AcademicGroup oldGroup, String baseCipher) {
-        if (oldGroup.getEducationForm().getId() != 2) {
+        final int edFormId = oldGroup.getEducationForm().getId();
+        if (edFormId == INTRAMURAL.getDbId()) {
             newGroup.setCipher(baseCipher + oldGroup.getCipher().substring(4));
-        } else { // ДА-з32м
-            char yearPart = baseCipher.charAt(3);
-            baseCipher = baseCipher.substring(0, 3) + "з" + yearPart;
-            newGroup.setCipher(baseCipher + oldGroup.getCipher().substring(5));
+        } else if (edFormId == EXTRAMURAL.getDbId()) { // ДА-з32м
+            setNewCipher(newGroup, oldGroup, baseCipher, EXTRAMURAL);
+        } else { //evening ДА-в32м
+            setNewCipher(newGroup, oldGroup, baseCipher, EVENING);
         }
+    }
+
+    private void setNewCipher(AcademicGroup newGroup, AcademicGroup oldGroup, String baseCipher, FormOfEducation evening) {
+        char yearDigit = baseCipher.charAt(3);
+        baseCipher = baseCipher.substring(0, 3) + evening.getGroupCipherPrefix() + yearDigit;
+        newGroup.setCipher(baseCipher + oldGroup.getCipher().substring(5));
     }
 
     private void reassignWorkingPlans() {
@@ -145,7 +155,7 @@ public class DatabaseCloner {
         int oldestMasterGroupStartYear = newYear - 2;
 
         for (AcademicGroup group : oldGroups) {
-            if (group.getQualification().getId() == 1) { // bachelors
+            if (group.getQualification().getId() == BACHELOR.getDbId()) { // bachelors
                 if (group.getStartYear() > oldestBachelorGroupsStartYear) {
                     reassignWorkingPlanToNewGroup(group);
                 }
@@ -185,7 +195,7 @@ public class DatabaseCloner {
 
         int oldestMagStartYear = newYear - 2;
         oldGroups.removeIf(group ->
-                (group.getQualification().getId() != 1) //not bachelor
+                (group.getQualification().getId() != BACHELOR.getDbId()) //not bachelor
                         && (group.getStartYear() == oldestMagStartYear)
         );
     }

@@ -1,6 +1,7 @@
 package edu.cad.generators;
 
 import edu.cad.Document;
+import edu.cad.generators.k3.FormK3Generator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -17,7 +18,11 @@ public abstract class DocumentGenerator {
         return workbook;
     }
 
-    abstract void fillInSheet(Sheet sheet);
+    public boolean canGenerate(Sheet sheet) {
+        throw new UnsupportedOperationException("Method should be implemented");
+    }
+
+    public abstract void fillInSheet(Sheet sheet);
 
     public static DocumentGenerator forDocumentType(Document document) {
         switch (document) {

@@ -1,0 +1,14 @@
+package edu.cad.domain;
+
+public enum ObjectOfWork {
+    PEDAGOGICAL_PRACTICE,
+    PRE_DIPLOMA_PRACTICE,
+    SCI_RESEARCH_PRACTICE,
+    BACHELORS,
+    SCI_MASTERS,
+    PRO_MASTERS,
+    PHD,
+    POSTGRADUATES,
+    APPLICANTS_AND_TRAINEES,
+    DOCTORAL_STUDENTS
+}

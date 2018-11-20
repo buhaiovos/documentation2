@@ -1,6 +1,6 @@
 package edu.cad.documentelements.k3columns;
 
-import edu.cad.entities.StudyLoadResults;
+import edu.cad.entities.SubjectStudyLoad;
 import edu.cad.utils.k3.K3SubjectEntity;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -8,11 +8,11 @@ import org.apache.poi.ss.usermodel.Row;
 
 import java.util.function.BiConsumer;
 
-public class StudyLoadColumn extends AbstractK3Column {
+public class SubjectStudyLoadColumn extends AbstractK3Column {
     private final StudyLoadType type;
-    private final BiConsumer<StudyLoadResults, Double> propertySetter;
+    private final BiConsumer<SubjectStudyLoad, Double> propertySetter;
 
-    public StudyLoadColumn(int columnNumber, StudyLoadType type, BiConsumer<StudyLoadResults, Double> propertySetter) {
+    public SubjectStudyLoadColumn(int columnNumber, StudyLoadType type, BiConsumer<SubjectStudyLoad, Double> propertySetter) {
         super(columnNumber);
         this.type = type;
         this.propertySetter = propertySetter;
@@ -34,7 +34,7 @@ public class StudyLoadColumn extends AbstractK3Column {
 
     }
 
-    public void setFormulaResultValueToStudyLoadResultObj(Row row, StudyLoadResults results) {
+    public void setFormulaResultValueToStudyLoadResultObj(Row row, SubjectStudyLoad results) {
         Cell currentCell = row.getCell(columnNumber);
         double cellValue = getValue(currentCell);
         propertySetter.accept(results, cellValue);

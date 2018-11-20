@@ -4,9 +4,11 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
+import static edu.cad.utils.documentutils.ColumnTokenStringSplitter.K3_WP_TOKEN_BEGINNING;
+
 public class K3SemesterStartRowFinder {
-    
-    private static final String TOKEN_START = "#sem";
+
+    private static final String TOKEN_START = "#".concat(K3_WP_TOKEN_BEGINNING).concat("sem_");
     
     public static Row findSemesterStartRow(Sheet sheet, int semesterNum) {
         validateNum(semesterNum);
@@ -20,7 +22,7 @@ public class K3SemesterStartRowFinder {
     }
 
     private static Row findRow(Sheet sheet, String num) {
-        final String token = TOKEN_START + num + "_";
+        final String token = TOKEN_START + num;
 
         for (int rowIndex = 0; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
             Row currentRow = sheet.getRow(rowIndex);

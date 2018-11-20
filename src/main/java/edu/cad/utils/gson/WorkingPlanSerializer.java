@@ -8,7 +8,7 @@ import edu.cad.entities.WorkingPlan;
 
 import java.lang.reflect.Type;
 
-public class WorkplanSerializer extends AbstractEntitySerializer<WorkingPlan> {
+public class WorkingPlanSerializer extends AbstractEntitySerializer<WorkingPlan> {
 
     @Override
     public JsonElement serialize(WorkingPlan instance, Type type, JsonSerializationContext jsc) {
@@ -18,6 +18,7 @@ public class WorkplanSerializer extends AbstractEntitySerializer<WorkingPlan> {
         addProperty(jsonElement, "practice", instance.getPractice(), true);
         addProperty(jsonElement, "stateCertification", instance.getStateCertification(), true);
         addProperty(jsonElement, "curriculum", instance.getCurriculum(), true);
+        addProperty(jsonElement, "scientific_subject", instance.getScientificResearchSubject(), true);
        
         return jsonElement.getAsJsonObject();
     }

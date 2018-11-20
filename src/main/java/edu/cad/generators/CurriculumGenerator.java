@@ -19,7 +19,7 @@ class CurriculumGenerator extends DocumentGenerator {
     private static final String CURRICULUM_ID_MARKER = "#curriculum_";
 
     @Override
-    void fillInSheet(final Sheet sheet) {
+    public void fillInSheet(final Sheet sheet) {
         final int id = extractCurriculumId(sheet, CURRICULUM_ID_MARKER);
         final Curriculum curriculum = findCurriculum(id);
         fillCurriculumSheetWithSubjectList(sheet, curriculum);
