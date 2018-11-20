@@ -16,7 +16,6 @@ import edu.cad.utils.k3.K3SubjectListCreator;
 import edu.cad.utils.k3.SourceOfFinancing;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
@@ -24,6 +23,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class SubjectListPageGenerator extends FormK3Generator {
+    private static final String PAGE_TOKEN = "#subj";
+
     private final StudyLoadResultsDao studyLoadResultsDao;
 
     private Map<Class, List<AbstractK3Column>> columnClassToListOfColumns;
@@ -37,7 +38,7 @@ public class SubjectListPageGenerator extends FormK3Generator {
 
     @Override
     public boolean canGenerate(Sheet sheet) {
-        return arePageSpecificTokensPresent(sheet);
+        return isPageSpecificTokenPresent(sheet, PAGE_TOKEN) && areEducationFormAndFinancialSourceTokensPresent(sheet);
     }
 
     @Override
@@ -45,36 +46,6 @@ public class SubjectListPageGenerator extends FormK3Generator {
         init(sheet);
         fillSemester(sheet, FIRST);
         fillSemester(sheet, SECOND);
-    }
-
-    private boolean arePageSpecificTokensPresent(Sheet sheet) {
-        boolean educationFormIsPresent = false;
-        boolean financialSourceIsPresent = false;
-
-        final Row firstRow = sheet.getRow(0);
-
-        for (int cellNumber = 0; cellNumber < sheet.getLastRowNum(); cellNumber++) {
-            Cell cell = firstRow.getCell(cellNumber);
-            if (cell != null && cell.getStringCellValue() != null) {
-                if (isTokenPresent(cell, EDUCATION_FORM_TOKEN_BEGINNING)) {
-                    educationFormIsPresent = true;
-                } else {
-                    financialSourceIsPresent = isTokenPresent(cell, FINANCE_SOURCE_TOKEN_BEGINNING);
-                }
-            }
-        }
-
-        return educationFormIsPresent && financialSourceIsPresent;
-    }
-
-    private boolean isTokenPresent(Cell cell, String token) {
-        String cellValue = cell.getStringCellValue();
-        if (cellValue.contains(token)) {
-            cell.setCellValue(cellValue);
-            cell.setCellType(CellType.STRING);
-            return true;
-        }
-        return false;
     }
 
     private void init(Sheet sheet) {

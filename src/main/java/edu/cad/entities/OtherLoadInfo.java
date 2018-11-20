@@ -29,7 +29,7 @@ public class OtherLoadInfo {
             joinColumns = {@JoinColumn(name = "info_id")},
             inverseJoinColumns = {@JoinColumn(name = "group_id")}
     )
-    private List<AcademicGroup> groupsCiphers;
+    private List<AcademicGroup> groups;
     @Column(name = "hours")
     private double calculatedHours;
 }

@@ -8,14 +8,16 @@ import edu.cad.utils.Utils;
 import edu.cad.utils.k3.SourceOfFinancing;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class FormK3Generator extends DocumentGenerator {
-    static final String EDUCATION_FORM_TOKEN_BEGINNING = "#edform";
-    static final String FINANCE_SOURCE_TOKEN_BEGINNING = "#source";
+    private static final String EDUCATION_FORM_TOKEN_BEGINNING = "#edform";
+    private static final String FINANCE_SOURCE_TOKEN_BEGINNING = "#source";
+
     static final int FIRST = 1;
     static final int SECOND = 2;
 
@@ -25,6 +27,41 @@ public class FormK3Generator extends DocumentGenerator {
                 .filter(generator -> generator.canGenerate(sheet))
                 .findAny()
                 .ifPresent(generator -> generator.fillInSheet(sheet));
+    }
+
+    protected boolean isPageSpecificTokenPresent(Sheet sheet, String pageToken) {
+        final Cell tokenSpecificCell = sheet.getRow(0).getCell(0);
+        return tokenSpecificCell != null && tokenSpecificCell.getStringCellValue().contains(pageToken);
+    }
+
+    protected boolean areEducationFormAndFinancialSourceTokensPresent(Sheet sheet) {
+        boolean educationFormIsPresent = false;
+        boolean financialSourceIsPresent = false;
+
+        final Row firstRow = sheet.getRow(0);
+
+        for (int cellNumber = 0; cellNumber < sheet.getLastRowNum(); cellNumber++) {
+            Cell cell = firstRow.getCell(cellNumber);
+            if (cell != null && cell.getStringCellValue() != null) {
+                if (isTokenPresent(cell, EDUCATION_FORM_TOKEN_BEGINNING)) {
+                    educationFormIsPresent = true;
+                } else {
+                    financialSourceIsPresent = isTokenPresent(cell, FINANCE_SOURCE_TOKEN_BEGINNING);
+                }
+            }
+        }
+
+        return educationFormIsPresent && financialSourceIsPresent;
+    }
+
+    private boolean isTokenPresent(Cell cell, String token) {
+        String cellValue = cell.getStringCellValue();
+        if (cellValue.contains(token)) {
+            cell.setCellValue(cellValue);
+            cell.setCellType(CellType.STRING);
+            return true;
+        }
+        return false;
     }
 
     Department getDepartment(Sheet sheet) {
