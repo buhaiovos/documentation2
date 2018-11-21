@@ -8,7 +8,7 @@ import static edu.cad.documentelements.k3columns.K3OtherLoadTokens.*;
 import static java.lang.String.format;
 
 public class OtherLoadColumnsFactory {
-    public AbstractOtherLoadColumn getColumn(Integer columnNumber, String token, SourceOfFinancing source) {
+    public static AbstractOtherLoadColumn getColumn(int columnNumber, String token, SourceOfFinancing source) {
         ColumnTokenStringSplitter tokenSplitter = new ColumnTokenStringSplitter(token);
         String type = tokenSplitter.getType();
         int semester = Utils.parseInteger(tokenSplitter.getFirstNumString()).orElseThrow();

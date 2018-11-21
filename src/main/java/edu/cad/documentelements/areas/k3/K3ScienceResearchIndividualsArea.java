@@ -7,7 +7,7 @@ import edu.cad.utils.k3.SourceOfFinancing;
 import java.util.List;
 import java.util.Map;
 
-public class K3ScienceResearchIndividualsArea extends AbstractDocumentElement implements K3OtherStudyLoadAreas {
+public class K3ScienceResearchIndividualsArea extends AbstractDocumentElement implements K3OtherStudyLoadArea {
     private static final String AREA_TOKEN_PREFIX = "k3(O)researchSubject";
 
     Map<Integer, List<OneSemesterOtherLoadRow>> semesterToLoadRows;
