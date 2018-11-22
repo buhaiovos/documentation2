@@ -2,6 +2,7 @@ package edu.cad.entities;
 
 import edu.cad.domain.ObjectOfWork;
 import edu.cad.domain.OtherLoadType;
+import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "other_load")
-public class OtherLoad {
+public class OtherLoad implements IDatabaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

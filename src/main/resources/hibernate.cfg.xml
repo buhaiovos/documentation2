@@ -29,5 +29,7 @@
         <mapping class="edu.cad.entities.SubjectType"/>
         <mapping class="edu.cad.entities.WorkType"/>
         <mapping class="edu.cad.entities.WorkingPlan"/>
+        <mapping class="edu.cad.entities.OtherLoad"/>
+        <mapping class="edu.cad.entities.OtherLoadInfo"/>
     </session-factory>
 </hibernate-configuration>

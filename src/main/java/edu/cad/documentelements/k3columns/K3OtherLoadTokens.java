@@ -4,7 +4,7 @@ final class K3OtherLoadTokens {
     private K3OtherLoadTokens() {
     }
 
-    private static final String TOKEN_BEGINNING = "#k3(OC)";
+    private static final String TOKEN_BEGINNING = "k3(OC)";
 
     public static final String FACULTY = TOKEN_BEGINNING + "faculty";
     public static final String YEAR = TOKEN_BEGINNING + "year";

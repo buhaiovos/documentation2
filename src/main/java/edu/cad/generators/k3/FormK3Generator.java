@@ -14,9 +14,14 @@ import org.apache.poi.ss.usermodel.Sheet;
 import java.util.LinkedList;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class FormK3Generator extends DocumentGenerator {
     private static final String EDUCATION_FORM_TOKEN_BEGINNING = "#edform";
     private static final String FINANCE_SOURCE_TOKEN_BEGINNING = "#source";
+
+    private static final int PAGE_SPECIFIC_TOKEN_CELL_NUM = 0;
+    private static final int PAGE_SPECIFIC_TOKEN_ROW_NUM = 0;
 
     static final int FIRST = 1;
     static final int SECOND = 2;
@@ -30,8 +35,12 @@ public class FormK3Generator extends DocumentGenerator {
     }
 
     protected boolean isPageSpecificTokenPresent(Sheet sheet, String pageToken) {
-        final Cell tokenSpecificCell = sheet.getRow(0).getCell(0);
+        final Cell tokenSpecificCell = getPageSpecificTokenCell(sheet);
         return tokenSpecificCell != null && tokenSpecificCell.getStringCellValue().contains(pageToken);
+    }
+
+    protected Cell getPageSpecificTokenCell(Sheet sheet) {
+        return sheet.getRow(PAGE_SPECIFIC_TOKEN_ROW_NUM).getCell(PAGE_SPECIFIC_TOKEN_CELL_NUM);
     }
 
     protected boolean areEducationFormAndFinancialSourceTokensPresent(Sheet sheet) {
@@ -42,7 +51,8 @@ public class FormK3Generator extends DocumentGenerator {
 
         for (int cellNumber = 0; cellNumber < sheet.getLastRowNum(); cellNumber++) {
             Cell cell = firstRow.getCell(cellNumber);
-            if (cell != null && cell.getStringCellValue() != null) {
+            if (cell != null && cell.getStringCellValue() != null
+                    && cell.getStringCellValue().startsWith("#")) {
                 if (isTokenPresent(cell, EDUCATION_FORM_TOKEN_BEGINNING)) {
                     educationFormIsPresent = true;
                 } else {
@@ -71,12 +81,12 @@ public class FormK3Generator extends DocumentGenerator {
 
     SourceOfFinancing getSourceOfFinancing(Sheet sheet) {
         int id;
-        id = getId(sheet, 0, 1, FINANCE_SOURCE_TOKEN_BEGINNING);
+        id = getId(sheet, 0, 2, FINANCE_SOURCE_TOKEN_BEGINNING);
         return SourceOfFinancing.values()[id];//TODO: this is extremely bad. Rework when some time will be available
     }
 
     EducationForm getEducationForm(Sheet sheet) {
-        int id = getId(sheet, 0, 0, EDUCATION_FORM_TOKEN_BEGINNING);
+        int id = getId(sheet, 0, 1, EDUCATION_FORM_TOKEN_BEGINNING);
         return new HibernateDao<>(EducationForm.class).get(id);
     }
 
@@ -84,17 +94,21 @@ public class FormK3Generator extends DocumentGenerator {
         String value;
         Cell cell = sheet.getRow(row).getCell(col);
 
-        if (cell == null || !cell.getCellTypeEnum().equals(CellType.STRING))
-            return 0;
+        if (cell == null || !cell.getCellTypeEnum().equals(CellType.STRING)) {
+            throw new IllegalStateException(format("Token '%s' is not found", token));
+        }
 
         value = sheet.getRow(row).getCell(col).getStringCellValue();
         cell.setCellType(CellType.BLANK);
-        if (!value.contains(token))
-            return 0;
+        if (!value.contains(token)) {
+            throw new IllegalStateException(format("Token '%s' does not contain required information", value));
+
+        }
 
         value = value.substring(token.length() + 1);
-        if (!Utils.isNumber(value))
-            return 0;
+        if (!Utils.isNumber(value)) {
+            throw new IllegalStateException(format("Token '%s' does not contain required information", value));
+        }
 
         return Integer.parseInt(value);
     }

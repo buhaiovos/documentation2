@@ -7,6 +7,7 @@ public enum ObjectOfWork {
     BACHELORS,
     SCI_MASTERS,
     PRO_MASTERS,
+    ALL_MASTERS,
     PHD,
     POSTGRADUATES,
     APPLICANTS_AND_TRAINEES,

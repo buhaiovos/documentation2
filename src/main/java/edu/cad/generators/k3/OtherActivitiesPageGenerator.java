@@ -1,11 +1,13 @@
 package edu.cad.generators.k3;
 
+import edu.cad.documentelements.areas.k3.K3ScienceResearchIndividualsArea;
 import edu.cad.documentelements.k3columns.AbstractOtherLoadColumn;
 import edu.cad.documentelements.k3columns.OtherLoadColumnsFactory;
 import edu.cad.entities.Department;
 import edu.cad.entities.EducationForm;
 import edu.cad.utils.k3.SourceOfFinancing;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
@@ -31,6 +33,8 @@ public class OtherActivitiesPageGenerator extends FormK3Generator {
             this.department = getDepartment(sheet);
             this.educationForm = getEducationForm(sheet);
             this.sourceOfFinancing = getSourceOfFinancing(sheet);
+            Cell pageSpecificTokenCell = getPageSpecificTokenCell(sheet);
+            pageSpecificTokenCell.setCellType(CellType.BLANK);
         }
 
         return canGenerate;
@@ -42,7 +46,8 @@ public class OtherActivitiesPageGenerator extends FormK3Generator {
         Map<Integer, List<AbstractOtherLoadColumn>> semesterToColumns = findColumns(sheet);
 
         // construct all areas
-        throw new UnsupportedOperationException("To be implemented...");
+        K3ScienceResearchIndividualsArea area = new K3ScienceResearchIndividualsArea(semesterToColumns);
+        area.fill(sheet, educationForm, sourceOfFinancing);
     }
 
     private Map<Integer, List<AbstractOtherLoadColumn>> findColumns(Sheet sheet) {
@@ -58,6 +63,7 @@ public class OtherActivitiesPageGenerator extends FormK3Generator {
                 if (token.contains(K3_OTHER_PAGE_COLUMN_TOKEN_BEGINNING)) {
                     AbstractOtherLoadColumn column =
                             OtherLoadColumnsFactory.getColumn(columnNumber, token, sourceOfFinancing);
+                    currentCell.setCellType(Cell.CELL_TYPE_BLANK);
 
                     semesterToColumns.get(column.getSemester()).add(column);
                 }
