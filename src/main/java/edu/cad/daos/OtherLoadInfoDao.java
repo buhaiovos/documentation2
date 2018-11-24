@@ -15,7 +15,7 @@ public class OtherLoadInfoDao extends HibernateDao<OtherLoadInfo> {
         super(OtherLoadInfo.class);
     }
 
-    public Optional<OtherLoadInfo> findByLoadHeaderAndSemesterAndYearAndEducationFromAndFinancialSource(OtherLoad loadHeader,
+    public Optional<OtherLoadInfo> findByLoadHeaderAndSemesterAndYearAndEducationFormAndFinancialSource(OtherLoad loadHeader,
                                                                                                         int semester,
                                                                                                         int year,
                                                                                                         EducationForm educationForm,

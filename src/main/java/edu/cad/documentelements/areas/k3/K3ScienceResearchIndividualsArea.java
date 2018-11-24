@@ -6,11 +6,12 @@ import edu.cad.daos.OtherLoadInfoDao;
 import edu.cad.documentelements.k3columns.AbstractOtherLoadColumn;
 import edu.cad.entities.*;
 import edu.cad.services.years.DbYearsService;
-import edu.cad.utils.k3.SourceOfFinancing;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
@@ -24,27 +25,16 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
     private static final String SECOND_YEAR_ROW = "#k3(O)ind_2";
 
     private static DbYearsService dbYearsService;
-    private EducationForm educationForm;
-    private SourceOfFinancing sourceOfFinancing;
 
     public K3ScienceResearchIndividualsArea(Map<Integer, List<AbstractOtherLoadColumn>> semesterNumToColumns) {
         super(semesterNumToColumns);
 
-        this.acceptableTokens = new HashSet<>();
         this.acceptableTokens.add(FIRST_YEAR_ROW);
         this.acceptableTokens.add(SECOND_YEAR_ROW);
     }
 
     @Override
-    public void fill(Sheet sheet, EducationForm formOfEducation, SourceOfFinancing sourceOfFinancing) {
-        this.educationForm = formOfEducation;
-        this.sourceOfFinancing = sourceOfFinancing;
-
-        findRowsOnSheet(sheet);
-        process(formOfEducation, sourceOfFinancing);
-    }
-
-    private void process(EducationForm formOfEducation, SourceOfFinancing sourceOfFinancing) {
+    protected void fill() {
         HibernateDao<WorkingPlan> workingPlanDao = new HibernateDao<>(WorkingPlan.class);
         List<WorkingPlan> workingPlansWithSciSubjects = workingPlanDao.getAll().stream()
                 .filter(wp -> Objects.nonNull(wp.getScientificResearchSubject()))
@@ -53,16 +43,14 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
         Map<SubjectInfo, List<AcademicGroup>> sciResearchSubjectToGroups = workingPlansWithSciSubjects.stream()
                 .collect(groupingBy(WorkingPlan::getScientificResearchSubject,
                         flatMapping(wp -> wp.getGroups().stream(),
-                                filtering(group -> formOfEducation.equals(group.getEducationForm()),
+                                filtering(group -> educationForm.equals(group.getEducationForm()),
                                         toList())))
                 );
 
         fillArea(sciResearchSubjectToGroups);
-
     }
 
     private void fillArea(Map<SubjectInfo, List<AcademicGroup>> sciResearchSubjectToGroups) {
-        // split into semesters
         Map<Integer, List<AcademicGroup>> semesterToGroups = sciResearchSubjectToGroups.keySet().stream()
                 .collect(
                         groupingBy(info -> info.getSemester() % 2,
@@ -81,13 +69,21 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
             Map<Integer, List<AcademicGroup>> yearToGroupsWhichApplicableInGivenSemester = groupsForSemester.stream()
                     .collect(groupingBy(this::getYearOfEducation));
 
-            List<AbstractOtherLoadColumn> columnsForSemester = semesterNumToColumns.get(semester);
+            processYear(
+                    yearToGroupsWhichApplicableInGivenSemester,
+                    1,
+                    semester,
+                    tokenToRow.get(FIRST_YEAR_ROW),
+                    semesterNumToColumns.get(semester)
+            );
 
-            processYear(yearToGroupsWhichApplicableInGivenSemester, 1, semester, tokenToRow.get(FIRST_YEAR_ROW),
-                    columnsForSemester);
-
-            processYear(yearToGroupsWhichApplicableInGivenSemester, 2, semester, tokenToRow.get(SECOND_YEAR_ROW),
-                    columnsForSemester);
+            processYear(
+                    yearToGroupsWhichApplicableInGivenSemester,
+                    2,
+                    semester,
+                    tokenToRow.get(SECOND_YEAR_ROW),
+                    semesterNumToColumns.get(semester)
+            );
         }
     }
 
@@ -103,54 +99,28 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
             final int yearOfEducation = 4 + year;
 
             var otherLoadDao = new OtherLoadDao();
-            OtherLoad persistedOtherLoad =
-                    otherLoadDao.findByLoadTypeAndWorkObject(SCI_RESEARCH_INDIVIDUAL, ALL_MASTERS)
-                            .orElseGet(() -> {
-                                        var otherLoad = new OtherLoad();
-                                        otherLoad.setLoadType(SCI_RESEARCH_INDIVIDUAL);
-                                        otherLoad.setObjectOfWork(ALL_MASTERS);
-
-                                        otherLoadDao.create(otherLoad);
-
-                                        return otherLoad;
-                                    }
-                            );
+            OtherLoad persistedOtherLoad = otherLoadDao.findByLoadTypeAndWorkObject(SCI_RESEARCH_INDIVIDUAL, ALL_MASTERS)
+                    .orElseGet(() -> createAndSaveOtherLoad(otherLoadDao));
 
             var otherLoadInfoDao = new OtherLoadInfoDao();
-            OtherLoadInfo persistedInfo =
-                    otherLoadInfoDao.findByLoadHeaderAndSemesterAndYearAndEducationFromAndFinancialSource(
-                            persistedOtherLoad, semester, yearOfEducation, educationForm, sourceOfFinancing)
-                            .orElseGet(() -> {
-                                var otherLoadInfo = new OtherLoadInfo();
-                                otherLoadInfo.setYearOfEducation(yearOfEducation);
-                                otherLoadInfo.setFacultyTitle(faculty);
-                                otherLoadInfo.setGroups(groupsWhichHaveStudentsOfGivenFinancialSource);
-                                otherLoadInfo.setSemester(semester);
-                                otherLoadInfo.setLoadHeader(persistedOtherLoad);
-                                otherLoadInfo.setEducationForm(educationForm);
-                                otherLoadInfo.setSourceOfFinancing(sourceOfFinancing);
-
-                                otherLoadInfoDao.create(otherLoadInfo);
-
-                                return otherLoadInfo;
-                            });
-
+            OtherLoadInfo persistedInfo = otherLoadInfoDao
+                    .findByLoadHeaderAndSemesterAndYearAndEducationFormAndFinancialSource(
+                            persistedOtherLoad,
+                            semester, yearOfEducation,
+                            educationForm,
+                            sourceOfFinancing
+                    )
+                    .orElseGet(
+                            () -> createAndSaveNewOtherLoadInfo(
+                                    semester, groupsWhichHaveStudentsOfGivenFinancialSource,
+                                    faculty, yearOfEducation, persistedOtherLoad, otherLoadInfoDao
+                            )
+                    );
 
             columns.forEach(column -> column.fill(row, persistedInfo));
 
             otherLoadInfoDao.update(persistedInfo);
 
-        }
-    }
-
-    private ToIntFunction<AcademicGroup> resolveForSourceOfFinancing(SourceOfFinancing sourceOfFinancing) {
-        switch (sourceOfFinancing) {
-            case Contract:
-                return AcademicGroup::getContractStudents;
-            case Budgetary:
-                return AcademicGroup::getBudgetaryStudents;
-            default:
-                throw new IllegalArgumentException(sourceOfFinancing.name());
         }
     }
 
@@ -171,5 +141,35 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
 
     public static void setDbYearsService(DbYearsService service) {
         dbYearsService = service;
+    }
+
+    private OtherLoad createAndSaveOtherLoad(OtherLoadDao otherLoadDao) {
+        var otherLoad = new OtherLoad();
+        otherLoad.setLoadType(SCI_RESEARCH_INDIVIDUAL);
+        otherLoad.setObjectOfWork(ALL_MASTERS);
+
+        otherLoadDao.create(otherLoad);
+
+        return otherLoad;
+    }
+
+    private OtherLoadInfo createAndSaveNewOtherLoadInfo(int semester,
+                                                        List<AcademicGroup> groupsWhichHaveStudentsOfGivenFinancialSource,
+                                                        String faculty,
+                                                        int yearOfEducation,
+                                                        OtherLoad persistedOtherLoad,
+                                                        OtherLoadInfoDao otherLoadInfoDao) {
+        var otherLoadInfo = new OtherLoadInfo();
+        otherLoadInfo.setYearOfEducation(yearOfEducation);
+        otherLoadInfo.setFacultyTitle(faculty);
+        otherLoadInfo.setGroups(groupsWhichHaveStudentsOfGivenFinancialSource);
+        otherLoadInfo.setSemester(semester);
+        otherLoadInfo.setLoadHeader(persistedOtherLoad);
+        otherLoadInfo.setEducationForm(educationForm);
+        otherLoadInfo.setSourceOfFinancing(sourceOfFinancing);
+
+        otherLoadInfoDao.create(otherLoadInfo);
+
+        return otherLoadInfo;
     }
 }

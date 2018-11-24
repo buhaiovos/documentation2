@@ -24,15 +24,15 @@ public class PracticeController extends AbstractEntityController<Practice> {
 
     @Override
     protected Practice getInstance(HttpServletRequest request) {
-        Practice instance = new Practice();
-        instance = initializeInstance(instance, request);
-        setIntProperty(request, "semester", instance::setSemester);
-        setIntProperty(request, "weeks", instance::setWeeks);
-        setStringProperty(request, "denotation", instance::setDenotation);
-        setDateProperty(request, "start", instance::setStart);
-        setDateProperty(request, "finish", instance::setFinish);
-        
-        return instance;
+        var practice = new Practice();
+        practice = initializeInstance(practice, request);
+        setIntProperty(request, "semester", practice::setSemester);
+        setIntProperty(request, "weeks", practice::setWeeks);
+        setStringProperty(request, "denotation", practice::setDenotationFromString);
+        setDateProperty(request, "start", practice::setStart);
+        setDateProperty(request, "finish", practice::setFinish);
+
+        return practice;
     }
     
     @Override

@@ -1,11 +1,13 @@
 package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
+import edu.cad.domain.PracticeType;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "practice")
@@ -30,8 +32,9 @@ public class Practice implements IDatabaseEntity, Serializable{
     private int weeks;
     
     @Expose
-    @Column(name = "denotation")
-    private String denotation;
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private PracticeType type;
     
     @Expose
     @Column(name = "start")
@@ -44,12 +47,11 @@ public class Practice implements IDatabaseEntity, Serializable{
     public Practice() {
     }
 
-    public Practice(int id, int semester, int weeks, String denotation, 
-            Date start, Date finish) {
+    public Practice(int id, int semester, int weeks, PracticeType type, Date start, Date finish) {
         this.id = id;
         this.semester = semester;
         this.weeks = weeks;
-        this.denotation = denotation;
+        this.type = type;
         this.start = start;
         this.finish = finish;
     }
@@ -80,12 +82,12 @@ public class Practice implements IDatabaseEntity, Serializable{
         this.weeks = weeks;
     }
 
-    public String getDenotation() {
-        return denotation;
+    public PracticeType getType() {
+        return type;
     }
 
-    public void setDenotation(String denotation) {
-        this.denotation = denotation;
+    public void setType(PracticeType denotation) {
+        this.type = denotation;
     }
 
     public Date getStart() {
@@ -119,21 +121,16 @@ public class Practice implements IDatabaseEntity, Serializable{
         if (obj == null) {
             return false;
         }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
         final Practice other = (Practice) obj;
-        if (this.id != other.getId()) {
-            return false;
-        }
-        return true;
+        return this.id == other.getId();
     }
 
     @Override
     public String toString() {
-        return denotation + " (" + semester + " семестр/" + weeks + " тижні(в))";
+        return type + " (" + semester + " семестр/" + weeks + " тижні(в))";
     }
-    
-    
-    
+
+    public void setDenotationFromString(String type) {
+        this.type = PracticeType.valueOf(type);
+    }
 }
