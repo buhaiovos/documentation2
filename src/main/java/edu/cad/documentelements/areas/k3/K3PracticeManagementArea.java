@@ -8,8 +8,7 @@ import edu.cad.entities.AcademicGroup;
 import edu.cad.entities.OtherLoad;
 import edu.cad.entities.OtherLoadInfo;
 import edu.cad.entities.WorkingPlan;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import edu.cad.utils.Pair;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.util.List;
@@ -145,12 +144,5 @@ public class K3PracticeManagementArea extends K3OtherStudyLoadArea {
         info.setGroups(groups); //in case this changed in data but in db values are not up-to-date
 
         return info;
-    }
-
-    @RequiredArgsConstructor
-    @Getter
-    private static final class Pair<T1, T2> {
-        private final T1 left;
-        private final T2 right;
     }
 }

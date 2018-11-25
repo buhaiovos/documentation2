@@ -1,6 +1,6 @@
 $(document).ready(function() {
         $('#StateCertificationTableContainer').jtable({
-            title : 'Освітньо-кваліфікаційні рівні',
+            title: 'Державні атестації',
             editinline: { enable : true },
             actions : {
                 listAction: 'state-certification?action=list',
