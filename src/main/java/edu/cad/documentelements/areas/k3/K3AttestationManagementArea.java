@@ -60,7 +60,7 @@ public class K3AttestationManagementArea extends K3OtherStudyLoadArea {
     }
 
     private List<AcademicGroup> getMatchingGroups(QualificationLevel qualificationLevel) {
-        ToIntFunction<AcademicGroup> studentsNumExtractor = resolveForSourceOfFinancing(sourceOfFinancing);
+        ToIntFunction<AcademicGroup> studentsNumExtractor = sourceOfFinancing.studentNumberGetter();
 
         return wpDao.getAll().stream()
                 .filter(workingPlan -> Objects.nonNull(workingPlan.getStateCertification()))

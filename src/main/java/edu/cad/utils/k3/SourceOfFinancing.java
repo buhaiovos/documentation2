@@ -2,6 +2,8 @@ package edu.cad.utils.k3;
 
 import edu.cad.entities.AcademicGroup;
 
+import java.util.function.ToIntFunction;
+
 public enum SourceOfFinancing {
     Budgetary, 
     Contract;
@@ -26,5 +28,17 @@ public enum SourceOfFinancing {
         }
         
         return group.getTotalStudents();
+    }
+
+    public ToIntFunction<AcademicGroup> studentNumberGetter() {
+        switch (this) {
+            case Budgetary:
+                return AcademicGroup::getBudgetaryStudents;
+            case Contract:
+                return AcademicGroup::getContractStudents;
+
+            default:
+                throw new IllegalArgumentException(this.name());
+        }
     }
 }

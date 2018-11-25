@@ -16,7 +16,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.*;
-import java.util.function.ToIntFunction;
 
 import static org.apache.poi.ss.usermodel.CellType.BLANK;
 import static org.apache.poi.ss.usermodel.CellType.STRING;
@@ -34,7 +33,7 @@ public abstract class K3OtherStudyLoadArea extends AbstractDocumentElement {
     OtherLoadDao otherLoadDao = new OtherLoadDao();
     OtherLoadInfoDao otherLoadInfoDao = new OtherLoadInfoDao();
 
-    public K3OtherStudyLoadArea(Map<Integer, List<AbstractOtherLoadColumn>> semesterNumToColumns) {
+    K3OtherStudyLoadArea(Map<Integer, List<AbstractOtherLoadColumn>> semesterNumToColumns) {
         this.semesterNumToColumns = semesterNumToColumns;
     }
 
@@ -63,17 +62,6 @@ public abstract class K3OtherStudyLoadArea extends AbstractDocumentElement {
                     }
                 }
             }
-        }
-    }
-
-    ToIntFunction<AcademicGroup> resolveForSourceOfFinancing(SourceOfFinancing sourceOfFinancing) {
-        switch (sourceOfFinancing) {
-            case Contract:
-                return AcademicGroup::getContractStudents;
-            case Budgetary:
-                return AcademicGroup::getBudgetaryStudents;
-            default:
-                throw new IllegalArgumentException(sourceOfFinancing.name());
         }
     }
 

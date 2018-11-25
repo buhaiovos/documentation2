@@ -88,7 +88,7 @@ public class K3PracticeManagementArea extends K3OtherStudyLoadArea {
     }
 
     private Map<Integer, List<AcademicGroup>> getGroupsInvolvedGroupedBySemester(List<WorkingPlan> workingPlansWithGivenPractice) {
-        ToIntFunction<AcademicGroup> studentsNumExtractor = resolveForSourceOfFinancing(sourceOfFinancing);
+        ToIntFunction<AcademicGroup> studentsNumExtractor = sourceOfFinancing.studentNumberGetter();
         return workingPlansWithGivenPractice.stream()
                 .collect(
                         groupingBy(this::calculateSemesterForPractice,

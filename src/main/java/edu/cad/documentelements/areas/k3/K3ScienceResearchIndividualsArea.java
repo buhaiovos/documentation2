@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 
 import static edu.cad.domain.ObjectOfWork.ALL_MASTERS;
 import static edu.cad.domain.OtherLoadType.SCI_RESEARCH_INDIVIDUAL;
-import static edu.cad.domain.QualificationLevel.*;
+import static edu.cad.domain.QualificationLevel.PROF_MASTER;
+import static edu.cad.domain.QualificationLevel.SCI_MASTER;
 import static java.util.stream.Collectors.*;
 
 public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
@@ -88,7 +89,7 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
     private void processYear(Map<Integer, List<AcademicGroup>> yearToGroups, int year, int semester,
                              Row row, List<AbstractOtherLoadColumn> columns) {
         if (yearToGroups.containsKey(year)) {
-            ToIntFunction<AcademicGroup> studentsNumExtractor = resolveForSourceOfFinancing(sourceOfFinancing);
+            ToIntFunction<AcademicGroup> studentsNumExtractor = sourceOfFinancing.studentNumberGetter();
             List<AcademicGroup> groupsWhichHaveStudentsOfGivenFinancialSource = yearToGroups.get(year).stream()
                     .filter(group -> studentsNumExtractor.applyAsInt(group) > 0)
                     .collect(Collectors.toList());
