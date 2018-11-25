@@ -34,6 +34,29 @@ public class OtherLoadInfoDao extends HibernateDao<OtherLoadInfo> {
         query.setParameter("educationForm", educationForm);
         query.setParameter("sourceOfFinancing", source);
 
+        return processQueryQuietly(query);
+    }
+
+    public Optional<OtherLoadInfo> findByLoadHeaderAndSemesterAndEducationFormAndFinancialSource(OtherLoad loadHeader,
+                                                                                                 int semester,
+                                                                                                 EducationForm educationForm,
+                                                                                                 SourceOfFinancing source) {
+        EntityManager em = getSession().getEntityManagerFactory().createEntityManager();
+        TypedQuery<OtherLoadInfo> query = em.createQuery("select oli from OtherLoadInfo oli " +
+                "where oli.loadHeader = :loadHeader " +
+                "and oli.semester = :semester " +
+                "and oli.educationForm = :educationForm " +
+                "and oli.sourceOfFinancing = :sourceOfFinancing", OtherLoadInfo.class);
+
+        query.setParameter("loadHeader", loadHeader);
+        query.setParameter("semester", semester);
+        query.setParameter("educationForm", educationForm);
+        query.setParameter("sourceOfFinancing", source);
+
+        return processQueryQuietly(query);
+    }
+
+    private Optional<OtherLoadInfo> processQueryQuietly(TypedQuery<OtherLoadInfo> query) {
         try {
             return Optional.of(query.getSingleResult());
         } catch (NoResultException e) {

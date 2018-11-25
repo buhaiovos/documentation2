@@ -1,8 +1,6 @@
 package edu.cad.documentelements.areas.k3;
 
 import edu.cad.daos.HibernateDao;
-import edu.cad.daos.OtherLoadDao;
-import edu.cad.daos.OtherLoadInfoDao;
 import edu.cad.documentelements.k3columns.AbstractOtherLoadColumn;
 import edu.cad.entities.*;
 import edu.cad.services.years.DbYearsService;
@@ -98,11 +96,9 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
             String faculty = "ІПСА";
             final int yearOfEducation = 4 + year;
 
-            var otherLoadDao = new OtherLoadDao();
             OtherLoad persistedOtherLoad = otherLoadDao.findByLoadTypeAndWorkObject(SCI_RESEARCH_INDIVIDUAL, ALL_MASTERS)
-                    .orElseGet(() -> createAndSaveOtherLoad(otherLoadDao));
+                    .orElseGet(this::createAndSaveOtherLoad);
 
-            var otherLoadInfoDao = new OtherLoadInfoDao();
             OtherLoadInfo persistedInfo = otherLoadInfoDao
                     .findByLoadHeaderAndSemesterAndYearAndEducationFormAndFinancialSource(
                             persistedOtherLoad,
@@ -113,7 +109,7 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
                     .orElseGet(
                             () -> createAndSaveNewOtherLoadInfo(
                                     semester, groupsWhichHaveStudentsOfGivenFinancialSource,
-                                    faculty, yearOfEducation, persistedOtherLoad, otherLoadInfoDao
+                                    faculty, yearOfEducation, persistedOtherLoad
                             )
                     );
 
@@ -143,33 +139,8 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
         dbYearsService = service;
     }
 
-    private OtherLoad createAndSaveOtherLoad(OtherLoadDao otherLoadDao) {
-        var otherLoad = new OtherLoad();
-        otherLoad.setLoadType(SCI_RESEARCH_INDIVIDUAL);
-        otherLoad.setObjectOfWork(ALL_MASTERS);
-
-        otherLoadDao.create(otherLoad);
-
-        return otherLoad;
+    private OtherLoad createAndSaveOtherLoad() {
+        return createAndSaveOtherLoad(SCI_RESEARCH_INDIVIDUAL, ALL_MASTERS);
     }
 
-    private OtherLoadInfo createAndSaveNewOtherLoadInfo(int semester,
-                                                        List<AcademicGroup> groupsWhichHaveStudentsOfGivenFinancialSource,
-                                                        String faculty,
-                                                        int yearOfEducation,
-                                                        OtherLoad persistedOtherLoad,
-                                                        OtherLoadInfoDao otherLoadInfoDao) {
-        var otherLoadInfo = new OtherLoadInfo();
-        otherLoadInfo.setYearOfEducation(yearOfEducation);
-        otherLoadInfo.setFacultyTitle(faculty);
-        otherLoadInfo.setGroups(groupsWhichHaveStudentsOfGivenFinancialSource);
-        otherLoadInfo.setSemester(semester);
-        otherLoadInfo.setLoadHeader(persistedOtherLoad);
-        otherLoadInfo.setEducationForm(educationForm);
-        otherLoadInfo.setSourceOfFinancing(sourceOfFinancing);
-
-        otherLoadInfoDao.create(otherLoadInfo);
-
-        return otherLoadInfo;
-    }
 }

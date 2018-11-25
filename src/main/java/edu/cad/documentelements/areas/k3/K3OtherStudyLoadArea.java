@@ -1,9 +1,15 @@
 package edu.cad.documentelements.areas.k3;
 
+import edu.cad.daos.OtherLoadDao;
+import edu.cad.daos.OtherLoadInfoDao;
 import edu.cad.documentelements.AbstractDocumentElement;
 import edu.cad.documentelements.k3columns.AbstractOtherLoadColumn;
+import edu.cad.domain.ObjectOfWork;
+import edu.cad.domain.OtherLoadType;
 import edu.cad.entities.AcademicGroup;
 import edu.cad.entities.EducationForm;
+import edu.cad.entities.OtherLoad;
+import edu.cad.entities.OtherLoadInfo;
 import edu.cad.utils.k3.SourceOfFinancing;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -25,9 +31,14 @@ public abstract class K3OtherStudyLoadArea extends AbstractDocumentElement {
     SourceOfFinancing sourceOfFinancing;
     EducationForm educationForm;
 
+    OtherLoadDao otherLoadDao = new OtherLoadDao();
+    OtherLoadInfoDao otherLoadInfoDao = new OtherLoadInfoDao();
+
     public K3OtherStudyLoadArea(Map<Integer, List<AbstractOtherLoadColumn>> semesterNumToColumns) {
         this.semesterNumToColumns = semesterNumToColumns;
     }
+
+    protected abstract void fill();
 
     public void fill(Sheet sheet, EducationForm formOfEducation, SourceOfFinancing sourceOfFinancing) {
         this.sourceOfFinancing = sourceOfFinancing;
@@ -37,9 +48,7 @@ public abstract class K3OtherStudyLoadArea extends AbstractDocumentElement {
         fill();
     }
 
-    protected abstract void fill();
-
-    void findRowsOnSheet(Sheet sheet) {
+    private void findRowsOnSheet(Sheet sheet) {
         Objects.requireNonNull(acceptableTokens, "Area must have distinctive tokens.");
 
         for (int rowNum = SEARCH_START_ROW; rowNum < sheet.getLastRowNum(); rowNum++) {
@@ -57,7 +66,7 @@ public abstract class K3OtherStudyLoadArea extends AbstractDocumentElement {
         }
     }
 
-    protected ToIntFunction<AcademicGroup> resolveForSourceOfFinancing(SourceOfFinancing sourceOfFinancing) {
+    ToIntFunction<AcademicGroup> resolveForSourceOfFinancing(SourceOfFinancing sourceOfFinancing) {
         switch (sourceOfFinancing) {
             case Contract:
                 return AcademicGroup::getContractStudents;
@@ -66,5 +75,34 @@ public abstract class K3OtherStudyLoadArea extends AbstractDocumentElement {
             default:
                 throw new IllegalArgumentException(sourceOfFinancing.name());
         }
+    }
+
+    OtherLoad createAndSaveOtherLoad(OtherLoadType type, ObjectOfWork object) {
+        var otherLoad = new OtherLoad();
+        otherLoad.setLoadType(type);
+        otherLoad.setObjectOfWork(object);
+
+        otherLoadDao.create(otherLoad);
+
+        return otherLoad;
+    }
+
+    OtherLoadInfo createAndSaveNewOtherLoadInfo(int semester,
+                                                List<AcademicGroup> groupsWhichHaveStudentsOfGivenFinancialSource,
+                                                String faculty,
+                                                int yearOfEducation,
+                                                OtherLoad persistedOtherLoad) {
+        var otherLoadInfo = new OtherLoadInfo();
+        otherLoadInfo.setYearOfEducation(yearOfEducation);
+        otherLoadInfo.setFacultyTitle(faculty);
+        otherLoadInfo.setGroups(groupsWhichHaveStudentsOfGivenFinancialSource);
+        otherLoadInfo.setSemester(semester);
+        otherLoadInfo.setLoadHeader(persistedOtherLoad);
+        otherLoadInfo.setEducationForm(educationForm);
+        otherLoadInfo.setSourceOfFinancing(sourceOfFinancing);
+
+        otherLoadInfoDao.create(otherLoadInfo);
+
+        return otherLoadInfo;
     }
 }
