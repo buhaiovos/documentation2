@@ -44,7 +44,9 @@ public abstract class K3OtherStudyLoadArea extends AbstractDocumentElement {
         this.educationForm = formOfEducation;
 
         findRowsOnSheet(sheet);
-        fill();
+        if (!tokenToRow.isEmpty()) {
+            fill();
+        }
     }
 
     private void findRowsOnSheet(Sheet sheet) {

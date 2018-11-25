@@ -1,6 +1,7 @@
 package edu.cad.generators.k3;
 
 import edu.cad.documentelements.areas.k3.K3AttestationManagementArea;
+import edu.cad.documentelements.areas.k3.K3ExamWorkArea;
 import edu.cad.documentelements.areas.k3.K3PracticeManagementArea;
 import edu.cad.documentelements.areas.k3.K3ScienceResearchIndividualsArea;
 import edu.cad.documentelements.k3columns.AbstractOtherLoadColumn;
@@ -51,6 +52,7 @@ public class OtherActivitiesPageGenerator extends FormK3Generator {
         new K3ScienceResearchIndividualsArea(semesterToColumns).fill(sheet, educationForm, sourceOfFinancing);
         new K3PracticeManagementArea(semesterToColumns).fill(sheet, educationForm, sourceOfFinancing);
         new K3AttestationManagementArea(semesterToColumns).fill(sheet, educationForm, sourceOfFinancing);
+        new K3ExamWorkArea(semesterToColumns).fill(sheet, educationForm, sourceOfFinancing);
     }
 
     private Map<Integer, List<AbstractOtherLoadColumn>> findColumns(Sheet sheet) {
