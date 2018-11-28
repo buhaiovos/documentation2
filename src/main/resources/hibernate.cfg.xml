@@ -31,5 +31,6 @@
         <mapping class="edu.cad.entities.WorkingPlan"/>
         <mapping class="edu.cad.entities.OtherLoad"/>
         <mapping class="edu.cad.entities.OtherLoadInfo"/>
+        <mapping class="edu.cad.entities.Staff"/>
     </session-factory>
 </hibernate-configuration>

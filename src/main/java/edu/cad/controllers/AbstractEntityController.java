@@ -206,8 +206,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
         gson = createGsonBuilder().create();
     }
 
-    private void processListAction(HttpServletResponse response)
-            throws IOException {
+    private void processListAction(HttpServletResponse response) throws IOException {
         list = getList();
 
         putOk();

@@ -4,22 +4,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
-import edu.cad.entities.AcademicGroup;
+import edu.cad.entities.Staff;
 
 import java.lang.reflect.Type;
 
-public class AcademicGroupSerializer extends AbstractEntitySerializer<AcademicGroup>{
+public class StaffSerializer extends AbstractEntitySerializer<Staff> {
 
     @Override
-    public JsonElement serialize(AcademicGroup instance, Type type, JsonSerializationContext jsc) {
+    public JsonElement serialize(Staff instance, Type type, JsonSerializationContext jsc) {
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         JsonElement jsonElement = gson.toJsonTree(instance);
-        
-        addProperty(jsonElement, "specialization", instance.getSpecialization(), false);
-        addProperty(jsonElement, "qualification", instance.getQualification(), false);
+
         addProperty(jsonElement, "educationForm", instance.getEducationForm(), false);
-        addProperty(jsonElement, "workplan", instance.getWorkingPlan(), false);
-       
+
         return jsonElement.getAsJsonObject();
     }
 }

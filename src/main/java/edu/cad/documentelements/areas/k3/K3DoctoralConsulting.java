@@ -13,27 +13,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static edu.cad.domain.OtherLoadType.MANAGEMENT;
-import static edu.cad.domain.StaffType.POSTGRADUATE;
-import static edu.cad.domain.StaffType.TRAINEE;
+import static edu.cad.domain.StaffType.DOCTORAL_STUDENT;
 
 @SuppressWarnings("Duplicates")
-public class K3PostgraduatesManagement extends K3OtherStudyLoadArea {
-    private static final String POSTGRADUATES = "#k3(O)manPostgr";
-    private static final String TRAINEES = "#k3(O)manTrainees";
+public class K3DoctoralConsulting extends K3OtherStudyLoadArea {
+    private static final String DOCTORAL = "#k3(O)docCon";
 
-    public K3PostgraduatesManagement(Map<Integer, List<AbstractOtherLoadColumn>> semesterNumToColumns) {
+    public K3DoctoralConsulting(Map<Integer, List<AbstractOtherLoadColumn>> semesterNumToColumns) {
         super(semesterNumToColumns);
 
-        acceptableTokens.add(POSTGRADUATES);
-        acceptableTokens.add(TRAINEES);
+        acceptableTokens.add(DOCTORAL);
     }
 
     @Override
     protected void fill() {
-        fill(POSTGRADUATE, 1);
-        fill(POSTGRADUATE, 2);
-        fill(TRAINEE, 1);
-        fill(TRAINEE, 2);
+        fill(DOCTORAL_STUDENT, 1);
+        fill(DOCTORAL_STUDENT, 2);
     }
 
     private void fill(StaffType type, int semester) {
@@ -67,15 +62,10 @@ public class K3PostgraduatesManagement extends K3OtherStudyLoadArea {
     }
 
     private String resolveForActorType(StaffType type) {
-        switch (type) {
-            case POSTGRADUATE:
-                return POSTGRADUATES;
-            case TRAINEE:
-                return TRAINEES;
-
-            default:
-                throw new IllegalArgumentException(type.name() + " is not supported");
+        if (type == DOCTORAL_STUDENT) {
+            return DOCTORAL;
         }
+        throw new IllegalArgumentException(type.name() + " is not supported");
     }
 
 

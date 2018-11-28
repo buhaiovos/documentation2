@@ -29,4 +29,9 @@ public class OtherLoad implements IDatabaseEntity {
             mappedBy = "loadHeader"
     )
     private List<OtherLoadInfo> loadInfo;
+
+    @Override
+    public String toString() {
+        return id + " " + loadType.name() + " " + objectOfWork.name();
+    }
 }

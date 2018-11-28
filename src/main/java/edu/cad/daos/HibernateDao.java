@@ -100,7 +100,7 @@ public class HibernateDao<Entity extends IDatabaseEntity> implements IDAO<Entity
             transaction.rollback();
             return false;
         } finally {
-            session.flush();
+//            session.flush();
         }
 
         return true;
