@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class K3SubgroupsCaculator {
+public class K3SubgroupsCalculator {
 
     public static List<K3SubjectEntity> calculateList(List<SubjectInfo> subjectDetails,
                                                       SourceOfFinancing source) {
-        removeEmptySubjects(subjectDetails, source);
-        if (subjectDetails.isEmpty())
+//        removeEmptySubjects(subjectDetails, source);
+        if (subjectDetails.isEmpty()) {
             return new ArrayList<>();
+        }
 
         List<K3SubjectEntity> entities = createList(subjectDetails);
 
