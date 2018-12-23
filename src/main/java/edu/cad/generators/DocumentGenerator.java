@@ -1,6 +1,6 @@
 package edu.cad.generators;
 
-import edu.cad.Document;
+import edu.cad.domain.Document;
 import edu.cad.generators.k3.FormK3Generator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;

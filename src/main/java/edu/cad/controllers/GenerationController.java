@@ -1,6 +1,6 @@
 package edu.cad.controllers;
 
-import edu.cad.Document;
+import edu.cad.domain.Document;
 import edu.cad.services.DocumentGenerationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

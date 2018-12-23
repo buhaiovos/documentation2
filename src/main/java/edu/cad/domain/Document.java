@@ -1,4 +1,4 @@
-package edu.cad;
+package edu.cad.domain;
 
 public enum Document {
     CURRICULUM,
