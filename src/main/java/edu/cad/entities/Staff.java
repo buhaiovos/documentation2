@@ -1,5 +1,6 @@
 package edu.cad.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.Expose;
 import edu.cad.domain.StaffType;
 import edu.cad.entities.interfaces.IDatabaseEntity;
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties({"educationForm"})
 public class Staff implements IDatabaseEntity {
     @Expose
     @Id

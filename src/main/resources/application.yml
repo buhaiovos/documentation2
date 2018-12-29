@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: ${db.url}
+    username: ${db.username}
+    password: ${db.password}
+
+debug: false
+
+cad:
+  generation:
+    templates-extension: .xls
+    path:
+      workplan: /WEB-INF/classes/templates/WorkplanTemplate.xls
+      curriculum: /WEB-INF/classes/templates/CurriculumTemplate.xls
+      k3: /WEB-INF/classes/templates/K3FormTemplate.xls

@@ -11,6 +11,6 @@ public interface HibernateSessionManager {
     void configureNewSession(Configuration configuration);
 
     static HibernateSessionManager getInstance() {
-        return HibernateSessionManagerImpl.INSTANCE;
+        return null;
     }
 }

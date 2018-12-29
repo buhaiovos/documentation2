@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import edu.cad.daos.HibernateDao;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.entities.interfaces.SubjectProperty;
-import edu.cad.entities.listeners.SubjectListener;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -20,7 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@EntityListeners(SubjectListener.class)
+//@EntityListeners(SubjectListener.class)
 @Table(name = "academic_subject")
 public class SubjectInfo implements IDatabaseEntity, Serializable {
     @Expose
