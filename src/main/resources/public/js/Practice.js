@@ -16,9 +16,13 @@ $(document).ready(function() {
                     create : false,
                     edit : false        
                 },
-                denotation : {
+                type: {
                     title : 'Вид практики',
-                    edit : true
+                    options: {
+                        'PRE_DIPLOMA': 'Переддипломна',
+                        'PEDAGOGICAL': 'Педагогічна',
+                        'SCI_RESEARCH': 'Науково-дослідна'
+                    }
                 },
                 semester : {
                     title : 'Семестр',

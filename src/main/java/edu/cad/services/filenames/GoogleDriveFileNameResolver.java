@@ -1,6 +1,6 @@
 package edu.cad.services.filenames;
 
-import edu.cad.Document;
+import edu.cad.domain.Document;
 import edu.cad.utils.databaseutils.DatabaseSwitcher;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;

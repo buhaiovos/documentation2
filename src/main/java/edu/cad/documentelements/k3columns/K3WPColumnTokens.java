@@ -3,6 +3,9 @@ package edu.cad.documentelements.k3columns;
 import edu.cad.utils.documentutils.ColumnTokenStringSplitter;
 
 final class K3WPColumnTokens {
+    private K3WPColumnTokens() {
+    }
+
     private static final String TOKEN_BEGINNING = ColumnTokenStringSplitter.K3_WP_TOKEN_BEGINNING;
 
     static final String ORDER_NUM = TOKEN_BEGINNING + "sem";

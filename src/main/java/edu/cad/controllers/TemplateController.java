@@ -1,8 +1,9 @@
 package edu.cad.controllers;
 
-import edu.cad.Document;
+import edu.cad.domain.Document;
 import edu.cad.services.filenames.FileNameResolvingService;
 import edu.cad.services.storage.StorageService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,14 +12,10 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/templates")
+@RequiredArgsConstructor
 public class TemplateController {
     private final StorageService storageService;
     private final FileNameResolvingService docNameResolver;
-
-    public TemplateController(StorageService storageService, FileNameResolvingService docNameResolver) {
-        this.storageService = storageService;
-        this.docNameResolver = docNameResolver;
-    }
 
     @GetMapping
     public ResponseEntity<byte[]> getTemplate(@RequestParam("template") Document document) {

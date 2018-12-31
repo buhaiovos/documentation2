@@ -1,6 +1,6 @@
 package edu.cad.services.filenames;
 
-import edu.cad.Document;
+import edu.cad.domain.Document;
 
 public interface FileNameResolvingService {
     String resolveForDocument(Document document);

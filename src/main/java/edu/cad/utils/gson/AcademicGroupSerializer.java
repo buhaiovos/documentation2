@@ -22,7 +22,4 @@ public class AcademicGroupSerializer extends AbstractEntitySerializer<AcademicGr
        
         return jsonElement.getAsJsonObject();
     }
-    
-    
-    
 }

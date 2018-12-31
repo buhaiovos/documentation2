@@ -1,15 +1,13 @@
-package edu.cad.generators;
+package edu.cad.generators.k3;
 
-import edu.cad.daos.HibernateDao;
 import edu.cad.daos.StudyLoadResultsDao;
 import edu.cad.documentelements.k3columns.AbstractK3Column;
-import edu.cad.documentelements.k3columns.AllK3ColumnsFactory;
-import edu.cad.documentelements.k3columns.StudyLoadColumn;
+import edu.cad.documentelements.k3columns.K3SubjectPageColumnsFactory;
+import edu.cad.documentelements.k3columns.SubjectStudyLoadColumn;
 import edu.cad.entities.Department;
 import edu.cad.entities.EducationForm;
-import edu.cad.entities.StudyLoadResults;
 import edu.cad.entities.SubjectInfo;
-import edu.cad.utils.Utils;
+import edu.cad.entities.SubjectStudyLoad;
 import edu.cad.utils.documentutils.FormulaCopier;
 import edu.cad.utils.documentutils.K3SemesterStartRowFinder;
 import edu.cad.utils.documentutils.RowInserter;
@@ -18,105 +16,49 @@ import edu.cad.utils.k3.K3SubjectListCreator;
 import edu.cad.utils.k3.SourceOfFinancing;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class FormK3Generator extends DocumentGenerator {
-    private static final String EDUCATION_FORM_TOKEN_BEGINNING = "#edform";
-    private static final String FINANCE_SOURCE_TOKEN_BEGINNING = "#source";
-    private static final int FIRST = 1;
-    private static final int SECOND = 2;
+public class SubjectListPageGenerator extends FormK3Generator {
+    private static final String PAGE_TOKEN = "#subj";
 
-    private final Department department;
     private final StudyLoadResultsDao studyLoadResultsDao;
 
+    private Map<Class, List<AbstractK3Column>> columnClassToListOfColumns;
+    private Department department;
     private EducationForm educationForm;
     private SourceOfFinancing sourceOfFinancing;
-    private Map<Class, List<AbstractK3Column>> columnClassToListOfColumns;
 
-    FormK3Generator() {
-        this.department = new HibernateDao<>(Department.class).get(1);
+    SubjectListPageGenerator() {
         this.studyLoadResultsDao = new StudyLoadResultsDao();
     }
 
     @Override
-    void fillInSheet(Sheet sheet) {
-        if (currentSheetNeedsToBeFilled(sheet)) {
-            fill(sheet);
-        }
+    public boolean canGenerate(Sheet sheet) {
+        return isPageSpecificTokenPresent(sheet, PAGE_TOKEN) && areEducationFormAndFinancialSourceTokensPresent(sheet);
     }
 
-    private boolean currentSheetNeedsToBeFilled(Sheet sheet) {
-        return areEducationFormAndSourceTokenPresent(sheet);
-    }
-
-    private boolean areEducationFormAndSourceTokenPresent(Sheet sheet) {
-        boolean educationFormIsPresent = false;
-        boolean financialSourceIsPresent = false;
-
-        final Row firstRow = sheet.getRow(0);
-        for (int cellNumber = 0; cellNumber < sheet.getLastRowNum(); cellNumber++) {
-            Cell cell = firstRow.getCell(cellNumber);
-            if (cell != null && cell.getStringCellValue() != null) {
-                String cellValue = cell.getStringCellValue();
-                if (cellValue.contains(EDUCATION_FORM_TOKEN_BEGINNING)) {
-                    educationFormIsPresent = true;
-                    cell.setCellValue(cellValue);
-                    cell.setCellType(CellType.STRING);
-                }
-                if (cellValue.contains(FINANCE_SOURCE_TOKEN_BEGINNING)) {
-                    financialSourceIsPresent = true;
-                    cell.setCellValue(cellValue);
-                    cell.setCellType(CellType.STRING);
-                }
-            }
-        }
-
-        return educationFormIsPresent && financialSourceIsPresent;
-    }
-
-    private void fill(Sheet sheet) {
-        initializeColumnsMap();
-        setEducationFormAndSource(sheet);
+    @Override
+    public void fillInSheet(Sheet sheet) {
+        init(sheet);
         fillSemester(sheet, FIRST);
         fillSemester(sheet, SECOND);
+    }
+
+    private void init(Sheet sheet) {
+        initializeColumnsMap();
+        this.department = getDepartment(sheet);
+        this.sourceOfFinancing = getSourceOfFinancing(sheet);
+        this.educationForm = getEducationForm(sheet);
     }
 
     private void initializeColumnsMap() {
         this.columnClassToListOfColumns = new HashMap<>();
         columnClassToListOfColumns.put(AbstractK3Column.class, new ArrayList<>());
-        columnClassToListOfColumns.put(StudyLoadColumn.class, new ArrayList<>());
-    }
-
-    private void setEducationFormAndSource(Sheet sheet) {
-        int id = getId(sheet, 0, 0, EDUCATION_FORM_TOKEN_BEGINNING);
-        educationForm = new HibernateDao<>(EducationForm.class).get(id);
-
-        id = getId(sheet, 0, 1, FINANCE_SOURCE_TOKEN_BEGINNING);
-        sourceOfFinancing = SourceOfFinancing.values()[id];
-    }
-
-    private int getId(Sheet sheet, int row, int col, String token) {
-        String value;
-        Cell cell = sheet.getRow(row).getCell(col);
-
-        if (cell == null || !cell.getCellTypeEnum().equals(CellType.STRING))
-            return 0;
-
-        value = sheet.getRow(row).getCell(col).getStringCellValue();
-        cell.setCellType(CellType.BLANK);
-        if (!value.contains(token))
-            return 0;
-
-        value = value.substring(token.length() + 1);
-        if (!Utils.isNumber(value))
-            return 0;
-
-        return Integer.parseInt(value);
+        columnClassToListOfColumns.put(SubjectStudyLoadColumn.class, new ArrayList<>());
     }
 
     private void fillSemester(final Sheet sheet, final int semester) {
@@ -134,21 +76,20 @@ public class FormK3Generator extends DocumentGenerator {
     private void findColumnsForCurrentSemesterPart(Row row) {
         for (int i = 0; i <= row.getLastCellNum(); i++) {
             Cell cell = row.getCell(i);
-            AllK3ColumnsFactory.createAndAddColumn(columnClassToListOfColumns, cell, sourceOfFinancing);
+            K3SubjectPageColumnsFactory.createAndAddColumn(columnClassToListOfColumns, cell, sourceOfFinancing);
         }
     }
 
     private void clearRecordedColumns() {
         columnClassToListOfColumns.get(AbstractK3Column.class).clear();
-        columnClassToListOfColumns.get(StudyLoadColumn.class).clear();
+        columnClassToListOfColumns.get(SubjectStudyLoadColumn.class).clear();
     }
 
-    private void fillRows(final Row firstRowOfSemesterSection,
-                          final List<K3SubjectEntity> subjects,
+    private void fillRows(final Row firstRowOfSemesterSection, final List<K3SubjectEntity> subjects,
                           final boolean needToFixFormulas) {
         K3SubjectEntity firstSubject = subjects.get(0);
         if (needToFixFormulas) {
-            fixShiftedFormulas(firstRowOfSemesterSection, columnClassToListOfColumns.get(StudyLoadColumn.class));
+            fixShiftedFormulas(firstRowOfSemesterSection, columnClassToListOfColumns.get(SubjectStudyLoadColumn.class));
         }
         processAllColumns(firstRowOfSemesterSection, firstSubject);
 
@@ -169,10 +110,10 @@ public class FormK3Generator extends DocumentGenerator {
     private void processAllColumns(Row row, K3SubjectEntity subject) {
         fillColumns(row, columnClassToListOfColumns.get(AbstractK3Column.class), subject);
         HSSFFormulaEvaluator.evaluateAllFormulaCells(row.getSheet().getWorkbook());
-        readStudyLoadColumnsAndSaveData(
+        readLoadColumnsAndSaveData(
                 row,
-                columnClassToListOfColumns.get(StudyLoadColumn.class)
-                        .stream().map(StudyLoadColumn.class::cast).collect(Collectors.toList()),
+                columnClassToListOfColumns.get(SubjectStudyLoadColumn.class)
+                        .stream().map(SubjectStudyLoadColumn.class::cast).collect(Collectors.toList()),
                 subject
         );
     }
@@ -185,10 +126,10 @@ public class FormK3Generator extends DocumentGenerator {
         }
     }
 
-    private void readStudyLoadColumnsAndSaveData(Row row, List<StudyLoadColumn> columns, K3SubjectEntity subject) {
-        StudyLoadResults results = studyLoadResultsDao.findBySubjectInfoAndSourceOfFinanceAndFormOfEducation(
+    private void readLoadColumnsAndSaveData(Row row, List<SubjectStudyLoadColumn> columns, K3SubjectEntity subject) {
+        SubjectStudyLoad results = studyLoadResultsDao.findBySubjectInfoAndSourceOfFinanceAndFormOfEducation(
                 subject.getSubjectInfo(), this.sourceOfFinancing, this.educationForm
-        ).orElseGet(() -> this.newStudyLoadResults(subject.getSubjectInfo()));
+        ).orElseGet(() -> this.newSubjectLoad(subject.getSubjectInfo()));
 
         columns.stream()
                 .filter(Objects::nonNull)
@@ -197,8 +138,8 @@ public class FormK3Generator extends DocumentGenerator {
         studyLoadResultsDao.update(results);
     }
 
-    private StudyLoadResults newStudyLoadResults(SubjectInfo subjectInfo) {
-        var studyLoadResults = new StudyLoadResults();
+    private SubjectStudyLoad newSubjectLoad(SubjectInfo subjectInfo) {
+        var studyLoadResults = new SubjectStudyLoad();
         studyLoadResults.setSubjectInfo(subjectInfo);
         studyLoadResults.setEducationForm(this.educationForm);
         studyLoadResults.setSourceOfFinancing(this.sourceOfFinancing);

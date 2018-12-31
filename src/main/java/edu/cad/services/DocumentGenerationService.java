@@ -1,6 +1,6 @@
 package edu.cad.services;
 
-import edu.cad.Document;
+import edu.cad.domain.Document;
 import edu.cad.generators.DocumentGenerator;
 import edu.cad.services.filenames.FileNameResolvingService;
 import edu.cad.services.storage.StorageService;

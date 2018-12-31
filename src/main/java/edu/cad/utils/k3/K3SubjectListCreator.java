@@ -13,38 +13,38 @@ public class K3SubjectListCreator {
                                                    final Department department,
                                                    final int semester) {
         Set<WorkingPlan> includedWorkingPlans = createWorkPlanSet(educationForm);
-        Set<SubjectInfo> subjectDetailsSet = createSubjectSet(includedWorkingPlans, department, semester);
+        Set<SubjectInfo> allSubjectsInfo = createSubjectSet(includedWorkingPlans, department, semester);
 
-        Map<SubjectHeader, List<SubjectInfo>> subjectMap = new LinkedHashMap<>();
+        Map<SubjectHeader, List<SubjectInfo>> subjectHeaderToSubjectInfo = new LinkedHashMap<>();
 
-        for (SubjectInfo subjectDetails : subjectDetailsSet) {
-            int position = findPosition(subjectMap, subjectDetails);
+        for (SubjectInfo subjectInfo : allSubjectsInfo) {
+            int position = findPosition(subjectHeaderToSubjectInfo, subjectInfo);
             Map<Department, List<AcademicGroup>> map = new HashMap<>();
 
-            for (AcademicGroup group : subjectDetails.getGroups()) {
+            for (AcademicGroup group : subjectInfo.getGroups()) {
                 if (!group.getEducationForm().equals(educationForm)) {
-                    subjectDetails.getGroups().remove(group);
+                    subjectInfo.getGroups().remove(group);
                     continue;
                 }
 
                 if (!group.getDepartment().equals(department)) {
                     addToMap(map, group);
-                    subjectDetails.getGroups().remove(group);
+                    subjectInfo.getGroups().remove(group);
                 }
             }
 
-            subjectMap.get(subjectDetails.getSubjectHeader()).add(position++, subjectDetails);
-            addClones(subjectMap, subjectDetails, position, map);
+            subjectHeaderToSubjectInfo.get(subjectInfo.getSubjectHeader()).add(position++, subjectInfo);
+            addClones(subjectHeaderToSubjectInfo, subjectInfo, position, map);
         }
 
-        List<K3SubjectEntity> entities = new ArrayList<>();
-        for (SubjectHeader dictionary : subjectMap.keySet()) {
-            entities.addAll(K3SubgroupsCaculator.calculateList(subjectMap.get(dictionary), source));
+        List<K3SubjectEntity> subjects = new ArrayList<>();
+        for (SubjectHeader subjectHeader : subjectHeaderToSubjectInfo.keySet()) {
+            subjects.addAll(K3SubgroupsCalculator.calculateList(subjectHeaderToSubjectInfo.get(subjectHeader), source));
         }
 
-        assignNumbersToSubjectEntities(entities);
+        assignNumbersToSubjectEntities(subjects);
 
-        return entities;
+        return subjects;
     }
 
     private static Set<WorkingPlan> createWorkPlanSet(EducationForm educationForm) {
@@ -62,8 +62,7 @@ public class K3SubjectListCreator {
         Set<SubjectInfo> subjectDetails = new LinkedHashSet<>();
 
         for (WorkingPlan workingPlan : workingPlans) {
-            Set<CurriculumSubject> workingPlanSubjects = new TreeSet<>();
-            workingPlanSubjects.addAll(workingPlan.getCurriculumSubjects());
+            Set<CurriculumSubject> workingPlanSubjects = new TreeSet<>(workingPlan.getCurriculumSubjects());
 
             for (CurriculumSubject curriculumSubject : workingPlanSubjects) {
                 SubjectInfo info = curriculumSubject.getSubjectInfo();
@@ -80,12 +79,11 @@ public class K3SubjectListCreator {
         return subjectDetails;
     }
 
-    private static void addToMap(Map<Department, List<AcademicGroup>> map, AcademicGroup group) {
-        if (!map.containsKey(group.getDepartment())) {
-            map.put(group.getDepartment(), new ArrayList<>());
+    private static void addToMap(Map<Department, List<AcademicGroup>> departmentToGroups, AcademicGroup group) {
+        List<AcademicGroup> groups = departmentToGroups.putIfAbsent(group.getDepartment(), new ArrayList<>(List.of(group)));
+        if (groups != null) { // null when first insertion occurs, hence no need to insert
+            groups.add(group);
         }
-
-        map.get(group.getDepartment()).add(group);
     }
 
     private static void addClones(Map<SubjectHeader, List<SubjectInfo>> subjectMap,
@@ -107,16 +105,15 @@ public class K3SubjectListCreator {
         }
     }
 
-    private static int findPosition(Map<SubjectHeader, List<SubjectInfo>> subjectMap, SubjectInfo subjectDetails) {
-        if (!subjectMap.containsKey(subjectDetails.getSubjectHeader())) {
-            subjectMap.put(subjectDetails.getSubjectHeader(), new ArrayList<>());
-            return 0;
-        }
-
+    private static int findPosition(Map<SubjectHeader, List<SubjectInfo>> subjectHeaderToSubjectInfos, SubjectInfo subjectInfo) {
         int index = 0;
-        for (SubjectInfo element : subjectMap.get(subjectDetails.getSubjectHeader())) {
-            if (element.getEctsHours() < subjectDetails.getEctsHours()) {
-                index = subjectMap.get(subjectDetails.getSubjectHeader()).indexOf(element) + 1;
+        SubjectHeader subjectHeader = subjectInfo.getSubjectHeader();
+        List<SubjectInfo> subjectInfos;
+        if (null != (subjectInfos = subjectHeaderToSubjectInfos.putIfAbsent(subjectHeader, new ArrayList<>()))) {
+            for (SubjectInfo info : subjectInfos) {
+                if (info.getEctsHours() < subjectInfo.getEctsHours()) {
+                    index = subjectInfos.indexOf(info) + 1;
+                }
             }
         }
 

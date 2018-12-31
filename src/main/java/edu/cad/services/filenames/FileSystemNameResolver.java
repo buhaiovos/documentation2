@@ -1,6 +1,6 @@
 package edu.cad.services.filenames;
 
-import edu.cad.Document;
+import edu.cad.domain.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

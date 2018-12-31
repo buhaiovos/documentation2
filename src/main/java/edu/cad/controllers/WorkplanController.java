@@ -1,11 +1,8 @@
 package edu.cad.controllers;
 
 import com.google.gson.GsonBuilder;
-import edu.cad.entities.Curriculum;
-import edu.cad.entities.Practice;
-import edu.cad.entities.StateCertification;
-import edu.cad.entities.WorkingPlan;
-import edu.cad.utils.gson.WorkplanSerializer;
+import edu.cad.entities.*;
+import edu.cad.utils.gson.WorkingPlanSerializer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +21,7 @@ public class WorkplanController extends AbstractEntityController<WorkingPlan> {
     @Override
     protected GsonBuilder createGsonBuilder() {
         return super.createGsonBuilder().registerTypeAdapter(WorkingPlan.class,
-                new WorkplanSerializer());
+                new WorkingPlanSerializer());
     }
 
 
@@ -37,6 +34,7 @@ public class WorkplanController extends AbstractEntityController<WorkingPlan> {
         setObjectProperty(request, "curriculum", workplan::setCurriculum, Curriculum.class);
         setObjectProperty(request, "practice", workplan::setPractice, Practice.class);
         setObjectProperty(request, "stateCertification", workplan::setStateCertification, StateCertification.class);
+        setObjectProperty(request, "scientific_subject", workplan::setScientificResearchSubject, SubjectInfo.class);
         
         return workplan;
     }

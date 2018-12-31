@@ -3,8 +3,6 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.show_sql">false</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
@@ -23,11 +21,14 @@
         <mapping class="edu.cad.entities.Section"/>
         <mapping class="edu.cad.entities.Specialization"/>
         <mapping class="edu.cad.entities.StateCertification"/>
-        <mapping class="edu.cad.entities.StudyLoadResults"/>
+        <mapping class="edu.cad.entities.SubjectStudyLoad"/>
         <mapping class="edu.cad.entities.SubjectInfo"/>
         <mapping class="edu.cad.entities.SubjectHeader"/>
         <mapping class="edu.cad.entities.SubjectType"/>
         <mapping class="edu.cad.entities.WorkType"/>
         <mapping class="edu.cad.entities.WorkingPlan"/>
+        <mapping class="edu.cad.entities.OtherLoad"/>
+        <mapping class="edu.cad.entities.OtherLoadInfo"/>
+        <mapping class="edu.cad.entities.Staff"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,6 +1,6 @@
 package edu.cad.controllers;
 
-import edu.cad.Document;
+import edu.cad.domain.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

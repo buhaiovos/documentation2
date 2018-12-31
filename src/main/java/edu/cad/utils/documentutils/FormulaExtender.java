@@ -8,10 +8,11 @@ public class FormulaExtender {
 
     public static void extendFormula(Sheet sheet, Cell src, Cell dst) {
         Cell formulaCell = sheet.getRow(dst.getRowIndex() + 1).getCell(dst.getColumnIndex());
-        
-        if(!formulaCell.getCellTypeEnum().equals(CellType.FORMULA))
+
+        if (formulaCell == null || !formulaCell.getCellTypeEnum().equals(CellType.FORMULA)) {
             return;
-        
+        }
+
         String formula = formulaCell.getCellFormula();
         formula = formula.replaceAll(":" + src.getAddress().toString(), ":" + dst.getAddress().toString());
         formulaCell.setCellFormula(formula);

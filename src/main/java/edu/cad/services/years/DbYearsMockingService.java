@@ -1,12 +1,9 @@
 package edu.cad.services.years;
 
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
-
 import java.util.Set;
 
-@Service
-@Primary
+//@Service
+//@Primary
 public class DbYearsMockingService implements DbYearsService {
     @Override
     public Set<Integer> getAll() {

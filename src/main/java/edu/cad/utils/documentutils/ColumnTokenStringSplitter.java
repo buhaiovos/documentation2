@@ -1,10 +1,12 @@
 package edu.cad.utils.documentutils;
 
 import edu.cad.utils.Utils;
+import lombok.Getter;
 
 /**
  * @author Олександр
  */
+@Getter
 public class ColumnTokenStringSplitter {
 
     public static final String CURRICULUM_TOKEN_BEGINNING = "#";
@@ -74,21 +76,4 @@ public class ColumnTokenStringSplitter {
     private void setFormula() {
         formula = token.substring(token.indexOf('_') + 1).replaceAll(",", ".").replaceAll(";", ",");
     }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getFormula() {
-        return formula;
-    }
-
-    public String getFirstNumString() {
-        return firstNumString;
-    }
-
-    public String getSecondNumString() {
-        return secondNumString;
-    }
-
 }
