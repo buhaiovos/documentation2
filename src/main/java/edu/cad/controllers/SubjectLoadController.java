@@ -1,5 +1,6 @@
 package edu.cad.controllers;
 
+import edu.cad.controllers.dto.DistributedSubjectLoadDto;
 import edu.cad.controllers.dto.SubjectLoadDistributionDto;
 import edu.cad.services.load.distribution.SubjectLoadDistributionService;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +17,26 @@ import java.util.List;
 public class SubjectLoadController {
     private final SubjectLoadDistributionService distributionService;
 
-    @GetMapping
-    public List<String> getAll() {
-        return null;
+    @GetMapping(params = "employee_id")
+    public List<DistributedSubjectLoadDto> getAllByEmployeeId(@RequestParam("employee_id") int employeeId) {
+        return distributionService.getAllByEmployeeId(employeeId);
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity submitLoadDistribution(@PathVariable int id, @RequestBody SubjectLoadDistributionDto dto) {
-        log.info("Accepted dto: {} with id: {}", dto, id);
+    @GetMapping("/{load-id}")
+    public List<DistributedSubjectLoadDto> getDistributedLoadByLoadId(@PathVariable("load-id") int loadId) {
+        return distributionService.getAllByLoadId(loadId);
+    }
+
+    @PostMapping("/{load-id}")
+    public ResponseEntity submitLoadDistribution(@PathVariable("load-id") int loadId, @RequestBody SubjectLoadDistributionDto dto) {
+        log.info("Accepted dto: {} with id: {}", dto, loadId);
+        distributionService.submitDistribution(loadId, dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity deleteLoadDistribution(@RequestParam("distribution_id") int distributionId) {
+        distributionService.deleteById(distributionId);
         return ResponseEntity.ok().build();
     }
 }

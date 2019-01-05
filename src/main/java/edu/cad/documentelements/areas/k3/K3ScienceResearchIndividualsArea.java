@@ -124,7 +124,7 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
 
     private boolean hasMasterQualification(AcademicGroup group) { // bad design. Answer to this question should be given by AcademicGroup object
         return Set.of(
-                MASTER.getDbId(),
+//                MASTER.getDbId(),
                 PROF_MASTER.getDbId(),
                 SCI_MASTER.getDbId()
         ).contains(

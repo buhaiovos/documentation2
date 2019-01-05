@@ -1,0 +1,9 @@
+cad:
+  generation:
+    path:
+      curriculum:
+        ~/tmp/genration
+      workplan:
+        ~/tmp/generation
+      k3:
+        ~/tmp/generation
