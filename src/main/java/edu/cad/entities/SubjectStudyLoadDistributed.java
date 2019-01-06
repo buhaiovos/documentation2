@@ -8,8 +8,8 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "subject_study_load_submitted")
-public class SubjectStudyLoadSubmitted implements IDatabaseEntity {
+@Table(name = "subject_study_load_distributed")
+public class SubjectStudyLoadDistributed implements IDatabaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -7,8 +7,10 @@ import edu.cad.utils.k3.SourceOfFinancing;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "staff")
@@ -65,5 +67,9 @@ public class Staff implements IDatabaseEntity {
 
     public void setSourceOfFinancingFromString(String name) {
         this.sourceOfFinancing = SourceOfFinancing.valueOf(name);
+    }
+
+    public String getFullName() {
+        return StringUtils.join(List.of(firstName, lastName).toArray(), " ");
     }
 }

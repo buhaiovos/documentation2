@@ -13,5 +13,4 @@ public interface SubjectLoadDistributionService {
     void deleteById(int distributionId);
 
     void submitDistribution(int loadId, SubjectLoadDistributionDto dto);
-
 }

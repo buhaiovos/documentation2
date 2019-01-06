@@ -31,7 +31,7 @@
         <mapping class="edu.cad.entities.OtherLoad"/>
         <mapping class="edu.cad.entities.OtherLoadInfo"/>
         <mapping class="edu.cad.entities.Staff"/>
-        <mapping class="edu.cad.entities.SubjectStudyLoadSubmitted"/>
+        <mapping class="edu.cad.entities.SubjectStudyLoadDistributed"/>
         <mapping class="edu.cad.entities.OtherLoadInfoSubmitted"/>
     </session-factory>
 </hibernate-configuration>
