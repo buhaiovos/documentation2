@@ -61,10 +61,10 @@ public class SubjectLoadDistributionServiceImpl implements SubjectLoadDistributi
     }
 
     @Override
-    public void submitDistribution(int loadId, SubjectLoadDistributionDto dto) {
-        log.info("submitting load for load with id: {} and data: {}", loadId, dto);
+    public void submitDistribution(SubjectLoadDistributionDto dto) {
+        log.info("submitting load for data: {}", dto);
 
-        SubjectStudyLoad studyLoad = studyLoadDao.getById(loadId)
+        SubjectStudyLoad studyLoad = studyLoadDao.getById(dto.getLoadId())
                 .orElseThrow(() -> new IllegalArgumentException("No such load exists"));
 
         SubjectStudyLoadDistributed distributedLoad = toDistributedLoad(dto, studyLoad);

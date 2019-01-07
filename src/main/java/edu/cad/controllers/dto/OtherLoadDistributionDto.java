@@ -4,16 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class SubjectLoadDistributionDto {
+public class OtherLoadDistributionDto {
     @JsonProperty("load_id")
-    private int loadId;
-
-    @JsonProperty("type")
-    private String type;
-
-    @JsonProperty("value")
-    private double value;
+    private int otherLoadId;
 
     @JsonProperty("staff_id")
     private int staffId;
+
+    @JsonProperty("value")
+    private double value;
 }

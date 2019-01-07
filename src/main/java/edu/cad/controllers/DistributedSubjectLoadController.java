@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/subject-load")
+@RequestMapping("/distributed-subject-load")
 @RequiredArgsConstructor
 @Slf4j
-public class SubjectLoadController {
+public class DistributedSubjectLoadController {
     private final SubjectLoadDistributionService distributionService;
 
     @GetMapping(params = "employee_id")
@@ -22,21 +22,21 @@ public class SubjectLoadController {
         return distributionService.getAllByEmployeeId(employeeId);
     }
 
-    @GetMapping("/{load-id}")
-    public List<DistributedSubjectLoadDto> getDistributedLoadByLoadId(@PathVariable("load-id") int loadId) {
+    @GetMapping(params = "load_id")
+    public List<DistributedSubjectLoadDto> getDistributedLoadByLoadId(@RequestParam("load_id") int loadId) {
         return distributionService.getAllByLoadId(loadId);
     }
 
-    @PostMapping("/{load-id}")
-    public ResponseEntity submitLoadDistribution(@PathVariable("load-id") int loadId, @RequestBody SubjectLoadDistributionDto dto) {
-        log.info("Accepted dto: {} with id: {}", dto, loadId);
-        distributionService.submitDistribution(loadId, dto);
+    @PostMapping
+    public ResponseEntity submitLoadDistribution(@RequestBody SubjectLoadDistributionDto dto) {
+        log.info("Accepted dto: {}", dto);
+        distributionService.submitDistribution(dto);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping
-    public ResponseEntity deleteLoadDistribution(@RequestParam("distribution_id") int distributionId) {
-        distributionService.deleteById(distributionId);
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteLoadDistribution(@PathVariable int id) {
+        distributionService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 }
