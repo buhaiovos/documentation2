@@ -3,7 +3,7 @@ package edu.cad.services.load.distribution;
 import edu.cad.controllers.dto.DistributedSubjectLoadDto;
 import edu.cad.controllers.dto.SubjectLoadDistributionDto;
 import edu.cad.daos.HibernateDao;
-import edu.cad.documentelements.k3columns.StudyLoadType;
+import edu.cad.domain.StudyLoadType;
 import edu.cad.entities.SubjectStudyLoad;
 import edu.cad.entities.SubjectStudyLoadDistributed;
 import edu.cad.services.StaffService;

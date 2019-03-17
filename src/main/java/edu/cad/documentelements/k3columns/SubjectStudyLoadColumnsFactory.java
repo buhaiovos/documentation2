@@ -1,5 +1,6 @@
 package edu.cad.documentelements.k3columns;
 
+import edu.cad.domain.StudyLoadType;
 import edu.cad.entities.SubjectStudyLoad;
 import edu.cad.utils.documentutils.CellWithTokenValidator;
 import edu.cad.utils.documentutils.ColumnTokenStringSplitter;
@@ -45,7 +46,7 @@ public class SubjectStudyLoadColumnsFactory {
                 return SubjectStudyLoad::setControlWorks;
             case COURSE_PROJECTS:
                 return SubjectStudyLoad::setCourseProjects;
-            case COURSEWORKS:
+            case COURSE_WORKS:
                 return SubjectStudyLoad::setCourseWorks;
             case RGRS:
                 return SubjectStudyLoad::setRGRs;

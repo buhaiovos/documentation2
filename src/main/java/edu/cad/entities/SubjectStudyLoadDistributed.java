@@ -1,6 +1,6 @@
 package edu.cad.entities;
 
-import edu.cad.documentelements.k3columns.StudyLoadType;
+import edu.cad.domain.StudyLoadType;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.Data;
 

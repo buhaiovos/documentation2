@@ -7,3 +7,7 @@ cad:
         ~/tmp/generation
       k3:
         ~/tmp/generation
+  allowed-origins:
+    urls:
+      - http://localhost:4200
+      - http://localhost:4200/subject-load
