@@ -1,5 +1,6 @@
 package edu.cad.documentelements.k3columns;
 
+import edu.cad.domain.StudyLoadType;
 import edu.cad.entities.SubjectStudyLoad;
 import edu.cad.utils.documentutils.CellUtils;
 import edu.cad.utils.k3.K3SubjectEntity;
