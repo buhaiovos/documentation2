@@ -5,6 +5,7 @@
  */
 package edu.cad.domain;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -30,7 +31,9 @@ public enum StudyLoadType {
     REFERATS("referats", "k3(SL)referat"),
     CONSULTATIONS("consult", "k3(SL)consult");
 
+    @JsonValue
     private final String id;
+
     private final String k3Token;
 
     public static StudyLoadType getByToken(String token) {

@@ -11,3 +11,8 @@ cad:
     urls:
       - http://localhost:4200
       - http://localhost:4200/subject-load
+    headers:
+      - content-type
+spring:
+  mvc:
+    dispatch-options-request: true

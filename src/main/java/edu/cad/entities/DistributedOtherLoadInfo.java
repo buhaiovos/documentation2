@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "other_load_info_distributed")
-public class OtherLoadInfoDistributed implements IDatabaseEntity {
+public class DistributedOtherLoadInfo implements IDatabaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

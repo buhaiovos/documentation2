@@ -1,5 +1,7 @@
 package edu.cad.configuration;
 
+import edu.cad.controllers.dto.DistributedSubjectLoadDto;
+import edu.cad.daos.DistributedStudyLoadDao;
 import edu.cad.daos.HibernateDao;
 import edu.cad.entities.*;
 import edu.cad.services.years.DbYearsTrackingService;
@@ -19,11 +21,6 @@ public class DocumentationBeans {
                 new DatabaseCloner(HibernateSessionManager.getInstance()),
                 yearsTrackingService
         );
-    }
-
-    @Bean
-    public HibernateDao<SubjectStudyLoadDistributed> subjectStudyLoadSubmittedHibernateDao() {
-        return new HibernateDao<>(SubjectStudyLoadDistributed.class);
     }
 
     @Bean
@@ -47,7 +44,12 @@ public class DocumentationBeans {
     }
 
     @Bean
-    public HibernateDao<OtherLoadInfoDistributed> otherLoadInfoSubmittedHibernateDao() {
-        return new HibernateDao<>(OtherLoadInfoDistributed.class);
+    public HibernateDao<DistributedOtherLoadInfo> otherLoadInfoSubmittedHibernateDao() {
+        return new HibernateDao<>(DistributedOtherLoadInfo.class);
+    }
+
+    @Bean
+    public DistributedStudyLoadDao distributedStudyLoadDao() {
+        return new DistributedStudyLoadDao(DistributedSubjectStudyLoad.class);
     }
 }

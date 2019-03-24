@@ -6,6 +6,7 @@ import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.utils.hibernateutils.HibernateSessionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -83,6 +84,10 @@ public class HibernateDao<Entity extends IDatabaseEntity> implements IDAO<Entity
             System.out.println(e);
             transaction.rollback();
             return false;
+        } finally {
+            if (transaction.getStatus().equals(TransactionStatus.ACTIVE)) {
+                transaction.commit();
+            }
         }
 
         return true;

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "subject_study_load_distributed")
-public class SubjectStudyLoadDistributed implements IDatabaseEntity {
+public class DistributedSubjectStudyLoad implements IDatabaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

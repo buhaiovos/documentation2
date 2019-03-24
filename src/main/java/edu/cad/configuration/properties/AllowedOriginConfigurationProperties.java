@@ -16,4 +16,5 @@ import java.util.Set;
 @Setter @Getter @NoArgsConstructor
 public class AllowedOriginConfigurationProperties {
     private Set<String> urls = new HashSet<>();
+    private Set<String> headers = new HashSet<>();
 }

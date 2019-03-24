@@ -1,6 +1,7 @@
 package edu.cad.controllers.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.cad.domain.StudyLoadType;
 import lombok.Data;
 
 @Data
@@ -9,7 +10,7 @@ public class SubjectLoadDistributionDto {
     private int loadId;
 
     @JsonProperty("type")
-    private String type;
+    private StudyLoadType type;
 
     @JsonProperty("value")
     private double value;

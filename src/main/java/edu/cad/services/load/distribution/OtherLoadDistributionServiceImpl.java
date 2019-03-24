@@ -4,7 +4,7 @@ import edu.cad.controllers.dto.DistributedOtherLoadDto;
 import edu.cad.controllers.dto.OtherLoadDistributionDto;
 import edu.cad.daos.HibernateDao;
 import edu.cad.entities.OtherLoadInfo;
-import edu.cad.entities.OtherLoadInfoDistributed;
+import edu.cad.entities.DistributedOtherLoadInfo;
 import edu.cad.services.StaffService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 public class OtherLoadDistributionServiceImpl implements OtherLoadDistributionService {
     private final HibernateDao<OtherLoadInfo> otherLoadInfoDao;
-    private final HibernateDao<OtherLoadInfoDistributed> otherLoadInfoSubmittedDao;
+    private final HibernateDao<DistributedOtherLoadInfo> otherLoadInfoSubmittedDao;
     private final StaffService staffService;
 
     @Override
@@ -33,7 +33,7 @@ public class OtherLoadDistributionServiceImpl implements OtherLoadDistributionSe
                 .collect(toList());
     }
 
-    private DistributedOtherLoadDto toDto(OtherLoadInfoDistributed distributedLoad) {
+    private DistributedOtherLoadDto toDto(DistributedOtherLoadInfo distributedLoad) {
         var dto = new DistributedOtherLoadDto();
         dto.setEmployeeName(distributedLoad.getAssignedProfessor().getFullName());
         dto.setId(distributedLoad.getId());
@@ -66,14 +66,14 @@ public class OtherLoadDistributionServiceImpl implements OtherLoadDistributionSe
 
         OtherLoadInfo otherLoadInfo = otherLoadInfoDao.getById(dto.getOtherLoadId())
                 .orElseThrow();
-        OtherLoadInfoDistributed distributed = createDistributedOtherLoadInfo(dto, otherLoadInfo);
+        DistributedOtherLoadInfo distributed = createDistributedOtherLoadInfo(dto, otherLoadInfo);
         otherLoadInfoSubmittedDao.create(distributed);
 
         log.info("created new distribution info with id: {}", distributed.getId());
     }
 
-    private OtherLoadInfoDistributed createDistributedOtherLoadInfo(OtherLoadDistributionDto dto, OtherLoadInfo otherLoadInfo) {
-        var otherLoadDistributed = new OtherLoadInfoDistributed();
+    private DistributedOtherLoadInfo createDistributedOtherLoadInfo(OtherLoadDistributionDto dto, OtherLoadInfo otherLoadInfo) {
+        var otherLoadDistributed = new DistributedOtherLoadInfo();
         otherLoadDistributed.setAmount(dto.getValue());
         otherLoadDistributed.setTargetLoad(otherLoadInfo);
         otherLoadDistributed.setAssignedProfessor(staffService.getById(dto.getStaffId()));

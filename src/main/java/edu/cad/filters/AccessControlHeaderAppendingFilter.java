@@ -9,12 +9,14 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class AllowOriginHeaderAppendingFilter implements Filter {
+public class AccessControlHeaderAppendingFilter implements Filter {
     private static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
+    private static final String ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers";
     private static final String ORIGIN = "Origin";
 
     private final AllowedOriginConfigurationProperties properties;
@@ -26,6 +28,7 @@ public class AllowOriginHeaderAppendingFilter implements Filter {
         if (properties.getUrls().contains(origin)) {
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             response.addHeader(ACCESS_CONTROL_ALLOW_ORIGIN, origin);
+            response.addHeader(ACCESS_CONTROL_ALLOW_HEADERS, String.join(",", properties.getHeaders()));
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

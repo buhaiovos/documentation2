@@ -3,9 +3,8 @@ package edu.cad.services.load.distribution;
 import edu.cad.controllers.dto.DistributedSubjectLoadDto;
 import edu.cad.controllers.dto.SubjectLoadDistributionDto;
 import edu.cad.daos.HibernateDao;
-import edu.cad.domain.StudyLoadType;
 import edu.cad.entities.SubjectStudyLoad;
-import edu.cad.entities.SubjectStudyLoadDistributed;
+import edu.cad.entities.DistributedSubjectStudyLoad;
 import edu.cad.services.StaffService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -20,7 +20,7 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class SubjectLoadDistributionServiceImpl implements SubjectLoadDistributionService {
 
-    private final HibernateDao<SubjectStudyLoadDistributed> submittedLoadDao;
+    private final HibernateDao<DistributedSubjectStudyLoad> submittedLoadDao;
     private final HibernateDao<SubjectStudyLoad> studyLoadDao;
     private final StaffService staffService;
 
@@ -33,7 +33,7 @@ public class SubjectLoadDistributionServiceImpl implements SubjectLoadDistributi
                 .collect(toList());
     }
 
-    private DistributedSubjectLoadDto toDto(SubjectStudyLoadDistributed loadSubmitted) {
+    private DistributedSubjectLoadDto toDto(DistributedSubjectStudyLoad loadSubmitted) {
         var distributedSubjectLoadDto = new DistributedSubjectLoadDto();
         distributedSubjectLoadDto.setId(loadSubmitted.getId());
         distributedSubjectLoadDto.setAmount(loadSubmitted.getAmount());
@@ -65,18 +65,18 @@ public class SubjectLoadDistributionServiceImpl implements SubjectLoadDistributi
         log.info("submitting load for data: {}", dto);
 
         SubjectStudyLoad studyLoad = studyLoadDao.getById(dto.getLoadId())
-                .orElseThrow(() -> new IllegalArgumentException("No such load exists"));
+                .orElseThrow(() -> new IllegalArgumentException(format("No load for id %d was found", dto.getLoadId())));
 
-        SubjectStudyLoadDistributed distributedLoad = toDistributedLoad(dto, studyLoad);
+        DistributedSubjectStudyLoad distributedLoad = toDistributedLoad(dto, studyLoad);
         submittedLoadDao.create(distributedLoad);
     }
 
-    private SubjectStudyLoadDistributed toDistributedLoad(SubjectLoadDistributionDto dto, SubjectStudyLoad studyLoad) {
-        var distributedLoad = new SubjectStudyLoadDistributed();
+    private DistributedSubjectStudyLoad toDistributedLoad(SubjectLoadDistributionDto dto, SubjectStudyLoad studyLoad) {
+        var distributedLoad = new DistributedSubjectStudyLoad();
         distributedLoad.setAmount(dto.getValue());
         distributedLoad.setTargetLoad(studyLoad);
         distributedLoad.setAssignedProfessor(staffService.getById(dto.getStaffId()));
-        distributedLoad.setStudyLoadType(StudyLoadType.valueOf(dto.getType()));
+        distributedLoad.setStudyLoadType(dto.getType());
 
         return distributedLoad;
     }

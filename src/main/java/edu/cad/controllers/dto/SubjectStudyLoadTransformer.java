@@ -1,7 +1,10 @@
 package edu.cad.controllers.dto;
 
+import edu.cad.domain.StudyLoadType;
 import edu.cad.entities.SubjectStudyLoad;
+import edu.cad.services.SubjectLoadSubtractionService;
 import edu.cad.utils.SubjectNameUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -10,31 +13,33 @@ import java.util.Map;
 import static edu.cad.domain.StudyLoadType.*;
 
 @Service
+@RequiredArgsConstructor
 public class SubjectStudyLoadTransformer {
+    private final SubjectLoadSubtractionService subjectLoadSubtractionService;
 
     public SubjectLoadDto toDto(SubjectStudyLoad studyLoad) {
         var subjectLoadDto = new SubjectLoadDto();
         subjectLoadDto.setId(studyLoad.getId());
         subjectLoadDto.setName(SubjectNameUtil.getDetailedSubjectName(studyLoad.getSubjectInfo(), "ІПСА"));
         subjectLoadDto.setLoadAmountByType(collectLoadDataToMap(studyLoad));
-        return subjectLoadDto;
+        return subjectLoadSubtractionService.subtractDistributedLoad(subjectLoadDto);
     }
 
-    private Map<String, Double> collectLoadDataToMap(SubjectStudyLoad studyLoad) {
-        var loadData = new HashMap<String, Double>();
-        loadData.put(LECTURES.getId(), studyLoad.getLectures());
-        loadData.put(PRACTICES.getId(), studyLoad.getPractices());
-        loadData.put(LABS.getId(), studyLoad.getLabs());
-        loadData.put(INDIVIDUALS.getId(), studyLoad.getIndividuals());
-        loadData.put(EXAMS.getId(), studyLoad.getExams());
-        loadData.put(CREDITS.getId(), studyLoad.getCredits());
-        loadData.put(CONTROL_WORKS.getId(), studyLoad.getControlWorks());
-        loadData.put(COURSE_PROJECTS.getId(), studyLoad.getCourseProjects());
-        loadData.put(COURSE_WORKS.getId(), studyLoad.getCourseWorks());
-        loadData.put(RGRS.getId(), studyLoad.getRGRs());
-        loadData.put(DKR.getId(), studyLoad.getDKRs());
-        loadData.put(REFERATS.getId(), studyLoad.getReferats());
-        loadData.put(CONSULTATIONS.getId(), studyLoad.getConsultations());
+    private Map<StudyLoadType, Double> collectLoadDataToMap(SubjectStudyLoad studyLoad) {
+        var loadData = new HashMap<StudyLoadType, Double>();
+        loadData.put(LECTURES, studyLoad.getLectures());
+        loadData.put(PRACTICES, studyLoad.getPractices());
+        loadData.put(LABS, studyLoad.getLabs());
+        loadData.put(INDIVIDUALS, studyLoad.getIndividuals());
+        loadData.put(EXAMS, studyLoad.getExams());
+        loadData.put(CREDITS, studyLoad.getCredits());
+        loadData.put(CONTROL_WORKS, studyLoad.getControlWorks());
+        loadData.put(COURSE_PROJECTS, studyLoad.getCourseProjects());
+        loadData.put(COURSE_WORKS, studyLoad.getCourseWorks());
+        loadData.put(RGRS, studyLoad.getRGRs());
+        loadData.put(DKR, studyLoad.getDKRs());
+        loadData.put(REFERATS, studyLoad.getReferats());
+        loadData.put(CONSULTATIONS, studyLoad.getConsultations());
 
         return loadData;
     }
