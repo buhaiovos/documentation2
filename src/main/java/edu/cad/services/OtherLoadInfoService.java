@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,6 @@ public class OtherLoadInfoService {
                 .filter(load -> load.getSemester() == semester)
                 .filter(load -> formOfEducation.getDbId() == load.getEducationForm().getId())
                 .filter(load -> sourceOfFinancing.equals(load.getSourceOfFinancing()))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 }

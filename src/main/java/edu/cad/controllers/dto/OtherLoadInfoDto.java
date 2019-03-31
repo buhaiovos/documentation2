@@ -1,6 +1,7 @@
 package edu.cad.controllers.dto;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Map;
@@ -9,8 +10,9 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 public class OtherLoadInfoDto {
     long id;
     String name;
-    Map<String, Double> data;
+    Map<String, Double> elements;
 }

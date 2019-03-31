@@ -12,20 +12,19 @@ public class OtherLoadInfoTransformer {
     public OtherLoadInfoDto toDto(OtherLoadInfo from) {
         long id = from.getId();
         String name = from.getLoadHeader().getLoadType().name();
-
-        String dataKey = from.getLoadHeader().getObjectOfWork().name() +
-                " " +
-                from.getGroups()
-                        .stream()
-                        .map(AcademicGroup::getCipher)
-                        .collect(Collectors.joining(", "));
-
+        String dataKey = from.getLoadHeader().getObjectOfWork().name() + " " + getGroupCiphers(from);
         double dataValue = from.getCalculatedHours();
 
-        OtherLoadInfoDto otherLoadInfoDto = new OtherLoadInfoDto();
-        otherLoadInfoDto.setId(id);
-        otherLoadInfoDto.setName(name);
-        otherLoadInfoDto.setData(ImmutableMap.of(dataKey, dataValue));
-        return otherLoadInfoDto;
+        return new OtherLoadInfoDto()
+                .setId(id)
+                .setName(name)
+                .setElements(ImmutableMap.of(dataKey, dataValue));
+    }
+
+    private String getGroupCiphers(OtherLoadInfo from) {
+        return from.getGroups()
+                .stream()
+                .map(AcademicGroup::getCipher)
+                .collect(Collectors.joining(", "));
     }
 }
