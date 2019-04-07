@@ -3,6 +3,7 @@ package edu.cad.services.load.distribution;
 import edu.cad.controllers.dto.DistributedOtherLoadDto;
 import edu.cad.controllers.dto.OtherLoadDistributionDto;
 import edu.cad.daos.HibernateDao;
+import edu.cad.daos.OtherLoadInfoDao;
 import edu.cad.entities.OtherLoadInfo;
 import edu.cad.entities.DistributedOtherLoadInfo;
 import edu.cad.services.StaffService;
@@ -18,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 @Slf4j
 public class OtherLoadDistributionServiceImpl implements OtherLoadDistributionService {
-    private final HibernateDao<OtherLoadInfo> otherLoadInfoDao;
+    private final OtherLoadInfoDao otherLoadInfoDao;
     private final HibernateDao<DistributedOtherLoadInfo> otherLoadInfoSubmittedDao;
     private final StaffService staffService;
 
@@ -70,6 +71,15 @@ public class OtherLoadDistributionServiceImpl implements OtherLoadDistributionSe
         otherLoadInfoSubmittedDao.create(distributed);
 
         log.info("created new distribution info with id: {}", distributed.getId());
+    }
+
+    @Override
+    public double getAllDistributedHoursForLoadById(long id) {
+        return otherLoadInfoSubmittedDao.getAll()
+                .stream()
+                .filter(load -> load.getTargetLoad().getId() == id)
+                .mapToDouble(DistributedOtherLoadInfo::getAmount)
+                .sum();
     }
 
     private DistributedOtherLoadInfo createDistributedOtherLoadInfo(OtherLoadDistributionDto dto, OtherLoadInfo otherLoadInfo) {

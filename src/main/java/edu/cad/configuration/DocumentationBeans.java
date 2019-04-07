@@ -3,6 +3,7 @@ package edu.cad.configuration;
 import edu.cad.controllers.dto.DistributedSubjectLoadDto;
 import edu.cad.daos.DistributedStudyLoadDao;
 import edu.cad.daos.HibernateDao;
+import edu.cad.daos.OtherLoadInfoDao;
 import edu.cad.entities.*;
 import edu.cad.services.years.DbYearsTrackingService;
 import edu.cad.utils.databaseutils.DatabaseCloner;
@@ -34,8 +35,8 @@ public class DocumentationBeans {
     }
 
     @Bean
-    public HibernateDao<OtherLoadInfo> otherLoadInfoHibernateDao() {
-        return new HibernateDao<>(OtherLoadInfo.class);
+    public OtherLoadInfoDao otherLoadInfoHibernateDao() {
+        return new OtherLoadInfoDao();
     }
 
     @Bean

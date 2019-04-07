@@ -1,9 +1,7 @@
 package edu.cad.services.load.distribution;
 
 import edu.cad.controllers.dto.DistributedOtherLoadDto;
-import edu.cad.controllers.dto.DistributedSubjectLoadDto;
 import edu.cad.controllers.dto.OtherLoadDistributionDto;
-import edu.cad.controllers.dto.SubjectLoadDistributionDto;
 
 import java.util.List;
 
@@ -15,4 +13,6 @@ public interface OtherLoadDistributionService {
     void deleteById(int distributionId);
 
     void submitDistribution(OtherLoadDistributionDto dto);
+
+    double getAllDistributedHoursForLoadById(long id);
 }
