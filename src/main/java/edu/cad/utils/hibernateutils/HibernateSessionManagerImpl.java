@@ -1,5 +1,6 @@
 package edu.cad.utils.hibernateutils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.cfgxml.spi.LoadedConfig;
@@ -7,6 +8,10 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import java.util.Map;
+import java.util.Properties;
+
+@Slf4j
 public enum HibernateSessionManagerImpl implements HibernateSessionManager {
     INSTANCE;
 
@@ -32,8 +37,27 @@ public enum HibernateSessionManagerImpl implements HibernateSessionManager {
     private Configuration fetchConfiguration() {
         var configuration = new Configuration();
         configuration.configure(HIBERNATE_CFG_XML);
-        configuration.addProperties(System.getProperties());
+
+        Properties properties = getDatabaseProperties();
+        configuration.addProperties(properties);
+
         return configuration;
+    }
+
+    private Properties getDatabaseProperties() {
+        Properties properties = new Properties();
+
+        String url = System.getenv("DB_URL");
+        String password = System.getenv("DB_PASSWORD");
+        String username = System.getenv("DB_USER_NAME");
+
+        log.info("Database url: {}", url);
+
+        properties.put("hibernate.connection.url", url);
+        properties.put("hibernate.connection.username", username);
+        properties.put("hibernate.connection.password", password);
+
+        return properties;
     }
 
     private synchronized SessionFactory getSessionFactory() {

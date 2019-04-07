@@ -10,7 +10,9 @@ cad:
   allowed-origins:
     urls:
       - http://localhost:4200
+      - http://localhost:8088
       - http://localhost:4200/subject-load
+      - http://localhost:8088/subject-load
     headers:
       - content-type
 spring:
