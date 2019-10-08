@@ -11,7 +11,7 @@ public abstract class AbstractEntitySerializer<T extends IDatabaseEntity>
             IDatabaseEntity object, boolean canBeEmpty) {
         
         if(object != null){
-            jsonElement.getAsJsonObject().addProperty(property, object.getId());
+            jsonElement.getAsJsonObject().addProperty(property, object.getId().toString());
         } else if (canBeEmpty) {
             jsonElement.getAsJsonObject().addProperty(property, 0);
         }

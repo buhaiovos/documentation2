@@ -10,10 +10,10 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "other_load_info")
-public class OtherLoadInfo implements IDatabaseEntity {
+public class OtherLoadInfo extends YearTracked implements IDatabaseEntity<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "source_of_financing")
     @Enumerated(EnumType.STRING)

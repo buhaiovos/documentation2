@@ -15,10 +15,10 @@ import java.io.Serializable;
 @ToString
 @Entity
 @Table(name = "subject_study_load")
-public class SubjectStudyLoad implements IDatabaseEntity, Serializable {
+public class SubjectStudyLoad extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_education_form")
@@ -70,16 +70,6 @@ public class SubjectStudyLoad implements IDatabaseEntity, Serializable {
 
     @Column(name = "consult")
     private double consultations;
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Override
     public int hashCode() {

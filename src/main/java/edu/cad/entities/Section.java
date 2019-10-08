@@ -2,41 +2,38 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "section")
-public class Section implements IDatabaseEntity, Serializable{
-    
+public class Section extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
+
     @Expose
     @Id
-    @GenericGenerator(
-        name = "assigned-identity", 
-        strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
-    )
-    @GeneratedValue(generator = "assigned-identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private int id;
-    
+    private Integer id;
+
     @Expose
     @Column(name = "denotation")
     private String denotation;
-    
+
     @Expose
-    @Column(name = "is_optional", columnDefinition = "TINYINT")
-    @Type(type = "org.hibernate.type.NumericBooleanType")
+    @Column(name = "is_optional")
     private boolean optional;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cycle")
     private Cycle cycle;
-    
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "curriculumSection")
     private Set<SubjectHeader> curriculumSubjects = new HashSet<>();
 
@@ -50,40 +47,6 @@ public class Section implements IDatabaseEntity, Serializable{
         this.id = id;
         this.denotation = denotation;
         this.optional = isOptional;
-        this.cycle = cycle;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDenotation() {
-        return denotation;
-    }
-
-    public void setDenotation(String denotation) {
-        this.denotation = denotation;
-    }
-
-    public boolean isOptional() {
-        return optional;
-    }
-
-    public void setOptional(boolean optional) {
-        this.optional = optional;
-    }
-
-    public Cycle getCycle() {
-        return cycle;
-    }
-
-    public void setCycle(Cycle cycle) {
         this.cycle = cycle;
     }
 
@@ -104,7 +67,7 @@ public class Section implements IDatabaseEntity, Serializable{
         this.workingPlanSubjects.clear();
         this.workingPlanSubjects.addAll(workingPlanSubjects);
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;

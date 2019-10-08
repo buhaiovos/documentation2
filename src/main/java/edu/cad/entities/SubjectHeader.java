@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,17 +14,13 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "dict_subjects")
-public class SubjectHeader implements IDatabaseEntity, Serializable, Comparable<SubjectHeader> {
+public class SubjectHeader extends YearTracked implements IDatabaseEntity<Integer>, Serializable, Comparable<SubjectHeader> {
 
     @Expose
     @Id
-    @GenericGenerator(
-            name = "assigned-identity",
-            strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
-    )
-    @GeneratedValue(generator = "assigned-identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private int id;
+    private Integer id;
 
     @Expose
     @Column(name = "denotation")
@@ -71,16 +66,6 @@ public class SubjectHeader implements IDatabaseEntity, Serializable, Comparable<
         this.workingPlanSection = workingPlanSection;
         this.type = type;
         this.department = department;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setSubjectInfo(Set<SubjectInfo> subjectInfo) {

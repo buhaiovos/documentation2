@@ -2,39 +2,38 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.DiscriminatorOptions;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "curriculum")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue(value = "curriculum")
-@DiscriminatorOptions(force=true)
-public class Curriculum implements IDatabaseEntity, Serializable{
-    
+@DiscriminatorOptions(force = true)
+public class Curriculum extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
+
     @Expose
     @Id
-    @GenericGenerator(
-        name = "assigned-identity", 
-        strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
-    )
-    @GeneratedValue(generator = "assigned-identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    protected int id;
-    
+    protected Integer id;
+
     @Expose
     @Column(name = "denotation")
     protected String denotation;
-    
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.curriculum", cascade = CascadeType.MERGE)
     private Set<CurriculumSubject> curriculumSubjects = new HashSet<>();
-    
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "curriculum")
     private Set<WorkingPlan> workingPlans = new HashSet<>();
 
@@ -42,16 +41,6 @@ public class Curriculum implements IDatabaseEntity, Serializable{
     }
 
     public Curriculum(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
         this.id = id;
     }
 
@@ -80,7 +69,7 @@ public class Curriculum implements IDatabaseEntity, Serializable{
         this.workingPlans.clear();
         this.workingPlans.addAll(workingPlans);
     }
-    
+
     public Qualification getQualification() {
         return workingPlans.iterator().next().getQualification();
     }
@@ -109,41 +98,41 @@ public class Curriculum implements IDatabaseEntity, Serializable{
 
     public boolean contains(SubjectInfo subjectInfo) {
         for (WorkingPlan plan : getWorkingPlans()) {
-            for(CurriculumSubject currSubject : plan.getCurriculumSubjects()){
+            for (CurriculumSubject currSubject : plan.getCurriculumSubjects()) {
                 if (currSubject.getSubjectInfo().equals(subjectInfo)) {
                     return true;
                 }
             }
         }
-        
+
         return false;
     }
-    
-    public int countControlsByType(int semester, ControlDictionary type){
+
+    public int countControlsByType(int semester, ControlDictionary type) {
         int total = 0;
-        
-        for(CurriculumSubject curriculumSubject : getCurriculumSubjects()){
+
+        for (CurriculumSubject curriculumSubject : getCurriculumSubjects()) {
             for (SubjectInfo subjectInfo : curriculumSubject.getSubjectInfo().getSubSubjects(this)) {
                 for (Control control : subjectInfo.getControlsByType(type)) {
-                    if(control.getSemester() == semester){
+                    if (control.getSemester() == semester) {
                         total++;
                     }
                 }
-            } 
+            }
         }
-        
+
         return total;
     }
-    
-    public int countControlsByType(ControlDictionary type){
+
+    public int countControlsByType(ControlDictionary type) {
         int total = 0;
-        
-        for(CurriculumSubject curriculumSubject : getCurriculumSubjects()){
+
+        for (CurriculumSubject curriculumSubject : getCurriculumSubjects()) {
             for (SubjectInfo subjectInfo : curriculumSubject.getSubjectInfo().getSubSubjects(this)) {
                 total += subjectInfo.getControlsByType(type).size();
-            } 
+            }
         }
-        
+
         return total;
     }
 }

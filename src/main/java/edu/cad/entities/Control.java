@@ -2,56 +2,36 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "control")
-public class Control implements IDatabaseEntity, Serializable, 
-        Comparable<Control>{
-    
+public class Control extends YearTracked implements IDatabaseEntity<Integer>, Serializable, Comparable<Control> {
     @Expose
     @Id
-    @GenericGenerator(
-        name = "assigned-identity", 
-        strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
-    )
-    @GeneratedValue(generator = "assigned-identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private int id;
-    
+    private Integer id;
+
     @Expose
     @Column(name = "semester")
     private int semester;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_type")
     private ControlDictionary type;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_subject")
     private SubjectInfo subjectInfo;
 
     public Control() {
-    }
-
-    public Control(int id, int semester, ControlDictionary type, SubjectInfo subjectInfo) {
-        this.id = id;
-        this.semester = semester;
-        this.type = type;
-        this.subjectInfo = subjectInfo;
-    }
-    
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getSemester() {
@@ -77,7 +57,7 @@ public class Control implements IDatabaseEntity, Serializable,
     public void setSubjectInfo(SubjectInfo subjectInfo) {
         this.subjectInfo = subjectInfo;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -87,15 +67,15 @@ public class Control implements IDatabaseEntity, Serializable,
 
     @Override
     public boolean equals(Object obj) {
+        if (!(obj instanceof Control)) {
+            return false;
+        }
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
-            return false;
-        }
         final Control other = (Control) obj;
         return this.id == other.id;
-    }   
+    }
 
     @Override
     public int compareTo(Control other) {
@@ -104,11 +84,9 @@ public class Control implements IDatabaseEntity, Serializable,
 
     @Override
     public String toString() {
-        if(type.getId() == 9)
+        if (type.getId() == 9)
             return semester + "д";
-        
+
         return Integer.toString(semester);
     }
-    
-    
 }

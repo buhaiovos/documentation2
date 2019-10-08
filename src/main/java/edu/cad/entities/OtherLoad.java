@@ -11,10 +11,10 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "other_load")
-public class OtherLoad implements IDatabaseEntity {
+public class OtherLoad extends YearTracked implements IDatabaseEntity<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "load_type")
     @Enumerated(EnumType.STRING)

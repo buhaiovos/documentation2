@@ -3,10 +3,10 @@ $(document).ready(function() {
             title : 'Академічні групи',
             editinline: { enable : true },
             actions : {
-                listAction: 'academic-group?action=list',
-                createAction: 'academic-group?action=create',
-                updateAction: 'academic-group?action=update',
-                deleteAction: 'academic-group?action=delete'
+                listAction: 'v2/academic-groups?action=list',
+                createAction: 'v2/academic-groups?action=create',
+                updateAction: 'v2/academic-groups?action=update',
+                deleteAction: 'v2/academic-groups?action=delete'
             },
             fields : {
                 id : {
@@ -34,22 +34,22 @@ $(document).ready(function() {
                 },
                 specialization : {
                     title : 'Спеціалізація',
-                    options: 'specialization?action=dropdownlist',
+                    options: 'v2/specializations?action=dropdown',
                     edit : true                                    
                 },
                 qualification : {
                     title : 'Освітньо-кваліфікаційний рівень',
-                    options: 'qualification?action=dropdownlist',
+                    options: 'v2/qualifications?action=dropdown',
                     edit : true
                 },
                 educationForm : {
                     title : 'Форма навчання',
-                    options: 'form-of-education?action=dropdownlist',
+                    options: 'v2/education-forms?action=dropdown',
                     edit : true
                 },
                 workplan : {
                     title : 'Робочий план',
-                    options: 'workplans?action=dropdownlist',
+                    options: 'v2/working-plans?action=dropdown',
                     edit : true
                 }
             }

@@ -17,11 +17,11 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class Staff implements IDatabaseEntity {
+public class Staff extends YearTracked implements IDatabaseEntity<Integer> {
     @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Expose
     @Column(name = "first_name")

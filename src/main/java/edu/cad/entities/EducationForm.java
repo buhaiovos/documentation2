@@ -2,26 +2,25 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "form_of_education")
-public class EducationForm implements IDatabaseEntity, Serializable {
+public class EducationForm extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
 
     @Expose
     @Id
-    @GenericGenerator(
-            name = "assigned-identity",
-            strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
-    )
-    @GeneratedValue(generator = "assigned-identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private int id;
+    private Integer id;
 
     @Expose
     @Column(name = "denotation")
@@ -36,16 +35,6 @@ public class EducationForm implements IDatabaseEntity, Serializable {
     public EducationForm(int id, String denotation) {
         this.id = id;
         this.denotation = denotation;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getDenotation() {

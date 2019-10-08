@@ -3,11 +3,15 @@ package edu.cad.entities;
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.utils.Utils;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "curriculum_subject")
 @AssociationOverrides({
@@ -20,8 +24,7 @@ import java.util.Objects;
                 joinColumns = @JoinColumn(name = "id_subject")
         )
 })
-public class CurriculumSubject implements IDatabaseEntity, Serializable,
-        Comparable<CurriculumSubject> {
+public class CurriculumSubject implements IDatabaseEntity<Integer>, Serializable, Comparable<CurriculumSubject> {
 
     @EmbeddedId
     private CurriculumSubjectId pk = new CurriculumSubjectId();
@@ -35,16 +38,6 @@ public class CurriculumSubject implements IDatabaseEntity, Serializable,
 
     public CurriculumSubject(String cipher) {
         this.cipher = cipher;
-    }
-
-    @Override
-    public int getId() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void setId(int id) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public CurriculumSubjectId getPk() {
@@ -112,5 +105,15 @@ public class CurriculumSubject implements IDatabaseEntity, Serializable,
         }
 
         return cipher.compareTo(other.getCipher());
+    }
+
+    @Override
+    public Integer getId() {
+        throw new UnsupportedOperationException("do not use");
+    }
+
+    @Override
+    public void setId(Integer id) {
+        // do nothing
     }
 }

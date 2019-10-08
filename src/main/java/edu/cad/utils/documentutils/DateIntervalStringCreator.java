@@ -1,19 +1,9 @@
 package edu.cad.utils.documentutils;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class DateIntervalStringCreator {
-    
-    public static String getDatesString(Date st, Date fin) {
-        String start = getProperlyFormattedDate(st);
-        String finish = getProperlyFormattedDate(fin);
-        
+    public static String getDatesString(LocalDate start, LocalDate finish) {
         return "з " + start + " по " + finish;
-    }
-
-    private static String getProperlyFormattedDate(Date date) {
-        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
-        return df.format(date).substring(0, 5);
     }
 }

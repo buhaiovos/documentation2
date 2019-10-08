@@ -7,7 +7,6 @@ import edu.cad.entities.interfaces.SubjectProperty;
 import edu.cad.entities.listeners.SubjectListener;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,16 +21,12 @@ import java.util.Set;
 @Entity
 @EntityListeners(SubjectListener.class)
 @Table(name = "academic_subject")
-public class SubjectInfo implements IDatabaseEntity, Serializable {
+public class SubjectInfo extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
     @Expose
     @Id
-    @GenericGenerator(
-            name = "assigned-identity",
-            strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
-    )
-    @GeneratedValue(generator = "assigned-identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private int id;
+    private Integer id;
 
     @Expose
     @Column(name = "semester")
@@ -98,16 +93,6 @@ public class SubjectInfo implements IDatabaseEntity, Serializable {
         this.practices = practices;
         this.ects = ects;
         this.subjectHeader = subjectHeader;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Set<Control> getControls() {

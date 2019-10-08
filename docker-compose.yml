@@ -1,0 +1,15 @@
+version: "3"
+services:
+  backend:
+    network_mode: host
+    image: obuhaiov/documentation-2:be-0.1
+    environment:
+      DB_URL:
+    ports:
+      - "8080:8080"
+  frontend:
+    image: obuhaiov/documentation-2:fe-0.1
+    depends_on:
+      - backend
+    ports:
+      - "8088:80"

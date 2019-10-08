@@ -1,49 +1,41 @@
 package edu.cad.daos;
 
-import edu.cad.entities.Curriculum;
-import edu.cad.entities.WorkingPlan;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import edu.cad.utils.hibernateutils.HibernateSessionManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @SuppressWarnings("unchecked")
 public class HibernateDao<Entity extends IDatabaseEntity> implements IDAO<Entity> {
     private final Class<Entity> typeParameterClass;
-    private final Session session;
+    private final Session session = null;
 
     public HibernateDao(Class<Entity> typeParameterClass) {
         this.typeParameterClass = typeParameterClass;
-        this.session = HibernateSessionManager.getInstance().getCurrentSession();
     }
 
     public HibernateDao(Class<Entity> typeParameterClass, Session session) {
         this.typeParameterClass = typeParameterClass;
-        this.session = session;
     }
 
     @Override
     public List<Entity> getAll() {
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Entity> query = criteriaBuilder.createQuery(typeParameterClass);
-        Root<Entity> fromT = query.from(typeParameterClass);
-        query.select(fromT);
-        TypedQuery<Entity> typedQuery = session.createQuery(query);
-        List<Entity> resultList = typedQuery.getResultList();
-
-        if (typeParameterClass.equals(Curriculum.class)) {
-            resultList.removeIf(element -> element instanceof WorkingPlan);
-        }
-
-        return resultList;
+//        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//        CriteriaQuery<Entity> query = criteriaBuilder.createQuery(typeParameterClass);
+//        Root<Entity> fromT = query.from(typeParameterClass);
+//        query.select(fromT);
+//        TypedQuery<Entity> typedQuery = session.createQuery(query);
+//        List<Entity> resultList = typedQuery.getResultList();
+//
+//        if (typeParameterClass.equals(Curriculum.class)) {
+//            resultList.removeIf(element -> element instanceof WorkingPlan);
+//        }
+//
+        return Collections.emptyList();
     }
 
     @Override

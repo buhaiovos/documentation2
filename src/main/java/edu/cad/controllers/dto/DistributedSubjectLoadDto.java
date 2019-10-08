@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class DistributedSubjectLoadDto {
     @JsonProperty("id")
-    private int id;
+    private Integer id;
 
     @JsonProperty("load_id")
     private int subjectLoadId;

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@RestController
+@RestController("legacy-academic-group-controller")
 @RequestMapping("/academic-group")
 public class AcademicGroupController extends AbstractEntityController<AcademicGroup> {
 

@@ -4,7 +4,6 @@ import edu.cad.daos.HibernateDao;
 import edu.cad.domain.FormOfEducation;
 import edu.cad.entities.AcademicGroup;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import edu.cad.utils.hibernateutils.HibernateSessionManager;
 import org.hibernate.Session;
 import org.reflections.Reflections;
 
@@ -18,17 +17,11 @@ public class DatabaseCloner {
     private static final String FK_CHECKS_0_QUERY = "SET FOREIGN_KEY_CHECKS=0";
     private static final String FK_CHECKS_1_QUERY = "SET FOREIGN_KEY_CHECKS=1";
 
-    private final HibernateSessionManager sessionManager;
-
     private Map<Class<? extends IDatabaseEntity>, List<? extends IDatabaseEntity>> entityMap = new HashMap<>();
     private List<AcademicGroup> oldGroups = null;
     private List<AcademicGroup> newGroups = null;
 
     private int newYear;
-
-    public DatabaseCloner(HibernateSessionManager sessionManager) {
-        this.sessionManager = sessionManager;
-    }
 
     public void cloneDatabase(Session oldSession) {
         //getCurrentSession Class objects of all @Entity classes
@@ -70,12 +63,6 @@ public class DatabaseCloner {
     @SuppressWarnings("unchecked")
     private void cloneAllEntriesOfEntity(Class<? extends IDatabaseEntity> classObj,
                                          List<? extends IDatabaseEntity> list) {
-        Session currentSession = sessionManager.getCurrentSession();
-        HibernateDao<IDatabaseEntity> destDAO = new HibernateDao(classObj, currentSession);
-
-        for (IDatabaseEntity entry : list) {
-            destDAO.create(entry);
-        }
     }
 
     private void rewriteGroups() {

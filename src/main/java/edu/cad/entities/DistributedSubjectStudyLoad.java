@@ -9,10 +9,10 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "subject_study_load_distributed")
-public class DistributedSubjectStudyLoad implements IDatabaseEntity {
+public class DistributedSubjectStudyLoad extends YearTracked implements IDatabaseEntity<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_load_id")

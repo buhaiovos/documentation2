@@ -1,8 +1,8 @@
 package edu.cad.controllers.functional.interfaces;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @FunctionalInterface
 public interface DatePropertySetter {
-    void setProperty(Date date);
+    void setProperty(LocalDate date);
 }

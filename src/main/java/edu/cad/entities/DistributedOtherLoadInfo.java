@@ -2,16 +2,18 @@ package edu.cad.entities;
 
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "other_load_info_distributed")
-public class DistributedOtherLoadInfo implements IDatabaseEntity {
+public class DistributedOtherLoadInfo extends YearTracked implements IDatabaseEntity<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "other_load_info_id")

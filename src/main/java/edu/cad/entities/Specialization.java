@@ -1,75 +1,36 @@
 package edu.cad.entities;
 
-import com.google.gson.annotations.Expose;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "specialization")
-public class Specialization implements IDatabaseEntity, Serializable{
-    
-    @Expose
+public class Specialization extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
     @Id
-    @GenericGenerator(
-        name = "assigned-identity", 
-        strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
-    )
-    @GeneratedValue(generator = "assigned-identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private int id;
+    private Integer id;
 
-    @Expose
     @Column(name = "denotation")
     private String denotation;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_department")
+    @JsonIgnore
     private Department department;
-    
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "specialization")
+    @JsonIgnore
     private Set<AcademicGroup> academicGroups = new HashSet<>();
-
-    public Specialization() {
-    }
-
-    public Specialization(int id, String denotation) {
-        this.id = id;
-        this.denotation = denotation;
-    }
-    
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDenotation() {
-        return denotation;
-    }
-
-    public void setDenotation(String denotation) {
-        this.denotation = denotation;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-    
-    public Set<AcademicGroup> getAcademicGroups() {
-        return academicGroups;
-    }
 
     public void setAcademicGroups(Set<AcademicGroup> academicGroups) {
         this.academicGroups.clear();
@@ -100,6 +61,4 @@ public class Specialization implements IDatabaseEntity, Serializable{
         }
         return true;
     }
-    
-    
 }

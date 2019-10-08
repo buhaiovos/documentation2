@@ -18,3 +18,10 @@ cad:
 spring:
   mvc:
     dispatch-options-request: true
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER_NAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate

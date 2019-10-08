@@ -2,44 +2,28 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import java.io.Serializable;
-import javax.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "type_of_work")
-public class WorkType implements IDatabaseEntity, Serializable {
-    
+public class WorkType extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
+
     @Expose
     @Id
-    @GenericGenerator(
-        name = "assigned-identity", 
-        strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
-    )
-    @GeneratedValue(generator = "assigned-identity")
-    @Column(name = "id", unique = true, nullable = false)
-    private int id;
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @Expose
     @Column(name = "denotation")
     private String denotation;
 
     public WorkType() {
-    }
-
-    public WorkType(int id, String denotation) {
-        this.id = id;
-        this.denotation = denotation;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getDenotation() {

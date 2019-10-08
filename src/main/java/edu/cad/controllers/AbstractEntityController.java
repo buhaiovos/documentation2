@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractEntityController<T extends IDatabaseEntity> {
 
@@ -89,6 +92,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
 
         System.out.println(jsonArray);
 
+        response.setHeader("Content-Type", "application/json");
         response.getWriter().print(jsonArray);
     }
 
@@ -138,12 +142,12 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
 
     void setDateProperty(HttpServletRequest request, String requestParamString, DatePropertySetter propSetter) {
         String dateString = request.getParameter(requestParamString);
-        if (dateString != null) {
-            Date date = gson.fromJson(dateString, Date.class);
-            if (date != null) {
-                propSetter.setProperty(date);
-            }
-        }
+//        if (dateString != null) {
+//            Date date = gson.fromJson(dateString, Date.class);
+//            if (date != null) {
+//                propSetter.setProperty(date);
+//            }
+//        }
     }
 
     protected <E extends IDatabaseEntity>

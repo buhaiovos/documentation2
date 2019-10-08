@@ -1,36 +1,28 @@
 package edu.cad.utils.gson;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.Expose;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Option {
-    
+
+    @JsonProperty("DisplayText")
     @Expose
-    private String DisplayText;
-    
+    private String displayText;
+
+    @JsonProperty("Value")
     @Expose
-    private int Value;
+    private Object value;
 
-    public Option() {
-    }
-
-    public Option(String DisplayText, int Value) {
-        this.DisplayText = DisplayText;
-        this.Value = Value;
-    }
-
-    public String getDisplayText() {
-        return DisplayText;
-    }
-
-    public void setDisplayText(String DisplayText) {
-        this.DisplayText = DisplayText;
-    }
-
-    public int getValue() {
-        return Value;
-    }
-
-    public void setValue(int Value) {
-        this.Value = Value;
+    public Option(String displayText, Object value) {
+        this.displayText = displayText;
+        this.value = value;
     }
 }

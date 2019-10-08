@@ -1,8 +1,11 @@
 package edu.cad.entities;
 
-import com.google.gson.annotations.Expose;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.cad.entities.interfaces.IDatabaseEntity;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,77 +13,32 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "department")
-public class Department implements IDatabaseEntity, Serializable{
-    
-    @Expose
-    @Id
-    @GenericGenerator(
-        name = "assigned-identity", 
-        strategy = "edu.cad.utils.hibernateutils.AssignedIdentityGenerator"
-    )
-    @GeneratedValue(generator = "assigned-identity")
-    @Column(name = "id", unique = true, nullable = false)
-    private int id;
+@EqualsAndHashCode(of = "id", callSuper = false)
+public class Department extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
 
-    @Expose
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
+
     @Column(name = "denotation")
     private String denotation;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "department")
+    @JsonIgnore
     private Set<Specialization> specializations = new HashSet<>();
-
-    public Department() {
-    }
 
     public Department(int id, String denotation) {
         this.id = id;
         this.denotation = denotation;
     }
 
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDenotation() {
-        return denotation;
-    }
-
-    public void setDenotation(String denotation) {
-        this.denotation = denotation;
-    }
-
-    public Set<Specialization> getSpecializations() {
-        return specializations;
-    }
-
     public void setSpecializations(Set<Specialization> specializations) {
         this.specializations.clear();
         this.specializations.addAll(specializations);
     }
- 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        final Department other = (Department) obj;
-        return this.id == other.getId();
-    }  
 }

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@RestController
+@RestController("legacy-education-form-controller")
 @RequestMapping("/form-of-education")
 public class EducationFormController extends AbstractEntityController<EducationForm>{
 

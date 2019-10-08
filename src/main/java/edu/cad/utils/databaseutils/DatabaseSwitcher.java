@@ -1,7 +1,6 @@
 package edu.cad.utils.databaseutils;
 
 import edu.cad.services.years.DbYearsTrackingService;
-import edu.cad.utils.hibernateutils.HibernateSessionManager;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 
@@ -19,13 +18,11 @@ public class DatabaseSwitcher {
     private static final String ILLEGAL_SWITCH_MESSAGE_FORMAT = "Illegal switch: database for previous year %d should exist";
     private static final String HIBERNATE_CONNECTION_URL = "hibernate.connection.url";
 
-    private final HibernateSessionManager sessionManager;
     private final DatabaseCloner databaseCloner;
     private final DbYearsTrackingService yearsTrackingService;
 
-    public DatabaseSwitcher(HibernateSessionManager sessionManager, DatabaseCloner databaseCloner,
+    public DatabaseSwitcher(DatabaseCloner databaseCloner,
                             DbYearsTrackingService yearsTrackingService) {
-        this.sessionManager = sessionManager;
         this.databaseCloner = databaseCloner;
         this.yearsTrackingService = yearsTrackingService;
     }
@@ -57,9 +54,10 @@ public class DatabaseSwitcher {
     }
 
     public int getDatabaseYear() {
-        Configuration configuration = sessionManager.getConfiguration();
-        String url = configuration.getProperty(HIBERNATE_CONNECTION_URL);
-        return extractDatabaseYearFromConnectionUrl(url);
+//        Configuration configuration = sessionManager.getConfiguration();
+//        String url = configuration.getProperty(HIBERNATE_CONNECTION_URL);
+//        return extractDatabaseYearFromConnectionUrl(url);
+        return 0;
     }
 
     private int extractDatabaseYearFromConnectionUrl(String url) {
@@ -83,11 +81,11 @@ public class DatabaseSwitcher {
     }
 
     private boolean isCurrent(int year) {
-        final Configuration configuration = sessionManager.getConfiguration();
-        final String url = configuration.getProperty(HIBERNATE_CONNECTION_URL);
-        final int databaseYear = extractDatabaseYearFromConnectionUrl(url);
+//        final Configuration configuration = sessionManager.getConfiguration();
+//        final String url = configuration.getProperty(HIBERNATE_CONNECTION_URL);
+//        final int databaseYear = extractDatabaseYearFromConnectionUrl(url);
 
-        return year == databaseYear;
+        return year == 0;
     }
 
     private Session switchDatabaseAndReturnPreviousSession(int year) {
@@ -96,10 +94,10 @@ public class DatabaseSwitcher {
         final String newDatabaseUrl = oldUrl.replaceFirst(DATABASE_NAME_REGEX, CAD_DATABASE + Integer.toString(year));
         configuration.setProperty(HIBERNATE_CONNECTION_URL, newDatabaseUrl);
 
-        Session prevSession = sessionManager.getCurrentSession();
-        sessionManager.configureNewSession(configuration);
-
-        return prevSession;
+//        Session prevSession = sessionManager.getCurrentSession();
+//        sessionManager.configureNewSession(configuration);
+//
+        return null;
     }
 
     private void createDatabase(int year) {
