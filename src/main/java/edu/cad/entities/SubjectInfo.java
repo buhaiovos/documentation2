@@ -248,4 +248,9 @@ public class SubjectInfo extends YearTracked implements IDatabaseEntity<Integer>
                 .append(" ]");
         return value.toString();
     }
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
 }

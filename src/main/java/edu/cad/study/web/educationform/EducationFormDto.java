@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-class EducationFormDto {
+public class EducationFormDto {
     int id;
+    String denotation;
 }

@@ -101,4 +101,9 @@ public class DiplomaPreparation extends YearTracked implements IDatabaseEntity<I
         final DiplomaPreparation other = (DiplomaPreparation) obj;
         return this.id == other.getId();
     }
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
 }

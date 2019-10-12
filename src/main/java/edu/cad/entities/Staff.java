@@ -69,6 +69,11 @@ public class Staff extends YearTracked implements IDatabaseEntity<Integer> {
         this.sourceOfFinancing = SourceOfFinancing.valueOf(name);
     }
 
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
+
     public String getFullName() {
         return StringUtils.join(List.of(firstName, lastName).toArray(), " ");
     }

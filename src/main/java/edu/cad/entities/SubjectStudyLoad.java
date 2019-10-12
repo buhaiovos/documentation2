@@ -2,6 +2,7 @@ package edu.cad.entities;
 
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.utils.k3.SourceOfFinancing;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "subject_study_load")
 public class SubjectStudyLoad extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
@@ -72,22 +74,7 @@ public class SubjectStudyLoad extends YearTracked implements IDatabaseEntity<Int
     private double consultations;
 
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + this.id;
-        return hash;
+    public void setIdentifier(Integer id) {
+        this.id = id;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        final SubjectStudyLoad other = (SubjectStudyLoad) obj;
-        return this.id == other.getId();
-    }
-
 }

@@ -8,6 +8,6 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-class WorkingPlanDto {
+public class WorkingPlanDto {
     int id;
 }

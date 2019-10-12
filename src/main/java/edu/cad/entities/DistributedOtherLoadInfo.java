@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "other_load_info_distributed")
 public class DistributedOtherLoadInfo extends YearTracked implements IDatabaseEntity<Integer> {
@@ -25,4 +25,9 @@ public class DistributedOtherLoadInfo extends YearTracked implements IDatabaseEn
 
     @Column(name = "hours")
     private double amount;
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
 }

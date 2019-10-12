@@ -65,4 +65,9 @@ public class Practice extends YearTracked implements IDatabaseEntity<Integer>, S
     public void setDenotationFromString(String type) {
         this.type = PracticeType.valueOf(type);
     }
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
 }

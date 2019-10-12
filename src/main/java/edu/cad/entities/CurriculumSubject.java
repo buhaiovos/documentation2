@@ -113,7 +113,7 @@ public class CurriculumSubject implements IDatabaseEntity<Integer>, Serializable
     }
 
     @Override
-    public void setId(Integer id) {
+    public void setIdentifier(Integer id) {
         // do nothing
     }
 }

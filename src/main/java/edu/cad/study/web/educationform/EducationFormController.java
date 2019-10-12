@@ -1,5 +1,6 @@
 package edu.cad.study.web.educationform;
 
+import edu.cad.entities.EducationForm;
 import edu.cad.study.service.EducationFormService;
 import edu.cad.study.web.ActionProcessor;
 import edu.cad.utils.gson.Option;
@@ -32,17 +33,19 @@ public class EducationFormController extends ActionProcessor<EducationFormDto, E
 
     @Override
     public EducationFormDto create(EducationFormDto request) {
-        return null;
+        EducationForm educationForm = service.create(request);
+        return mapper.toResponse(educationForm);
     }
 
     @Override
     public EducationFormDto update(EducationFormDto request) {
+        service.update(request);
         return null;
     }
 
     @Override
-    public void delete(Integer integer) {
-
+    public void delete(Integer id) {
+        service.deleteById(id);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class EducationFormController extends ActionProcessor<EducationFormDto, E
     }
 
     @Override
-    public EducationFormDto getDependent(HttpServletRequest request) {
+    public List<EducationFormDto> getDependent(HttpServletRequest request) {
         return null;
     }
 }

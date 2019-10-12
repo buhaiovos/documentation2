@@ -4,11 +4,13 @@ import edu.cad.domain.ObjectOfWork;
 import edu.cad.domain.OtherLoadType;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "other_load")
 public class OtherLoad extends YearTracked implements IDatabaseEntity<Integer> {
@@ -33,5 +35,10 @@ public class OtherLoad extends YearTracked implements IDatabaseEntity<Integer> {
     @Override
     public String toString() {
         return id + " " + loadType.name() + " " + objectOfWork.name();
+    }
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
     }
 }

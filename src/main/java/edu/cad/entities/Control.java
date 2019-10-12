@@ -89,4 +89,9 @@ public class Control extends YearTracked implements IDatabaseEntity<Integer>, Se
 
         return Integer.toString(semester);
     }
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
 }

@@ -73,5 +73,8 @@ public class ControlDictionary extends YearTracked implements IDatabaseEntity<In
         return "ControlDictionary{denotation=" + denotation + '}';
     }
 
-
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
 }

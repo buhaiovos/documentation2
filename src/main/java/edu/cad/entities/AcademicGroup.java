@@ -5,12 +5,14 @@ import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "academic_group")
@@ -66,6 +68,11 @@ public class AcademicGroup extends YearTracked implements IDatabaseEntity<Intege
 
     public boolean isBudgetary() {
         return budgetaryStudents > 0;
+    }
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
     }
 
     @Override

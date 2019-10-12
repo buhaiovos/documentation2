@@ -119,5 +119,10 @@ public class SubjectHeader extends YearTracked implements IDatabaseEntity<Intege
 
         return this.department.getId() - other.department.getId();
     }
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
 }
 

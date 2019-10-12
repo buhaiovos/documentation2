@@ -1,6 +1,7 @@
 package edu.cad.entities;
 
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "state_certification")
 public class StateCertification extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
@@ -35,34 +37,12 @@ public class StateCertification extends YearTracked implements IDatabaseEntity<I
     }
 
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 17 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
-        final StateCertification other = (StateCertification) obj;
-        if (this.id != other.getId()) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public String toString() {
         return form + " (" + semester + " семестр)";
     }
 
-
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
 }

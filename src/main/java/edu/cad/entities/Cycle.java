@@ -77,5 +77,10 @@ public class Cycle extends YearTracked implements IDatabaseEntity<Integer>, Seri
             return false;
         }
         return true;
-    }   
+    }
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
 }

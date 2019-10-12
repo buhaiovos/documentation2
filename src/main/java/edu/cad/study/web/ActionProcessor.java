@@ -31,7 +31,7 @@ public abstract class ActionProcessor<Response, Request, Id> {
 
     public abstract List<Option> getOptions();
 
-    public abstract Response getDependent(HttpServletRequest request);
+    public abstract List<Response> getDependent(HttpServletRequest request);
 
     @PostMapping(params = {"action"})
     public ResponseEntity<?> processAction(@RequestParam Action action,

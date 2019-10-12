@@ -14,4 +14,10 @@ class EducationFormMapper {
     Option toOption(EducationForm specialization) {
         return new Option(specialization.getDenotation(), specialization.getId());
     }
+
+    EducationFormDto toResponse(EducationForm educationForm) {
+        return new EducationFormDto()
+                .setDenotation(educationForm.getDenotation())
+                .setId(educationForm.getId());
+    }
 }

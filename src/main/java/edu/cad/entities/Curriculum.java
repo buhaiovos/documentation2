@@ -2,6 +2,7 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DiscriminatorOptions;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "curriculum")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -74,28 +76,6 @@ public class Curriculum extends YearTracked implements IDatabaseEntity<Integer>,
         return workingPlans.iterator().next().getQualification();
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 17 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
-        final Curriculum other = (Curriculum) obj;
-        return this.id == other.getId();
-    }
-
     public boolean contains(SubjectInfo subjectInfo) {
         for (WorkingPlan plan : getWorkingPlans()) {
             for (CurriculumSubject currSubject : plan.getCurriculumSubjects()) {
@@ -134,5 +114,10 @@ public class Curriculum extends YearTracked implements IDatabaseEntity<Integer>,
         }
 
         return total;
+    }
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
     }
 }

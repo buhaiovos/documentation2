@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-class AcademicGroupDto {
+public class AcademicGroupDto {
     private int id;
     private String cipher;
     private int budgetaryStudents;

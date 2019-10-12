@@ -8,6 +8,8 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-class SpecializationDto {
+public class SpecializationDto {
     int id;
+    String denotation;
+    int department;
 }

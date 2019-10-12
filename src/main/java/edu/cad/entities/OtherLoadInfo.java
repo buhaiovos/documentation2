@@ -3,11 +3,13 @@ package edu.cad.entities;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.utils.k3.SourceOfFinancing;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "other_load_info")
 public class OtherLoadInfo extends YearTracked implements IDatabaseEntity<Integer> {
@@ -45,4 +47,9 @@ public class OtherLoadInfo extends YearTracked implements IDatabaseEntity<Intege
     private List<AcademicGroup> groups;
     @Column(name = "hours")
     private double calculatedHours;
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
 }

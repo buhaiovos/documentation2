@@ -41,4 +41,9 @@ public class Department extends YearTracked implements IDatabaseEntity<Integer>,
         this.specializations.clear();
         this.specializations.addAll(specializations);
     }
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
 }

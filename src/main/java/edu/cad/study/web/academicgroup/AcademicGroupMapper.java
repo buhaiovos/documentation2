@@ -1,15 +1,16 @@
 package edu.cad.study.web.academicgroup;
 
 import edu.cad.entities.AcademicGroup;
+import edu.cad.study.web.EntityMapper;
 import edu.cad.utils.gson.Option;
 import org.springframework.stereotype.Component;
 
 import static java.util.Objects.requireNonNull;
 
 @Component
-class AcademicGroupMapper {
+class AcademicGroupMapper implements EntityMapper<AcademicGroup, AcademicGroupDto> {
 
-    AcademicGroupDto toResponse(AcademicGroup group) {
+    public AcademicGroupDto toResponse(AcademicGroup group) {
         return new AcademicGroupDto()
                 .setId(group.getId())
                 .setCipher(group.getCipher())

@@ -2,6 +2,7 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "section")
 public class Section extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
@@ -84,6 +86,11 @@ public class Section extends YearTracked implements IDatabaseEntity<Integer>, Se
             return false;
         }
         final Section other = (Section) obj;
-        return this.id == other.getId();
+        return this.id.equals(other.getId());
+    }
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
     }
 }

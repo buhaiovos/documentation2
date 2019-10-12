@@ -2,6 +2,7 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "qualification")
 public class Qualification extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
@@ -54,29 +56,7 @@ public class Qualification extends YearTracked implements IDatabaseEntity<Intege
     }
 
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.id;
-        return hash;
+    public void setIdentifier(Integer id) {
+        this.id = id;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
-        final Qualification other = (Qualification) obj;
-        if (this.id != other.getId()) {
-            return false;
-        }
-        return true;
-    }
-
-
 }

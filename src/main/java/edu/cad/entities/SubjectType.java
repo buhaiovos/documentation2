@@ -72,4 +72,9 @@ public class SubjectType extends YearTracked implements IDatabaseEntity<Integer>
         final SubjectType other = (SubjectType) obj;
         return this.id == other.getId();
     }
+
+    @Override
+    public void setIdentifier(Integer id) {
+        this.id = id;
+    }
 }

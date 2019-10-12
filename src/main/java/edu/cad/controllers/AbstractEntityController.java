@@ -169,7 +169,7 @@ public abstract class AbstractEntityController<T extends IDatabaseEntity> {
             if (found != null)
                 return found;
 
-            instance.setId(id);
+            instance.setIdentifier(id);
         }
 
         return instance;
