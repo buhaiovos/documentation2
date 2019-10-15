@@ -1,7 +1,7 @@
 package edu.cad.study.service;
 
 import edu.cad.entities.Qualification;
-import edu.cad.study.persistence.QualificationRepository;
+import edu.cad.study.persistence.QualificationRepositoryWrapper;
 import edu.cad.study.web.qualification.QualificationDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class QualificationService implements EntityService<Qualification, Integer, QualificationDto> {
-    QualificationRepository repo;
+    QualificationRepositoryWrapper repo;
 
     @Override
     public List<Qualification> getAll() {

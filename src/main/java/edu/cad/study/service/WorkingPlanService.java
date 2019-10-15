@@ -1,7 +1,7 @@
 package edu.cad.study.service;
 
 import edu.cad.entities.WorkingPlan;
-import edu.cad.study.persistence.WorkingPlanRepository;
+import edu.cad.study.persistence.WorkingPlanRepositoryWrapper;
 import edu.cad.study.web.workingplan.WorkingPlanDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class WorkingPlanService implements EntityService<WorkingPlan, Integer, WorkingPlanDto> {
-    WorkingPlanRepository repository;
+    WorkingPlanRepositoryWrapper repository;
 
     public List<WorkingPlan> getAll() {
         return repository.findAll();

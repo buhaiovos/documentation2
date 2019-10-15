@@ -1,7 +1,7 @@
 package edu.cad.study.service;
 
 import edu.cad.entities.EducationForm;
-import edu.cad.study.persistence.EducationFormRepository;
+import edu.cad.study.persistence.EducationFormRepositoryWrapper;
 import edu.cad.study.web.educationform.EducationFormDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class EducationFormService {
-    EducationFormRepository repo;
+    EducationFormRepositoryWrapper repo;
 
     public List<EducationForm> getAll() {
         return repo.findAll();

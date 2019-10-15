@@ -22,32 +22,33 @@ public abstract class ActionController<Entity, Id, Dto> extends ActionProcessor<
     @Override
     public List<Dto> list() {
         List<Entity> groups = service.getAll();
-        log.info("getting list of academic groups, size: {}", groups.size());
+        log.info("Getting list, size: {}", groups.size());
         return toResponse(groups);
     }
 
     @Override
     public Dto create(Dto request) {
-        log.info("creating new academic group: {}", request);
+        log.info("Creating: {}", request);
         Entity academicGroup = service.create(request);
         return mapper.toResponse(academicGroup);
     }
 
     @Override
     public Dto update(Dto request) {
-        log.info("updating existing academic group {}", request);
+        log.info("Updating {}", request);
         Entity updatedGroup = service.update(request);
         return mapper.toResponse(updatedGroup);
     }
 
     @Override
     public void delete(Id id) {
-        log.info("deleting academic group with id: {}", id);
+        log.info("Deleting by id: {}", id);
         service.deleteById(id);
     }
 
     @Override
     public List<Option> getOptions() {
+        log.info("Getting options");
         return service.getAll()
                 .stream()
                 .map(mapper::toOption)
