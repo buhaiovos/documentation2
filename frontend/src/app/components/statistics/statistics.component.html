@@ -1,0 +1,44 @@
+<div><h2>Навантаження дисциплін</h2></div>
+<div id="chart" *ngFor="let barchartData of barChartDataAll">
+  <div style="display: block">
+    <canvas baseChart
+            [datasets]="barchartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+</div>
+
+<div><h2>Інші види навантаження</h2></div>
+<div id="other-chart" *ngFor="let barchartData of barChartOtherDataAll">
+  <div>
+    <canvas baseChart
+            [datasets]="barchartData"
+            [labels]="otherBarChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="otherLoadBarType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+  <br>
+</div>
+
+<div><h2>Загальне навантаження</h2></div>
+<div id="total" *ngFor="let barchartData of barChartOverallDataAll">
+  <div>
+    <canvas baseChart
+            [datasets]="barchartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+  <br>
+</div>
+

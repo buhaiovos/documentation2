@@ -1,0 +1,65 @@
+<script src="node_modules/chart.js/src/chart.js"></script>
+<div class="menuBackground">
+  <div class="left">
+    <a href="">
+      <img src="../assets/logo-cad.png" alt="Home" style="width:50px;height:37px;border:0;">
+    </a>
+  </div>
+
+  <div class="center">
+    <ul class="dropDownMenu">
+      <li><a href="#">Дані</a>
+        <ul>
+          <li><a href="#">Предмети</a>
+            <ul>
+              <li><a href="http://localhost:8080/Subject.html">Академічні предмети</a></li>
+              <li><a href="http://localhost:8080/SubjectType.html">Типи предметів</a></li>
+              <li><a href="http://localhost:8080/ControlDictionary.html">Словник контрольних заходів</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#">Факультет</a>
+            <ul>
+              <li><a href="http://localhost:8080/Department.html">Кафедри</a></li>
+              <li><a href="http://localhost:8080/AcademicGroup.html">Групи</a></li>
+              <li><a href="http://localhost:8080/EducationForm.html">Форми навчання</a></li>
+              <li><a href="http://localhost:8080/Qualification.html">Освітньо-кваліфікаційні рівні</a></li>
+              <li><a href="http://localhost:8080/Practice.html">Практика</a></li>
+              <li><a href="http://localhost:8080/StateCertification.html">Державна атестація</a></li>
+              <li><a href="http://localhost:8080/WorkType.html">Види робіт з підготовки дипломного проекту</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#">Документи</a>
+            <ul>
+              <li><a href="http://localhost:8080/Curriculum.html">Навчальні плани</a></li>
+              <li><a href="http://localhost:8080/Workplan.html">Робочі навчальні плани</a></li>
+              <li><a href="http://localhost:8080/Cycle.html">Розділи предметів</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+      <li><a href="#">Генерація</a>
+        <ul>
+          <li><a href="http://localhost:8080/document-generation?document=CURRICULUM">Навчальний план</a></li>
+          <li><a href="http://localhost:8080/document-generation?document=WORK_PLAN">Робочий навчальний план</a></li>
+          <li><a href="http://localhost:8080/document-generation?document=K3">Форма К-3</a></li>
+        </ul>
+      </li>
+
+      <li><a href="http://localhost:8080/Templates.html">Робота з шаблонами</a></li>
+
+      <li><a href="http://localhost:8080/DatabaseYear.html">Вибрати рік</a></li>
+
+      <li><a href="#">Навантаження</a>
+        <ul>
+          <li><a routerLink="/subject-load">Розподіл (дисципліни)</a></li>
+          <li><a routerLink="/other-load">Розподіл (інші види)</a></li>
+          <li><a routerLink="/statistics">Статистика по викладачам</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+<router-outlet></router-outlet>
