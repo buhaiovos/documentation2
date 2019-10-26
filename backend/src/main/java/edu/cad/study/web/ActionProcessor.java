@@ -2,14 +2,11 @@ package edu.cad.study.web;
 
 import edu.cad.controllers.Action;
 import edu.cad.study.web.dto.Options;
-import edu.cad.study.web.dto.Records;
 import edu.cad.study.web.dto.Result;
 import edu.cad.utils.gson.Option;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedList;
@@ -56,24 +53,26 @@ public abstract class ActionProcessor<Response, Request, Id> {
         }
     }
 
-    private ResponseEntity<?> deletedResponse(Id id) {
+    @DeleteMapping("{id}")
+    private ResponseEntity<?> deletedResponse(@PathVariable Id id) {
         delete(id);
         return ResponseEntity.ok().build();
     }
 
-    private ResponseEntity<?> updatedRecord(Request request) {
+    @PutMapping
+    private ResponseEntity<?> updatedRecord(@RequestBody Request request) {
         Response updated = update(request);
         return ResponseEntity.ok(new Result<>(updated));
     }
 
-    private ResponseEntity<?> createdRecord(Request request) {
+    @PostMapping
+    private ResponseEntity<?> createdRecord(@RequestBody Request request) {
         Response created = create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(new Result<>(created));
     }
 
-    private ResponseEntity<Records<Response>> allRecordsResponse() {
-        List<Response> all = list();
-        return ResponseEntity.ok(new Records<>(all, OK));
+    private ResponseEntity<List<Response>> allRecordsResponse() {
+        return ResponseEntity.ok(list());
     }
 
     private ResponseEntity<Options> dropdownResponse() {

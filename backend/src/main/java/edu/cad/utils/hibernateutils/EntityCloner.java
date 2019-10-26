@@ -5,8 +5,9 @@
  */
 package edu.cad.utils.hibernateutils;
 
-import java.io.Serializable;
 import org.hibernate.internal.util.SerializationHelper;
+
+import java.io.Serializable;
 
 /**
  *
