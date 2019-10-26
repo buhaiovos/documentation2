@@ -14,30 +14,35 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class EducationFormService {
+public class EducationFormService implements EntityService<EducationForm, Integer, EducationFormDto> {
     EducationFormRepositoryWrapper repo;
 
+    @Override
     public List<EducationForm> getAll() {
         return repo.findAll();
     }
 
-    public Optional<EducationForm> findById(int id) {
+    @Override
+    public Optional<EducationForm> findById(Integer id) {
         return repo.findById(id);
     }
 
+    @Override
     public EducationForm create(EducationFormDto educationForm) {
         EducationForm newEducationForm =
                 new EducationForm().setDenotation(educationForm.getDenotation());
         return repo.save(newEducationForm);
     }
 
+    @Override
     public EducationForm update(EducationFormDto updated) {
         EducationForm existing = findById(updated.getId()).orElseThrow();
         existing.setDenotation(updated.getDenotation());
         return repo.save(existing);
     }
 
-    public void deleteById(int id) {
+    @Override
+    public void deleteById(Integer id) {
         repo.deleteById(id);
     }
 }

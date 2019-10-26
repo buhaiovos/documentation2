@@ -19,7 +19,7 @@ public class QualificationService implements EntityService<Qualification, Intege
 
     @Override
     public List<Qualification> getAll() {
-        return null;
+        return repo.findAll();
     }
 
     @Override

@@ -1,21 +1,18 @@
 package edu.cad.study.web.educationform;
 
 import edu.cad.entities.EducationForm;
+import edu.cad.study.web.EntityMapper;
 import edu.cad.utils.gson.Option;
 import org.springframework.stereotype.Component;
 
 @Component
-class EducationFormMapper {
-    EducationFormDto toDto(EducationForm spec) {
-        return new EducationFormDto()
-                .setId(0);
-    }
+class EducationFormMapper implements EntityMapper<EducationForm, EducationFormDto> {
 
-    Option toOption(EducationForm specialization) {
+    public Option toOption(EducationForm specialization) {
         return new Option(specialization.getDenotation(), specialization.getId());
     }
 
-    EducationFormDto toResponse(EducationForm educationForm) {
+    public EducationFormDto toResponse(EducationForm educationForm) {
         return new EducationFormDto()
                 .setDenotation(educationForm.getDenotation())
                 .setId(educationForm.getId());

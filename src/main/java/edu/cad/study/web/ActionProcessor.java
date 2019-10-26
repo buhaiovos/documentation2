@@ -33,7 +33,10 @@ public abstract class ActionProcessor<Response, Request, Id> {
 
     public abstract List<Response> getDependent(HttpServletRequest request);
 
-    @PostMapping(params = {"action"})
+    @PostMapping(
+            params = {"action"},
+            consumes = {"*", "application/x-www-form-urlencoded;charset=UTF-8"}
+    )
     public ResponseEntity<?> processAction(@RequestParam Action action,
                                            @RequestParam(required = false) Id id,
                                            @RequestBody(required = false) Request request) {

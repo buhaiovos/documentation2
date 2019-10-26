@@ -28,8 +28,7 @@ class AcademicGroupMapper implements EntityMapper<AcademicGroup, AcademicGroupDt
     }
 
     private int getWorkingPlan(AcademicGroup group) {
-        return requireNonNull(group.getWorkingPlan(), "workingPlan")
-                .getId();
+        return requireNonNull(group.getWorkingPlan(), "workingPlan").getId();
     }
 
     private int getSpecialization(AcademicGroup group) {
