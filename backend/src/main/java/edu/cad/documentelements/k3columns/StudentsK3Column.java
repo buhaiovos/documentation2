@@ -24,11 +24,7 @@ public class StudentsK3Column extends AbstractK3Column{
                 total += studentSource.getStudents(group);
             }
         }
-        
-        if(total > 0){
-            return Integer.toString(total);
-        }
-        
-        return "0";
+
+        return total > 0 ? Integer.toString(total) : "0";
     }
 }

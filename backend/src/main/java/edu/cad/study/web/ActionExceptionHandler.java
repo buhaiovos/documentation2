@@ -9,6 +9,8 @@ public class ActionExceptionHandler {
     @ExceptionHandler(UnsupportedOperationException.class)
     public ResponseEntity handleUnsupportedOperation(Exception e) {
         return ResponseEntity.badRequest()
-                .body("{\"message\": \"Unsupported operation\"}");
+                .body("""
+                {"message": "Unsupported operation"}
+                """);
     }
 }

@@ -4,8 +4,8 @@ import edu.cad.utils.k3.K3SubjectEntity;
 import edu.cad.utils.k3.TypeOfGroupWork;
 
 public class K3StreamColumn extends AbstractK3Column{
-    
-    public K3StreamColumn(int columnNumber) {
+
+    K3StreamColumn(int columnNumber) {
         super(columnNumber);
     }
 

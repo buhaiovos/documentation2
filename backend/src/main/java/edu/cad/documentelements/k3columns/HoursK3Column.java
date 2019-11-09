@@ -5,8 +5,8 @@ import edu.cad.utils.k3.K3SubjectEntity;
 
 public class HoursK3Column extends AbstractK3Column{
     private final SubjectProperty property;
-    
-    public HoursK3Column(int columnNumber, SubjectProperty property) {
+
+    HoursK3Column(int columnNumber, SubjectProperty property) {
         super(columnNumber);
         this.property = property;
     }

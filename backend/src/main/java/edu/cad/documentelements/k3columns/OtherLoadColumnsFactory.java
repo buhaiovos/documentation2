@@ -13,20 +13,13 @@ public class OtherLoadColumnsFactory {
         String type = tokenSplitter.getType();
         int semester = Utils.parseInteger(tokenSplitter.getFirstNumString()).orElseThrow();
 
-        switch (type) {
-            case FACULTY:
-                return new OtherLoadFacultyColumn(semester, columnNumber);
-            case YEAR:
-                return new OtherLoadYearColumn(semester, columnNumber);
-            case GROUP:
-                return new OtherLoadGroupCipherColumn(semester, columnNumber);
-            case NUMBER_OF_STUDENTS:
-                return new OtherLoadStudentNumberColumn(semester, columnNumber, source);
-            case HOURS:
-                return new OtherLoadFormulaColumn(semester, columnNumber);
-
-            default:
-                throw new IllegalArgumentException(format("Unsupported token: '%s'", token));
-        }
+        return switch (type) {
+            case FACULTY -> new OtherLoadFacultyColumn(semester, columnNumber);
+            case YEAR -> new OtherLoadYearColumn(semester, columnNumber);
+            case GROUP -> new OtherLoadGroupCipherColumn(semester, columnNumber);
+            case NUMBER_OF_STUDENTS -> new OtherLoadStudentNumberColumn(semester, columnNumber, source);
+            case HOURS -> new OtherLoadFormulaColumn(semester, columnNumber);
+            default -> throw new IllegalArgumentException(format("Unsupported token: '%s'", token));
+        };
     }
 }

@@ -66,12 +66,12 @@ export class OtherLoadTableComponent implements OnInit {
       });
   }
 
-  semesterClick() {
+  semesterClick(e) {
     console.log(this.semester);
     this.reload();
   }
 
-  financeClick() {
+  financeClick(e) {
     console.log(this.finance);
     this.reload();
   }

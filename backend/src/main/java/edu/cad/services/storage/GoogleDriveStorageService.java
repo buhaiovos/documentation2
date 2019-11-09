@@ -71,7 +71,7 @@ public class GoogleDriveStorageService implements StorageService {
     private Credential authorize() throws Exception {
         return GoogleCredential
                 .fromStream(
-                        GoogleDriveStorageService.class.getResourceAsStream("/kpi-cad-documentation-42eb34ecb6a0.json")
+                        GoogleDriveStorageService.class.getResourceAsStream("/kpi-cad-documentation-438eaf836d3f.json")
                 )
                 .createScoped(Collections.singleton(DriveScopes.DRIVE_FILE));
     }
