@@ -5,6 +5,7 @@ import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Accessors(chain = true)
 @EqualsAndHashCode(of = "id", callSuper = false)
+@ToString(of = {"id", "denotation"})
 @Entity
 @Table(name = "form_of_education")
 public class EducationForm extends YearTracked implements IDatabaseEntity<Integer>, Serializable {

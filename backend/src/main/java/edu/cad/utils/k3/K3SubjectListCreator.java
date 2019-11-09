@@ -6,6 +6,8 @@ import edu.cad.utils.hibernateutils.EntityCloner;
 
 import java.util.*;
 
+import static java.util.Optional.ofNullable;
+
 public class K3SubjectListCreator {
 
     public static List<K3SubjectEntity> createList(final EducationForm educationForm,
@@ -80,18 +82,16 @@ public class K3SubjectListCreator {
     }
 
     private static void addToMap(Map<Department, List<AcademicGroup>> departmentToGroups, AcademicGroup group) {
-        List<AcademicGroup> groups = departmentToGroups.putIfAbsent(group.getDepartment(), new ArrayList<>(List.of(group)));
-        if (groups != null) { // null when first insertion occurs, hence no need to insert
-            groups.add(group);
-        }
+        ofNullable(
+                departmentToGroups.putIfAbsent(group.getDepartment(), new ArrayList<>(List.of(group)))
+        ).ifPresent(groups -> groups.add(group));
     }
 
     private static void addClones(Map<SubjectHeader, List<SubjectInfo>> subjectMap,
                                   SubjectInfo subjectDetails,
                                   int position,
                                   Map<Department, List<AcademicGroup>> departmentToGroups) {
-        if (departmentToGroups.isEmpty())
-            return;
+        if (departmentToGroups.isEmpty()) return;
 
         for (Department department : departmentToGroups.keySet()) {
             SubjectInfo clone = EntityCloner.clone(SubjectInfo.class, subjectDetails);

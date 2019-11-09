@@ -67,7 +67,7 @@ public class OtherActivitiesPageGenerator extends FormK3Generator {
                 if (token.contains(K3_OTHER_PAGE_COLUMN_TOKEN_BEGINNING)) {
                     AbstractOtherLoadColumn column =
                             OtherLoadColumnsFactory.getColumn(columnNumber, token, sourceOfFinancing);
-                    currentCell.setCellType(Cell.CELL_TYPE_BLANK);
+                    currentCell.setBlank();
 
                     semesterToColumns.get(column.getSemester()).add(column);
                 }

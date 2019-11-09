@@ -1,6 +1,6 @@
 package edu.cad.domain;
 
-public enum Document {
+public enum DocumentType {
     CURRICULUM,
     WORK_PLAN,
     K3

@@ -1,6 +1,6 @@
 package edu.cad.services.filenames;
 
-import edu.cad.domain.Document;
+import edu.cad.domain.DocumentType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +23,8 @@ public class FileSystemNameResolver implements FileNameResolvingService {
     }
 
     @Override
-    public String resolveForDocument(Document document) {
-        switch (document) {
+    public String resolveForDocument(DocumentType documentType) {
+        switch (documentType) {
             case CURRICULUM:
                 return this.servletContext.getRealPath(curriculumPath);
             case WORK_PLAN:

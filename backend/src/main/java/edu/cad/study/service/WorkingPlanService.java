@@ -38,6 +38,6 @@ public class WorkingPlanService implements EntityService<WorkingPlan, Integer, W
 
     @Override
     public void deleteById(Integer id) {
-
+        repository.deleteById(id);
     }
 }

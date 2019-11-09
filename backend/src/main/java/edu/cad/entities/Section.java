@@ -71,25 +71,6 @@ public class Section extends YearTracked implements IDatabaseEntity<Integer>, Se
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        final Section other = (Section) obj;
-        return this.id.equals(other.getId());
-    }
-
-    @Override
     public void setIdentifier(Integer id) {
         this.id = id;
     }

@@ -5,6 +5,8 @@ import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +15,8 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Accessors(chain = true)
+@ToString(of = {"id", "denotation"})
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "qualification")
@@ -31,23 +35,6 @@ public class Qualification extends YearTracked implements IDatabaseEntity<Intege
     private Set<AcademicGroup> academicGroups = new HashSet<>(0);
 
     public Qualification() {
-    }
-
-    public Qualification(int id, String denotation) {
-        this.id = id;
-        this.denotation = denotation;
-    }
-
-    public String getDenotation() {
-        return denotation;
-    }
-
-    public void setDenotation(String denotation) {
-        this.denotation = denotation;
-    }
-
-    public Set<AcademicGroup> getAcademicGroups() {
-        return academicGroups;
     }
 
     public void setAcademicGroups(Set<AcademicGroup> academicGroups) {

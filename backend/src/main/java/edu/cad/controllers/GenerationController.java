@@ -1,6 +1,6 @@
 package edu.cad.controllers;
 
-import edu.cad.domain.Document;
+import edu.cad.domain.DocumentType;
 import edu.cad.services.DocumentGenerationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +18,8 @@ public class GenerationController {
     }
 
     @GetMapping
-    public ResponseEntity<byte[]> generateDocument(@RequestParam("document") Document document) {
-        final byte[] bytes = generationService.generateDocument(document);
-        return DocumentResponseUtil.buildResponseForXlsFileBytes(document, bytes);
+    public ResponseEntity<byte[]> generateDocument(@RequestParam("document") DocumentType documentType) {
+        final byte[] bytes = generationService.generateDocument(documentType);
+        return DocumentResponseUtil.buildResponseForXlsFileBytes(documentType, bytes);
     }
 }

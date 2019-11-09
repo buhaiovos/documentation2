@@ -4,6 +4,7 @@ import edu.cad.services.filenames.FileNameResolvingService;
 import edu.cad.services.storage.StorageService;
 import edu.cad.utils.databaseutils.DatabaseSwitcher;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import java.nio.file.Files;
 import java.util.Set;
 
 @Service
+@Lazy
 @Slf4j
 class DbYearsTrackingServiceImpl implements DbYearsTrackingService {
     private static final String TEMP_FILE_PREFIX = "years";
@@ -24,8 +26,9 @@ class DbYearsTrackingServiceImpl implements DbYearsTrackingService {
     private final YearsFileHandler yearsFileHandler;
     private final DatabaseSwitcher databaseSwitcher;
 
-    public DbYearsTrackingServiceImpl(FileNameResolvingService fileNameResolvingService,
-                                      StorageService storageService, DatabaseSwitcher databaseSwitcher) {
+    public DbYearsTrackingServiceImpl(@Lazy FileNameResolvingService fileNameResolvingService,
+                                      @Lazy StorageService storageService,
+                                      @Lazy DatabaseSwitcher databaseSwitcher) {
         this.fileNameResolvingService = fileNameResolvingService;
         this.storageService = storageService;
         this.databaseSwitcher = databaseSwitcher;

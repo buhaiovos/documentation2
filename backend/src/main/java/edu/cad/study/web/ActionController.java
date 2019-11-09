@@ -7,61 +7,69 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Slf4j
 public abstract class ActionController<Entity, Id, Dto> extends ActionProcessor<Dto, Dto, Id> {
-    EntityService<Entity, Id, Dto> service;
-    EntityMapper<Entity, Dto> mapper;
+    final EntityService<Entity, Id, Dto> service;
+    final EntityMapper<Entity, Dto> mapper;
+
+    String entityName;
 
     @Override
     public List<Dto> list() {
         List<Entity> groups = service.getAll();
-        log.info("Getting list, size: {}", groups.size());
+        log.debug("Getting list of {}, size: {}", getEntityName(), groups.size());
         return toResponse(groups);
     }
 
     @Override
     public Dto create(Dto request) {
-        log.info("Creating: {}", request);
+        log.debug("Creating {}: {}", getEntityName(), request);
         Entity academicGroup = service.create(request);
         return mapper.toResponse(academicGroup);
     }
 
     @Override
     public Dto update(Dto request) {
-        log.info("Updating {}", request);
+        log.debug("Updating {}: {}", getEntityName(), request);
         Entity updatedGroup = service.update(request);
         return mapper.toResponse(updatedGroup);
     }
 
     @Override
     public void delete(Id id) {
-        log.info("Deleting by id: {}", id);
+        log.debug("Deleting {} by id: {}", getEntityName(), id);
         service.deleteById(id);
     }
 
     @Override
     public List<Option> getOptions() {
-        log.info("Getting options");
+        log.debug("Getting options ({})", getEntityName());
         return service.getAll()
                 .stream()
                 .map(mapper::toOption)
                 .collect(toList());
     }
 
-    @Override
-    public abstract List<Dto> getDependent(HttpServletRequest request);
-
     private List<Dto> toResponse(List<Entity> groups) {
         return groups
                 .stream()
                 .map(mapper::toResponse)
                 .collect(toList());
+    }
+
+    private String getEntityName() {
+        if (entityName == null) {
+            entityName = service.getClass()
+                    .getSimpleName()
+                    .replace("Service", EMPTY);
+        }
+        return entityName;
     }
 }

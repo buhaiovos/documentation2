@@ -25,4 +25,8 @@ public class Option {
         this.displayText = displayText;
         this.value = value;
     }
+
+    public static Option empty() {
+        return new Option("-", 0);
+    }
 }

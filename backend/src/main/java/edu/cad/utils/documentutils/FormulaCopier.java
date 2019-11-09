@@ -9,6 +9,7 @@ import org.apache.poi.ss.formula.ptg.AreaPtg;
 import org.apache.poi.ss.formula.ptg.Ptg;
 import org.apache.poi.ss.formula.ptg.RefPtgBase;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Sheet;
 
 public class FormulaCopier {
@@ -74,8 +75,8 @@ public class FormulaCopier {
     }
 
     private static boolean isInputValid(Sheet sheet, Cell src, Cell dest) {
-        if (src == null || dest == null || sheet == null 
-                || src.getCellType() != Cell.CELL_TYPE_FORMULA) {
+        if (src == null || dest == null || sheet == null
+                || src.getCellType() != CellType.FORMULA) {
             return false;
         }
         return !src.isPartOfArrayFormulaGroup();

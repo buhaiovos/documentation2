@@ -1,9 +1,9 @@
 package edu.cad.services.filenames;
 
-import edu.cad.domain.Document;
+import edu.cad.domain.DocumentType;
 
 public interface FileNameResolvingService {
-    String resolveForDocument(Document document);
+    String resolveForDocument(DocumentType documentType);
 
     String resolveForDatabaseYearsFile();
 }

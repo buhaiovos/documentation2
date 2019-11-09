@@ -12,6 +12,7 @@ import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ import static java.lang.String.format;
 
 @Service
 @Primary
+@Lazy
 @Slf4j
 public class GoogleDriveStorageService implements StorageService {
     /**

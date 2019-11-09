@@ -5,6 +5,7 @@ import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @Setter
 @Accessors(chain = true)
 @EqualsAndHashCode(of = "id", callSuper = false)
+@ToString(of = {"id", "cipher"})
 @Entity
 @Table(name = "academic_group")
 public class AcademicGroup extends YearTracked implements IDatabaseEntity<Integer>, Serializable, Comparable<AcademicGroup> {

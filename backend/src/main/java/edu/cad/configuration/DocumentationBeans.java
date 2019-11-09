@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Lazy;
 @Configuration
 public class DocumentationBeans {
     @Bean
+    @Lazy
     public DatabaseSwitcher databaseSwitcher(@Lazy DbYearsTrackingService yearsTrackingService) {
         return new DatabaseSwitcher(
                 new DatabaseCloner(),

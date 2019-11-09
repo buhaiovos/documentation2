@@ -2,17 +2,20 @@ package edu.cad.services.years;
 
 import edu.cad.documentelements.areas.k3.K3ScienceResearchIndividualsArea;
 import edu.cad.utils.databaseutils.DatabaseSwitcher;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Set;
 
 @Service
+@Lazy
 public class DbYearsServiceImpl implements DbYearsService {
     private final DbYearsTrackingService yearsTrackingService;
     private final DatabaseSwitcher databaseSwitcher;
 
-    public DbYearsServiceImpl(DbYearsTrackingService yearsTrackingService, DatabaseSwitcher databaseSwitcher) {
+    public DbYearsServiceImpl(@Lazy DbYearsTrackingService yearsTrackingService,
+                              @Lazy DatabaseSwitcher databaseSwitcher) {
         this.yearsTrackingService = yearsTrackingService;
         this.databaseSwitcher = databaseSwitcher;
     }

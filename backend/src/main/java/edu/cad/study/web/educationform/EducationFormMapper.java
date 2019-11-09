@@ -8,10 +8,12 @@ import org.springframework.stereotype.Component;
 @Component
 class EducationFormMapper implements EntityMapper<EducationForm, EducationFormDto> {
 
+    @Override
     public Option toOption(EducationForm specialization) {
         return new Option(specialization.getDenotation(), specialization.getId());
     }
 
+    @Override
     public EducationFormDto toResponse(EducationForm educationForm) {
         return new EducationFormDto()
                 .setDenotation(educationForm.getDenotation())

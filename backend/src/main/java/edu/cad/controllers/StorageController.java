@@ -1,6 +1,7 @@
 package edu.cad.controllers;
 
 import edu.cad.services.storage.StorageService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StorageController {
     private final StorageService storageService;
 
-    public StorageController(StorageService storageService) {
+    public StorageController(@Lazy StorageService storageService) {
         this.storageService = storageService;
     }
 
