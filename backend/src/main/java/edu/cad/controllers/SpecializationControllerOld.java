@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder;
 import edu.cad.daos.HibernateDao;
 import edu.cad.entities.Department;
 import edu.cad.entities.Specialization;
-import edu.cad.study.persistence.SpecializationRepository;
+import edu.cad.study.specialization.SpecializationRepository;
 import edu.cad.utils.gson.Option;
 import edu.cad.utils.gson.SpecializationSerializer;
 import lombok.Setter;

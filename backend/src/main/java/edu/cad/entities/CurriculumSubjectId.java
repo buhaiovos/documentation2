@@ -6,11 +6,11 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class CurriculumSubjectId implements Serializable{
-    
+public class CurriculumSubjectId implements Serializable {
+
     @ManyToOne
     private Curriculum curriculum;
-    
+
     @ManyToOne
     private SubjectInfo subjectInfo;
 
@@ -59,5 +59,5 @@ public class CurriculumSubjectId implements Serializable{
             return false;
         }
         return this.subjectInfo.equals(other.getSubjectInfo());
-    }   
+    }
 }

@@ -1,7 +1,7 @@
 package edu.cad.controllers;
 
 import edu.cad.entities.Qualification;
-import edu.cad.study.persistence.QualificationRepository;
+import edu.cad.study.qualification.QualificationRepository;
 import edu.cad.utils.gson.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

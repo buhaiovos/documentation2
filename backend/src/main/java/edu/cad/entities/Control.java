@@ -2,15 +2,21 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
 @Getter
 @Setter
+@Accessors(chain = true)
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@Entity
 @Table(name = "control")
 public class Control extends YearTracked implements IDatabaseEntity<Integer>, Serializable, Comparable<Control> {
     @Expose
@@ -31,52 +37,6 @@ public class Control extends YearTracked implements IDatabaseEntity<Integer>, Se
     @JoinColumn(name = "id_subject")
     private SubjectInfo subjectInfo;
 
-    public Control() {
-    }
-
-    public int getSemester() {
-        return semester;
-    }
-
-    public void setSemester(int semester) {
-        this.semester = semester;
-    }
-
-    public ControlDictionary getType() {
-        return type;
-    }
-
-    public void setType(ControlDictionary type) {
-        this.type = type;
-    }
-
-    public SubjectInfo getSubjectInfo() {
-        return subjectInfo;
-    }
-
-    public void setSubjectInfo(SubjectInfo subjectInfo) {
-        this.subjectInfo = subjectInfo;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Control)) {
-            return false;
-        }
-        if (this == obj) {
-            return true;
-        }
-        final Control other = (Control) obj;
-        return this.id == other.id;
-    }
-
     @Override
     public int compareTo(Control other) {
         return this.semester - other.semester;
@@ -95,3 +55,4 @@ public class Control extends YearTracked implements IDatabaseEntity<Integer>, Se
         this.id = id;
     }
 }
+

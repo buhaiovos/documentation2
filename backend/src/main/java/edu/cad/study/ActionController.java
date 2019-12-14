@@ -1,0 +1,74 @@
+package edu.cad.study;
+
+import edu.cad.utils.gson.Option;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Slf4j
+public abstract class ActionController<Entity, Id, Dto> extends ActionProcessor<Dto, Dto, Id> {
+    final EntityService<Entity, Id, Dto> service;
+    final EntityMapper<Entity, Dto> mapper;
+
+    String entityName;
+
+    @Override
+    public List<Dto> list() {
+        List<Entity> groups = service.getAll();
+        log.debug("Getting list of {}, size: {}", getEntityName(), groups.size());
+        return toResponse(groups);
+    }
+
+    @Override
+    public Dto create(Dto request) {
+        log.debug("Creating {}: {}", getEntityName(), request);
+        Entity academicGroup = service.create(request);
+        return mapper.toResponse(academicGroup);
+    }
+
+    @Override
+    public Dto update(Dto request) {
+        log.debug("Updating {}: {}", getEntityName(), request);
+        Entity updatedGroup = service.update(request);
+        return mapper.toResponse(updatedGroup);
+    }
+
+    @Override
+    public void delete(Id id) {
+        log.debug("Deleting {} by id: {}", getEntityName(), id);
+        service.deleteById(id);
+    }
+
+    @Override
+    public List<Option> getOptions() {
+        log.debug("Getting options ({})", getEntityName());
+        return service.getAll()
+                .stream()
+                .map(mapper::toOption)
+                .collect(toList());
+    }
+
+    private List<Dto> toResponse(List<Entity> groups) {
+        return groups
+                .stream()
+                .map(mapper::toResponse)
+                .collect(toList());
+    }
+
+    private String getEntityName() {
+        if (entityName == null) {
+            entityName = service.getClass()
+                    .getSimpleName()
+                    .replace("Service", EMPTY);
+        }
+        return entityName;
+    }
+}

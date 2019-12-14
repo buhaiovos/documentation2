@@ -3,15 +3,16 @@ package edu.cad.entities;
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.utils.Utils;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = "pk")
 @Entity
 @Table(name = "curriculum_subject")
 @AssociationOverrides({
@@ -40,14 +41,6 @@ public class CurriculumSubject implements IDatabaseEntity<Integer>, Serializable
         this.cipher = cipher;
     }
 
-    public CurriculumSubjectId getPk() {
-        return pk;
-    }
-
-    public void setPk(CurriculumSubjectId pk) {
-        this.pk = pk;
-    }
-
     @Transient
     public Curriculum getCurriculum() {
         return pk.getCurriculum();
@@ -64,36 +57,6 @@ public class CurriculumSubject implements IDatabaseEntity<Integer>, Serializable
 
     public void setSubjectInfo(SubjectInfo subjectInfo) {
         pk.setSubjectInfo(subjectInfo);
-    }
-
-    public String getCipher() {
-        return cipher;
-    }
-
-    public void setCipher(String cipher) {
-        this.cipher = cipher;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.pk);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
-        final CurriculumSubject other = (CurriculumSubject) obj;
-        return this.pk == other.getPk();
     }
 
     @Override
