@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@RestController
+@RestController("legacy-curriculum-controller")
 @RequestMapping("/curriculum")
 public class CurriculumController extends AbstractEntityController<Curriculum> {
 

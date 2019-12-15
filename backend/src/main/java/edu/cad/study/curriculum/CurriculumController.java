@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v2/academic-groups")
+@RequestMapping("/v2/curriculum")
 @Slf4j
 public class CurriculumController extends ActionController<Curriculum, Integer, CurriculumDto> {
     public CurriculumController(CurriculumService service, CurriculumMapper mapper) {

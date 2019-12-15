@@ -16,6 +16,8 @@ cad:
     headers:
       - content-type
 spring:
+  liquibase:
+    change-log: classpath:/db/changelog/changelog-master.xml
   mvc:
     dispatch-options-request: true
   datasource:

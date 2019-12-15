@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@RestController
+@RestController("legacy-controller")
 @RequestMapping("/control")
 public class ControlController extends AbstractEntityController<Control>{
 

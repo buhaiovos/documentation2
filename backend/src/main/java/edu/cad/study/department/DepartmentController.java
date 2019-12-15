@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v2/department")
+@RequestMapping("/v2/departments")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DepartmentController extends ActionController<Department, Integer, DepartmentDto> {
     public DepartmentController(DepartmentService service, DepartmentMapper mapper) {
