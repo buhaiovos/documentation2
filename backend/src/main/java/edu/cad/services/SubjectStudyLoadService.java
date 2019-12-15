@@ -32,14 +32,14 @@ public class SubjectStudyLoadService {
     }
 
     private Predicate<SubjectStudyLoad> bySemester(int semester) {
-        switch (semester) {
+        return switch (semester) {
             case 1:
-                return load -> (load.getSubjectInfo() != null) && (load.getSubjectInfo().getSemester() % 2 == 1);
+                yield load -> (load.getSubjectInfo() != null) && (load.getSubjectInfo().getSemester() % 2 == 1);
             case 2:
-                return load -> (load.getSubjectInfo() != null) && (load.getSubjectInfo().getSemester() % 2 == 0);
+                yield load -> (load.getSubjectInfo() != null) && (load.getSubjectInfo().getSemester() % 2 == 0);
             default:
                 throw new IllegalArgumentException(format("Unsupported semester nubmer: %d", semester));
-        }
+        };
     }
 
     private Predicate<SubjectStudyLoad> byFormOfEducation(FormOfEducation formOfEducation) {
