@@ -2,6 +2,7 @@ package edu.cad.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Accessors(chain = true)
 @DiscriminatorValue("workplan")
 public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
 
@@ -51,24 +53,22 @@ public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
     }
 
     @Override
-    public Set<CurriculumSubject> getCurriculumSubjects() {
-        return workplanSubjects;
-    }
-
-    @Override
-    public void setCurriculumSubjects(Set<CurriculumSubject> workplanSubjects) {
+    public WorkingPlan setCurriculumSubjects(Set<CurriculumSubject> workplanSubjects) {
         this.workplanSubjects.clear();
         this.workplanSubjects.addAll(workplanSubjects);
+        return this;
     }
 
-    public void setDiplomaPreparations(Set<DiplomaPreparation> diplomaPreparations) {
+    public WorkingPlan setDiplomaPreparations(Set<DiplomaPreparation> diplomaPreparations) {
         this.diplomaPreparations.clear();
         this.diplomaPreparations.addAll(diplomaPreparations);
+        return this;
     }
 
-    public void setGroups(Set<AcademicGroup> groups) {
+    public WorkingPlan setGroups(Set<AcademicGroup> groups) {
         this.groups.clear();
         this.groups.addAll(groups);
+        return this;
     }
 
     @Override

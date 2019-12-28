@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -18,7 +20,7 @@ public class SubjectInfoService implements EntityService<SubjectInfo, Integer, S
 
     @Override
     public List<SubjectInfo> getAll() {
-        return null;
+        return repo.findAll();
     }
 
     @Override
@@ -39,5 +41,12 @@ public class SubjectInfoService implements EntityService<SubjectInfo, Integer, S
     @Override
     public void deleteById(Integer integer) {
 
+    }
+
+    public List<SubjectInfo> getByIds(List<Integer> ids) {
+        return repo.findAll()
+                .stream()
+                .filter(subjectInfo -> ids.contains(subjectInfo.getId()))
+                .collect(toList());
     }
 }

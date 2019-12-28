@@ -5,7 +5,7 @@ import edu.cad.study.EntityService;
 import edu.cad.study.educationform.EducationFormService;
 import edu.cad.study.qualification.QualificationService;
 import edu.cad.study.specialization.SpecializationService;
-import edu.cad.study.specialization.WorkingPlanService;
+import edu.cad.study.workingplan.WorkingPlanService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

@@ -2,7 +2,6 @@ package edu.cad.study.workingplan;
 
 import edu.cad.entities.WorkingPlan;
 import edu.cad.study.ActionController;
-import edu.cad.study.specialization.WorkingPlanService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
+import java.util.Map;
 
 @Data
 @Accessors(chain = true)
@@ -13,6 +13,5 @@ import java.util.List;
 public class CurriculumDto {
     int id;
     String denotation;
-    List<Integer> subjectIds;
-    List<Integer> workingPlanIds;
+    Map<String, Integer> subjectIdsByCiphers;
 }

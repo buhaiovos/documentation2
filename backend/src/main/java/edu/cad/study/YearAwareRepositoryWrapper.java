@@ -21,7 +21,7 @@ public abstract class YearAwareRepositoryWrapper<T extends YearTracked, ID> {
     public List<T> findAll() {
         return repo.findAll()
                 .stream()
-                .filter(group -> group.getYearOfInformation() == yearProvider.getCurrent())
+                .filter(entity -> entity.getYearOfInformation() == yearProvider.getCurrent())
                 .collect(toList());
     }
 
@@ -29,12 +29,12 @@ public abstract class YearAwareRepositoryWrapper<T extends YearTracked, ID> {
         return repo.findById(id);
     }
 
-    public T save(T g) {
-        g.setYearOfInformation(yearProvider.getCurrent());
-        return repo.save(g);
+    public T save(T entity) {
+        entity.setYearOfInformation(yearProvider.getCurrent());
+        return repo.save(entity);
     }
 
     public void deleteById(ID id) {
-        repo.deleteById(id);
+        if (repo.existsById(id)) repo.deleteById(id);
     }
 }

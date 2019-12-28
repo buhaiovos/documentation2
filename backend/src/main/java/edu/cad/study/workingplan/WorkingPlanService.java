@@ -1,9 +1,7 @@
-package edu.cad.study.specialization;
+package edu.cad.study.workingplan;
 
 import edu.cad.entities.WorkingPlan;
 import edu.cad.study.EntityService;
-import edu.cad.study.workingplan.WorkingPlanDto;
-import edu.cad.study.workingplan.WorkingPlanRepositoryWrapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

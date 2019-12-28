@@ -24,40 +24,40 @@ public abstract class ActionController<Entity, Id, Dto> extends ActionProcessor<
     @Override
     public List<Dto> list() {
         List<Entity> groups = service.getAll();
-        log.debug("Getting list of {}, size: {}", getEntityName(), groups.size());
+        log.info("Getting list of {}, size: {}", getEntityName(), groups.size());
         return toResponse(groups);
     }
 
     @Override
     public Dto create(Dto request) {
-        log.debug("Creating {}: {}", getEntityName(), request);
+        log.info("Creating {}: {}", getEntityName(), request);
         Entity entity = service.create(request);
         return mapper.toResponse(entity);
     }
 
     @Override
     public Optional<Dto> getById(Id id) {
-        log.debug("Getting {} by id: {}", getEntityName(), id);
+        log.info("Getting {} by id: {}", getEntityName(), id);
         return service.findById(id)
                 .map(mapper::toResponse);
     }
 
     @Override
     public Dto update(Id id, Dto request) {
-        log.debug("Updating {}: {}", getEntityName(), request);
+        log.info("Updating {}: {}", getEntityName(), request);
         Entity updatedEntity = service.update(id, request);
         return mapper.toResponse(updatedEntity);
     }
 
     @Override
     public void delete(Id id) {
-        log.debug("Deleting {} by id: {}", getEntityName(), id);
+        log.info("Deleting {} by id: {}", getEntityName(), id);
         service.deleteById(id);
     }
 
     @Override
     public List<Option> getOptions() {
-        log.debug("Getting options ({})", getEntityName());
+        log.info("Getting options ({})", getEntityName());
         return service.getAll()
                 .stream()
                 .map(mapper::toOption)

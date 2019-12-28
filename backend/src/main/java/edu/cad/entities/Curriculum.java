@@ -5,6 +5,7 @@ import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id", callSuper = false)
+@Accessors(chain = true)
 @Entity
 @Table(name = "curriculum")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -33,7 +35,14 @@ public class Curriculum extends YearTracked implements IDatabaseEntity<Integer>,
     @Column(name = "denotation")
     protected String denotation;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.curriculum", cascade = CascadeType.MERGE)
+    @Column(name = "type", updatable = false, insertable = false)
+    protected String type;
+
+    @OneToMany(
+            fetch = FetchType.EAGER, mappedBy = "pk.curriculum",
+            cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE},
+            orphanRemoval = true
+    )
     private Set<CurriculumSubject> curriculumSubjects = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "curriculum")
@@ -46,34 +55,24 @@ public class Curriculum extends YearTracked implements IDatabaseEntity<Integer>,
         this.id = id;
     }
 
-    public String getDenotation() {
-        return denotation;
-    }
-
-    public void setDenotation(String denotation) {
-        this.denotation = denotation;
-    }
-
-    public Set<CurriculumSubject> getCurriculumSubjects() {
-        return curriculumSubjects;
-    }
-
-    public void setCurriculumSubjects(Set<CurriculumSubject> curriculumSubjects) {
+    public Curriculum setCurriculumSubjects(Set<CurriculumSubject> curriculumSubjects) {
         this.curriculumSubjects.clear();
         this.curriculumSubjects.addAll(curriculumSubjects);
+        return this;
     }
 
-    public Set<WorkingPlan> getWorkingPlans() {
-        return workingPlans;
-    }
-
-    public void setWorkingPlans(Set<WorkingPlan> workingPlans) {
+    public Curriculum setWorkingPlans(Set<WorkingPlan> workingPlans) {
         this.workingPlans.clear();
         this.workingPlans.addAll(workingPlans);
+        return this;
     }
 
     public Qualification getQualification() {
-        return workingPlans.iterator().next().getQualification();
+        var iterator = workingPlans.iterator();
+        if (iterator.hasNext()) {
+            return iterator.next().getQualification();
+        }
+        return null;
     }
 
     public boolean contains(SubjectInfo subjectInfo) {
