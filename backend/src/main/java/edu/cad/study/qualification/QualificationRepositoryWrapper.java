@@ -1,7 +1,7 @@
 package edu.cad.study.qualification;
 
 import edu.cad.entities.Qualification;
-import edu.cad.study.persistence.YearAwareRepositoryWrapper;
+import edu.cad.study.YearAwareRepositoryWrapper;
 import edu.cad.year.YearProvider;
 import org.springframework.stereotype.Component;
 

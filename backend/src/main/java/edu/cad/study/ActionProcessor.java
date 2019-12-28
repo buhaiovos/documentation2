@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class ActionProcessor<Response, Request, Id> {
 
@@ -14,7 +15,9 @@ public abstract class ActionProcessor<Response, Request, Id> {
 
     public abstract Response create(Request request);
 
-    public abstract Response update(Request request);
+    public abstract Optional<Response> getById(Id id);
+
+    public abstract Response update(Id id, Request request);
 
     public abstract void delete(Id id);
 
@@ -30,6 +33,14 @@ public abstract class ActionProcessor<Response, Request, Id> {
         return ResponseEntity.ok(list());
     }
 
+    @GetMapping("{id}")
+    private ResponseEntity<Response> getRecordById(@PathVariable Id id) {
+        return getById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
     @GetMapping("/enumerated")
     private ResponseEntity<List<Option>> dropdownResponse() {
         var defaultOption = Option.empty();
@@ -42,7 +53,7 @@ public abstract class ActionProcessor<Response, Request, Id> {
 
     @PutMapping("{id}")
     private ResponseEntity<Response> updatedRecord(@PathVariable Id id, @RequestBody Request request) {
-        Response updated = update(request);
+        Response updated = update(id, request);
         return ResponseEntity.ok(updated);
     }
 

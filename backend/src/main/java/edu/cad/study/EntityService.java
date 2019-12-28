@@ -1,8 +1,11 @@
 package edu.cad.study;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public interface EntityService<Entity, Id, Dto> {
     List<Entity> getAll();
 
@@ -10,7 +13,7 @@ public interface EntityService<Entity, Id, Dto> {
 
     Entity create(Dto academicGroup);
 
-    Entity update(Dto updatedGroup);
+    Entity update(Id id, Dto updatedGroup);
 
     void deleteById(Id id);
 }

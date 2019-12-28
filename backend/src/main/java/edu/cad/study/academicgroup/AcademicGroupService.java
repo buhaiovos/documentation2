@@ -71,23 +71,24 @@ public class AcademicGroupService implements EntityService<AcademicGroup, Intege
 
     @Override
     @Transactional
-    public AcademicGroup update(AcademicGroupDto updatedGroup) {
+    public AcademicGroup update(Integer id, AcademicGroupDto updatedGroup) {
         log.info("Updating academic group: {}", updatedGroup);
-        WorkingPlan workingPlan = workingPlanService
+
+        final AcademicGroup existingGroup = findById(id).orElseThrow();
+        log.info("Found target group: {}", existingGroup);
+
+        final WorkingPlan workingPlan = workingPlanService
                 .findById(updatedGroup.getWorkplan())
                 .orElseThrow();
-        Specialization specialization = specializationService
+        final Specialization specialization = specializationService
                 .findById(updatedGroup.getSpecialization())
                 .orElseThrow();
-        EducationForm educationForm = educationFormService
+        final EducationForm educationForm = educationFormService
                 .findById(updatedGroup.getEducationForm())
                 .orElseThrow();
-        Qualification qualification = qualificationService
+        final Qualification qualification = qualificationService
                 .findById(updatedGroup.getQualification())
                 .orElseThrow();
-
-        AcademicGroup existingGroup = findById(updatedGroup.getId()).orElseThrow();
-        log.info("Found target group: {}", existingGroup);
 
         existingGroup
                 .setBudgetaryStudents(updatedGroup.getBudgetaryStudents())

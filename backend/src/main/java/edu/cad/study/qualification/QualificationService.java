@@ -39,10 +39,8 @@ public class QualificationService implements EntityService<Qualification, Intege
     }
 
     @Override
-    public Qualification update(QualificationDto qualification) {
-        Qualification existing =
-                repo.findById(qualification.getId()).orElseThrow();
-
+    public Qualification update(Integer id, QualificationDto qualification) {
+        Qualification existing = repo.findById(id).orElseThrow();
         existing.setDenotation(qualification.getDenotation());
         return repo.save(existing);
     }

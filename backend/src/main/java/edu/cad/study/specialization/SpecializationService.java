@@ -42,7 +42,7 @@ public class SpecializationService implements EntityService<Specialization, Inte
     }
 
     @Override
-    public Specialization update(SpecializationDto updatedGroup) {
+    public Specialization update(Integer id, SpecializationDto updatedGroup) {
         return null;
     }
 

@@ -34,8 +34,8 @@ public class EducationFormService implements EntityService<EducationForm, Intege
     }
 
     @Override
-    public EducationForm update(EducationFormDto updated) {
-        EducationForm existing = findById(updated.getId()).orElseThrow();
+    public EducationForm update(Integer id, EducationFormDto updated) {
+        EducationForm existing = findById(id).orElseThrow();
         existing.setDenotation(updated.getDenotation());
         return repo.save(existing);
     }

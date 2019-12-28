@@ -33,7 +33,7 @@ public class WorkingPlanService implements EntityService<WorkingPlan, Integer, W
     }
 
     @Override
-    public WorkingPlan update(WorkingPlanDto updatedGroup) {
+    public WorkingPlan update(Integer id, WorkingPlanDto updatedGroup) {
         return null;
     }
 

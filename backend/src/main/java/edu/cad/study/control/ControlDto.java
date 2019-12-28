@@ -11,6 +11,6 @@ import lombok.experimental.FieldDefaults;
 public class ControlDto {
     private int id;
     private int semester;
-    private String type;
+    private int typeId;
     private int subjectId;
 }

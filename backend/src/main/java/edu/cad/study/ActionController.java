@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -30,15 +31,22 @@ public abstract class ActionController<Entity, Id, Dto> extends ActionProcessor<
     @Override
     public Dto create(Dto request) {
         log.debug("Creating {}: {}", getEntityName(), request);
-        Entity academicGroup = service.create(request);
-        return mapper.toResponse(academicGroup);
+        Entity entity = service.create(request);
+        return mapper.toResponse(entity);
     }
 
     @Override
-    public Dto update(Dto request) {
+    public Optional<Dto> getById(Id id) {
+        log.debug("Getting {} by id: {}", getEntityName(), id);
+        return service.findById(id)
+                .map(mapper::toResponse);
+    }
+
+    @Override
+    public Dto update(Id id, Dto request) {
         log.debug("Updating {}: {}", getEntityName(), request);
-        Entity updatedGroup = service.update(request);
-        return mapper.toResponse(updatedGroup);
+        Entity updatedEntity = service.update(id, request);
+        return mapper.toResponse(updatedEntity);
     }
 
     @Override

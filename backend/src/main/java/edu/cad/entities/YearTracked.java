@@ -11,7 +11,7 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class YearTracked {
+public abstract class YearTracked {
     @Column(name = "year_of_information")
     private short yearOfInformation;
 }

@@ -13,7 +13,7 @@ class ControlMapper implements EntityMapper<Control, ControlDto> {
         return new ControlDto()
                 .setId(e.getId())
                 .setSemester(e.getSemester())
-                .setType(e.getType().getDenotation())
+                .setTypeId(e.getType().getId())
                 .setSubjectId(e.getSubjectInfo().getId());
     }
 

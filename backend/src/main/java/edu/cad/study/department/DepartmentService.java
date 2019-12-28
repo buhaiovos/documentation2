@@ -34,8 +34,8 @@ public class DepartmentService implements EntityService<Department, Integer, Dep
     }
 
     @Override
-    public Department update(DepartmentDto updatedGroup) {
-        Department existing = repository.findById(updatedGroup.getId()).orElseThrow();
+    public Department update(Integer id, DepartmentDto updatedGroup) {
+        Department existing = repository.findById(id).orElseThrow();
         existing.setDenotation(updatedGroup.getDenotation());
         return repository.save(existing);
     }

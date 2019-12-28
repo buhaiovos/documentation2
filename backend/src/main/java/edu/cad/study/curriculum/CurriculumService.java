@@ -35,7 +35,7 @@ public class CurriculumService implements EntityService<Curriculum, Integer, Cur
     }
 
     @Override
-    public Curriculum update(CurriculumDto updatedGroup) {
+    public Curriculum update(Integer id, CurriculumDto updatedGroup) {
         throw new ToDoException();
     }
 
