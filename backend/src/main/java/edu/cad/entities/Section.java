@@ -5,6 +5,7 @@ import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "section")
@@ -52,17 +54,9 @@ public class Section extends YearTracked implements IDatabaseEntity<Integer>, Se
         this.cycle = cycle;
     }
 
-    public Set<SubjectHeader> getCurriculumSubjects() {
-        return curriculumSubjects;
-    }
-
     public void setCurriculumSubjects(Set<SubjectHeader> curriculumSubjects) {
         this.curriculumSubjects.clear();
         this.curriculumSubjects.addAll(curriculumSubjects);
-    }
-
-    public Set<SubjectHeader> getWorkingPlanSubjects() {
-        return workingPlanSubjects;
     }
 
     public void setWorkingPlanSubjects(Set<SubjectHeader> workingPlanSubjects) {
