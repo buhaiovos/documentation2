@@ -2,8 +2,10 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +15,8 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Accessors(chain = true)
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Table(name = "cycle")
 public class Cycle extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
     
@@ -37,46 +41,9 @@ public class Cycle extends YearTracked implements IDatabaseEntity<Integer>, Seri
         this.denotation = denotation;
     }
 
-    public String getDenotation() {
-        return denotation;
-    }
-
-    public void setDenotation(String denotation) {
-        this.denotation = denotation;
-    }
-
-    public Set<Section> getSections() {
-        return sections;
-    }
-
     public void setSections(Set<Section> sections) {
         this.sections.clear();
         this.sections.addAll(sections);
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 41 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        /*if (getClass() != obj.getClass()) {
-            return false;
-        }*/
-        final Cycle other = (Cycle) obj;
-        if (this.id != other.getId()) {
-            return false;
-        }
-        return true;
     }
 
     @Override
