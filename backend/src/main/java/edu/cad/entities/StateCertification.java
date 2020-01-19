@@ -4,6 +4,7 @@ import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "state_certification")
@@ -32,9 +34,6 @@ public class StateCertification extends YearTracked implements IDatabaseEntity<I
 
     @Column(name = "finish")
     private LocalDate finish;
-
-    public StateCertification() {
-    }
 
     @Override
     public String toString() {
