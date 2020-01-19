@@ -17,4 +17,13 @@ public enum PracticeType {
         this.denotation = denotation;
         this.objectOfWork = objectOfWork;
     }
+
+    public static PracticeType fromDenotation(String denotation) {
+        for (PracticeType type : PracticeType.values()) {
+            if (type.getDenotation().equals(denotation)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("Wrong practice denotation");
+    }
 }

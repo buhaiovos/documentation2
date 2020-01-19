@@ -2,8 +2,10 @@ package edu.cad.entities;
 
 import edu.cad.domain.PracticeType;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +13,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id", callSuper = false)
+@Accessors(chain = true)
 @Entity
 @Table(name = "practice")
 public class Practice extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
@@ -35,35 +39,14 @@ public class Practice extends YearTracked implements IDatabaseEntity<Integer>, S
     @Column(name = "finish")
     private LocalDate finish;
 
-    public Practice() {
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 17 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        final Practice other = (Practice) obj;
-        return this.id == other.getId();
+    public Practice setStart(LocalDate start) {
+        this.start = start;
+        return this;
     }
 
     @Override
     public String toString() {
         return type + " (" + semester + " семестр/" + weeks + " тижні(в))";
-    }
-
-    public void setDenotationFromString(String type) {
-        this.type = PracticeType.valueOf(type);
     }
 
     @Override
