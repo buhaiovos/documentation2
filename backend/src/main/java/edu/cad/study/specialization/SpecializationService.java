@@ -42,8 +42,14 @@ public class SpecializationService implements EntityService<Specialization, Inte
     }
 
     @Override
-    public Specialization update(Integer id, SpecializationDto updatedGroup) {
-        return null;
+    public Specialization update(Integer id, SpecializationDto specialization) {
+        var updated = repo.findById(id).orElseThrow();
+        var department = departmentService.findById(specialization.getDepartment())
+                .orElseThrow();
+        updated.setDenotation(specialization.getDenotation());
+        updated.setDepartment(department);
+
+        return updated;
     }
 
     @Override
