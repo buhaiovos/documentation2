@@ -7,6 +7,7 @@ import edu.cad.utils.k3.SourceOfFinancing;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.util.List;
 @Table(name = "staff")
 @Getter
 @Setter
+@Accessors(chain = true)
 @ToString
 public class Staff extends YearTracked implements IDatabaseEntity<Integer> {
     @Expose
