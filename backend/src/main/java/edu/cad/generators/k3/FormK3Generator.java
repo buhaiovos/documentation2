@@ -1,9 +1,10 @@
 package edu.cad.generators.k3;
 
-import edu.cad.daos.HibernateDao;
 import edu.cad.entities.Department;
 import edu.cad.entities.EducationForm;
 import edu.cad.generators.DocumentGenerator;
+import edu.cad.study.department.DepartmentService;
+import edu.cad.study.educationform.EducationFormService;
 import edu.cad.utils.Utils;
 import edu.cad.utils.k3.SourceOfFinancing;
 import org.apache.poi.ss.usermodel.Cell;
@@ -25,6 +26,9 @@ public class FormK3Generator extends DocumentGenerator {
 
     static final int FIRST = 1;
     static final int SECOND = 2;
+
+    private EducationFormService educationFormService;
+    private DepartmentService departmentService;
 
     @Override
     public void fillInSheet(Sheet sheet) {
@@ -76,7 +80,7 @@ public class FormK3Generator extends DocumentGenerator {
 
     Department getDepartment(Sheet sheet) {
         // TODO: parse id of department from template and use it to get from dao
-        return new HibernateDao<>(Department.class).get(1);
+        return departmentService.findById(1).orElseThrow();
     }
 
     SourceOfFinancing getSourceOfFinancing(Sheet sheet) {
@@ -87,7 +91,7 @@ public class FormK3Generator extends DocumentGenerator {
 
     EducationForm getEducationForm(Sheet sheet) {
         int id = getId(sheet, 0, 1, EDUCATION_FORM_TOKEN_BEGINNING);
-        return new HibernateDao<>(EducationForm.class).get(id);
+        return educationFormService.findById(id).orElseThrow();
     }
 
     private int getId(Sheet sheet, int row, int col, String token) {

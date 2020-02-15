@@ -1,9 +1,12 @@
 package edu.cad.study.subject.info;
 
 import edu.cad.entities.Control;
+import edu.cad.entities.ControlDictionary;
+import edu.cad.entities.SubjectHeader;
 import edu.cad.entities.SubjectInfo;
 import edu.cad.study.EntityService;
 import edu.cad.study.control.ControlService;
+import edu.cad.study.control.dictionary.ControlDictionaryService;
 import edu.cad.study.subject.header.SubjectHeaderService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static edu.cad.entities.ControlDictionary.COURSE_WORK;
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -25,6 +29,7 @@ public class SubjectInfoService implements EntityService<SubjectInfo, Integer, S
     SubjectInfoRepositoryWrapper repo;
     SubjectHeaderService subjectHeaderService;
     ControlService controlService;
+    ControlDictionaryService controlDictionaryService;
 
     @Override
     public List<SubjectInfo> getAll() {
@@ -98,5 +103,32 @@ public class SubjectInfoService implements EntityService<SubjectInfo, Integer, S
                 .stream()
                 .filter(subjectInfo -> ids.contains(subjectInfo.getId()))
                 .collect(toList());
+    }
+
+    public boolean hasCourseWork(SubjectInfo si) {
+        ControlDictionary courseWork = controlDictionaryService.findById(COURSE_WORK).orElseThrow();
+
+        for (SubjectHeader subjectHeader : si.getSubjectHeader().getSubSubjects()) {
+            for (SubjectInfo element : subjectHeader.getSubjectInfo()) {
+                if (element.hasControlOfType(courseWork)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isCourseWork(SubjectInfo si) {
+        ControlDictionary courseWork = controlDictionaryService.findById(COURSE_WORK).orElseThrow();
+
+        return si.hasControlOfType(courseWork);
+    }
+
+    public double getEctsHoursWithoutExam(SubjectInfo si) {
+        if (hasCourseWork(si))
+            return si.getEctsHours() - 30;
+
+        return si.getEctsHours();
     }
 }

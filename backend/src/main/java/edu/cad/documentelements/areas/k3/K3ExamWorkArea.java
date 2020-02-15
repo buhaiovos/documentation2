@@ -1,6 +1,5 @@
 package edu.cad.documentelements.areas.k3;
 
-import edu.cad.daos.HibernateDao;
 import edu.cad.documentelements.k3columns.AbstractOtherLoadColumn;
 import edu.cad.domain.ObjectOfWork;
 import edu.cad.domain.QualificationLevel;
@@ -8,6 +7,7 @@ import edu.cad.entities.AcademicGroup;
 import edu.cad.entities.OtherLoad;
 import edu.cad.entities.OtherLoadInfo;
 import edu.cad.entities.WorkingPlan;
+import edu.cad.study.workingplan.WorkingPlanService;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class K3ExamWorkArea extends K3OtherStudyLoadArea {
     private static final String PROF_MASTERS_DEFENCE = "#k3(O)exManDefProfMas";
     private static final String SCI_MASTERS_DEFENCE = "#k3(O)exManDefSciMas";
 
-    private HibernateDao<WorkingPlan> wpDao = new HibernateDao<>(WorkingPlan.class);
+    private WorkingPlanService workingPlanService;
 
     public K3ExamWorkArea(Map<Integer, List<AbstractOtherLoadColumn>> semesterNumToColumns) {
         super(semesterNumToColumns);
@@ -63,7 +63,7 @@ public class K3ExamWorkArea extends K3OtherStudyLoadArea {
     private List<AcademicGroup> getMatchingGroups(QualificationLevel qualificationLevel) {
         ToIntFunction<AcademicGroup> studentsNumExtractor = sourceOfFinancing.studentNumberGetter();
 
-        return wpDao.getAll().stream()
+        return workingPlanService.getAll().stream()
                 .filter(workingPlan -> Objects.nonNull(workingPlan.getStateCertification()))
                 .map(WorkingPlan::getGroups)
                 .flatMap(Set::stream)
@@ -91,16 +91,10 @@ public class K3ExamWorkArea extends K3OtherStudyLoadArea {
     }
 
     private int getSemesterForQualification(QualificationLevel qualificationLevel) {
-        switch (qualificationLevel) {
-            case BACHELOR:
-            case SCI_MASTER:
-            case MASTER:
-                return 2;
-            case SPECIALIST:
-            case PROF_MASTER:
-                return 1;
-            default:
-                throw new UnsupportedOperationException(qualificationLevel.name() + " is not supported");
-        }
+        return switch (qualificationLevel) {
+            case BACHELOR, SCI_MASTER, MASTER -> 2;
+            case SPECIALIST, PROF_MASTER -> 1;
+            default -> throw new UnsupportedOperationException(qualificationLevel.name() + " is not supported");
+        };
     }
 }

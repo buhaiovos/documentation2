@@ -1,8 +1,8 @@
 package edu.cad.documentelements.k3columns;
 
-import edu.cad.daos.HibernateDao;
-import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.SubjectInfo;
+import edu.cad.study.control.dictionary.ControlDictionaryService;
+import edu.cad.study.subject.info.SubjectInfoService;
 import edu.cad.utils.documentutils.CellWithTokenValidator;
 import edu.cad.utils.documentutils.ColumnTokenStringSplitter;
 import edu.cad.utils.k3.SourceOfFinancing;
@@ -17,6 +17,10 @@ import static java.lang.String.format;
 
 @Slf4j
 class K3WPColumnsFactory {
+
+    private static ControlDictionaryService controlDictionaryService;
+    private static SubjectInfoService subjectInfoService;
+
     static AbstractK3Column createColumn(Cell cell, SourceOfFinancing mainSource) {
         if (cell != null) {
             String cellContent = CellWithTokenValidator.getContentIfCellValid(cell, K3_WP_TOKEN_BEGINNING);
@@ -33,23 +37,21 @@ class K3WPColumnsFactory {
 
     @SuppressWarnings("DuplicatedCode")
     private static AbstractK3Column createColumn(int columnIndex, String typeStr, SourceOfFinancing mainSource) {
-        HibernateDao<ControlDictionary> controlDAO = new HibernateDao<>(ControlDictionary.class);
-
         return switch (typeStr) {
             case ORDER_NUM -> new NumberK3Column(columnIndex);
-            case SEM_HOURS -> new HoursK3Column(columnIndex, SubjectInfo::getEctsHoursWithoutExam);
+            case SEM_HOURS -> new HoursK3Column(columnIndex, subjectInfoService::getEctsHoursWithoutExam);
             case LECTURES -> new HoursK3Column(columnIndex, SubjectInfo::getLectures);
             case PRACTICE -> new HoursK3Column(columnIndex, SubjectInfo::getPractices);
             case LABS -> new HoursK3Column(columnIndex, SubjectInfo::getLabs);
             case INDIVIDUALS -> new HoursK3Column(columnIndex, SubjectInfo::getIndividualHours);
-            case EXAMS -> new ControlK3Column(columnIndex, controlDAO.get(EXAM_ID));
-            case CREDITS -> new ControlK3Column(columnIndex, controlDAO.get(CREDIT_ID));
-            case CONTROL_WORKS -> new ControlK3Column(columnIndex, controlDAO.get(MODULES_AND_TESTS_ID));
-            case COURSE_PROJS -> new ControlK3Column(columnIndex, controlDAO.get(COURSE_PROJECT));
-            case COURSE_WORKS -> new ControlK3Column(columnIndex, controlDAO.get(COURSE_WORK));
-            case RGRS -> new ControlK3Column(columnIndex, controlDAO.get(CALCULATION_GRAPHIC_ASSIGNMENT));
-            case DKR -> new ControlK3Column(columnIndex, controlDAO.get(STATE_TEST));
-            case REFERATS -> new ControlK3Column(columnIndex, controlDAO.get(ESSAY));
+            case EXAMS -> new ControlK3Column(columnIndex, controlDictionaryService.findById(EXAM_ID).orElseThrow());
+            case CREDITS -> new ControlK3Column(columnIndex, controlDictionaryService.findById(CREDIT_ID).orElseThrow());
+            case CONTROL_WORKS -> new ControlK3Column(columnIndex, controlDictionaryService.findById(MODULES_AND_TESTS_ID).orElseThrow());
+            case COURSE_PROJS -> new ControlK3Column(columnIndex, controlDictionaryService.findById(COURSE_PROJECT).orElseThrow());
+            case COURSE_WORKS -> new ControlK3Column(columnIndex, controlDictionaryService.findById(COURSE_WORK).orElseThrow());
+            case RGRS -> new ControlK3Column(columnIndex, controlDictionaryService.findById(CALCULATION_GRAPHIC_ASSIGNMENT).orElseThrow());
+            case DKR -> new ControlK3Column(columnIndex, controlDictionaryService.findById(STATE_TEST).orElseThrow());
+            case REFERATS -> new ControlK3Column(columnIndex, controlDictionaryService.findById(ESSAY).orElseThrow());
             case AC_GROUPS -> new GroupsK3Column(columnIndex, mainSource, TypeOfGroupWork.Academic);
             case SUBGR_PRACT -> new GroupsK3Column(columnIndex, mainSource, TypeOfGroupWork.Practice);
             case SUBGR_LABS -> new GroupsK3Column(columnIndex, mainSource, TypeOfGroupWork.Lab);

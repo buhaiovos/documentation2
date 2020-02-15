@@ -1,8 +1,8 @@
 package edu.cad.generators;
 
-import edu.cad.daos.HibernateDao;
 import edu.cad.documentelements.areas.CurriculumSubjectList;
 import edu.cad.entities.Curriculum;
+import edu.cad.study.curriculum.CurriculumService;
 import edu.cad.utils.Utils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -17,6 +17,8 @@ class CurriculumGenerator extends DocumentGenerator {
     private static final int CURRICULUM_ID_CELL_NUM = 0;
     private static final String BLANK_STRING = "";
     private static final String CURRICULUM_ID_MARKER = "#curriculum_";
+
+    private CurriculumService curriculumService;
 
     @Override
     public void fillInSheet(final Sheet sheet) {
@@ -64,8 +66,8 @@ class CurriculumGenerator extends DocumentGenerator {
     }
 
     private Curriculum findCurriculum(final int id) {
-        return new HibernateDao<>(Curriculum.class)
-                .getById(id)
+        return curriculumService
+                .findById(id)
                 .orElseThrow(() -> new RuntimeException(format("Curriculum with id <%d> is not found", id)));
     }
 

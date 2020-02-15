@@ -1,10 +1,10 @@
 package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
-import edu.cad.daos.HibernateDao;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.entities.interfaces.SubjectProperty;
 import edu.cad.entities.listeners.SubjectListener;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -20,6 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Accessors(chain = true)
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @EntityListeners(SubjectListener.class)
 @Table(name = "academic_subject")
@@ -123,13 +124,6 @@ public class SubjectInfo extends YearTracked implements IDatabaseEntity<Integer>
         return (ects * 30);
     }
 
-    public double getEctsHoursWithoutExam() {
-        if (hasCourseWork())
-            return getEctsHours() - 30;
-
-        return getEctsHours();
-    }
-
     public int getSemesterHours(int currSemester, Curriculum curriculum,
                                 SubjectProperty property) {
         Set<SubjectInfo> subjectDetails = getSubSubjects(curriculum);
@@ -190,51 +184,12 @@ public class SubjectInfo extends YearTracked implements IDatabaseEntity<Integer>
         groups.addAll(groups);
     }
 
-    public boolean hasCourseWork() {
-        ControlDictionary courseWork = new HibernateDao<>(ControlDictionary.class).get(5);
-
-        for (SubjectHeader subjectHeader : getSubjectHeader().getSubSubjects()) {
-            for (SubjectInfo element : subjectHeader.getSubjectInfo()) {
-                if (element.hasControlOfType(courseWork)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public boolean isCourseWork() {
-        ControlDictionary courseWork = new HibernateDao<>(ControlDictionary.class).get(5);
-
-        return hasControlOfType(courseWork);
-    }
-
     public double getIndividualHours() {
         double individualLectures = actualLectures > 0 ? lectures - actualLectures : 0;
         double individualPractices = actualPractices > 0 ? practices - actualPractices : 0;
         double individualLabs = actualLabs > 0 ? labs - actualLabs : 0;
 
         return individualLectures + individualPractices + individualLabs;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 11 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        final SubjectInfo other = (SubjectInfo) obj;
-        return this.id == other.getId();
     }
 
     @Override

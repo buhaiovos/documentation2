@@ -1,6 +1,5 @@
 package edu.cad.documentelements.areas.k3;
 
-import edu.cad.daos.HibernateDao;
 import edu.cad.documentelements.k3columns.AbstractOtherLoadColumn;
 import edu.cad.domain.ObjectOfWork;
 import edu.cad.domain.PracticeType;
@@ -8,6 +7,7 @@ import edu.cad.entities.AcademicGroup;
 import edu.cad.entities.OtherLoad;
 import edu.cad.entities.OtherLoadInfo;
 import edu.cad.entities.WorkingPlan;
+import edu.cad.study.workingplan.WorkingPlanService;
 import edu.cad.utils.Pair;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -26,6 +26,7 @@ public class K3PracticeManagementArea extends K3OtherStudyLoadArea {
     private static final String PRE_DIPLOMA_PRACTICE_TOKEN = "#k3(O)practPreDip";
     private static final String SCI_RESEARCH_PRACTICE_TOKEN = "#k3(O)practSciRes";
     private static final String PEDAGOGICAL_PRACTICE_TOKEN = "#k3(O)practPedagogic";
+    private WorkingPlanService workingPlanService;
 
     public K3PracticeManagementArea(Map<Integer, List<AbstractOtherLoadColumn>> semesterToColumns) {
         super(semesterToColumns);
@@ -79,9 +80,7 @@ public class K3PracticeManagementArea extends K3OtherStudyLoadArea {
     }
 
     private List<WorkingPlan> getWorkingPlansByPracticeType(PracticeType practiceType) {
-        HibernateDao<WorkingPlan> wpDao = new HibernateDao<>(WorkingPlan.class);
-
-        return wpDao.getAll().stream()
+        return workingPlanService.getAll().stream()
                 .filter(wp -> Objects.nonNull(wp.getPractice()))
                 .filter(wp -> wp.getPractice().getType().equals(practiceType))
                 .collect(Collectors.toList());

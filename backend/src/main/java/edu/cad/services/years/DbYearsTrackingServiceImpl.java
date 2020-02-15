@@ -2,7 +2,7 @@ package edu.cad.services.years;
 
 import edu.cad.services.filenames.FileNameResolvingService;
 import edu.cad.services.storage.StorageService;
-import edu.cad.utils.databaseutils.DatabaseSwitcher;
+import edu.cad.year.YearProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -24,14 +24,14 @@ class DbYearsTrackingServiceImpl implements DbYearsTrackingService {
     private final FileNameResolvingService fileNameResolvingService;
     private final StorageService storageService;
     private final YearsFileHandler yearsFileHandler;
-    private final DatabaseSwitcher databaseSwitcher;
+    private final YearProvider yearProvider;
 
     public DbYearsTrackingServiceImpl(@Lazy FileNameResolvingService fileNameResolvingService,
                                       @Lazy StorageService storageService,
-                                      @Lazy DatabaseSwitcher databaseSwitcher) {
+                                      @Lazy YearProvider yearProvider) {
         this.fileNameResolvingService = fileNameResolvingService;
         this.storageService = storageService;
-        this.databaseSwitcher = databaseSwitcher;
+        this.yearProvider = yearProvider;
 
         this.yearsFileHandler = new YearsFileHandler();
     }
@@ -50,7 +50,7 @@ class DbYearsTrackingServiceImpl implements DbYearsTrackingService {
     }
 
     private void createYearsFileWithCurrentYear() {
-        final int databaseYear = databaseSwitcher.getDatabaseYear();
+        final int databaseYear = yearProvider.getCurrent();
         final File yearsFile = prepareTempFile();
         yearsFileHandler.addYearToFile(databaseYear, yearsFile);
         storageService.uploadFile(fileNameResolvingService.resolveForDatabaseYearsFile(), yearsFile);

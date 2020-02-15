@@ -1,9 +1,9 @@
 package edu.cad.documentelements.controlcounters;
 
-import edu.cad.daos.HibernateDao;
 import edu.cad.documentelements.AbstractDocumentElement;
 import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.Curriculum;
+import edu.cad.study.control.dictionary.ControlDictionaryService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 
@@ -13,6 +13,8 @@ import static edu.cad.entities.ControlDictionary.DIFFERENTIATED_CREDIT_ID;
 public class ControlCounter extends AbstractDocumentElement {
     protected final Cell cell;
     protected final ControlDictionary control;
+
+    protected ControlDictionaryService controlDictionaryService;
 
     public ControlCounter(Cell cell, ControlDictionary control) {
         this.cell = cell;
@@ -25,7 +27,7 @@ public class ControlCounter extends AbstractDocumentElement {
 
         if (control.getId() == CREDIT_ID) {
             ControlDictionary differentiatedCredit =
-                    new HibernateDao<>(ControlDictionary.class).get(DIFFERENTIATED_CREDIT_ID);
+                    controlDictionaryService.findById(DIFFERENTIATED_CREDIT_ID).orElseThrow();
             int numberOfDifferentiatedCredits = curriculum.countControlsByType(differentiatedCredit);
 
             buildDifferentiatedCreditValuePart(value, count > 0, numberOfDifferentiatedCredits);

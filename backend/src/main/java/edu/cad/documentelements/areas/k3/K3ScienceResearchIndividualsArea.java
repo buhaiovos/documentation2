@@ -1,9 +1,9 @@
 package edu.cad.documentelements.areas.k3;
 
-import edu.cad.daos.HibernateDao;
 import edu.cad.documentelements.k3columns.AbstractOtherLoadColumn;
 import edu.cad.entities.*;
 import edu.cad.services.years.DbYearsService;
+import edu.cad.study.workingplan.WorkingPlanService;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.util.List;
@@ -24,6 +24,7 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
     private static final String SECOND_YEAR_ROW = "#k3(O)ind_2";
 
     private static DbYearsService dbYearsService;
+    private WorkingPlanService workingPlanService;
 
     public K3ScienceResearchIndividualsArea(Map<Integer, List<AbstractOtherLoadColumn>> semesterNumToColumns) {
         super(semesterNumToColumns);
@@ -34,8 +35,7 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
 
     @Override
     protected void fill() {
-        HibernateDao<WorkingPlan> workingPlanDao = new HibernateDao<>(WorkingPlan.class);
-        List<WorkingPlan> workingPlansWithSciSubjects = workingPlanDao.getAll().stream()
+        List<WorkingPlan> workingPlansWithSciSubjects = workingPlanService.getAll().stream()
                 .filter(wp -> Objects.nonNull(wp.getScientificResearchSubject()))
                 .collect(toList());
 

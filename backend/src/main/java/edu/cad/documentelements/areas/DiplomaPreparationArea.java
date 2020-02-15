@@ -1,13 +1,12 @@
 package edu.cad.documentelements.areas;
 
-import edu.cad.daos.HibernateDao;
-import edu.cad.daos.IDAO;
 import edu.cad.documentelements.columns.AbstractColumn;
 import edu.cad.documentelements.columns.SimpleColumn;
 import edu.cad.entities.Curriculum;
 import edu.cad.entities.DiplomaPreparation;
 import edu.cad.entities.WorkType;
 import edu.cad.entities.WorkingPlan;
+import edu.cad.study.worktype.WorkTypeService;
 import edu.cad.utils.Utils;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
@@ -18,6 +17,7 @@ import java.util.Map;
 
 public class DiplomaPreparationArea extends AbstractDocumentArea {
     private final Map<String, AbstractColumn> columns;
+    private WorkTypeService workTypeService;
 
     public DiplomaPreparationArea(Sheet sheet, int startRow) {
         super(sheet);
@@ -66,14 +66,13 @@ public class DiplomaPreparationArea extends AbstractDocumentArea {
     }
 
     private WorkType getWorkType(Row row, int columnNumber) {
-        IDAO<WorkType> workTypeDAO = new HibernateDao(WorkType.class);
-
         String cellContent = row.getCell(columnNumber).getStringCellValue();
         String workId = cellContent.replaceAll("#work", "");
 
-        if (!Utils.isNumber(workId))
+        if (!Utils.isNumber(workId)) {
             return null;
-        return workTypeDAO.get(Integer.parseInt(workId));
+        }
+        return workTypeService.findById(Integer.parseInt(workId)).orElseThrow();
     }
 
     private void fillColumns(DiplomaPreparation preparation) {

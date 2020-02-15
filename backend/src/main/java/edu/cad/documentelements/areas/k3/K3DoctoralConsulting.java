@@ -1,12 +1,12 @@
 package edu.cad.documentelements.areas.k3;
 
-import edu.cad.daos.HibernateDao;
 import edu.cad.documentelements.k3columns.AbstractOtherLoadColumn;
 import edu.cad.domain.StaffType;
 import edu.cad.entities.AcademicGroup;
 import edu.cad.entities.OtherLoad;
 import edu.cad.entities.OtherLoadInfo;
 import edu.cad.entities.Staff;
+import edu.cad.study.staff.StaffService;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +18,8 @@ import static edu.cad.domain.StaffType.DOCTORAL_STUDENT;
 @SuppressWarnings("Duplicates")
 public class K3DoctoralConsulting extends K3OtherStudyLoadArea {
     private static final String DOCTORAL = "#k3(O)docCon";
+
+    private StaffService staffService;
 
     public K3DoctoralConsulting(Map<Integer, List<AbstractOtherLoadColumn>> semesterNumToColumns) {
         super(semesterNumToColumns);
@@ -32,8 +34,7 @@ public class K3DoctoralConsulting extends K3OtherStudyLoadArea {
     }
 
     private void fill(StaffType type, int semester) {
-        HibernateDao<Staff> staffDao = new HibernateDao<>(Staff.class);
-        List<Staff> all = staffDao.getAll().stream()
+        List<Staff> all = staffService.getAll().stream()
                 .filter(actor -> actor.getType().equals(type)
                         && actor.getEducationForm().equals(educationForm)
                         && actor.getSourceOfFinancing().equals(sourceOfFinancing))

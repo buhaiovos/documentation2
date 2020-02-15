@@ -1,7 +1,8 @@
 package edu.cad.utils.k3;
 
-import edu.cad.daos.HibernateDao;
 import edu.cad.entities.*;
+import edu.cad.study.subject.info.SubjectInfoService;
+import edu.cad.study.workingplan.WorkingPlanService;
 import edu.cad.utils.hibernateutils.EntityCloner;
 
 import java.util.*;
@@ -9,6 +10,8 @@ import java.util.*;
 import static java.util.Optional.ofNullable;
 
 public class K3SubjectListCreator {
+    private static WorkingPlanService workingPlanService;
+    private static SubjectInfoService subjectInfoService;
 
     public static List<K3SubjectEntity> createList(final EducationForm educationForm,
                                                    final SourceOfFinancing source,
@@ -50,7 +53,7 @@ public class K3SubjectListCreator {
     }
 
     private static Set<WorkingPlan> createWorkPlanSet(EducationForm educationForm) {
-        List<WorkingPlan> workingPlans = new HibernateDao<>(WorkingPlan.class).getAll();
+        List<WorkingPlan> workingPlans = workingPlanService.getAll();
 
         workingPlans.removeIf(
                 workPlan -> !workPlan.getEducationForm().equals(educationForm)
@@ -70,7 +73,7 @@ public class K3SubjectListCreator {
                 SubjectInfo info = curriculumSubject.getSubjectInfo();
 
                 if (info.getSubjectHeader().getDepartment().equals(department)) {
-                    if (info.isCourseWork() || info.getSemester() % 2 != modulo)
+                    if (subjectInfoService.isCourseWork(info) || info.getSemester() % 2 != modulo)
                         continue;
 
                     subjectDetails.add(info);

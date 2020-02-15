@@ -1,23 +1,24 @@
 package edu.cad.generators;
 
-import edu.cad.daos.HibernateDao;
 import edu.cad.documentelements.areas.*;
 import edu.cad.entities.WorkingPlan;
+import edu.cad.study.workingplan.WorkingPlanService;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.ArrayList;
 import java.util.List;
 
 class WorkingPlanGenerator extends CurriculumGenerator {
-
     private static final String WORK_PLAN_ID_MARKER = "#workplan_";
+
     private List<AbstractDocumentArea> workPlanSpecificAreas = new ArrayList<>();
+    private WorkingPlanService workingPlanService;
 
     @Override
     public void fillInSheet(Sheet sheet) {
         int id = extractCurriculumId(sheet, WORK_PLAN_ID_MARKER);
         WorkingPlanSubjectList subjectList = new WorkingPlanSubjectList(sheet, 0);
-        WorkingPlan workplan = new HibernateDao<>(WorkingPlan.class).get(id);
+        WorkingPlan workplan = workingPlanService.findById(id).orElseThrow();
 
         if (workplan == null) {
             return;

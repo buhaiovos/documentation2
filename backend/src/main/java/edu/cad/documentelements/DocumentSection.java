@@ -1,18 +1,19 @@
 package edu.cad.documentelements;
 
-import edu.cad.daos.HibernateDao;
 import edu.cad.entities.Section;
+import edu.cad.study.section.SectionService;
 import edu.cad.utils.Utils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 
-public class DocumentSection extends AbstractDocumentElement{
+public class DocumentSection extends AbstractDocumentElement {
     private static final String SECTION_TOKEN = "#section_";
-    
+
     private int rowNumber = -1;
     private Section section = null;
-    
-    public DocumentSection(Sheet sheet, int startRow){
+    private SectionService sectionService;
+
+    public DocumentSection(Sheet sheet, int startRow) {
         findSection(sheet, startRow);
     }
 
@@ -24,39 +25,38 @@ public class DocumentSection extends AbstractDocumentElement{
     private int findId(Sheet sheet, int startRow) {
         final int LAST_ROW_NUM = sheet.getLastRowNum();
         int currentRow = startRow;
-        
+
         int foundCellIndex = findInRow(sheet.getRow(currentRow), SECTION_TOKEN);
-        while ( (foundCellIndex < 0) && (currentRow < LAST_ROW_NUM) ) {
+        while ((foundCellIndex < 0) && (currentRow < LAST_ROW_NUM)) {
             currentRow++;
             foundCellIndex = findInRow(sheet.getRow(currentRow), SECTION_TOKEN);
         }
-        
+
         if (foundCellIndex > 0) {
             rowNumber = currentRow;
-            
+
             Cell foundCell = sheet.getRow(rowNumber).getCell(foundCellIndex);
             return extractIdFromString(foundCell.getStringCellValue());
-        } 
-        else {
+        } else {
             return -1;
         }
     }
-    
+
     private void setSection(int id) {
         if (id > 0) {
-            section = new HibernateDao<>(Section.class).get(id);
+            section = sectionService.findById(id).orElseThrow();
         } else {
             section = null;
         }
     }
-    
+
     private int extractIdFromString(String stringCellValue) {
         String idStr = stringCellValue.replaceFirst(SECTION_TOKEN, "").trim();
 
         if (Utils.isNumber(idStr)) {
             return Integer.parseInt(idStr);
         }
-        
+
         return -1;
     }
 
