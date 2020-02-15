@@ -2,8 +2,10 @@ package edu.cad.entities;
 
 import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,9 +14,13 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Accessors(chain = true)
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Entity
 @Table(name = "dict_subjects")
-public class SubjectHeader extends YearTracked implements IDatabaseEntity<Integer>, Serializable, Comparable<SubjectHeader> {
+public class SubjectHeader
+        extends YearTracked
+        implements IDatabaseEntity<Integer>, Serializable, Comparable<SubjectHeader> {
 
     @Expose
     @Id
@@ -30,7 +36,7 @@ public class SubjectHeader extends YearTracked implements IDatabaseEntity<Intege
     @JoinColumn(name = "id_supersubject")
     private SubjectHeader superSubject;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "superSubject")//subjectDictionary")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "superSubject")
     private Set<SubjectHeader> subSubjects = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -85,25 +91,6 @@ public class SubjectHeader extends YearTracked implements IDatabaseEntity<Intege
         }
 
         return null;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 71 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        final SubjectHeader other = (SubjectHeader) obj;
-        return this.id == other.id;
     }
 
     @Override
