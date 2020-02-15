@@ -1,7 +1,5 @@
 package edu.cad.documentelements.areas.k3;
 
-import edu.cad.daos.OtherLoadDao;
-import edu.cad.daos.OtherLoadInfoDao;
 import edu.cad.documentelements.AbstractDocumentElement;
 import edu.cad.documentelements.k3columns.AbstractOtherLoadColumn;
 import edu.cad.domain.ObjectOfWork;
@@ -10,6 +8,8 @@ import edu.cad.entities.AcademicGroup;
 import edu.cad.entities.EducationForm;
 import edu.cad.entities.OtherLoad;
 import edu.cad.entities.OtherLoadInfo;
+import edu.cad.study.load.other.OtherLoadInfoRepositoryWrapper;
+import edu.cad.study.load.other.OtherLoadRepositoryWrapper;
 import edu.cad.utils.k3.SourceOfFinancing;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -30,8 +30,8 @@ public abstract class K3OtherStudyLoadArea extends AbstractDocumentElement {
     SourceOfFinancing sourceOfFinancing;
     EducationForm educationForm;
 
-    OtherLoadDao otherLoadDao = new OtherLoadDao();
-    OtherLoadInfoDao otherLoadInfoDao = new OtherLoadInfoDao();
+    OtherLoadRepositoryWrapper otherLoadDao;
+    OtherLoadInfoRepositoryWrapper otherLoadInfoDao;
 
     K3OtherStudyLoadArea(Map<Integer, List<AbstractOtherLoadColumn>> semesterNumToColumns) {
         this.semesterNumToColumns = semesterNumToColumns;
@@ -71,10 +71,7 @@ public abstract class K3OtherStudyLoadArea extends AbstractDocumentElement {
         var otherLoad = new OtherLoad();
         otherLoad.setLoadType(type);
         otherLoad.setObjectOfWork(object);
-
-        otherLoadDao.create(otherLoad);
-
-        return otherLoad;
+        return otherLoadDao.save(otherLoad);
     }
 
     OtherLoadInfo createAndSaveNewOtherLoadInfo(int semester,
@@ -91,8 +88,6 @@ public abstract class K3OtherStudyLoadArea extends AbstractDocumentElement {
         otherLoadInfo.setEducationForm(educationForm);
         otherLoadInfo.setSourceOfFinancing(sourceOfFinancing);
 
-        otherLoadInfoDao.create(otherLoadInfo);
-
-        return otherLoadInfo;
+        return otherLoadInfoDao.save(otherLoadInfo);
     }
 }

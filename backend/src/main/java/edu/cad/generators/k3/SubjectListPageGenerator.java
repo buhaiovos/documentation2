@@ -1,6 +1,5 @@
 package edu.cad.generators.k3;
 
-import edu.cad.daos.StudyLoadResultsDao;
 import edu.cad.documentelements.k3columns.AbstractK3Column;
 import edu.cad.documentelements.k3columns.K3SubjectPageColumnsFactory;
 import edu.cad.documentelements.k3columns.SubjectStudyLoadColumn;
@@ -8,6 +7,7 @@ import edu.cad.entities.Department;
 import edu.cad.entities.EducationForm;
 import edu.cad.entities.SubjectInfo;
 import edu.cad.entities.SubjectStudyLoad;
+import edu.cad.study.load.subject.SubjectStudyLoadRepositoryWrapper;
 import edu.cad.utils.documentutils.FormulaCopier;
 import edu.cad.utils.documentutils.K3SemesterStartRowFinder;
 import edu.cad.utils.documentutils.RowInserter;
@@ -25,16 +25,12 @@ import java.util.stream.Collectors;
 public class SubjectListPageGenerator extends FormK3Generator {
     private static final String PAGE_TOKEN = "#subj";
 
-    private final StudyLoadResultsDao studyLoadResultsDao;
+    private SubjectStudyLoadRepositoryWrapper studyLoadResultsDao;
 
     private Map<Class, List<AbstractK3Column>> columnClassToListOfColumns;
     private Department department;
     private EducationForm educationForm;
     private SourceOfFinancing sourceOfFinancing;
-
-    SubjectListPageGenerator() {
-        this.studyLoadResultsDao = new StudyLoadResultsDao();
-    }
 
     @Override
     public boolean canGenerate(Sheet sheet) {
@@ -127,7 +123,7 @@ public class SubjectListPageGenerator extends FormK3Generator {
     }
 
     private void readLoadColumnsAndSaveData(Row row, List<SubjectStudyLoadColumn> columns, K3SubjectEntity subject) {
-        SubjectStudyLoad results = studyLoadResultsDao.findBySubjectInfoAndSourceOfFinanceAndFormOfEducation(
+        SubjectStudyLoad results = studyLoadResultsDao.findBySubjectInfoAndSourceOfFinancingAndFormOfAndEducationForm(
                 subject.getSubjectInfo(), this.sourceOfFinancing, this.educationForm
         ).orElseGet(() -> this.newSubjectLoad(subject.getSubjectInfo()));
 
@@ -135,7 +131,7 @@ public class SubjectListPageGenerator extends FormK3Generator {
                 .filter(Objects::nonNull)
                 .forEach(col -> col.setFormulaResultValueToStudyLoadResultObj(row, results));
 
-        studyLoadResultsDao.update(results);
+        studyLoadResultsDao.save(results);
     }
 
     private SubjectStudyLoad newSubjectLoad(SubjectInfo subjectInfo) {
@@ -143,16 +139,12 @@ public class SubjectListPageGenerator extends FormK3Generator {
         studyLoadResults.setSubjectInfo(subjectInfo);
         studyLoadResults.setEducationForm(this.educationForm);
         studyLoadResults.setSourceOfFinancing(this.sourceOfFinancing);
-        if (studyLoadResultsDao.create(studyLoadResults)) {
-            return studyLoadResults;
-        } else {
-            throw new RuntimeException("Failed to create new record of study load results");
-        }
+        return studyLoadResultsDao.save(studyLoadResults);
     }
 
     private Row getNextRowForGiven(Row firstRowOfSemesterSection) {
         int rowNum = firstRowOfSemesterSection.getRowNum();
-        Sheet sheet1 = firstRowOfSemesterSection.getSheet();
-        return sheet1.getRow(rowNum + 1);
+        Sheet sheet = firstRowOfSemesterSection.getSheet();
+        return sheet.getRow(rowNum + 1);
     }
 }

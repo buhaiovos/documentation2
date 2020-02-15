@@ -45,10 +45,10 @@ public class K3PostgraduatesManagement extends K3OtherStudyLoadArea {
                 .collect(Collectors.toList());
 
         List<AcademicGroup> mockGroupsForPostgraduates = createGroupsForPostgraduates(all);
-        OtherLoad otherLoad = otherLoadDao.findByLoadTypeAndWorkObject(MANAGEMENT, type.getObjectOfWork())
+        OtherLoad otherLoad = otherLoadDao.findByLoadTypeAndObjectOfWork(MANAGEMENT, type.getObjectOfWork())
                 .orElseGet(() -> createAndSaveOtherLoad(MANAGEMENT, type.getObjectOfWork()));
 
-        OtherLoadInfo loadInfo = otherLoadInfoDao.findByLoadHeaderAndSemesterAndEducationFormAndFinancialSource(
+        OtherLoadInfo loadInfo = otherLoadInfoDao.findByLoadHeaderAndSemesterAndEducationFormAndSourceOfFinancing(
                 otherLoad, semester, educationForm, sourceOfFinancing
         ).orElseGet(() -> createAndSaveNewOtherLoadInfo(
                 semester, null, "ІПСА", -1, otherLoad
@@ -63,19 +63,15 @@ public class K3PostgraduatesManagement extends K3OtherStudyLoadArea {
 
         loadInfo.setGroups(null);
 
-        otherLoadInfoDao.update(loadInfo);
+        otherLoadInfoDao.save(loadInfo);
     }
 
     private String resolveForActorType(StaffType type) {
-        switch (type) {
-            case POSTGRADUATE:
-                return POSTGRADUATES;
-            case TRAINEE:
-                return TRAINEES;
-
-            default:
-                throw new IllegalArgumentException(type.name() + " is not supported");
-        }
+        return switch (type) {
+            case POSTGRADUATE -> POSTGRADUATES;
+            case TRAINEE -> TRAINEES;
+            default -> throw new IllegalArgumentException(type.name() + " is not supported");
+        };
     }
 
 

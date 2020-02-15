@@ -97,11 +97,11 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
             String faculty = "ІПСА";
             final int yearOfEducation = 4 + year;
 
-            OtherLoad persistedOtherLoad = otherLoadDao.findByLoadTypeAndWorkObject(SCI_RESEARCH_INDIVIDUAL, ALL_MASTERS)
+            OtherLoad persistedOtherLoad = otherLoadDao.findByLoadTypeAndObjectOfWork(SCI_RESEARCH_INDIVIDUAL, ALL_MASTERS)
                     .orElseGet(this::createAndSaveOtherLoad);
 
             OtherLoadInfo persistedInfo = otherLoadInfoDao
-                    .findByLoadHeaderAndSemesterAndYearAndEducationFormAndFinancialSource(
+                    .findByLoadHeaderAndSemesterAndYearAndEducationFormAndSourceOfFinancing(
                             persistedOtherLoad,
                             semester, yearOfEducation,
                             educationForm,
@@ -116,7 +116,7 @@ public class K3ScienceResearchIndividualsArea extends K3OtherStudyLoadArea {
 
             columns.forEach(column -> column.fill(row, persistedInfo));
 
-            otherLoadInfoDao.update(persistedInfo);
+            otherLoadInfoDao.save(persistedInfo);
 
         }
     }

@@ -48,7 +48,7 @@ public class K3AttestationManagementArea extends K3OtherStudyLoadArea {
         semesterNumToColumns.get(otherLoadInfo.getSemester())
                 .forEach(column -> column.fill(row, otherLoadInfo));
 
-        otherLoadInfoDao.update(otherLoadInfo);
+        otherLoadInfoDao.save(otherLoadInfo);
     }
 
     private OtherLoadInfo getOtherLoadInfo(QualificationLevel qualificationLevel) {
@@ -73,14 +73,14 @@ public class K3AttestationManagementArea extends K3OtherStudyLoadArea {
 
     private OtherLoad getOrCreateLoadHeader(QualificationLevel qualificationLevel) {
         ObjectOfWork objectOfWork = qualificationLevel.getObjectOfWork();
-        return otherLoadDao.findByLoadTypeAndWorkObject(ATTESTATION_MANAGEMENT, objectOfWork)
+        return otherLoadDao.findByLoadTypeAndObjectOfWork(ATTESTATION_MANAGEMENT, objectOfWork)
                 .orElseGet(() -> createAndSaveOtherLoad(ATTESTATION_MANAGEMENT, objectOfWork));
     }
 
     private OtherLoadInfo getOrCreateLoadInfo(QualificationLevel qualificationLevel, List<AcademicGroup> groups,
                                               OtherLoad otherLoad) {
         final int semester = getSemesterForQualification(qualificationLevel);
-        OtherLoadInfo info = otherLoadInfoDao.findByLoadHeaderAndSemesterAndEducationFormAndFinancialSource(
+        OtherLoadInfo info = otherLoadInfoDao.findByLoadHeaderAndSemesterAndEducationFormAndSourceOfFinancing(
                 otherLoad, semester, educationForm, sourceOfFinancing
         ).orElseGet(() -> createAndSaveNewOtherLoadInfo(semester, groups, "ІПСА", -1, otherLoad));
 

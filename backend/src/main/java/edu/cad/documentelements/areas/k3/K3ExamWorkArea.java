@@ -49,7 +49,7 @@ public class K3ExamWorkArea extends K3OtherStudyLoadArea {
         semesterNumToColumns.get(otherLoadInfo.getSemester())
                 .forEach(column -> column.fill(row, otherLoadInfo));
 
-        otherLoadInfoDao.update(otherLoadInfo);
+        otherLoadInfoDao.save(otherLoadInfo);
     }
 
     private OtherLoadInfo getOtherLoadInfo(QualificationLevel qualificationLevel) {
@@ -74,14 +74,14 @@ public class K3ExamWorkArea extends K3OtherStudyLoadArea {
 
     private OtherLoad getOrCreateLoadHeader(QualificationLevel qualificationLevel) {
         ObjectOfWork objectOfWork = qualificationLevel.getObjectOfWork();
-        return otherLoadDao.findByLoadTypeAndWorkObject(EXAM_COMMISSION_DIPLOMA, objectOfWork)
+        return otherLoadDao.findByLoadTypeAndObjectOfWork(EXAM_COMMISSION_DIPLOMA, objectOfWork)
                 .orElseGet(() -> createAndSaveOtherLoad(EXAM_COMMISSION_DIPLOMA, objectOfWork));
     }
 
     private OtherLoadInfo getOrCreateLoadInfo(QualificationLevel qualificationLevel, List<AcademicGroup> groups,
                                               OtherLoad otherLoad) {
         final int semester = getSemesterForQualification(qualificationLevel);
-        OtherLoadInfo info = otherLoadInfoDao.findByLoadHeaderAndSemesterAndEducationFormAndFinancialSource(
+        OtherLoadInfo info = otherLoadInfoDao.findByLoadHeaderAndSemesterAndEducationFormAndSourceOfFinancing(
                 otherLoad, semester, educationForm, sourceOfFinancing
         ).orElseGet(() -> createAndSaveNewOtherLoadInfo(semester, groups, "ІПСА", -1, otherLoad));
 

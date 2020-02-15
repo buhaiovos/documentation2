@@ -75,7 +75,7 @@ public class K3PracticeManagementArea extends K3OtherStudyLoadArea {
     private void fillAndUpdateInDb(Map.Entry<Integer, OtherLoadInfo> entry, Row row) {
         OtherLoadInfo info = entry.getValue();
         semesterNumToColumns.get(entry.getKey()).forEach(column -> column.fill(row, info));
-        otherLoadInfoDao.update(info);
+        otherLoadInfoDao.save(info);
     }
 
     private List<WorkingPlan> getWorkingPlansByPracticeType(PracticeType practiceType) {
@@ -130,12 +130,12 @@ public class K3PracticeManagementArea extends K3OtherStudyLoadArea {
 
     private OtherLoad findOrCreateLoadHeader(PracticeType practiceType) {
         final ObjectOfWork objectOfWork = practiceType.getObjectOfWork();
-        return otherLoadDao.findByLoadTypeAndWorkObject(PRACTICE_MANAGEMENT, objectOfWork)
+        return otherLoadDao.findByLoadTypeAndObjectOfWork(PRACTICE_MANAGEMENT, objectOfWork)
                 .orElseGet(() -> createAndSaveOtherLoad(PRACTICE_MANAGEMENT, objectOfWork));
     }
 
     private OtherLoadInfo findOrCreateOtherLoadInfo(OtherLoad header, Integer semester, List<AcademicGroup> groups) {
-        OtherLoadInfo info = otherLoadInfoDao.findByLoadHeaderAndSemesterAndEducationFormAndFinancialSource(
+        OtherLoadInfo info = otherLoadInfoDao.findByLoadHeaderAndSemesterAndEducationFormAndSourceOfFinancing(
                 header, semester, educationForm, sourceOfFinancing
         ).orElseGet(
                 () -> createAndSaveNewOtherLoadInfo(semester, groups, "IPSA", -1, header)
