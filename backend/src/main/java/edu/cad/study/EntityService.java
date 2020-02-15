@@ -11,9 +11,9 @@ public interface EntityService<Entity, Id, Dto> {
 
     Optional<Entity> findById(Id id);
 
-    Entity create(Dto academicGroup);
+    Entity create(Dto dto);
 
-    Entity update(Id id, Dto updatedGroup);
+    Entity update(Id id, Dto dto);
 
     void deleteById(Id id);
 }
