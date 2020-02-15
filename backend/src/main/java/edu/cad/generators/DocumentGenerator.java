@@ -25,15 +25,10 @@ public abstract class DocumentGenerator {
     public abstract void fillInSheet(Sheet sheet);
 
     public static DocumentGenerator forDocumentType(DocumentType documentType) {
-        switch (documentType) {
-            case CURRICULUM:
-                return new CurriculumGenerator();
-            case WORK_PLAN:
-                return new WorkingPlanGenerator();
-            case K3:
-                return new FormK3Generator();
-            default:
-                throw new UnsupportedOperationException(documentType.name());
-        }
+        return switch (documentType) {
+            case CURRICULUM -> new CurriculumGenerator();
+            case WORK_PLAN -> new WorkingPlanGenerator();
+            case K3 -> new FormK3Generator();
+        };
     }
 }
