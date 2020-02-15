@@ -3,10 +3,8 @@ package edu.cad.study.diplomapreparation;
 import edu.cad.entities.Department;
 import edu.cad.entities.DiplomaPreparation;
 import edu.cad.entities.WorkType;
-import edu.cad.entities.WorkingPlan;
 import edu.cad.study.EntityService;
 import edu.cad.study.department.DepartmentService;
-import edu.cad.study.workingplan.WorkingPlanService;
 import edu.cad.study.worktype.WorkTypeService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,6 @@ public class DiplomaPreparationService implements EntityService<DiplomaPreparati
     DiplomaPreparationRepositoryWrapper repo;
     DepartmentService departmentService;
     WorkTypeService workTypeService;
-    WorkingPlanService workingPlanService;
 
     @Override
     public List<DiplomaPreparation> getAll() {
@@ -41,14 +38,11 @@ public class DiplomaPreparationService implements EntityService<DiplomaPreparati
                 departmentService.findById(dto.getDepartmentId()).orElseThrow();
         WorkType workType =
                 workTypeService.findById(dto.getWorkTypeId()).orElseThrow();
-        WorkingPlan workingPlan =
-                workingPlanService.findById(dto.getWorkingPlanId()).orElseThrow();
 
         var newDiplomaPreparation = new DiplomaPreparation()
                 .setNorm(dto.getNorm())
                 .setDepartment(department)
-                .setWorkType(workType)
-                .setWorkingPlan(workingPlan);
+                .setWorkType(workType);
 
         return repo.save(newDiplomaPreparation);
     }
@@ -60,13 +54,10 @@ public class DiplomaPreparationService implements EntityService<DiplomaPreparati
                 departmentService.findById(dto.getDepartmentId()).orElseThrow();
         WorkType workType =
                 workTypeService.findById(dto.getWorkTypeId()).orElseThrow();
-        WorkingPlan workingPlan =
-                workingPlanService.findById(dto.getWorkingPlanId()).orElseThrow();
 
         updated.setNorm(dto.getNorm())
                 .setDepartment(department)
-                .setWorkType(workType)
-                .setWorkingPlan(workingPlan);
+                .setWorkType(workType);
 
         return updated;
     }
