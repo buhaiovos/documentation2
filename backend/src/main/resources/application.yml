@@ -16,6 +16,8 @@ cad:
     headers:
       - content-type
 spring:
+  main:
+    lazy-initialization: false
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
   mvc:
