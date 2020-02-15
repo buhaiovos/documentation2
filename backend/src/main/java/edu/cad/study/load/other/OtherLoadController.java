@@ -1,9 +1,6 @@
-package edu.cad.controllers;
+package edu.cad.study.load.other;
 
-import edu.cad.controllers.dto.OtherLoadInfoDto;
-import edu.cad.controllers.dto.OtherLoadInfoTransformer;
 import edu.cad.domain.FormOfEducation;
-import edu.cad.services.OtherLoadInfoService;
 import edu.cad.utils.k3.SourceOfFinancing;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

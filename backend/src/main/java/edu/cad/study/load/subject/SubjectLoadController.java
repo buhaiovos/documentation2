@@ -1,9 +1,6 @@
-package edu.cad.controllers;
+package edu.cad.study.load.subject;
 
-import edu.cad.controllers.dto.SubjectLoadDto;
-import edu.cad.controllers.dto.SubjectStudyLoadTransformer;
 import edu.cad.domain.FormOfEducation;
-import edu.cad.services.SubjectStudyLoadService;
 import edu.cad.utils.k3.SourceOfFinancing;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

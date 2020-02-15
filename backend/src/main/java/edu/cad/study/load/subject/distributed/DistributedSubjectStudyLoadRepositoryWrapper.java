@@ -1,4 +1,4 @@
-package edu.cad.study.load.subject;
+package edu.cad.study.load.subject.distributed;
 
 import edu.cad.entities.DistributedSubjectStudyLoad;
 import edu.cad.study.YearAwareRepositoryWrapper;

@@ -1,4 +1,4 @@
-package edu.cad.controllers.dto;
+package edu.cad.study.load.subject.distributed;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

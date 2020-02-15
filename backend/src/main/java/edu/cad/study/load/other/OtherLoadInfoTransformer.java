@@ -1,9 +1,8 @@
-package edu.cad.controllers.dto;
+package edu.cad.study.load.other;
 
 import com.google.common.collect.ImmutableMap;
 import edu.cad.entities.AcademicGroup;
 import edu.cad.entities.OtherLoadInfo;
-import edu.cad.services.load.distribution.OtherLoadDistributionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

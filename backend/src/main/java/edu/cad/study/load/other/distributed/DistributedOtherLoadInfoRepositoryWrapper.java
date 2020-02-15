@@ -1,4 +1,4 @@
-package edu.cad.study.load.other;
+package edu.cad.study.load.other.distributed;
 
 import edu.cad.entities.DistributedOtherLoadInfo;
 import edu.cad.study.YearAwareRepositoryWrapper;

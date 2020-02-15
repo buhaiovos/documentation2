@@ -1,4 +1,4 @@
-package edu.cad.controllers.dto;
+package edu.cad.study.load.other;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

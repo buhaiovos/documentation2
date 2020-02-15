@@ -1,7 +1,7 @@
-package edu.cad.services.load.distribution;
+package edu.cad.study.load.subject;
 
-import edu.cad.controllers.dto.DistributedSubjectLoadDto;
-import edu.cad.controllers.dto.SubjectLoadDistributionDto;
+import edu.cad.study.load.subject.distributed.DistributedSubjectLoadDto;
+import edu.cad.study.load.subject.distributed.SubjectLoadDistributionDto;
 
 import java.util.List;
 

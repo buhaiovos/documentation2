@@ -15,7 +15,7 @@ public class OtherLoadDao extends HibernateDao<OtherLoad> {
         super(OtherLoad.class);
     }
 
-    public Optional<OtherLoad> findByLoadTypeAndWorkObject(OtherLoadType type, ObjectOfWork object) {
+    public Optional<OtherLoad> findByLoadTypeAndWorkObject1(OtherLoadType type, ObjectOfWork object) {
         EntityManager em = getSession().getEntityManagerFactory().createEntityManager();
         TypedQuery<OtherLoad> query = em.createQuery("select ol from OtherLoad ol " +
                 "where ol.loadType = :loadType " +

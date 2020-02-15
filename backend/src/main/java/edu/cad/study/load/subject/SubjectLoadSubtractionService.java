@@ -1,9 +1,8 @@
-package edu.cad.services;
+package edu.cad.study.load.subject;
 
-import edu.cad.controllers.dto.SubjectLoadDto;
-import edu.cad.daos.DistributedStudyLoadDao;
 import edu.cad.domain.StudyLoadType;
 import edu.cad.entities.DistributedSubjectStudyLoad;
+import edu.cad.study.load.subject.distributed.DistributedSubjectStudyLoadRepositoryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,22 +12,24 @@ import static java.util.stream.Collectors.summingDouble;
 @Service
 @RequiredArgsConstructor
 public class SubjectLoadSubtractionService {
-    private final DistributedStudyLoadDao distributedStudyLoadDao;
+    private final DistributedSubjectStudyLoadRepositoryWrapper repo;
+    private final SubjectStudyLoadService studyLoadService;
 
     public SubjectLoadDto subtractDistributedLoad(SubjectLoadDto subjectLoadDto) {
-        var deffensiveCopy = new SubjectLoadDto(subjectLoadDto);
+        var defensiveCopy = new SubjectLoadDto(subjectLoadDto);
 
-        distributedStudyLoadDao.getAllByTargetLoadId(subjectLoadDto.getId())
+        repo.findAll()
                 .stream()
+                .filter(load -> load.getTargetLoad().getId().equals(subjectLoadDto.getId()))
                 .collect(
                         groupingBy(
                                 DistributedSubjectStudyLoad::getStudyLoadType,
                                 summingDouble(DistributedSubjectStudyLoad::getAmount)
                         )
                 )
-                .forEach((key, value) -> subtractDistributedHours(deffensiveCopy, key, value));
+                .forEach((key, value) -> subtractDistributedHours(defensiveCopy, key, value));
 
-        return deffensiveCopy;
+        return defensiveCopy;
     }
 
     private void subtractDistributedHours(SubjectLoadDto deffensiveCopy, StudyLoadType type, Double distributedHours) {

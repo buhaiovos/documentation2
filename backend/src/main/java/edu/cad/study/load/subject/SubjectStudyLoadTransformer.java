@@ -1,8 +1,7 @@
-package edu.cad.controllers.dto;
+package edu.cad.study.load.subject;
 
 import edu.cad.domain.StudyLoadType;
 import edu.cad.entities.SubjectStudyLoad;
-import edu.cad.services.SubjectLoadSubtractionService;
 import edu.cad.utils.SubjectNameUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

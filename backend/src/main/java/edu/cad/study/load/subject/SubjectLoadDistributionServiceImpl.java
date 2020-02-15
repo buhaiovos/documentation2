@@ -1,11 +1,11 @@
-package edu.cad.services.load.distribution;
+package edu.cad.study.load.subject;
 
-import edu.cad.controllers.dto.DistributedSubjectLoadDto;
-import edu.cad.controllers.dto.SubjectLoadDistributionDto;
-import edu.cad.daos.HibernateDao;
 import edu.cad.entities.DistributedSubjectStudyLoad;
 import edu.cad.entities.SubjectStudyLoad;
 import edu.cad.services.StaffService;
+import edu.cad.study.load.subject.distributed.DistributedSubjectLoadDto;
+import edu.cad.study.load.subject.distributed.DistributedSubjectStudyLoadRepositoryWrapper;
+import edu.cad.study.load.subject.distributed.SubjectLoadDistributionDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,13 +20,13 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class SubjectLoadDistributionServiceImpl implements SubjectLoadDistributionService {
 
-    private final HibernateDao<DistributedSubjectStudyLoad> submittedLoadDao;
-    private final HibernateDao<SubjectStudyLoad> studyLoadDao;
+    private final DistributedSubjectStudyLoadRepositoryWrapper submittedLoadDao;
+    private final SubjectStudyLoadRepositoryWrapper studyLoadDao;
     private final StaffService staffService;
 
     @Override
     public List<DistributedSubjectLoadDto> getAllByLoadId(int loadId) {
-        return submittedLoadDao.getAll()
+        return submittedLoadDao.findAll()
                 .stream()
                 .filter(load -> load.getTargetLoad().getId() == loadId)
                 .map(this::toDto)
@@ -47,7 +47,7 @@ public class SubjectLoadDistributionServiceImpl implements SubjectLoadDistributi
     public List<DistributedSubjectLoadDto> getAllByEmployeeId(int employeeId) {
         log.info("get all by employee id: {}", employeeId);
 
-        return submittedLoadDao.getAll()
+        return submittedLoadDao.findAll()
                 .stream()
                 .filter(load -> load.getAssignedProfessor().getId() == employeeId)
                 .map(this::toDto)
@@ -57,18 +57,18 @@ public class SubjectLoadDistributionServiceImpl implements SubjectLoadDistributi
     @Override
     public void deleteById(int distributionId) {
         log.info("deleting distribution by id: {}", distributionId);
-        submittedLoadDao.delete(distributionId);
+        submittedLoadDao.deleteById(distributionId);
     }
 
     @Override
     public void submitDistribution(SubjectLoadDistributionDto dto) {
         log.info("submitting load for data: {}", dto);
 
-        SubjectStudyLoad studyLoad = studyLoadDao.getById(dto.getLoadId())
+        SubjectStudyLoad studyLoad = studyLoadDao.findById(dto.getLoadId())
                 .orElseThrow(() -> new IllegalArgumentException(format("No load for id %d was found", dto.getLoadId())));
 
         DistributedSubjectStudyLoad distributedLoad = toDistributedLoad(dto, studyLoad);
-        submittedLoadDao.create(distributedLoad);
+        submittedLoadDao.save(distributedLoad);
     }
 
     private DistributedSubjectStudyLoad toDistributedLoad(SubjectLoadDistributionDto dto, SubjectStudyLoad studyLoad) {

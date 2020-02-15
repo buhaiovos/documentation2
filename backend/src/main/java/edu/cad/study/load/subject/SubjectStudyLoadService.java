@@ -1,6 +1,5 @@
-package edu.cad.services;
+package edu.cad.study.load.subject;
 
-import edu.cad.daos.HibernateDao;
 import edu.cad.domain.FormOfEducation;
 import edu.cad.entities.SubjectStudyLoad;
 import edu.cad.utils.k3.SourceOfFinancing;
@@ -18,12 +17,12 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 @Slf4j
 public class SubjectStudyLoadService {
-    private final HibernateDao<SubjectStudyLoad> subjectLoadDao;
+    private final SubjectStudyLoadRepositoryWrapper subjectLoadDao;
 
     public List<SubjectStudyLoad> search(int semester,
                                          FormOfEducation formOfEducation,
                                          SourceOfFinancing sourceOfFinancing) {
-        return subjectLoadDao.getAll()
+        return subjectLoadDao.findAll()
                 .stream()
                 .filter(bySemester(semester))
                 .filter(byFormOfEducation(formOfEducation))

@@ -1,12 +1,11 @@
-package edu.cad.services.load.distribution;
+package edu.cad.study.load.other;
 
-import edu.cad.controllers.dto.DistributedOtherLoadDto;
-import edu.cad.controllers.dto.OtherLoadDistributionDto;
-import edu.cad.daos.HibernateDao;
-import edu.cad.daos.OtherLoadInfoDao;
 import edu.cad.entities.DistributedOtherLoadInfo;
 import edu.cad.entities.OtherLoadInfo;
 import edu.cad.services.StaffService;
+import edu.cad.study.load.other.distributed.DistributedOtherLoadDto;
+import edu.cad.study.load.other.distributed.DistributedOtherLoadInfoRepositoryWrapper;
+import edu.cad.study.load.other.distributed.OtherLoadDistributionDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,15 +18,15 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 @Slf4j
 public class OtherLoadDistributionServiceImpl implements OtherLoadDistributionService {
-    private final OtherLoadInfoDao otherLoadInfoDao;
-    private final HibernateDao<DistributedOtherLoadInfo> otherLoadInfoSubmittedDao;
+    private final OtherLoadInfoRepositoryWrapper otherLoadInfoDao;
+    private final DistributedOtherLoadInfoRepositoryWrapper otherLoadInfoSubmittedDao;
     private final StaffService staffService;
 
     @Override
     public List<DistributedOtherLoadDto> getAllByLoadId(int loadId) {
         log.info("getting all distribution info for load with id: '{}'", loadId);
 
-        return otherLoadInfoSubmittedDao.getAll()
+        return otherLoadInfoSubmittedDao.findAll()
                 .stream()
                 .filter(load -> load.getId() == loadId)
                 .map(this::toDto)
@@ -48,7 +47,7 @@ public class OtherLoadDistributionServiceImpl implements OtherLoadDistributionSe
     public List<DistributedOtherLoadDto> getAllByEmployeeId(int employeeId) {
         log.info("getting all distribution info by employee id '{}'", employeeId);
 
-        return otherLoadInfoSubmittedDao.getAll()
+        return otherLoadInfoSubmittedDao.findAll()
                 .stream()
                 .filter(load -> load.getAssignedProfessor().getId() == employeeId)
                 .map(this::toDto)
@@ -58,24 +57,24 @@ public class OtherLoadDistributionServiceImpl implements OtherLoadDistributionSe
     @Override
     public void deleteById(int distributionId) {
         log.info("deleting distribution info with id: '{}'", distributionId);
-        otherLoadInfoSubmittedDao.delete(distributionId);
+        otherLoadInfoSubmittedDao.deleteById(distributionId);
     }
 
     @Override
     public void submitDistribution(OtherLoadDistributionDto dto) {
         log.info("submitting distribution info with data: {}", dto);
 
-        OtherLoadInfo otherLoadInfo = otherLoadInfoDao.getById(dto.getOtherLoadId())
+        OtherLoadInfo otherLoadInfo = otherLoadInfoDao.findById(dto.getOtherLoadId())
                 .orElseThrow();
         DistributedOtherLoadInfo distributed = createDistributedOtherLoadInfo(dto, otherLoadInfo);
-        otherLoadInfoSubmittedDao.create(distributed);
+        otherLoadInfoSubmittedDao.save(distributed);
 
         log.info("created new distribution info with id: {}", distributed.getId());
     }
 
     @Override
     public double getAllDistributedHoursForLoadById(long id) {
-        return otherLoadInfoSubmittedDao.getAll()
+        return otherLoadInfoSubmittedDao.findAll()
                 .stream()
                 .filter(load -> load.getTargetLoad().getId() == id)
                 .mapToDouble(DistributedOtherLoadInfo::getAmount)

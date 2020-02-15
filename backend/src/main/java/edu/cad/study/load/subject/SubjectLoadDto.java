@@ -1,4 +1,4 @@
-package edu.cad.controllers.dto;
+package edu.cad.study.load.subject;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.cad.domain.StudyLoadType;

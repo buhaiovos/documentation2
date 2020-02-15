@@ -1,8 +1,6 @@
-package edu.cad.controllers;
+package edu.cad.study.load.subject.distributed;
 
-import edu.cad.controllers.dto.DistributedSubjectLoadDto;
-import edu.cad.controllers.dto.SubjectLoadDistributionDto;
-import edu.cad.services.load.distribution.SubjectLoadDistributionService;
+import edu.cad.study.load.subject.SubjectLoadDistributionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
