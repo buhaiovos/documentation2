@@ -2,10 +2,8 @@ package edu.cad.study.control;
 
 import edu.cad.entities.Control;
 import edu.cad.entities.ControlDictionary;
-import edu.cad.entities.SubjectInfo;
 import edu.cad.study.EntityService;
 import edu.cad.study.control.dictionary.ControlDictionaryService;
-import edu.cad.study.subject.info.SubjectInfoService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,7 +19,6 @@ import java.util.Optional;
 @Slf4j
 public class ControlService implements EntityService<Control, Integer, ControlDto> {
     ControlRepositoryWrapper repo;
-    SubjectInfoService subjectInfoService;
     ControlDictionaryService controlDictionaryService;
 
     @Override
@@ -36,14 +33,11 @@ public class ControlService implements EntityService<Control, Integer, ControlDt
 
     @Override
     public Control create(ControlDto control) {
-        final SubjectInfo subjectInfo =
-                subjectInfoService.findById(control.getSubjectId()).orElseThrow();
         final ControlDictionary controlDictionary =
                 controlDictionaryService.findById(control.getTypeId()).orElseThrow();
 
         final var newControl = new Control();
         newControl.setSemester(control.getSemester());
-        newControl.setSubjectInfo(subjectInfo);
         newControl.setType(controlDictionary);
 
         return repo.save(newControl);
@@ -52,13 +46,10 @@ public class ControlService implements EntityService<Control, Integer, ControlDt
     @Override
     public Control update(Integer id, ControlDto control) {
         final Control existingControl = repo.findById(id).orElseThrow();
-        final SubjectInfo subjectInfo =
-                subjectInfoService.findById(control.getSubjectId()).orElseThrow();
         final ControlDictionary controlDictionary =
                 controlDictionaryService.findById(control.getTypeId()).orElseThrow();
 
         existingControl.setType(controlDictionary)
-                .setSubjectInfo(subjectInfo)
                 .setSemester(control.getSemester());
 
         return existingControl;
