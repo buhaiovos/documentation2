@@ -6,6 +6,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Accessors(chain = true)
@@ -13,11 +14,11 @@ import java.util.List;
 public class WorkingPlanDto {
     int id;
     String denotation;
+    int curriculumId;
     int practiceId;
     int stateCertificationId;
-    int curriculumId;
-    List<Integer> subjectIds;
+    int scientificResearchSubjectId;
+    Map<String, Integer> subjectIdsByCiphers;
     List<Integer> groupIds;
     List<Integer> diplomaPreparationIds;
-    int scientificResearchSubjectId;
 }
