@@ -7,6 +7,7 @@ import edu.cad.entities.interfaces.SubjectProperty;
 import edu.cad.entities.listeners.SubjectListener;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import java.util.Set;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Getter
 @Setter
+@Accessors(chain = true)
 @Entity
 @EntityListeners(SubjectListener.class)
 @Table(name = "academic_subject")
