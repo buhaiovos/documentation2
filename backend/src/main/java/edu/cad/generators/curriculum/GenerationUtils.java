@@ -1,4 +1,4 @@
-package edu.cad.generators;
+package edu.cad.generators.curriculum;
 
 import edu.cad.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import static java.lang.String.format;
 
-public class GenerationUtils {
+class GenerationUtils {
     public static int extractCurriculumId(final Sheet sheet, final String curriculumIdMarker) {
         return getCellWhichHoldsCurriculumIdToken(sheet)
                 .filter(GenerationUtils::isCellOfValidType)

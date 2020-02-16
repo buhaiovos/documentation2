@@ -2,7 +2,7 @@ package edu.cad.generators.k3;
 
 import edu.cad.entities.Department;
 import edu.cad.entities.EducationForm;
-import edu.cad.generators.DocumentGenerator;
+import edu.cad.generators.curriculum.DocumentGenerator;
 import edu.cad.study.department.DepartmentService;
 import edu.cad.study.educationform.EducationFormService;
 import edu.cad.utils.Utils;

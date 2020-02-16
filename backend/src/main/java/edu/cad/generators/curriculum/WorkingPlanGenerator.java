@@ -1,4 +1,4 @@
-package edu.cad.generators;
+package edu.cad.generators.curriculum;
 
 import edu.cad.documentelements.areas.*;
 import edu.cad.entities.WorkingPlan;

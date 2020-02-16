@@ -1,6 +1,7 @@
 package edu.cad.generators;
 
 import edu.cad.domain.DocumentType;
+import edu.cad.generators.curriculum.DocumentGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

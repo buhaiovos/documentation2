@@ -1,8 +1,8 @@
 package edu.cad.services;
 
 import edu.cad.domain.DocumentType;
-import edu.cad.generators.DocumentGenerator;
 import edu.cad.generators.DocumentGeneratorFactory;
+import edu.cad.generators.curriculum.DocumentGenerator;
 import edu.cad.services.filenames.FileNameResolvingService;
 import edu.cad.services.storage.StorageService;
 import lombok.AccessLevel;

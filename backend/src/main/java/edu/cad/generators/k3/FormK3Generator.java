@@ -1,6 +1,6 @@
 package edu.cad.generators.k3;
 
-import edu.cad.generators.DocumentGenerator;
+import edu.cad.generators.curriculum.DocumentGenerator;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.stereotype.Component;

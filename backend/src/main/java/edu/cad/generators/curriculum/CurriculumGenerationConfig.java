@@ -1,4 +1,4 @@
-package edu.cad.generators;
+package edu.cad.generators.curriculum;
 
 import edu.cad.domain.DocumentType;
 import edu.cad.generators.k3.FormK3Generator;
