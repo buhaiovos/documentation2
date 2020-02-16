@@ -3,66 +3,24 @@ package edu.cad.generators;
 import edu.cad.documentelements.areas.CurriculumSubjectList;
 import edu.cad.entities.Curriculum;
 import edu.cad.study.curriculum.CurriculumService;
-import edu.cad.utils.Utils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Sheet;
-
-import java.util.Optional;
+import org.springframework.stereotype.Component;
 
 import static java.lang.String.format;
 
+@Component
+@RequiredArgsConstructor
 class CurriculumGenerator extends DocumentGenerator {
-    private static final int CURRICULUM_ID_ROW_NUM = 0;
-    private static final int CURRICULUM_ID_CELL_NUM = 0;
-    private static final String BLANK_STRING = "";
     private static final String CURRICULUM_ID_MARKER = "#curriculum_";
 
-    private CurriculumService curriculumService;
+    private final CurriculumService curriculumService;
 
     @Override
     public void fillInSheet(final Sheet sheet) {
-        final int id = extractCurriculumId(sheet, CURRICULUM_ID_MARKER);
+        final int id = GenerationUtils.extractCurriculumId(sheet, CURRICULUM_ID_MARKER);
         final Curriculum curriculum = findCurriculum(id);
         fillCurriculumSheetWithSubjectList(sheet, curriculum);
-    }
-
-    int extractCurriculumId(final Sheet sheet, final String curriculumIdMarker) {
-        return getCellWhichHoldsCurriculumIdToken(sheet)
-                .filter(this::isCellOfValidType)
-                .map(this::toCurriculumIdTokenWithCleanUp)
-                .filter(token -> token.contains(curriculumIdMarker))
-                .map(token -> toCurriculumId(token, curriculumIdMarker))
-                .orElseThrow(() -> new RuntimeException("Unable to get Curriculum id."));
-    }
-
-    private Optional<Cell> getCellWhichHoldsCurriculumIdToken(final Sheet sheet) {
-        return Optional.ofNullable(
-                sheet.getRow(CURRICULUM_ID_ROW_NUM).getCell(CURRICULUM_ID_CELL_NUM)
-        );
-    }
-
-    private boolean isCellOfValidType(Cell cell) {
-        return cell.getCellTypeEnum().equals(CellType.STRING);
-    }
-
-    private String toCurriculumIdTokenWithCleanUp(Cell curriculumIdHolder) {
-        final String curriculumIdToken = curriculumIdHolder.getStringCellValue();
-        clearCell(curriculumIdHolder);
-        return curriculumIdToken;
-    }
-
-    private void clearCell(Cell curriculumIdHolder) {
-        curriculumIdHolder.setCellType(CellType.BLANK); // also makes it empty
-    }
-
-    private Integer toCurriculumId(String curriculumIdToken, String curriculumIdMarker) {
-        final String id = curriculumIdToken.replaceFirst(curriculumIdMarker, BLANK_STRING);
-        if (Utils.isNumber(id)) {
-            return Integer.valueOf(id);
-        } else {
-            throw new RuntimeException(format("Broken curriculum id token: <%s>. Should contain id of Curriculum.", curriculumIdToken));
-        }
     }
 
     private Curriculum findCurriculum(final int id) {

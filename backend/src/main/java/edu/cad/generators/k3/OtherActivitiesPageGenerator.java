@@ -5,24 +5,32 @@ import edu.cad.documentelements.k3columns.AbstractOtherLoadColumn;
 import edu.cad.documentelements.k3columns.OtherLoadColumnsFactory;
 import edu.cad.entities.Department;
 import edu.cad.entities.EducationForm;
+import edu.cad.study.department.DepartmentService;
+import edu.cad.study.educationform.EducationFormService;
 import edu.cad.utils.k3.SourceOfFinancing;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class OtherActivitiesPageGenerator extends FormK3Generator {
+@Component
+class OtherActivitiesPageGenerator extends AbstractK3Generator {
     private static final String K3_OTHER_PAGE_COLUMN_TOKEN_BEGINNING = "#k3(OC)";
     private static final String PAGE_TOKEN = "#other";
 
     private Department department;
     private EducationForm educationForm;
     private SourceOfFinancing sourceOfFinancing;
+
+    public OtherActivitiesPageGenerator(EducationFormService educationFormService, DepartmentService departmentService) {
+        super(educationFormService, departmentService);
+    }
 
     @Override
     public boolean canGenerate(Sheet sheet) {

@@ -7,6 +7,8 @@ import edu.cad.entities.Department;
 import edu.cad.entities.EducationForm;
 import edu.cad.entities.SubjectInfo;
 import edu.cad.entities.SubjectStudyLoad;
+import edu.cad.study.department.DepartmentService;
+import edu.cad.study.educationform.EducationFormService;
 import edu.cad.study.load.subject.SubjectStudyLoadRepositoryWrapper;
 import edu.cad.utils.documentutils.FormulaCopier;
 import edu.cad.utils.documentutils.K3SemesterStartRowFinder;
@@ -18,19 +20,28 @@ import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class SubjectListPageGenerator extends FormK3Generator {
+@Component
+class SubjectListPageGenerator extends AbstractK3Generator {
     private static final String PAGE_TOKEN = "#subj";
 
-    private SubjectStudyLoadRepositoryWrapper studyLoadResultsDao;
+    private final SubjectStudyLoadRepositoryWrapper studyLoadResultsDao;
 
-    private Map<Class, List<AbstractK3Column>> columnClassToListOfColumns;
+    private Map<Class<? extends AbstractK3Column>, List<AbstractK3Column>> columnClassToListOfColumns;
     private Department department;
     private EducationForm educationForm;
     private SourceOfFinancing sourceOfFinancing;
+
+    public SubjectListPageGenerator(EducationFormService educationFormService,
+                                    DepartmentService departmentService,
+                                    SubjectStudyLoadRepositoryWrapper studyLoadResultsDao) {
+        super(educationFormService, departmentService);
+        this.studyLoadResultsDao = studyLoadResultsDao;
+    }
 
     @Override
     public boolean canGenerate(Sheet sheet) {

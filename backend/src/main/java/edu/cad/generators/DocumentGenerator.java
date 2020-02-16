@@ -1,7 +1,5 @@
 package edu.cad.generators;
 
-import edu.cad.domain.DocumentType;
-import edu.cad.generators.k3.FormK3Generator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -23,12 +21,4 @@ public abstract class DocumentGenerator {
     }
 
     public abstract void fillInSheet(Sheet sheet);
-
-    public static DocumentGenerator forDocumentType(DocumentType documentType) {
-        return switch (documentType) {
-            case CURRICULUM -> new CurriculumGenerator();
-            case WORK_PLAN -> new WorkingPlanGenerator();
-            case K3 -> new FormK3Generator();
-        };
-    }
 }

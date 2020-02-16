@@ -113,6 +113,7 @@ public abstract class AbstractSubjectList extends AbstractDocumentArea {
         }
     }
 
+    @FunctionalInterface
     protected interface SubjectSection {
         Section get(SubjectHeader subject);
     }
