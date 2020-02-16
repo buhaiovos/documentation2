@@ -1,4 +1,4 @@
-package edu.cad.utils.gson;
+package edu.cad.utils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.Expose;

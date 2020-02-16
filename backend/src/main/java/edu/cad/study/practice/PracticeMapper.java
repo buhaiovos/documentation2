@@ -2,7 +2,7 @@ package edu.cad.study.practice;
 
 import edu.cad.entities.Practice;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.gson.Option;
+import edu.cad.utils.Option;
 import org.springframework.stereotype.Component;
 
 @Component

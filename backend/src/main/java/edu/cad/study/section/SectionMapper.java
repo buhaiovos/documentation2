@@ -3,7 +3,7 @@ package edu.cad.study.section;
 import edu.cad.entities.Cycle;
 import edu.cad.entities.Section;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.gson.Option;
+import edu.cad.utils.Option;
 import org.springframework.stereotype.Component;
 
 import static java.util.Optional.ofNullable;

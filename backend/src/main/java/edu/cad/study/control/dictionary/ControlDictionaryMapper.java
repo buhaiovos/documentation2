@@ -2,7 +2,7 @@ package edu.cad.study.control.dictionary;
 
 import edu.cad.entities.ControlDictionary;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.gson.Option;
+import edu.cad.utils.Option;
 import org.springframework.stereotype.Component;
 
 @Component

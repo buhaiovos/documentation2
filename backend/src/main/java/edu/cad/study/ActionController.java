@@ -1,6 +1,6 @@
 package edu.cad.study;
 
-import edu.cad.utils.gson.Option;
+import edu.cad.utils.Option;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
