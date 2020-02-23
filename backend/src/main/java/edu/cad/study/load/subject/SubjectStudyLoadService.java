@@ -1,6 +1,8 @@
 package edu.cad.study.load.subject;
 
 import edu.cad.domain.FormOfEducation;
+import edu.cad.entities.EducationForm;
+import edu.cad.entities.SubjectInfo;
 import edu.cad.entities.SubjectStudyLoad;
 import edu.cad.utils.k3.SourceOfFinancing;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -17,12 +20,24 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 @Slf4j
 public class SubjectStudyLoadService {
-    private final SubjectStudyLoadRepositoryWrapper subjectLoadDao;
+    private final SubjectStudyLoadRepositoryWrapper repoWrapper;
+
+    public Optional<SubjectStudyLoad> findBySubjectInfoAndSourceOfFinancingAndFormOfAndEducationForm(SubjectInfo info,
+                                                                                                     SourceOfFinancing source,
+                                                                                                     EducationForm educationForm) {
+        return repoWrapper.findBySubjectInfoAndSourceOfFinancingAndFormOfAndEducationForm(
+                info, source, educationForm
+        );
+    }
+
+    public SubjectStudyLoad save(SubjectStudyLoad ssl) {
+        return repoWrapper.save(ssl);
+    }
 
     public List<SubjectStudyLoad> search(int semester,
                                          FormOfEducation formOfEducation,
                                          SourceOfFinancing sourceOfFinancing) {
-        return subjectLoadDao.findAll()
+        return repoWrapper.findAll()
                 .stream()
                 .filter(bySemester(semester))
                 .filter(byFormOfEducation(formOfEducation))

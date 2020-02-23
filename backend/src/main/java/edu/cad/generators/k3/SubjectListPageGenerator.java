@@ -9,7 +9,7 @@ import edu.cad.entities.SubjectInfo;
 import edu.cad.entities.SubjectStudyLoad;
 import edu.cad.study.department.DepartmentService;
 import edu.cad.study.educationform.EducationFormService;
-import edu.cad.study.load.subject.SubjectStudyLoadRepositoryWrapper;
+import edu.cad.study.load.subject.SubjectStudyLoadService;
 import edu.cad.utils.documentutils.FormulaCopier;
 import edu.cad.utils.documentutils.K3SemesterStartRowFinder;
 import edu.cad.utils.documentutils.RowInserter;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 class SubjectListPageGenerator extends AbstractK3Generator {
     private static final String PAGE_TOKEN = "#subj";
 
-    private final SubjectStudyLoadRepositoryWrapper studyLoadResultsDao;
+    private final SubjectStudyLoadService studyLoadService;
 
     private Map<Class<? extends AbstractK3Column>, List<AbstractK3Column>> columnClassToListOfColumns;
     private Department department;
@@ -38,9 +38,9 @@ class SubjectListPageGenerator extends AbstractK3Generator {
 
     public SubjectListPageGenerator(EducationFormService educationFormService,
                                     DepartmentService departmentService,
-                                    SubjectStudyLoadRepositoryWrapper studyLoadResultsDao) {
+                                    SubjectStudyLoadService studyLoadService) {
         super(educationFormService, departmentService);
-        this.studyLoadResultsDao = studyLoadResultsDao;
+        this.studyLoadService = studyLoadService;
     }
 
     @Override
@@ -134,7 +134,7 @@ class SubjectListPageGenerator extends AbstractK3Generator {
     }
 
     private void readLoadColumnsAndSaveData(Row row, List<SubjectStudyLoadColumn> columns, K3SubjectEntity subject) {
-        SubjectStudyLoad results = studyLoadResultsDao.findBySubjectInfoAndSourceOfFinancingAndFormOfAndEducationForm(
+        SubjectStudyLoad results = studyLoadService.findBySubjectInfoAndSourceOfFinancingAndFormOfAndEducationForm(
                 subject.getSubjectInfo(), this.sourceOfFinancing, this.educationForm
         ).orElseGet(() -> this.newSubjectLoad(subject.getSubjectInfo()));
 
@@ -142,7 +142,7 @@ class SubjectListPageGenerator extends AbstractK3Generator {
                 .filter(Objects::nonNull)
                 .forEach(col -> col.setFormulaResultValueToStudyLoadResultObj(row, results));
 
-        studyLoadResultsDao.save(results);
+        studyLoadService.save(results);
     }
 
     private SubjectStudyLoad newSubjectLoad(SubjectInfo subjectInfo) {
@@ -150,7 +150,7 @@ class SubjectListPageGenerator extends AbstractK3Generator {
         studyLoadResults.setSubjectInfo(subjectInfo);
         studyLoadResults.setEducationForm(this.educationForm);
         studyLoadResults.setSourceOfFinancing(this.sourceOfFinancing);
-        return studyLoadResultsDao.save(studyLoadResults);
+        return studyLoadService.save(studyLoadResults);
     }
 
     private Row getNextRowForGiven(Row firstRowOfSemesterSection) {
