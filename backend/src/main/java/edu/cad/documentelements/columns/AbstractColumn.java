@@ -11,41 +11,41 @@ public abstract class AbstractColumn extends AbstractDocumentElement {
 
     public AbstractColumn() {
     }
-    
+
     public AbstractColumn(int columnNumber) {
         this.columnNumber = columnNumber;
     }
-    
+
     public AbstractColumn(Row row, String token) {
         columnNumber = findInRow(row, token);
     }
-    
+
     public abstract void fill(Row row, CurriculumSubject record);
-    
-    public void fill(Row row, String value){
+
+    public void fill(Row row, String value) {
         Cell cell = row.getCell(columnNumber);
         cell.setCellValue(value);
     }
-    
-    public void fill(Row row, double value){
+
+    public void fill(Row row, double value) {
         Cell cell = row.getCell(columnNumber);
         cell.setCellValue(value);
-        cell.setCellType(CellType.NUMERIC);
     }
-    
-    public double getNumericCellValue(Row row){
-        if(!row.getCell(columnNumber).getCellTypeEnum().equals(CellType.NUMERIC)){
+
+    public double getNumericCellValue(Row row) {
+        CellType cellType = row.getCell(columnNumber).getCellType();
+        if (!CellType.NUMERIC.equals(cellType)) {
             return -1;
         }
-        
+
         return row.getCell(columnNumber).getNumericCellValue();
     }
-    
-    public void clear(Row row){
-        row.getCell(columnNumber).setCellType(CellType.BLANK);
+
+    public void clear(Row row) {
+        row.getCell(columnNumber).setBlank();
     }
-    
-    public int getColumnNumber(){
+
+    public int getColumnNumber() {
         return columnNumber;
     }
 }
