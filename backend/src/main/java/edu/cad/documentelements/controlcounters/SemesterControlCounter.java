@@ -2,7 +2,6 @@ package edu.cad.documentelements.controlcounters;
 
 import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.Curriculum;
-import edu.cad.study.control.dictionary.ControlDictionaryService;
 import org.apache.poi.ss.usermodel.Cell;
 
 import static edu.cad.entities.ControlDictionary.CREDIT_ID;
@@ -10,7 +9,6 @@ import static edu.cad.entities.ControlDictionary.DIFFERENTIATED_CREDIT_ID;
 
 public class SemesterControlCounter extends ControlCounter {
     private final int semester;
-    private ControlDictionaryService dictionaryService;
 
     public SemesterControlCounter(Cell cell, ControlDictionary control, int semester) {
         super(cell, control);

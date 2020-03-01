@@ -24,8 +24,9 @@ public class ControlCounterFactory {
 
         int controlType = Integer.parseInt(splitter.getFirstNumString());
         ControlDictionary control = controlDictionaryService.findById(controlType).orElseThrow();
-        if (splitter.getSecondNumString() == null || !Utils.isNumber(splitter.getSecondNumString()))
+        if (splitter.getSecondNumString() == null || !Utils.isNumber(splitter.getSecondNumString())) {
             return new ControlCounter(cell, control);
+        }
 
         int semester = Integer.parseInt(splitter.getSecondNumString());
         return new SemesterControlCounter(cell, control, semester);

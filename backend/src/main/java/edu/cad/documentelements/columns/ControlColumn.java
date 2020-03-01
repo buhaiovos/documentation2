@@ -18,31 +18,32 @@ import static edu.cad.entities.ControlDictionary.DIFFERENTIATED_CREDIT_ID;
 
 public class ControlColumn extends AbstractColumn {
     private final ControlDictionary control;
-    private ControlDictionaryService controlDictionaryService;
+    // I hope this will be removed soon once the Control Dictionary
+    // will be replaced as a type with some enumeration
+    private final ControlDictionaryService controlDictionaryService;
 
-    public ControlColumn(int columnNumber, ControlDictionary control) {
+    public ControlColumn(int columnNumber, ControlDictionary control, ControlDictionaryService cds) {
         super(columnNumber);
         this.control = control;
+        this.controlDictionaryService = cds;
     }
 
     @Override
-    public void fill(Row row, CurriculumSubject record) {
-        Set<Control> controls = new TreeSet<>();
-
-        controls.addAll(getSubjectControls(record, control));
+    public void fill(Row row, CurriculumSubject subject) {
+        Set<Control> controls = new TreeSet<>(getSubjectControls(subject, control));
 
         if (control.getId() == CREDIT_ID) {
             ControlDictionary diff = controlDictionaryService.findById(DIFFERENTIATED_CREDIT_ID).orElseThrow();
-            controls.addAll(getSubjectControls(record, diff));
+            controls.addAll(getSubjectControls(subject, diff));
         }
 
         writeControls(row, controls);
     }
 
-    public Set<Control> getSubjectControls(CurriculumSubject record, ControlDictionary type) {
+    public Set<Control> getSubjectControls(CurriculumSubject subject, ControlDictionary type) {
         Set<Control> result = new HashSet<>();
 
-        for (SubjectInfo element : record.getSubjectInfo().getSubSubjects(record.getCurriculum())) {
+        for (SubjectInfo element : subject.getSubjectInfo().getSubSubjects(subject.getCurriculum())) {
             result.addAll(element.getControlsByType(type));
         }
 

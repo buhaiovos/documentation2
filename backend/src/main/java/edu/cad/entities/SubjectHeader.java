@@ -39,11 +39,11 @@ public class SubjectHeader
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "superSubject")
     private Set<SubjectHeader> subSubjects = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_section_curriculum")
     private Section curriculumSection;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_section_workplan")
     private Section workingPlanSection;
 
@@ -51,7 +51,7 @@ public class SubjectHeader
     @JoinColumn(name = "id_type")
     private SubjectType type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_department")
     private Department department;
 

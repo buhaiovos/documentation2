@@ -14,7 +14,7 @@ public class ControlCounter extends AbstractDocumentElement {
     protected final Cell cell;
     protected final ControlDictionary control;
 
-    protected ControlDictionaryService controlDictionaryService;
+    protected ControlDictionaryService dictionaryService;
 
     public ControlCounter(Cell cell, ControlDictionary control) {
         this.cell = cell;
@@ -27,7 +27,7 @@ public class ControlCounter extends AbstractDocumentElement {
 
         if (control.getId() == CREDIT_ID) {
             ControlDictionary differentiatedCredit =
-                    controlDictionaryService.findById(DIFFERENTIATED_CREDIT_ID).orElseThrow();
+                    dictionaryService.findById(DIFFERENTIATED_CREDIT_ID).orElseThrow();
             int numberOfDifferentiatedCredits = curriculum.countControlsByType(differentiatedCredit);
 
             buildDifferentiatedCreditValuePart(value, count > 0, numberOfDifferentiatedCredits);

@@ -9,9 +9,14 @@ import org.apache.poi.ss.usermodel.Sheet;
 public class DocumentSection extends AbstractDocumentElement {
     private static final String SECTION_TOKEN = "#section_";
 
+    private static SectionService sectionService;
+
+    public static void setSectionService(SectionService ss) {
+        sectionService = ss;
+    }
+
     private int rowNumber = -1;
     private Section section = null;
-    private SectionService sectionService;
 
     public DocumentSection(Sheet sheet, int startRow) {
         findSection(sheet, startRow);

@@ -16,6 +16,10 @@ public class ColumnFactory {
 
     private static ControlDictionaryService controlDictionaryService;
 
+    public static void setControlDictionaryService(ControlDictionaryService cds) {
+        controlDictionaryService = cds;
+    }
+
     public static AbstractColumn createColumn(Cell cell) {
         if (cell != null) {
             String cellContent = CellWithTokenValidator.getContentIfCellValid(cell, TOKEN_BEGINNING);
@@ -54,7 +58,7 @@ public class ColumnFactory {
     private static AbstractColumn controlColumn(int columnNumber, ColumnTokenStringSplitter tokenStringSplitter) {
         int id = Integer.parseInt(tokenStringSplitter.getFirstNumString());
         ControlDictionary cd = controlDictionaryService.findById(id).orElseThrow();
-        return new ControlColumn(columnNumber, cd);
+        return new ControlColumn(columnNumber, cd, controlDictionaryService);
     }
 
     private static SemesterColumn semesterColumn(int columnNumber, ColumnTokenStringSplitter tokenStringSplitter,

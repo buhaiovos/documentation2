@@ -17,7 +17,12 @@ import java.util.Map;
 
 public class DiplomaPreparationArea extends AbstractDocumentArea {
     private final Map<String, AbstractColumn> columns;
-    private WorkTypeService workTypeService;
+
+    private static WorkTypeService workTypeService;
+
+    public static void setWorkTypeService(WorkTypeService wts) {
+        DiplomaPreparationArea.workTypeService = wts;
+    }
 
     public DiplomaPreparationArea(Sheet sheet, int startRow) {
         super(sheet);

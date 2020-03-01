@@ -21,11 +21,13 @@ public class AccessControlHeaderAppendingFilter implements Filter {
     private final AllowedOriginConfigurationProperties properties;
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+    public void doFilter(ServletRequest servletRequest,
+                         ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
+        var httpServletRequest = (HttpServletRequest) servletRequest;
         String origin = httpServletRequest.getHeader(ORIGIN);
         if (properties.getUrls().contains(origin)) {
-            HttpServletResponse response = (HttpServletResponse) servletResponse;
+            var response = (HttpServletResponse) servletResponse;
             response.addHeader(ACCESS_CONTROL_ALLOW_ORIGIN, origin);
             response.addHeader(ACCESS_CONTROL_ALLOW_HEADERS, String.join(",", properties.getHeaders()));
         }

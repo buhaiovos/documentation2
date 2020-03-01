@@ -67,11 +67,11 @@ public class SubjectInfo extends YearTracked implements IDatabaseEntity<Integer>
     @Column(name = "ECTS")
     private double ects;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_subject")
     private SubjectHeader subjectHeader;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subjectInfo")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "subjectInfo")
     private Set<Control> controls = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.subjectInfo", cascade = CascadeType.MERGE)

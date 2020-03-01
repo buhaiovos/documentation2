@@ -25,11 +25,11 @@ public class DiplomaPreparation extends YearTracked implements IDatabaseEntity<I
     @Column(name = "norm")
     private float norm;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_type_of_work")
     private WorkType workType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_department")
     private Department department;
 
