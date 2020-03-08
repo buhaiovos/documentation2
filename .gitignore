@@ -71,3 +71,4 @@ testem.log
 .DS_Store
 Thumbs.db
 /frontend/node/
+/backend/cds/set-env.sh
