@@ -18,6 +18,7 @@ import {LoadDistributorComponent} from './components/load-distributor/load-distr
 import {AppRoutingModule} from './app-routing.module';
 import {StatisticsComponent} from './components/statistics/statistics.component';
 import {ChartsModule} from 'ng2-charts';
+import {SubjectListComponent} from './components/lists/subjects/subject-list/subject-list.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {ChartsModule} from 'ng2-charts';
     SubjectLoadTableComponent,
     OtherLoadTableComponent,
     LoadDistributorComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    SubjectListComponent
   ],
   imports: [
     BrowserModule,

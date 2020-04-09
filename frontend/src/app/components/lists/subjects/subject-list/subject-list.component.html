@@ -1,0 +1,22 @@
+<div id="container">
+  <table id="subjects" class="table is-hoverable">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Назва предмету</th>
+      <th>Батьківський предмет</th>
+      <th>Редагування</th>
+      <th>Видалення</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let subject of subjects">
+      <td id="id">{{subject.id}}</td>
+      <td id="title">{{subject.title}}</td>
+      <td id="super_subject">{{subject.superSubjectId}}</td>
+      <td><a class="button" (click)="edit(subject)">Edit</a></td>
+      <td><a class="button" (click)="delete(subject.id)">Delete</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
