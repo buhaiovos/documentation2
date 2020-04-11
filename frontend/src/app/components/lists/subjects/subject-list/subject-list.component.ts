@@ -1,33 +1,45 @@
 import {Component, OnInit} from '@angular/core';
-import {Subject} from "../../../../models/subject.model";
+import {SubjectInfo} from "../../../../models/subject-info.model";
+import {SubjectListService} from "./subject-list.service";
+import {Subject} from "../../../../models/subject-model";
+import {SubjectHeader} from "../../../../models/subject-header.model";
 
 @Component({
   selector: 'app-subject-list',
   templateUrl: './subject-list.component.html',
-  styleUrls: ['./subject-list.component.css']
+  styleUrls: ['./subject-list.component.css'],
+  providers: [SubjectListService]
 })
 export class SubjectListComponent implements OnInit {
 
-  constructor() {
+  constructor(private subjectListService: SubjectListService) {
   }
 
   subjects: Subject[] = [];
 
   ngOnInit(): void {
-    this.subjects.push(
-      new Subject(1, "first subject", 21),
-      new Subject(2, 'Second Subject', 22),
-      new Subject(22, 'super subject', null)
-    );
-    console.log('Pushed')
-    console.log(this.subjects)
+    this.subjectListService
+      .fetchSubjectList()
+      .subscribe(subjects => this.subjects.push(...subjects));
   }
 
-  edit(subject: Subject) {
-    alert('editing')
+  editHeader(header: SubjectHeader) {
+    alert('editing ' + header);
   }
 
-  delete(id: number) {
-    this.subjects = this.subjects.filter(s => s.id !== id)
+  editInfo(info: SubjectInfo) {
+    alert('editing ' + info);
+  }
+
+  deleteHeader(header: SubjectHeader) {
+    alert('deleting ' + header);
+  }
+
+  deleteInfo(info: SubjectInfo) {
+    alert('deleting ' + info);
+  }
+
+  addInfo(header: SubjectHeader) {
+    alert('adding info ' + header);
   }
 }
