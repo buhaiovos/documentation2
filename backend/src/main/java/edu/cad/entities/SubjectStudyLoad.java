@@ -22,7 +22,7 @@ public class SubjectStudyLoad extends YearTracked implements IDatabaseEntity<Int
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_education_form")
     private EducationForm educationForm;
 
@@ -30,7 +30,7 @@ public class SubjectStudyLoad extends YearTracked implements IDatabaseEntity<Int
     @Enumerated(EnumType.STRING)
     private SourceOfFinancing sourceOfFinancing;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_academic_subject")
     private SubjectInfo subjectInfo;
 

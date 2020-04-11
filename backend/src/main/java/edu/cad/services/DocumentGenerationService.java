@@ -16,10 +16,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-@Service
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Service
 public class DocumentGenerationService {
     StorageService storageService;
     FileNameResolvingService nameResolvingService;
@@ -36,9 +36,9 @@ public class DocumentGenerationService {
         try (
                 var template = new ByteArrayInputStream(templateBytes);
                 var output = new ByteArrayOutputStream();
-                Workbook generated = generator.generate(template)
+                Workbook resultingDocument = generator.generate(template)
         ) {
-            generated.write(output);
+            resultingDocument.write(output);
             return output.toByteArray();
         } catch (IOException e) {
             throw new RuntimeException("IO exception during document generation", e);

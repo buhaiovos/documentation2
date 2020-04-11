@@ -11,8 +11,8 @@ import java.util.Set;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Getter
 @Setter
-@Entity
 @Accessors(chain = true)
+@Entity
 @DiscriminatorValue("workplan")
 public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
 
@@ -28,7 +28,7 @@ public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
     @JoinColumn(name = "id_curriculum")
     private Curriculum curriculum;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.curriculum", cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.curriculum", cascade = CascadeType.MERGE)
     private Set<CurriculumSubject> workplanSubjects = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "workingPlan")
@@ -73,7 +73,11 @@ public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
 
     @Override
     public Qualification getQualification() {
-        return groups.iterator().next().getQualification();
+        var iterator = groups.iterator();
+        if (iterator.hasNext()) {
+            return iterator.next().getQualification();
+        }
+        return null;
     }
 
     public EducationForm getEducationForm() {

@@ -1,5 +1,6 @@
 package edu.cad.study.subject.header;
 
+import edu.cad.entities.Department;
 import edu.cad.entities.Section;
 import edu.cad.entities.SubjectHeader;
 import edu.cad.study.EntityMapper;
@@ -15,7 +16,7 @@ public class SubjectHeaderMapper implements EntityMapper<SubjectHeader, SubjectH
         return new SubjectHeaderDto()
                 .setId(e.getId())
                 .setDenotation(e.getDenotation())
-                .setDepartmentId(e.getDepartment().getId())
+                .setDepartmentId(nullOr(e.getDepartment(), Department::getId))
                 .setSubjectTypeId(e.getType().getId())
                 .setSuperSubjectId(nullOr(e.getSuperSubject(), SubjectHeader::getId))
                 .setCurriculumSectionId(nullOr(e.getCurriculumSection(), Section::getId))

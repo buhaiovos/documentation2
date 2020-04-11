@@ -7,6 +7,7 @@ import edu.cad.utils.documentutils.CellWithTokenValidator;
 import edu.cad.utils.documentutils.ColumnTokenStringSplitter;
 import edu.cad.utils.k3.SourceOfFinancing;
 import edu.cad.utils.k3.TypeOfGroupWork;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 
@@ -16,9 +17,11 @@ import static edu.cad.utils.documentutils.ColumnTokenStringSplitter.K3_WP_TOKEN_
 import static java.lang.String.format;
 
 @Slf4j
-class K3WPColumnsFactory {
+public class K3WPColumnsFactory {
 
+    @Setter
     private static ControlDictionaryService controlDictionaryService;
+    @Setter
     private static SubjectInfoService subjectInfoService;
 
     static AbstractK3Column createColumn(Cell cell, SourceOfFinancing mainSource) {

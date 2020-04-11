@@ -39,8 +39,7 @@ public class SubjectListener {
         Set<SubjectInfo> subjectDetails = new HashSet<>();
         subjectDetails.add(info);
 
-        if (curriculum instanceof WorkingPlan)
-            return subjectDetails;
+        if (curriculum instanceof WorkingPlan) return subjectDetails;
 
         for (SubjectHeader dictionary : info.getSubjectHeader().getSubSubjects()) {
             boolean contains = false;
@@ -57,9 +56,8 @@ public class SubjectListener {
             
             if(!contains){
                 SubjectInfo appropriate = dictionary.findAppropriate(curriculum);
-                
-                if(appropriate == null)
-                    continue;
+
+                if (appropriate == null) continue;
 
                 subjectDetails.add(appropriate);
                 if(appropriate.getSubSubjects(curriculum) != null)

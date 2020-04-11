@@ -14,14 +14,6 @@ public class CurriculumSubjectId implements Serializable {
     @ManyToOne
     private SubjectInfo subjectInfo;
 
-    public CurriculumSubjectId() {
-    }
-
-    public CurriculumSubjectId(Curriculum curriculum, SubjectInfo subjectInfo) {
-        this.curriculum = curriculum;
-        this.subjectInfo = subjectInfo;
-    }
-
     public Curriculum getCurriculum() {
         return curriculum;
     }

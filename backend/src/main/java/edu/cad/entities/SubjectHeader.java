@@ -83,8 +83,9 @@ public class SubjectHeader
         Qualification current = curriculum.getQualification();
 
         for (SubjectInfo element : subjectInfo) {
-            for (CurriculumSubject currSubject : element.getCurriculumSubjects()) {
-                if (currSubject.getCurriculum().getQualification().equals(current)) {
+            for (CurriculumSubject subject : element.getCurriculumSubjects()) {
+                var qualification = subject.getCurriculum().getQualification();
+                if (qualification != null && qualification.equals(current)) {
                     return element;
                 }
             }

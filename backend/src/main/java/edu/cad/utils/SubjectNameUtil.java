@@ -6,7 +6,7 @@ import edu.cad.entities.SubjectInfo;
 import java.util.Set;
 
 public final class SubjectNameUtil {
-    private SubjectNameUtil(){
+    private SubjectNameUtil() {
     }
 
     public static String getDetailedSubjectName(SubjectInfo subjectInfo, String faculty) {
@@ -31,19 +31,21 @@ public final class SubjectNameUtil {
     }
 
     private static String getGroupsString(Set<AcademicGroup> groups) {
-        StringBuilder groupStringBuilder = new StringBuilder();
+        StringBuilder groupsString = new StringBuilder();
 
         for (AcademicGroup group : groups) {
-            groupStringBuilder.append(group.getCipher());
-            groupStringBuilder.append("(");
-            groupStringBuilder.append(group.getBudgetaryStudents());
-            groupStringBuilder.append("+");
-            groupStringBuilder.append(group.getContractStudents());
-            groupStringBuilder.append("),");
+            groupsString.append(group.getCipher());
+            groupsString.append("(");
+            groupsString.append(group.getBudgetaryStudents());
+            groupsString.append("+");
+            groupsString.append(group.getContractStudents());
+            groupsString.append("),");
         }
 
-        groupStringBuilder.deleteCharAt(groupStringBuilder.length() - 1);
+        if (groupsString.length() > 0) {
+            groupsString.deleteCharAt(groupsString.length() - 1);
+        }
 
-        return groupStringBuilder.toString();
+        return groupsString.toString();
     }
 }
