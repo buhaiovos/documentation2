@@ -10,17 +10,22 @@
   </parent>
 
   <artifactId>frontend</artifactId>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
   <name>Documentation FE</name>
 
   <build>
-    <finalName>client</finalName>
+    <finalName>frontend</finalName>
+    <resources>
+      <resource>
+        <directory>target/dist</directory>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
-        <version>1.6</version>
+        <version>1.9.1</version>
 
         <configuration>
           <nodeVersion>v13.8.0</nodeVersion>
