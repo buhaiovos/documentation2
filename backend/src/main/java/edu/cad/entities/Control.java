@@ -1,6 +1,5 @@
 package edu.cad.entities;
 
-import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,13 +18,13 @@ import java.io.Serializable;
 @Entity
 @Table(name = "control")
 public class Control extends YearTracked implements IDatabaseEntity<Integer>, Serializable, Comparable<Control> {
-    @Expose
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-    @Expose
+
     @Column(name = "semester")
     private int semester;
 

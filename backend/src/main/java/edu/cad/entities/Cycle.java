@@ -1,6 +1,5 @@
 package edu.cad.entities;
 
-import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,17 +18,17 @@ import java.util.Set;
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Table(name = "cycle")
 public class Cycle extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
-    
-    @Expose
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
-    
-    @Expose
+
+
     @Column(name = "denotation")
     private String denotation;
-    
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cycle")
     private Set<Section> sections = new HashSet<>();
 

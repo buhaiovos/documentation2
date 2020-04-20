@@ -1,6 +1,5 @@
 package edu.cad.entities;
 
-import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,13 +22,13 @@ import java.util.Set;
 @DiscriminatorValue(value = "curriculum")
 public class Curriculum extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
 
-    @Expose
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     protected Integer id;
 
-    @Expose
+
     @Column(name = "denotation")
     protected String denotation;
 

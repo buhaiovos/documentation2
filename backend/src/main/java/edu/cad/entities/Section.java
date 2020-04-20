@@ -1,6 +1,5 @@
 package edu.cad.entities;
 
-import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,17 +19,17 @@ import java.util.Set;
 @Table(name = "section")
 public class Section extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
 
-    @Expose
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-    @Expose
+
     @Column(name = "denotation")
     private String denotation;
 
-    @Expose
+
     @Column(name = "is_optional")
     private boolean optional;
 

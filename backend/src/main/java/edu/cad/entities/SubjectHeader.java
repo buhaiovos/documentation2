@@ -1,6 +1,5 @@
 package edu.cad.entities;
 
-import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,13 +21,13 @@ public class SubjectHeader
         extends YearTracked
         implements IDatabaseEntity<Integer>, Serializable, Comparable<SubjectHeader> {
 
-    @Expose
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-    @Expose
+
     @Column(name = "denotation")
     private String denotation;
 

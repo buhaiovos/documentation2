@@ -1,6 +1,5 @@
 package edu.cad.entities;
 
-import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.utils.Utils;
 import lombok.EqualsAndHashCode;
@@ -30,7 +29,7 @@ public class CurriculumSubject implements IDatabaseEntity<Integer>, Serializable
     @EmbeddedId
     private CurriculumSubjectId pk = new CurriculumSubjectId();
 
-    @Expose
+
     @Column(name = "cipher")
     private String cipher;
 

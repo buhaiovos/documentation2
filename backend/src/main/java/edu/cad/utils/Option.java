@@ -1,7 +1,6 @@
 package edu.cad.utils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.Expose;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,11 +13,9 @@ import lombok.ToString;
 public class Option {
 
     @JsonProperty("DisplayText")
-    @Expose
     private String displayText;
 
     @JsonProperty("Value")
-    @Expose
     private Object value;
 
     public Option(String displayText, Object value) {

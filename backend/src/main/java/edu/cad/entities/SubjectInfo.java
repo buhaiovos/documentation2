@@ -1,6 +1,5 @@
 package edu.cad.entities;
 
-import com.google.gson.annotations.Expose;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import edu.cad.entities.interfaces.SubjectProperty;
 import edu.cad.entities.listeners.SubjectListener;
@@ -25,45 +24,45 @@ import java.util.Set;
 @EntityListeners(SubjectListener.class)
 @Table(name = "academic_subject")
 public class SubjectInfo extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
-    @Expose
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-    @Expose
+
     @Column(name = "semester")
     private int semester;
 
-    @Expose
+
     @Column(name = "semesters_duration")
     private int semestersDuration;
 
-    @Expose
+
     @Column(name = "lectures")
     private double lectures;
 
-    @Expose
+
     @Column(name = "actual_lectures")
     private double actualLectures;
 
-    @Expose
+
     @Column(name = "labs")
     private double labs;
 
-    @Expose
+
     @Column(name = "actual_labs")
     private double actualLabs;
 
-    @Expose
+
     @Column(name = "practices")
     private double practices;
 
-    @Expose
+
     @Column(name = "actual_practices")
     private double actualPractices;
 
-    @Expose
+
     @Column(name = "ECTS")
     private double ects;
 
