@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>frontend</artifactId>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
 
   <name>Documentation FE</name>
 
@@ -19,6 +19,7 @@
     <resources>
       <resource>
         <directory>target/dist</directory>
+        <targetPath>public</targetPath>
       </resource>
     </resources>
     <plugins>
