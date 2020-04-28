@@ -33,7 +33,7 @@ export class SubjectListService {
 
   private toSubjects(headers: SubjectHeader[], infos: SubjectInfo[]): Subject[] {
     let headerAndInfosByHeaderId = {}
-    headers.map(header => headerAndInfosByHeaderId[header.id] = new Subject(header, []));
+    headers.map(header => headerAndInfosByHeaderId[header.id] = new Subject(header, [], false));
     infos.map(info => headerAndInfosByHeaderId[info.subjectHeaderId]?.infos.push(info));
     return Object.values(headerAndInfosByHeaderId);
   }

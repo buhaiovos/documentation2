@@ -1,15 +1,16 @@
 <div id="subject-list-container">
   <div id="subject-list-item-container" *ngFor="let subject of subjects">
-    <table class="table is-hoverable header-container">
+    <table class="table is-hoverable is-fullwidth header-container"
+           (click)="subject.displayInfo = !subject.displayInfo">
       <thead>
       <tr>
         <th>id</th>
-        <th>denotation</th>
-        <th>superSubjectId</th>
-        <th>curriculumSectionId</th>
-        <th>workingPlanSectionId</th>
-        <th>subjectTypeId</th>
-        <th>departmentId</th>
+        <th>Назва</th>
+        <th>Батьківський Предмет</th>
+        <th>Секція Навчального Плану</th>
+        <th>Секція Робочого Плану</th>
+        <th>Тип Предмета</th>
+        <th>Кафедра</th>
         <th></th>
         <th></th>
         <th></th>
@@ -17,34 +18,35 @@
       </thead>
       <tbody>
       <tr>
-        <td>{{subject.header.id}}</td>
-        <td>{{subject.header.denotation}}</td>
-        <td>{{subject.header.superSubjectId}}</td>
-        <td>{{subject.header.curriculumSectionId}}</td>
-        <td>{{subject.header.workingPlanSectionId}}</td>
-        <td>{{subject.header.subjectTypeId}}</td>
-        <td>{{subject.header.departmentId}}</td>
-        <td><a class="button" (click)="editHeader(subject.header)">Edit</a></td>
-        <td><a class="button" (click)="deleteHeader(subject.header)">Delete</a></td>
-        <td><a class="button" (click)="addInfo(subject.header)">Add Info</a></td>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.id}}</td>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.denotation}}</td>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.superSubjectId}}</td>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.curriculumSectionId}}</td>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.workingPlanSectionId}}</td>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.subjectTypeId}}</td>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.departmentId}}</td>
+        <td><a class="button is-info" (click)="editHeader(subject.header)">Edit</a></td>
+        <td><a class="button is-danger" (click)="deleteHeader(subject.header)">Delete</a></td>
+        <td><a class="button is-primary" (click)="addInfo(subject.header)">Add Info</a></td>
       </tr>
       </tbody>
     </table>
-    <table class="table is-hoverable infos-container">
+    <table *ngIf="subject.displayInfo"
+           class="table is-hoverable is-bordered is-fullwidth infos-container">
       <thead>
       <tr>
         <th>id</th>
-        <th>semester</th>
-        <th>semestersDuration</th>
-        <th>lectures</th>
-        <th>actualLectures</th>
-        <th>labs</th>
-        <th>actualLabs</th>
-        <th>practices</th>
-        <th>actualPractices</th>
-        <th>ects</th>
-        <th>headerId</th>
-        <th>ccontrolIdsontrolIds</th>
+        <th>Семестр</th>
+        <th>К-сть семестрів</th>
+        <th>Лекції</th>
+        <th>Фкт. Лекції</th>
+        <th>Лаби</th>
+        <th>Фкт. Лаби</th>
+        <th>Практики</th>
+        <th>Фкт. Практики</th>
+        <th>ECTS</th>
+        <th>Предмет</th>
+        <th>Контроль</th>
         <th></th>
         <th></th>
       </tr>
@@ -63,8 +65,8 @@
         <td>{{info.ects}}</td>
         <td>{{info.subjectHeaderId}}</td>
         <td>{{info.controlsIds}}</td>
-        <td><a class="button" (click)="editInfo(info)">Edit</a></td>
-        <td><a class="button" (click)="deleteInfo(info)">Delete</a></td>
+        <td><a class="button is-info is-small" (click)="editInfo(info)">Edit</a></td>
+        <td><a class="button is-danger is-small" (click)="deleteInfo(info)">Delete</a></td>
       </tr>
       </tbody>
     </table>
