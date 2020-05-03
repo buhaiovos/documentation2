@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {SubjectInfo} from "../../../../models/subject-info.model";
 import {SubjectListService} from "./subject-list.service";
 import {Subject} from "../../../../models/subject-model";
 import {SubjectHeader} from "../../../../models/subject-header.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-subject-list',
@@ -12,7 +12,8 @@ import {SubjectHeader} from "../../../../models/subject-header.model";
 })
 export class SubjectListComponent implements OnInit {
 
-  constructor(private subjectListService: SubjectListService) {
+  constructor(private subjectListService: SubjectListService,
+              private router: Router) {
   }
 
   subjects: Subject[] = [];
@@ -23,23 +24,27 @@ export class SubjectListComponent implements OnInit {
       .subscribe(subjects => this.subjects.push(...subjects));
   }
 
-  editHeader(header: SubjectHeader) {
-    alert('editing ' + header);
+  editInfo(infoId: number) {
+    this.router.navigate(['/subject-infos', {id: infoId}])
   }
 
-  editInfo(info: SubjectInfo) {
-    alert('editing ' + info);
+  addInfo(headerId: number) {
+    this.router.navigate(['/subject-infos', {headerId: headerId}])
+  }
+
+  deleteInfo(infoId: number) {
+    alert('deleting ' + infoId);
+  }
+
+  editHeader(headerId: number) {
+    this.router.navigate(['/subject-headers', {id: headerId}]);
   }
 
   deleteHeader(header: SubjectHeader) {
     alert('deleting ' + header);
   }
 
-  deleteInfo(info: SubjectInfo) {
-    alert('deleting ' + info);
-  }
-
-  addInfo(header: SubjectHeader) {
-    alert('adding info ' + header);
+  createHeader() {
+    this.router.navigate(['/subject-headers']);
   }
 }

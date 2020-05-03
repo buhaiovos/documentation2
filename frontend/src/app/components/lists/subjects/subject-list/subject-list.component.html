@@ -1,4 +1,9 @@
 <div id="subject-list-container">
+  <div>
+    <a class="button is-success column is-three-fifths is-offset-one-fifth"
+       (click)="createHeader()">Create New Subject</a>
+  </div>
+
   <div id="subject-list-item-container" *ngFor="let subject of subjects">
     <table class="table is-hoverable is-fullwidth header-container"
            (click)="subject.displayInfo = !subject.displayInfo">
@@ -25,9 +30,9 @@
         <td [class.is-selected]="subject.displayInfo">{{subject.header.workingPlanSectionId}}</td>
         <td [class.is-selected]="subject.displayInfo">{{subject.header.subjectTypeId}}</td>
         <td [class.is-selected]="subject.displayInfo">{{subject.header.departmentId}}</td>
-        <td><a class="button is-info" (click)="editHeader(subject.header)">Edit</a></td>
+        <td><a class="button is-info" (click)="editHeader(subject.header.id)">Edit</a></td>
         <td><a class="button is-danger" (click)="deleteHeader(subject.header)">Delete</a></td>
-        <td><a class="button is-primary" (click)="addInfo(subject.header)">Add Info</a></td>
+        <td><a class="button is-primary" (click)="addInfo(subject.header.id)">Add Info</a></td>
       </tr>
       </tbody>
     </table>
@@ -65,8 +70,8 @@
         <td>{{info.ects}}</td>
         <td>{{info.subjectHeaderId}}</td>
         <td>{{info.controlsIds}}</td>
-        <td><a class="button is-info is-small" (click)="editInfo(info)">Edit</a></td>
-        <td><a class="button is-danger is-small" (click)="deleteInfo(info)">Delete</a></td>
+        <td><a class="button is-info is-small" (click)="editInfo(info.id)">Edit</a></td>
+        <td><a class="button is-danger is-small" (click)="deleteInfo(info.id)">Delete</a></td>
       </tr>
       </tbody>
     </table>

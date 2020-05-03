@@ -19,6 +19,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {StatisticsComponent} from './components/statistics/statistics.component';
 import {ChartsModule} from 'ng2-charts';
 import {SubjectListComponent} from './components/lists/subjects/subject-list/subject-list.component';
+import {SubjectHeaderComponent} from './components/lists/subjects/subject-header/subject-header.component';
+import {SubjectInfoComponent} from './components/lists/subjects/subject-info/subject-info.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import {SubjectListComponent} from './components/lists/subjects/subject-list/sub
     OtherLoadTableComponent,
     LoadDistributorComponent,
     StatisticsComponent,
-    SubjectListComponent
+    SubjectListComponent,
+    SubjectHeaderComponent,
+    SubjectInfoComponent
   ],
   imports: [
     BrowserModule,

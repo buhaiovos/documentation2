@@ -1,0 +1,32 @@
+<div *ngIf="subjectHeader; else loading">
+  <div><p class="is-size-3">{{subjectHeader.denotation}}</p></div>
+  <br>
+  <label>id:<br>
+    <input [(ngModel)]="subjectHeader.id" readonly/>
+  </label>
+  <br>
+  <label>Назва:<br>
+    <input [(ngModel)]="subjectHeader.denotation" placeholder="Назва"/>
+  </label>
+  <br>
+  <label>Кафедра:<br>
+    <input [(ngModel)]="subjectHeader.departmentId" placeholder="Кафедра"/>
+  </label>
+  <br>
+  <label>Збірний предмет:<br>
+    <input [(ngModel)]="subjectHeader.superSubjectId" placeholder="Батьківський предмет"/>
+  </label>
+  <br>
+  <label>Секція робочого плану:<br>
+    <input [(ngModel)]="subjectHeader.workingPlanSectionId" placeholder="Секція робочого плану"/>
+  </label>
+  <br>
+  <label>Cекція навчального плану:<br>
+    <input [(ngModel)]="subjectHeader.curriculumSectionId" placeholder="Cекція навчального плану"/>
+  </label>
+  <br>
+  <a class="button is-success" (click)="save()">Зберегти</a>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>
