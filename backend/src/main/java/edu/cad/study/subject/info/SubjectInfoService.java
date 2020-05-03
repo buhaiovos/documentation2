@@ -20,6 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static edu.cad.entities.ControlDictionary.COURSE_WORK;
+import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -44,19 +45,22 @@ public class SubjectInfoService implements EntityService<SubjectInfo, Integer, S
     @Override
     public SubjectInfo create(SubjectInfoDto subjectInfo) {
         var newSubjectInfo = new SubjectInfo()
-                .setSemester(subjectInfo.getSemester())
-                .setSemestersDuration(subjectInfo.getSemestersDuration())
-                .setLectures(subjectInfo.getLectures())
-                .setActualLectures(subjectInfo.getActualLectures())
-                .setLabs(subjectInfo.getLabs())
-                .setActualLabs(subjectInfo.getActualLabs())
-                .setPractices(subjectInfo.getPractices())
-                .setActualPractices(subjectInfo.getActualPractices())
+                .setSemester(subjectInfo.semester())
+                .setSemestersDuration(subjectInfo.semestersDuration())
+                .setEcts(subjectInfo.ects())
+                .setLectures(subjectInfo.lectures())
+                .setActualLectures(subjectInfo.actualLectures())
+                .setLabs(subjectInfo.labs())
+                .setActualLabs(subjectInfo.actualLabs())
+                .setPractices(subjectInfo.practices())
+                .setActualPractices(subjectInfo.actualPractices())
                 .setSubjectHeader(
-                        subjectHeaderService.findById(subjectInfo.getSubjectHeaderId())
+                        subjectHeaderService.findById(subjectInfo.subjectHeaderId())
                                 .orElseThrow()
                 );
-        Set<Control> controls = Arrays.stream(subjectInfo.getControlsIds())
+
+        Set<Control> controls = ofNullable(subjectInfo.controlsIds())
+                .stream().flatMapToInt(Arrays::stream)
                 .mapToObj(controlService::findById)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -70,19 +74,19 @@ public class SubjectInfoService implements EntityService<SubjectInfo, Integer, S
     @Override
     public SubjectInfo update(Integer id, SubjectInfoDto subjectInfo) {
         SubjectInfo updated = repo.findById(id).orElseThrow();
-        updated.setSemester(subjectInfo.getSemester())
-                .setSemestersDuration(subjectInfo.getSemestersDuration())
-                .setLectures(subjectInfo.getLectures())
-                .setActualLectures(subjectInfo.getActualLectures())
-                .setLabs(subjectInfo.getLabs())
-                .setActualLabs(subjectInfo.getActualLabs())
-                .setPractices(subjectInfo.getPractices())
-                .setActualPractices(subjectInfo.getActualPractices())
+        updated.setSemester(subjectInfo.semester())
+                .setSemestersDuration(subjectInfo.semestersDuration())
+                .setLectures(subjectInfo.lectures())
+                .setActualLectures(subjectInfo.actualLectures())
+                .setLabs(subjectInfo.labs())
+                .setActualLabs(subjectInfo.actualLabs())
+                .setPractices(subjectInfo.practices())
+                .setActualPractices(subjectInfo.actualPractices())
                 .setSubjectHeader(
-                        subjectHeaderService.findById(subjectInfo.getSubjectHeaderId())
+                        subjectHeaderService.findById(subjectInfo.subjectHeaderId())
                                 .orElseThrow()
                 );
-        Set<Control> controls = Arrays.stream(subjectInfo.getControlsIds())
+        Set<Control> controls = Arrays.stream(subjectInfo.controlsIds())
                 .mapToObj(controlService::findById)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
