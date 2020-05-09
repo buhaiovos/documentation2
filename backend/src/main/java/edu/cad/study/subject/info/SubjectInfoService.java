@@ -82,6 +82,7 @@ public class SubjectInfoService implements EntityService<SubjectInfo, Integer, S
                 .setActualLabs(subjectInfo.actualLabs())
                 .setPractices(subjectInfo.practices())
                 .setActualPractices(subjectInfo.actualPractices())
+                .setEcts(subjectInfo.ects())
                 .setSubjectHeader(
                         subjectHeaderService.findById(subjectInfo.subjectHeaderId())
                                 .orElseThrow()
