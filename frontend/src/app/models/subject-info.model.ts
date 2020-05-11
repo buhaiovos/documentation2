@@ -1,3 +1,5 @@
+import { Control } from "./control.model";
+
 export class SubjectInfo {
   constructor(public subjectHeaderId: number,
               public id?: number,
@@ -10,6 +12,6 @@ export class SubjectInfo {
               public practices?: number,
               public actualPractices?: number,
               public ects?: number,
-              public controlsIds?: number[]) {
+              public controls?: Control[]) {
   }
 }

@@ -1,11 +1,11 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {SubjectListService} from './subject-list.service';
-import {HttpClient} from "@angular/common/http";
-import {SubjectHeader} from "../../../../models/subject-header.model";
-import {SubjectInfo} from "../../../../models/subject-info.model";
-import {Subject} from "../../../../models/subject-model";
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { SubjectListService } from './subject-list.service';
+import { HttpClient } from "@angular/common/http";
+import { SubjectHeader } from "../../models/subject-header.model";
+import { SubjectInfo } from "../../models/subject-info.model";
+import { Subject } from "../../models/subject-model";
 
 describe('SubjectListService', () => {
   const SUBJECT_HEADERS_URL = 'http://localhost:8080/v2/subject-headers';

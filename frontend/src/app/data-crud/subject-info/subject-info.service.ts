@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {SubjectInfo} from "../../../../models/subject-info.model";
-import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { SubjectInfo } from "../../models/subject-info.model";
+import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class SubjectInfoService {
@@ -20,5 +20,9 @@ export class SubjectInfoService {
     return info.id
       ? this.http.put<SubjectInfo>(this.infoByIdUrl(info.id), info)
       : this.http.post<SubjectInfo>(this.infosUrl, info);
+  }
+
+  deleteById(infoId: number): Observable<any> {
+    return this.http.delete<any>(this.infoByIdUrl(infoId));
   }
 }

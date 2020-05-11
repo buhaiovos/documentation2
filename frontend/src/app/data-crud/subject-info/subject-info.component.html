@@ -44,9 +44,15 @@
     <input [(ngModel)]="subjectInfo.ects" placeholder="ECTS"/>
   </label>
   <br>
-  <label>Контрольні заходи:<br>
-    <input [(ngModel)]="subjectInfo.controlsIds" placeholder="Контрольні заходи"/>
-  </label>
+  <label>Контрольні заходи:<br></label>
+  <table class="table is-bordered">
+    <tr *ngFor="let control of subjectInfo.controls">
+      <td>{{control.name}} - {{control.semester}} семестр</td>
+      <td><a class="button is-info" (click)="editControl(control)">&#9998;</a></td>
+      <td><a class="button is-danger" (click)="removeControl(control)">X</a></td>
+    </tr>
+  </table>
+  <a class="button is-success" (click)="addControl()">Додати контроль</a>
   <br>
   <br>
   <a class="button is-success" (click)="save()">Зберегти</a>

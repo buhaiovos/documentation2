@@ -1,16 +1,12 @@
 package edu.cad.study.control;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
-@Data
-@Accessors(chain = true)
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class ControlDto {
-    private int id;
-    private int semester;
-    private int typeId;
-    private int subjectId;
-}
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public record ControlDto(
+        Integer id,
+        Integer semester,
+        Integer typeId,
+        String name,
+        Integer subjectId
+) {}

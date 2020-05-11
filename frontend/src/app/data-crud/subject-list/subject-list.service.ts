@@ -1,17 +1,19 @@
-import {Injectable} from '@angular/core';
-import {Subject} from "../../../../models/subject-model";
-import {forkJoin, Observable} from "rxjs";
-import {SubjectInfo} from "../../../../models/subject-info.model";
-import {SubjectHeader} from "../../../../models/subject-header.model";
-import {HttpClient} from "@angular/common/http";
-import {map, take} from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { Subject } from "../../models/subject-model";
+import { forkJoin, Observable } from "rxjs";
+import { SubjectInfo } from "../../models/subject-info.model";
+import { SubjectHeader } from "../../models/subject-header.model";
+import { HttpClient } from "@angular/common/http";
+import { map, take } from "rxjs/operators";
+import { SubjectInfoService } from "../subject-info/subject-info.service";
 
 @Injectable()
 export class SubjectListService {
   private subjectHeadersUrl = 'http://localhost:8080/v2/subject-headers'
   private subjectInfosUrl = 'http://localhost:8080/v2/subject-infos'
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private infoService: SubjectInfoService) {
   }
 
   fetchSubjectList(): Observable<Subject[]> {
@@ -38,4 +40,8 @@ export class SubjectListService {
     return Object.values(headerAndInfosByHeaderId);
   }
 
+  deleteInfo(infoId: number): Observable<any> {
+    console.log("hey")
+    return this.infoService.deleteById(infoId).pipe(take(1));
+  }
 }

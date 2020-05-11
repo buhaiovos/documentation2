@@ -15,6 +15,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static java.util.function.Predicate.not;
+import static java.util.stream.Collectors.toSet;
+
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Getter
 @Setter
@@ -70,7 +73,7 @@ public class SubjectInfo extends YearTracked implements IDatabaseEntity<Integer>
     @JoinColumn(name = "id_subject")
     private SubjectHeader subjectHeader;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "subjectInfo")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "subjectInfo", orphanRemoval = true)
     private Set<Control> controls = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.subjectInfo", cascade = CascadeType.MERGE)
@@ -102,8 +105,14 @@ public class SubjectInfo extends YearTracked implements IDatabaseEntity<Integer>
     }
 
     public void setControls(Set<Control> controls) {
-        this.controls.clear();
-        this.controls.addAll(controls);
+        Set<Control> forRemoval = this.controls.stream()
+                .filter(control -> !controls.contains(control))
+                .collect(toSet());
+        forRemoval.forEach(c -> c.setSubjectInfo(null));
+        this.controls.removeAll(forRemoval);
+        controls.stream()
+                .filter(not(this.controls::contains))
+                .forEach(c -> this.controls.add(c));
     }
 
     public Set<CurriculumSubject> getCurriculumSubjects() {

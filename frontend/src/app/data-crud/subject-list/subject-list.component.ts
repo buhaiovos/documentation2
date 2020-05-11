@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {SubjectListService} from "./subject-list.service";
-import {Subject} from "../../../../models/subject-model";
-import {SubjectHeader} from "../../../../models/subject-header.model";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { SubjectListService } from "./subject-list.service";
+import { Subject } from "../../models/subject-model";
+import { SubjectHeader } from "../../models/subject-header.model";
+import { Router } from "@angular/router";
+import { Control } from "../../models/control.model";
 
 @Component({
   selector: 'app-subject-list',
@@ -33,7 +34,8 @@ export class SubjectListComponent implements OnInit {
   }
 
   deleteInfo(infoId: number) {
-    alert('deleting ' + infoId);
+    this.subjectListService.deleteInfo(infoId)
+      .subscribe(() => this.ngOnInit());
   }
 
   editHeader(headerId: number) {
@@ -46,5 +48,14 @@ export class SubjectListComponent implements OnInit {
 
   createHeader() {
     this.router.navigate(['/subject-headers']);
+  }
+
+  renderControls(controls: Control[]): string {
+    let listElements = '';
+    for (const control of controls) {
+      const name = `${control.name} - ${control.semester}\n`;
+      listElements += name;
+    }
+    return listElements;
   }
 }

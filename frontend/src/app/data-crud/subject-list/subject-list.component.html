@@ -69,7 +69,7 @@
         <td>{{info.actualPractices}}</td>
         <td>{{info.ects}}</td>
         <td>{{info.subjectHeaderId}}</td>
-        <td>{{info.controlsIds}}</td>
+        <td>{{renderControls(info.controls)}}</td>
         <td><a class="button is-info is-small" (click)="editInfo(info.id)">Edit</a></td>
         <td><a class="button is-danger is-small" (click)="deleteInfo(info.id)">Delete</a></td>
       </tr>

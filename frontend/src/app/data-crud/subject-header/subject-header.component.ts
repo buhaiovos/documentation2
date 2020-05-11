@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {flatMap, take} from "rxjs/operators";
-import {SubjectHeaderService} from "./subject-header.service";
-import {SubjectHeader} from "../../../../models/subject-header.model";
-import {Observable, of} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
+import { flatMap, take } from "rxjs/operators";
+import { SubjectHeaderService } from "./subject-header.service";
+import { SubjectHeader } from "../../models/subject-header.model";
+import { Observable, of } from "rxjs";
 
 @Component({
   selector: 'app-subject-header',

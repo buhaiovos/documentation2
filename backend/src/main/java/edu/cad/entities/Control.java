@@ -28,11 +28,11 @@ public class Control extends YearTracked implements IDatabaseEntity<Integer>, Se
     @Column(name = "semester")
     private int semester;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_type")
     private ControlDictionary type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_subject")
     private SubjectInfo subjectInfo;
 
@@ -43,10 +43,7 @@ public class Control extends YearTracked implements IDatabaseEntity<Integer>, Se
 
     @Override
     public String toString() {
-        if (type.getId() == 9)
-            return semester + "д";
-
-        return Integer.toString(semester);
+        return "" + type + " - " + semester;
     }
 
     @Override
