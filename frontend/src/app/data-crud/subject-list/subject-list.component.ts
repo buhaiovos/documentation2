@@ -53,7 +53,7 @@ export class SubjectListComponent implements OnInit {
   renderControls(controls: Control[]): string {
     let listElements = '';
     for (const control of controls) {
-      const name = `${control.name} - ${control.semester}\n`;
+      const name = `${control.name} - ${control.semester}; `;
       listElements += name;
     }
     return listElements;
