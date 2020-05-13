@@ -1,16 +1,16 @@
 package edu.cad.study.educationform;
 
 import edu.cad.entities.EducationForm;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.Option;
 import org.springframework.stereotype.Component;
 
 @Component
 class EducationFormMapper implements EntityMapper<EducationForm, EducationFormDto> {
 
     @Override
-    public Option toOption(EducationForm specialization) {
-        return new Option(specialization.getDenotation(), specialization.getId());
+    public DropdownOption toOption(EducationForm specialization) {
+        return new DropdownOption(specialization.getId(), specialization.getDenotation());
     }
 
     @Override

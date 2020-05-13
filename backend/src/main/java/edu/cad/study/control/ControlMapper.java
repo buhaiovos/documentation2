@@ -3,8 +3,8 @@ package edu.cad.study.control;
 import edu.cad.entities.Control;
 import edu.cad.entities.ControlDictionary;
 import edu.cad.entities.SubjectInfo;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.Option;
 import org.springframework.stereotype.Component;
 
 import static edu.cad.utils.Utils.nullOr;
@@ -24,7 +24,7 @@ public class ControlMapper implements EntityMapper<Control, ControlDto> {
     }
 
     @Override
-    public Option toOption(Control e) {
+    public DropdownOption toOption(Control e) {
         throw new UnsupportedOperationException("nothing to do here");
     }
 }

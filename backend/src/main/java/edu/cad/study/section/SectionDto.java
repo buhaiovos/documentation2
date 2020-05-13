@@ -1,18 +1,12 @@
 package edu.cad.study.section;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import edu.cad.study.DropdownOption;
 
-@Getter
-@Setter
-@Accessors(chain = true)
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class SectionDto {
-    int id;
-    String denotation;
-    boolean optional;
-    int cycleId;
-}
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public record SectionDto(
+        int id,
+        String denotation,
+        boolean optional,
+        DropdownOption cycle
+) {}

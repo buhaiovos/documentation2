@@ -1,6 +1,5 @@
 package edu.cad.study;
 
-import edu.cad.utils.Option;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,7 @@ public abstract class ActionProcessor<Response, Request, Id> {
 
     public abstract void delete(Id id);
 
-    public abstract List<Option> getOptions();
+    public abstract List<DropdownOption> getOptions();
 
     @PostMapping
     private ResponseEntity<Response> createdRecord(@RequestBody Request request) {
@@ -42,9 +41,9 @@ public abstract class ActionProcessor<Response, Request, Id> {
 
 
     @GetMapping("/enumerated")
-    private ResponseEntity<List<Option>> dropdownResponse() {
-        var defaultOption = Option.empty();
-        var dropdownOptions = new LinkedList<Option>();
+    private ResponseEntity<List<DropdownOption>> dropdownResponse() {
+        var defaultOption = DropdownOption.empty();
+        var dropdownOptions = new LinkedList<DropdownOption>();
         dropdownOptions.add(defaultOption);
         dropdownOptions.addAll(getOptions());
 

@@ -1,8 +1,8 @@
 package edu.cad.study.worktype;
 
 import edu.cad.entities.WorkType;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.Option;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +15,7 @@ public class WorkTypeMapper implements EntityMapper<WorkType, WorkTypeDto> {
     }
 
     @Override
-    public Option toOption(WorkType e) {
-        return null;
+    public DropdownOption toOption(WorkType e) {
+        throw new UnsupportedOperationException("Unsupported");
     }
 }

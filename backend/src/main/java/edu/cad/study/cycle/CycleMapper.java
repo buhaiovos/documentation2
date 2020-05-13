@@ -1,8 +1,8 @@
 package edu.cad.study.cycle;
 
 import edu.cad.entities.Cycle;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.Option;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +15,7 @@ public class CycleMapper implements EntityMapper<Cycle, CycleDto> {
     }
 
     @Override
-    public Option toOption(Cycle e) {
-        return new Option(e.getDenotation(), e.getId());
+    public DropdownOption toOption(Cycle e) {
+        return new DropdownOption(e.getId(), e.getDenotation());
     }
 }

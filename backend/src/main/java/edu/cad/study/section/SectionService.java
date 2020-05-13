@@ -1,6 +1,5 @@
 package edu.cad.study.section;
 
-import edu.cad.entities.Cycle;
 import edu.cad.entities.Section;
 import edu.cad.study.EntityService;
 import edu.cad.study.cycle.CycleService;
@@ -11,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static edu.cad.utils.Utils.nullOr;
 
 @Service
 @RequiredArgsConstructor
@@ -31,11 +32,10 @@ public class SectionService implements EntityService<Section, Integer, SectionDt
 
     @Override
     public Section create(SectionDto section) {
-        Cycle cycle = cycleService.findById(section.getCycleId()).orElseThrow();
         var newSection = new Section()
-                .setDenotation(section.getDenotation())
-                .setOptional(section.isOptional())
-                .setCycle(cycle);
+                .setDenotation(section.denotation())
+                .setOptional(section.optional())
+                .setCycle(nullOr(section.cycle().id(), id -> cycleService.findById(id).orElseThrow()));
 
         return repo.save(newSection);
     }
@@ -43,10 +43,10 @@ public class SectionService implements EntityService<Section, Integer, SectionDt
     @Override
     public Section update(Integer id, SectionDto section) {
         Section updated = repo.findById(id).orElseThrow();
-        Cycle cycle = cycleService.findById(section.getCycleId()).orElseThrow();
-        updated.setCycle(cycle)
-                .setDenotation(section.getDenotation())
-                .setOptional(section.isOptional());
+
+        updated.setDenotation(section.denotation())
+                .setOptional(section.optional())
+                .setCycle(nullOr(section.cycle().id(), _id -> cycleService.findById(_id).orElseThrow()));
 
         return updated;
     }

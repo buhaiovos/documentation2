@@ -31,7 +31,7 @@ public class SubjectHeader
     @Column(name = "denotation")
     private String denotation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_supersubject")
     private SubjectHeader superSubject;
 

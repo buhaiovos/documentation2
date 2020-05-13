@@ -43,7 +43,7 @@ export class ControlComponent implements OnInit {
         this.controlTypes = result.types;
         this.control = result.control;
       }
-    )
+    );
   }
 
   private getControl(params: ParamMap): Observable<Control> {

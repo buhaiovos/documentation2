@@ -2,7 +2,7 @@
   <div><p class="is-size-3">{{subjectHeader.denotation}}</p></div>
   <br>
   <label>id:<br>
-    <input [(ngModel)]="subjectHeader.id" readonly/>
+    <input [(ngModel)]="subjectHeader.id" disabled/>
   </label>
   <br>
   <label>Назва:<br>
@@ -10,19 +10,27 @@
   </label>
   <br>
   <label>Кафедра:<br>
-    <input [(ngModel)]="subjectHeader.departmentId" placeholder="Кафедра"/>
+    <select [(ngModel)]="subjectHeader.department.id">
+      <option *ngFor="let option of departments" [value]="option.id">{{option.text}}</option>
+    </select>
   </label>
   <br>
   <label>Збірний предмет:<br>
-    <input [(ngModel)]="subjectHeader.superSubjectId" placeholder="Батьківський предмет"/>
+    <select [(ngModel)]="subjectHeader.superSubject.id">
+      <option *ngFor="let option of headers" [value]="option.id">{{option.text}}</option>
+    </select>
   </label>
   <br>
   <label>Секція робочого плану:<br>
-    <input [(ngModel)]="subjectHeader.workingPlanSectionId" placeholder="Секція робочого плану"/>
+    <select [(ngModel)]="subjectHeader.workingPlanSection.id">
+      <option *ngFor="let option of sections" [value]="option.id">{{option.text}}</option>
+    </select>
   </label>
   <br>
   <label>Cекція навчального плану:<br>
-    <input [(ngModel)]="subjectHeader.curriculumSectionId" placeholder="Cекція навчального плану"/>
+    <select [(ngModel)]="subjectHeader.curriculumSection.id">
+      <option *ngFor="let option of sections" [value]="option.id">{{option.text}}</option>
+    </select>
   </label>
   <br>
   <a class="button is-success" (click)="save()">Зберегти</a>

@@ -6,6 +6,8 @@ import { HttpClient } from "@angular/common/http";
 import { SubjectHeader } from "../../models/subject-header.model";
 import { SubjectInfo } from "../../models/subject-info.model";
 import { Subject } from "../../models/subject-model";
+import { DropdownOption } from "../../models/dropdown-option.model";
+import { DataCrudModule } from "../data-crud.module";
 
 describe('SubjectListService', () => {
   const SUBJECT_HEADERS_URL = 'http://localhost:8080/v2/subject-headers';
@@ -17,7 +19,7 @@ describe('SubjectListService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, DataCrudModule],
       providers: [SubjectListService, HttpClient]
     });
     service = TestBed.inject(SubjectListService);
@@ -50,45 +52,43 @@ describe('SubjectListService', () => {
       const matan = new SubjectHeader(
         matanId,
         'Matan',
-        3,
-        1,
-        1,
-        1,
-        1
+        {id: 1, text: '42'} as DropdownOption,
+        {id: 1, text: '42'} as DropdownOption,
+        {id: 1, text: '42'} as DropdownOption,
+        {id: 1, text: '42'} as DropdownOption
       );
       const teorver = new SubjectHeader(
         teorverId,
         'Teorver',
         null,
-        1,
-        1,
-        1,
-        2
+        {id: 1, text: '42'} as DropdownOption,
+        {id: 1, text: '42'} as DropdownOption,
+        {id: 1, text: '42'} as DropdownOption
       );
       const headers = [matan, teorver];
 
       const matan1 = new SubjectInfo(
-        1, 1, 1, 0,
+        matanId, 1, 1, 1, 0,
         0, 0, 0, 0,
-        0, 0, matanId, []
+        0, 0, []
       );
       const teorver1 = new SubjectInfo(
-        3, 1, 1, 0,
+        teorverId, 3, 1, 0,
         0, 0, 0, 0,
-        0, 0, teorverId, []
+        0, 0, 0, []
       )
       const matan2 = new SubjectInfo(
-        2, 1, 1, 0,
+        matanId, 2, 1, 0,
         0, 0, 0, 0,
-        0, 0, matanId, []
+        0, 0, 0, []
       );
       const teorver2 = new SubjectInfo(
-        4, 1, 1, 0,
+        teorverId, 4, 1, 0,
         0, 0, 0, 0,
-        0, 0, teorverId, []
+        0, 0, 0, []
       );
       const noHeader = new SubjectInfo(
-        5, 1, 1, 0,
+        null, 1, 1, 0,
         0, 0, 0, 0,
         0, 0, 42, []
       );
@@ -97,8 +97,8 @@ describe('SubjectListService', () => {
       service.fetchSubjectList()
         .subscribe(subjects => {
           expect(subjects).toEqual([
-            new Subject(matan, [matan1, matan2]),
-            new Subject(teorver, [teorver1, teorver2])
+            new Subject(matan, [matan1, matan2], false),
+            new Subject(teorver, [teorver1, teorver2], false)
           ]);
           done();
         });

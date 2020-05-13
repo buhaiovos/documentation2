@@ -1,10 +1,10 @@
 package edu.cad.study.subject.info;
 
 import edu.cad.entities.SubjectInfo;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
 import edu.cad.study.control.ControlDto;
 import edu.cad.study.control.ControlMapper;
-import edu.cad.utils.Option;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +40,7 @@ public class SubjectInfoMapper implements EntityMapper<SubjectInfo, SubjectInfoD
 
     @Override
     @Deprecated
-    public Option toOption(SubjectInfo e) {
-        return null;
+    public DropdownOption toOption(SubjectInfo e) {
+        throw new UnsupportedOperationException("Unsupported");
     }
 }

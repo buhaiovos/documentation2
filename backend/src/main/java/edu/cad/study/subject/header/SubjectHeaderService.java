@@ -1,6 +1,8 @@
 package edu.cad.study.subject.header;
 
+import edu.cad.entities.Department;
 import edu.cad.entities.SubjectHeader;
+import edu.cad.entities.SubjectType;
 import edu.cad.study.EntityService;
 import edu.cad.study.department.DepartmentService;
 import edu.cad.study.section.SectionService;
@@ -42,37 +44,29 @@ public class SubjectHeaderService implements EntityService<SubjectHeader, Intege
 
     @Override
     public SubjectHeader update(Integer id, SubjectHeaderDto dto) {
-        var updated = repo.findById(id).orElseThrow();
+        SubjectHeader updated = repo.findById(id).orElseThrow();
         setFieldsFromDto(dto, updated);
 
         return updated;
     }
 
     private void setFieldsFromDto(SubjectHeaderDto dto, SubjectHeader entity) {
-        entity.setDenotation(dto.getDenotation());
+        entity.setDenotation(dto.denotation());
 
-        var subjectType = subjectTypeService.findById(dto.getSubjectTypeId())
-                .orElseThrow();
+        SubjectType subjectType = subjectTypeService.findById(dto.subjectTypeId()).orElseThrow();
         entity.setType(subjectType);
 
-        var department = departmentService.findById(dto.getDepartmentId())
-                .orElseThrow();
+        Department department = departmentService.findById(dto.department().id()).orElseThrow();
         entity.setDepartment(department);
 
-        ofNullable(dto.getSuperSubjectId()).ifPresent(
-                id -> entity.setSuperSubject(
-                        repo.findById(id).orElseThrow()
-                )
+        ofNullable(dto.superSubject()).ifPresent(
+                superSubject -> entity.setSuperSubject(repo.findById(superSubject.id()).orElseThrow())
         );
-        ofNullable(dto.getCurriculumSectionId()).ifPresent(
-                id -> entity.setCurriculumSection(
-                        sectionService.findById(id).orElseThrow()
-                )
+        ofNullable(dto.curriculumSection()).ifPresent(
+                section -> entity.setCurriculumSection(sectionService.findById(section.id()).orElseThrow())
         );
-        ofNullable(dto.getWorkingPlanSectionId()).ifPresent(
-                id -> entity.setWorkingPlanSection(
-                        sectionService.findById(id).orElseThrow()
-                )
+        ofNullable(dto.workingPlanSection()).ifPresent(
+                section -> entity.setWorkingPlanSection(sectionService.findById(section.id()).orElseThrow())
         );
     }
 

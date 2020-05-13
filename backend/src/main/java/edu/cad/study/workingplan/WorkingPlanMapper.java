@@ -1,8 +1,8 @@
 package edu.cad.study.workingplan;
 
 import edu.cad.entities.WorkingPlan;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.Option;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,10 +12,7 @@ class WorkingPlanMapper implements EntityMapper<WorkingPlan, WorkingPlanDto> {
                 .setId(0);
     }
 
-    public Option toOption(WorkingPlan wp) {
-        return new Option(
-                wp.getDenotation(),
-                wp.getId()
-        );
+    public DropdownOption toOption(WorkingPlan wp) {
+        return new DropdownOption(wp.getId(), wp.getDenotation());
     }
 }

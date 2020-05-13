@@ -1,18 +1,15 @@
 package edu.cad.study.subject.header;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import edu.cad.study.DropdownOption;
 
-@Getter
-@Setter
-@Accessors(chain = true)
-public class SubjectHeaderDto {
-    private int id;
-    private String denotation;
-    private Integer superSubjectId;
-    private Integer curriculumSectionId;
-    private Integer workingPlanSectionId;
-    private Integer subjectTypeId;
-    private Integer departmentId;
-}
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public record SubjectHeaderDto(
+        int id,
+        String denotation,
+        DropdownOption superSubject,
+        DropdownOption curriculumSection,
+        DropdownOption workingPlanSection,
+        Integer subjectTypeId,
+        DropdownOption department
+) {}

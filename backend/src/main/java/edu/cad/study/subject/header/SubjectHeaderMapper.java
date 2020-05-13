@@ -1,10 +1,9 @@
 package edu.cad.study.subject.header;
 
-import edu.cad.entities.Department;
-import edu.cad.entities.Section;
 import edu.cad.entities.SubjectHeader;
+import edu.cad.entities.SubjectType;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.Option;
 import org.springframework.stereotype.Component;
 
 import static edu.cad.utils.Utils.nullOr;
@@ -13,18 +12,19 @@ import static edu.cad.utils.Utils.nullOr;
 public class SubjectHeaderMapper implements EntityMapper<SubjectHeader, SubjectHeaderDto> {
     @Override
     public SubjectHeaderDto toResponse(SubjectHeader e) {
-        return new SubjectHeaderDto()
-                .setId(e.getId())
-                .setDenotation(e.getDenotation())
-                .setDepartmentId(nullOr(e.getDepartment(), Department::getId))
-                .setSubjectTypeId(e.getType().getId())
-                .setSuperSubjectId(nullOr(e.getSuperSubject(), SubjectHeader::getId))
-                .setCurriculumSectionId(nullOr(e.getCurriculumSection(), Section::getId))
-                .setWorkingPlanSectionId(nullOr(e.getWorkingPlanSection(), Section::getId));
+        return new SubjectHeaderDto(
+                e.getId(),
+                e.getDenotation(),
+                nullOr(e.getSuperSubject(), ss -> new DropdownOption(ss.getId(), ss.getDenotation())),
+                nullOr(e.getCurriculumSection(), cs -> new DropdownOption(cs.getId(), cs.getDenotation())),
+                nullOr(e.getWorkingPlanSection(), ws -> new DropdownOption(ws.getId(), ws.getDenotation())),
+                nullOr(e.getType(), SubjectType::getId),
+                nullOr(e.getDepartment(), d -> new DropdownOption(d.getId(), d.getDenotation()))
+        );
     }
 
     @Override
-    public Option toOption(SubjectHeader e) {
-        return null;
+    public DropdownOption toOption(SubjectHeader e) {
+        return new DropdownOption(e.getId(), e.getDenotation());
     }
 }

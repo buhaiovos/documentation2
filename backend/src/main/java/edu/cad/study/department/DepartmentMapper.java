@@ -1,8 +1,8 @@
 package edu.cad.study.department;
 
 import edu.cad.entities.Department;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.Option;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +15,7 @@ public class DepartmentMapper implements EntityMapper<Department, DepartmentDto>
     }
 
     @Override
-    public Option toOption(Department e) {
-        return new Option(e.getDenotation(), e.getId());
+    public DropdownOption toOption(Department e) {
+        return new DropdownOption(e.getId(), e.getDenotation());
     }
 }

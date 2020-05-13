@@ -1,8 +1,8 @@
 package edu.cad.study.academicgroup;
 
 import edu.cad.entities.AcademicGroup;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.Option;
 import org.springframework.stereotype.Component;
 
 import static java.util.Objects.requireNonNull;
@@ -23,8 +23,8 @@ class AcademicGroupMapper implements EntityMapper<AcademicGroup, AcademicGroupDt
                 .setWorkplan(getWorkingPlan(group));
     }
 
-    public Option toOption(AcademicGroup academicGroup) {
-        return new Option(academicGroup.getCipher(), academicGroup.getId());
+    public DropdownOption toOption(AcademicGroup academicGroup) {
+        return new DropdownOption(academicGroup.getId(), academicGroup.getCipher());
     }
 
     private int getWorkingPlan(AcademicGroup group) {

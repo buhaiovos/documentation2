@@ -2,8 +2,8 @@ package edu.cad.study.curriculum;
 
 import edu.cad.entities.Curriculum;
 import edu.cad.entities.CurriculumSubject;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.Option;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
@@ -29,7 +29,7 @@ class CurriculumMapper implements EntityMapper<Curriculum, CurriculumDto> {
     }
 
     @Override
-    public Option toOption(Curriculum e) {
+    public DropdownOption toOption(Curriculum e) {
         throw new UnsupportedOperationException("nothing to do here");
     }
 }

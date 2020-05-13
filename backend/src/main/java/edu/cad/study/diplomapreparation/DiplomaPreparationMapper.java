@@ -1,8 +1,8 @@
 package edu.cad.study.diplomapreparation;
 
 import edu.cad.entities.DiplomaPreparation;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
-import edu.cad.utils.Option;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +18,7 @@ public class DiplomaPreparationMapper implements EntityMapper<DiplomaPreparation
     }
 
     @Override
-    public Option toOption(DiplomaPreparation e) {
-        return null;
+    public DropdownOption toOption(DiplomaPreparation e) {
+        throw new UnsupportedOperationException("Unsupported");
     }
 }
