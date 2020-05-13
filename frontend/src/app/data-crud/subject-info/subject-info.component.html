@@ -1,0 +1,62 @@
+<div *ngIf="subjectInfo; else loading">
+  <br>
+  <label>Назва:<br>
+    <input [(ngModel)]="subjectInfo.subjectHeaderId" disabled/>
+  </label>
+  <br>
+  <label>id:<br>
+    <input [(ngModel)]="subjectInfo.id" disabled/>
+  </label>
+  <br>
+  <label>Семестр:<br>
+    <input [(ngModel)]="subjectInfo.semester" placeholder="Семестр"/>
+  </label>
+  <br>
+  <label>К-ть. Семестрів:<br>
+    <input [(ngModel)]="subjectInfo.semestersDuration" placeholder="К-ть. Семестрів"/>
+  </label>
+  <br>
+  <label>Лаби:<br>
+    <input [(ngModel)]="subjectInfo.labs" placeholder="Лаби"/>
+  </label>
+  <br>
+  <label>Факт. Лаби:<br>
+    <input [(ngModel)]="subjectInfo.actualLabs" placeholder="Факт. Лаби"/>
+  </label>
+  <br>
+  <label>Лекцї:<br>
+    <input [(ngModel)]="subjectInfo.lectures" placeholder="Лекції"/>
+  </label>
+  <br>
+  <label>Факт.Лекцї:<br>
+    <input [(ngModel)]="subjectInfo.actualLectures" placeholder="Факт. Лекції"/>
+  </label>
+  <br>
+  <label>Практики:<br>
+    <input [(ngModel)]="subjectInfo.practices" placeholder="Практики"/>
+  </label>
+  <br>
+  <label>Факт.Практики:<br>
+    <input [(ngModel)]="subjectInfo.actualPractices" placeholder="Факт. Практики"/>
+  </label>
+  <br>
+  <label>ECTS:<br>
+    <input [(ngModel)]="subjectInfo.ects" placeholder="ECTS"/>
+  </label>
+  <br>
+  <label>Контрольні заходи:<br></label>
+  <table class="table is-bordered">
+    <tr *ngFor="let control of subjectInfo.controls">
+      <td>{{control.name}} - {{control.semester}} семестр</td>
+      <td><a class="button is-info" (click)="editControl(control)">&#9998;</a></td>
+      <td><a class="button is-danger" (click)="removeControl(control)">X</a></td>
+    </tr>
+  </table>
+  <a class="button is-success" (click)="addControl()">Додати контроль</a>
+  <br>
+  <br>
+  <a class="button is-success" (click)="save()">Зберегти</a>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>

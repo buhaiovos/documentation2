@@ -1,0 +1,77 @@
+<div id="subject-list-container">
+  <div>
+    <a class="button is-success column is-three-fifths is-offset-one-fifth"
+       (click)="createHeader()">Create New Subject</a>
+  </div>
+
+  <div id="subject-list-item-container" *ngFor="let subject of subjects">
+    <table class="table is-hoverable is-fullwidth header-container"
+           (click)="subject.displayInfo = !subject.displayInfo">
+      <thead>
+      <tr>
+        <th>id</th>
+        <th>Назва</th>
+        <th>Батьківський Предмет</th>
+        <th>Секція Навчального Плану</th>
+        <th>Секція Робочого Плану</th>
+        <th>Кафедра</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.id}}</td>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.denotation}}</td>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.superSubject?.text}}</td>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.curriculumSection?.text}}</td>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.workingPlanSection?.text}}</td>
+        <td [class.is-selected]="subject.displayInfo">{{subject.header.department?.text}}</td>
+        <td><a class="button is-info" (click)="editHeader(subject.header.id)">Edit</a></td>
+        <td><a class="button is-danger" (click)="deleteHeader(subject.header)">Delete</a></td>
+        <td><a class="button is-primary" (click)="addInfo(subject.header.id)">Add Info</a></td>
+      </tr>
+      </tbody>
+    </table>
+    <table *ngIf="subject.displayInfo"
+           class="table is-hoverable is-bordered is-fullwidth infos-container">
+      <thead>
+      <tr>
+        <th>id</th>
+        <th>Семестр</th>
+        <th>К-сть семестрів</th>
+        <th>Лекції</th>
+        <th>Фкт. Лекції</th>
+        <th>Лаби</th>
+        <th>Фкт. Лаби</th>
+        <th>Практики</th>
+        <th>Фкт. Практики</th>
+        <th>ECTS</th>
+        <th>Предмет</th>
+        <th>Контроль</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let info of subject.infos">
+        <td>{{info.id}}</td>
+        <td>{{info.semester}}</td>
+        <td>{{info.semestersDuration}}</td>
+        <td>{{info.lectures}}</td>
+        <td>{{info.actualLectures}}</td>
+        <td>{{info.labs}}</td>
+        <td>{{info.actualLabs}}</td>
+        <td>{{info.practices}}</td>
+        <td>{{info.actualPractices}}</td>
+        <td>{{info.ects}}</td>
+        <td>{{info.subjectHeaderId}}</td>
+        <td>{{renderControls(info.controls)}}</td>
+        <td><a class="button is-info is-small" (click)="editInfo(info.id)">Edit</a></td>
+        <td><a class="button is-danger is-small" (click)="deleteInfo(info.id)">Delete</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

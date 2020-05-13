@@ -1,0 +1,80 @@
+<div id="container">
+  <div id="radiobuttons">
+    <mat-radio-group
+      [(ngModel)]="semester"
+      (change)="semesterClick($event)">
+      <mat-radio-button color="primary" value="1">Перший семестр</mat-radio-button>
+      <mat-radio-button color="primary" value="2">Другий семестр</mat-radio-button>
+    </mat-radio-group>
+    <br/>
+
+    <mat-radio-group
+      [(ngModel)]="finance"
+      (change)="financeClick($event)">
+      <mat-radio-button color="primary" value="Budgetary">Бюджет</mat-radio-button>
+      <mat-radio-button color="primary" value="Contract">Контракт</mat-radio-button>
+    </mat-radio-group>
+    <br/>
+
+    <mat-radio-group
+      [(ngModel)]="educationForm"
+      (change)="financeClick($event)">
+      <mat-radio-button color="primary" value="INTRAMURAL">Денна</mat-radio-button>
+      <mat-radio-button color="primary" value="EXTRAMURAL">Заочна</mat-radio-button>
+      <mat-radio-button color="primary" value="EVENING">Вечірня</mat-radio-button>
+    </mat-radio-group>
+    <br/>
+  </div>
+
+  <div id="list">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Фільтрувати">
+    </mat-form-field>
+
+    <table mat-table [dataSource]='dataSource' class='mat-elevation-z8' width="80%">
+      <ng-container matColumnDef='id'>
+        <th mat-header-cell *matHeaderCellDef> Id</th>
+        <td mat-cell *matCellDef='let element'>
+          {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef='typeOfActivity'>
+        <th mat-header-cell *matHeaderCellDef> Вид діяльності</th>
+        <td mat-cell
+            *matCellDef='let element'
+            (click)="subjectTitleClicked(element)">
+          {{element.name}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='object'>
+        <th mat-header-cell *matHeaderCellDef> Об'єкт</th>
+        <td mat-cell
+            *matCellDef='let element'>
+          {{getObjectOfActivity(element)}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='hours'>
+        <th mat-header-cell *matHeaderCellDef> Години</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked(getObjectOfActivity(element), element)"
+            [class.selected]="isSelected(getObjectOfActivity(element), element)">
+          {{getHours(element)}}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef='displayedColumns; sticky: true'></tr>
+      <tr [class.error]="hasError(row)"
+          [class.done]="isDone(row)"
+          mat-row *matRowDef='let row; columns: displayedColumns;'></tr>
+    </table>
+  </div>
+  <div *ngIf="showDistributor()" id="distributor">
+    <app-load-distributor [objectsOfDistribution]="selectedElements"
+                          [mode]="distributionMode"
+                          (submitted)='reload()'>
+    </app-load-distributor>
+  </div>
+</div>

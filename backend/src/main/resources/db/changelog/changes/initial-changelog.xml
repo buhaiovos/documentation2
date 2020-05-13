@@ -1,0 +1,696 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="buhaiovos (generated)" id="1576430454942-1">
+        <createTable tableName="academic_group">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="cipher" type="VARCHAR(45)"/>
+            <column name="budgetary_students" type="INT"/>
+            <column name="contract_students" type="INT"/>
+            <column name="id_specialization" type="INT"/>
+            <column name="id_qualification" type="INT"/>
+            <column name="id_education_form" type="INT"/>
+            <column name="start_year" type="INT"/>
+            <column name="id_workplan" type="INT"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-2">
+        <createTable tableName="academic_subject">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="lectures" type="DOUBLE"/>
+            <column name="labs" type="DOUBLE"/>
+            <column name="practices" type="DOUBLE"/>
+            <column name="ects" type="DOUBLE"/>
+            <column name="semester" type="INT"/>
+            <column name="semesters_duration" type="INT"/>
+            <column name="id_subject" type="INT"/>
+            <column name="actual_lectures" type="DOUBLE"/>
+            <column name="actual_practices" type="DOUBLE"/>
+            <column name="actual_labs" type="DOUBLE"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-3">
+        <createTable tableName="control">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="id_subject" type="INT"/>
+            <column name="id_type" type="INT"/>
+            <column name="semester" type="INT"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-4">
+        <createTable tableName="curriculum">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="id_practice" type="INT"/>
+            <column name="id_state_certification" type="INT"/>
+            <column name="type" type="VARCHAR(45)"/>
+            <column name="id_curriculum" type="INT"/>
+            <column name="denotation" type="VARCHAR(250)"/>
+            <column name="id_scientific_research_subject" type="INT"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-5">
+        <createTable tableName="curriculum_subject">
+            <column name="id_curriculum" type="INT"/>
+            <column name="id_subject" type="INT"/>
+            <column name="cipher" type="VARCHAR(10)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-6">
+        <createTable tableName="cycle">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="denotation" type="VARCHAR(45)"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-7">
+        <createTable tableName="department">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="denotation" type="VARCHAR(100)"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-8">
+        <createTable tableName="dict_control">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="denotation" type="VARCHAR(45)"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-9">
+        <createTable tableName="dict_subjects">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="denotation" type="VARCHAR(250)"/>
+            <column name="id_supersubject" type="INT"/>
+            <column name="id_section_curriculum" type="INT"/>
+            <column name="id_section_workplan" type="INT"/>
+            <column name="id_type" type="INT"/>
+            <column name="id_department" type="INT"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-10">
+        <createTable tableName="diploma_preparation">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="id_type_of_work" type="INT"/>
+            <column name="norm" type="FLOAT(12)"/>
+            <column name="id_department" type="INT"/>
+            <column name="id_curriculum" type="INT"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-11">
+        <createTable tableName="form_of_education">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="denotation" type="VARCHAR(45)"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-12">
+        <createTable tableName="other_load">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="load_type" type="VARCHAR(128)"/>
+            <column name="object" type="VARCHAR(128)"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-13">
+        <createTable tableName="other_load_info">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="year" type="INT"/>
+            <column name="hours" type="DOUBLE"/>
+            <column name="faculty" type="VARCHAR(256)"/>
+            <column name="semester" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="load_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="source_of_financing" type="VARCHAR(255)"/>
+            <column name="id_education_form" type="INT"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-14">
+        <createTable tableName="other_load_info_distributed">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="other_load_info_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="staff_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours" type="DOUBLE"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-15">
+        <createTable tableName="other_load_info_to_groups">
+            <column name="info_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-16">
+        <createTable tableName="practice">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="type" type="VARCHAR(50)"/>
+            <column name="semester" type="INT"/>
+            <column name="weeks" type="INT"/>
+            <column name="start" type="date"/>
+            <column name="finish" type="date"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-17">
+        <createTable tableName="qualification">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="denotation" type="VARCHAR(45)"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-18">
+        <createTable tableName="section">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="denotation" type="VARCHAR(250)"/>
+            <column name="id_cycle" type="INT"/>
+            <column name="is_optional" type="BIT(1)"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-19">
+        <createTable tableName="specialization">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="denotation" type="VARCHAR(250)"/>
+            <column name="id_department" type="INT"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-20">
+        <createTable tableName="specialization_academic_group">
+            <column name="specialization_id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="academicGroups_id" type="INT">
+                <constraints primaryKey="true" unique="true"/>
+            </column>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-21">
+        <createTable tableName="staff">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(128)"/>
+            <column name="last_name" type="VARCHAR(128)"/>
+            <column name="middle_name" type="VARCHAR(128)"/>
+            <column name="type" type="VARCHAR(128)"/>
+            <column name="id_education_form" type="INT"/>
+            <column name="source_of_financing" type="VARCHAR(255)"/>
+            <column defaultValueNumeric="1.0" name="rate" type="DOUBLE"/>
+            <column name="degree" type="VARCHAR(25)"/>
+            <column name="position" type="VARCHAR(25)"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-22">
+        <createTable tableName="state_certification">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="form" type="VARCHAR(45)"/>
+            <column name="semester" type="INT"/>
+            <column name="start" type="date"/>
+            <column name="finish" type="date"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-23">
+        <createTable tableName="subject_study_load">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="id_education_form" type="INT"/>
+            <column name="financing" type="VARCHAR(25)"/>
+            <column name="id_academic_subject" type="INT"/>
+            <column name="lectures" type="DOUBLE"/>
+            <column name="practices" type="DOUBLE"/>
+            <column name="labs" type="DOUBLE"/>
+            <column name="individuals" type="DOUBLE"/>
+            <column name="exams" type="DOUBLE"/>
+            <column name="credits" type="DOUBLE"/>
+            <column name="contr_works" type="DOUBLE"/>
+            <column name="course_projs" type="DOUBLE"/>
+            <column name="course_works" type="DOUBLE"/>
+            <column name="rgr" type="DOUBLE"/>
+            <column name="dkr" type="DOUBLE"/>
+            <column name="referats" type="DOUBLE"/>
+            <column name="consult" type="DOUBLE"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-24">
+        <createTable tableName="subject_study_load_distributed">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="value" type="DOUBLE"/>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="staff_id" type="INT"/>
+            <column name="subject_load_id" type="INT"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-25">
+        <createTable tableName="subject_type">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="denotation" type="VARCHAR(45)"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-26">
+        <createTable tableName="type_of_work">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="denotation" type="VARCHAR(45)"/>
+            <column name="year_of_information" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-27">
+        <createIndex indexName="FK79a03ox083dmtvegkcf8kqnwy" tableName="subject_study_load_distributed">
+            <column name="staff_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-28">
+        <createIndex indexName="FKar2khtucrueuf9hekghjvj31w" tableName="other_load_info">
+            <column name="id_education_form"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-29">
+        <createIndex indexName="FKfud5x912alr9aim3skq1cs2ku" tableName="subject_study_load_distributed">
+            <column name="subject_load_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-30">
+        <createIndex indexName="FKh57uwqc1r740ycy1nxq3eylfk" tableName="other_load_info">
+            <column name="load_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-31">
+        <createIndex indexName="fk_academic_subject_dict_subjects1_idx" tableName="academic_subject">
+            <column name="id_subject"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-32">
+        <createIndex indexName="fk_actor_education_from" tableName="staff">
+            <column name="id_education_form"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-33">
+        <createIndex indexName="fk_control_subject" tableName="control">
+            <column name="id_subject"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-34">
+        <createIndex indexName="fk_control_type" tableName="control">
+            <column name="id_type"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-35">
+        <createIndex indexName="fk_curriculum" tableName="curriculum_subject">
+            <column name="id_curriculum"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-36">
+        <createIndex indexName="fk_curriculum_scientific_research_subject" tableName="curriculum">
+            <column name="id_scientific_research_subject"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-37">
+        <createIndex indexName="fk_curriculum_subject" tableName="curriculum_subject">
+            <column name="id_subject"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-38">
+        <createIndex indexName="fk_curriculum_workplan" tableName="curriculum">
+            <column name="id_curriculum"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-39">
+        <createIndex indexName="fk_cycle" tableName="section">
+            <column name="id_cycle"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-40">
+        <createIndex indexName="fk_diploma_curriculum" tableName="diploma_preparation">
+            <column name="id_curriculum"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-41">
+        <createIndex indexName="fk_diploma_department" tableName="diploma_preparation">
+            <column name="id_department"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-42">
+        <createIndex indexName="fk_diploma_type_of_work" tableName="diploma_preparation">
+            <column name="id_type_of_work"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-43">
+        <createIndex indexName="fk_group_education_form" tableName="academic_group">
+            <column name="id_education_form"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-44">
+        <createIndex indexName="fk_group_qualification" tableName="academic_group">
+            <column name="id_qualification"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-45">
+        <createIndex indexName="fk_group_specialization" tableName="academic_group">
+            <column name="id_specialization"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-46">
+        <createIndex indexName="fk_practice" tableName="curriculum">
+            <column name="id_practice"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-47">
+        <createIndex indexName="fk_section_curriculum" tableName="dict_subjects">
+            <column name="id_section_curriculum"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-48">
+        <createIndex indexName="fk_section_workplan" tableName="dict_subjects">
+            <column name="id_section_workplan"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-49">
+        <createIndex indexName="fk_specialization_department" tableName="specialization">
+            <column name="id_department"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-50">
+        <createIndex indexName="fk_state_certification" tableName="curriculum">
+            <column name="id_state_certification"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-51">
+        <createIndex indexName="fk_study_load_academ_subject" tableName="subject_study_load">
+            <column name="id_academic_subject"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-52">
+        <createIndex indexName="fk_study_load_education_form" tableName="subject_study_load">
+            <column name="id_education_form"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-53">
+        <createIndex indexName="fk_subject_department" tableName="dict_subjects">
+            <column name="id_department"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-54">
+        <createIndex indexName="fk_subject_type" tableName="dict_subjects">
+            <column name="id_type"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-55">
+        <createIndex indexName="fk_supersubject" tableName="dict_subjects">
+            <column name="id_supersubject"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-56">
+        <createIndex indexName="fk_workplan_group" tableName="academic_group">
+            <column name="id_workplan"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-57">
+        <createIndex indexName="group_id" tableName="other_load_info_to_groups">
+            <column name="group_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-58">
+        <createIndex indexName="info_id" tableName="other_load_info_to_groups">
+            <column name="info_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-59">
+        <createIndex indexName="other_load_info_id" tableName="other_load_info_distributed">
+            <column name="other_load_info_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-60">
+        <createIndex indexName="staff_id" tableName="other_load_info_distributed">
+            <column name="staff_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-61">
+        <addForeignKeyConstraint baseColumnNames="id_type" baseTableName="dict_subjects"
+                                 constraintName="FK2eiof1l452oui10clhpjdn1mx" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="subject_type" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-62">
+        <addForeignKeyConstraint baseColumnNames="id_education_form" baseTableName="subject_study_load"
+                                 constraintName="FK4vh76av0mxl6vm65ldc3c9931" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="form_of_education" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-63">
+        <addForeignKeyConstraint baseColumnNames="id_section_curriculum" baseTableName="dict_subjects"
+                                 constraintName="FK60jga4li5pnugbtjfsxjip4fo" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="section" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-64">
+        <addForeignKeyConstraint baseColumnNames="id_curriculum" baseTableName="diploma_preparation"
+                                 constraintName="FK73kdpbl1d59k690aq0dwjuvxd" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="curriculum" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-65">
+        <addForeignKeyConstraint baseColumnNames="id_state_certification" baseTableName="curriculum"
+                                 constraintName="FK8jl8dlg2vdd05x17nwkmc8sif" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="state_certification" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-66">
+        <addForeignKeyConstraint baseColumnNames="academicGroups_id" baseTableName="specialization_academic_group"
+                                 constraintName="FK_4p53wuy4brvw0adxpxyha2f0o" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="academic_group" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-67">
+        <addForeignKeyConstraint baseColumnNames="specialization_id" baseTableName="specialization_academic_group"
+                                 constraintName="FK_m9fwut5g4g0q8d4x4imtn4a19" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="specialization" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-68">
+        <addForeignKeyConstraint baseColumnNames="id_education_form" baseTableName="other_load_info"
+                                 constraintName="FKar2khtucrueuf9hekghjvj31w" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="form_of_education" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-69">
+        <addForeignKeyConstraint baseColumnNames="id_curriculum" baseTableName="curriculum_subject"
+                                 constraintName="FKbgh8up2uxbdvg7wcptggbxu11" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="curriculum" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-70">
+        <addForeignKeyConstraint baseColumnNames="load_id" baseTableName="other_load_info"
+                                 constraintName="FKh57uwqc1r740ycy1nxq3eylfk" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="other_load" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-71">
+        <addForeignKeyConstraint baseColumnNames="id_supersubject" baseTableName="dict_subjects"
+                                 constraintName="FKjlesokg0tvru0rfoqy9o1e3ne" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="dict_subjects" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-72">
+        <addForeignKeyConstraint baseColumnNames="id_cycle" baseTableName="section"
+                                 constraintName="FKk6ippmj3o1ypgp87tx6t96rl2" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="cycle" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-73">
+        <addForeignKeyConstraint baseColumnNames="id_workplan" baseTableName="academic_group"
+                                 constraintName="FKogiorclfd0cmtfvh7brnpsr9a" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="curriculum" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-74">
+        <addForeignKeyConstraint baseColumnNames="id_department" baseTableName="dict_subjects"
+                                 constraintName="FKpovhpndv31rw0sm654o85p4i5" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="department" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-75">
+        <addForeignKeyConstraint baseColumnNames="id_academic_subject" baseTableName="subject_study_load"
+                                 constraintName="FKps9pb2bytdk371w31ytq7fmqa" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="academic_subject" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-76">
+        <addForeignKeyConstraint baseColumnNames="id_department" baseTableName="specialization"
+                                 constraintName="FKt1rw1sop8eb031e7ap4kmy5gj" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="department" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-77">
+        <addForeignKeyConstraint baseColumnNames="id_subject" baseTableName="academic_subject"
+                                 constraintName="fk_academic_subject_dict_subjects1" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="dict_subjects" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-78">
+        <addForeignKeyConstraint baseColumnNames="id_education_form" baseTableName="staff"
+                                 constraintName="fk_actor_education_from" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id"
+                                 referencedTableName="form_of_education" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-79">
+        <addForeignKeyConstraint baseColumnNames="id_subject" baseTableName="control"
+                                 constraintName="fk_control_subject" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id"
+                                 referencedTableName="academic_subject" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-80">
+        <addForeignKeyConstraint baseColumnNames="id_type" baseTableName="control" constraintName="fk_control_type"
+                                 deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="dict_control" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-81">
+        <addForeignKeyConstraint baseColumnNames="id_scientific_research_subject" baseTableName="curriculum"
+                                 constraintName="fk_curriculum_scientific_research_subject" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="academic_subject" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-82">
+        <addForeignKeyConstraint baseColumnNames="id_subject" baseTableName="curriculum_subject"
+                                 constraintName="fk_curriculum_subject" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id"
+                                 referencedTableName="academic_subject" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-83">
+        <addForeignKeyConstraint baseColumnNames="id_curriculum" baseTableName="curriculum"
+                                 constraintName="fk_curriculum_workplan" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id"
+                                 referencedTableName="curriculum" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-84">
+        <addForeignKeyConstraint baseColumnNames="id_department" baseTableName="diploma_preparation"
+                                 constraintName="fk_diploma_department" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id"
+                                 referencedTableName="department" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-85">
+        <addForeignKeyConstraint baseColumnNames="id_type_of_work" baseTableName="diploma_preparation"
+                                 constraintName="fk_diploma_type_of_work" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id"
+                                 referencedTableName="type_of_work" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-86">
+        <addForeignKeyConstraint baseColumnNames="id_education_form" baseTableName="academic_group"
+                                 constraintName="fk_group_education_form" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id"
+                                 referencedTableName="form_of_education" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-87">
+        <addForeignKeyConstraint baseColumnNames="id_qualification" baseTableName="academic_group"
+                                 constraintName="fk_group_qualification" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id"
+                                 referencedTableName="qualification" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-88">
+        <addForeignKeyConstraint baseColumnNames="id_specialization" baseTableName="academic_group"
+                                 constraintName="fk_group_specialization" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id"
+                                 referencedTableName="specialization" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-89">
+        <addForeignKeyConstraint baseColumnNames="id_practice" baseTableName="curriculum" constraintName="fk_practice"
+                                 deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="practice" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-90">
+        <addForeignKeyConstraint baseColumnNames="id_section_workplan" baseTableName="dict_subjects"
+                                 constraintName="fk_section_workplan" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id"
+                                 referencedTableName="section" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-91">
+        <addForeignKeyConstraint baseColumnNames="other_load_info_id" baseTableName="other_load_info_distributed"
+                                 constraintName="other_load_info_distributed_ibfk_1" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="other_load_info" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-92">
+        <addForeignKeyConstraint baseColumnNames="staff_id" baseTableName="other_load_info_distributed"
+                                 constraintName="other_load_info_distributed_ibfk_2" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="staff" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-93">
+        <addForeignKeyConstraint baseColumnNames="info_id" baseTableName="other_load_info_to_groups"
+                                 constraintName="other_load_info_to_groups_ibfk_1" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="other_load_info" validate="true"/>
+    </changeSet>
+    <changeSet author="buhaiovos (generated)" id="1576430454942-94">
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="other_load_info_to_groups"
+                                 constraintName="other_load_info_to_groups_ibfk_2" deferrable="false"
+                                 initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="academic_group" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

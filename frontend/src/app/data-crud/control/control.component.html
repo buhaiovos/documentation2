@@ -1,0 +1,25 @@
+<div *ngIf="control; else loading">
+  <br>
+  <label>id:<br>
+    <input [(ngModel)]="control.id" disabled/>
+  </label>
+  <br>
+  <label>Назва:<br>
+    <input [(ngModel)]="control.name" disabled/>
+  </label>
+  <br>
+  <label>Семестр:<br>
+    <input [(ngModel)]="control.semester" placeholder="Семестр"/>
+  </label>
+  <br>
+  <label>Тип:<br>
+    <select [(ngModel)]="control.typeId">
+      <option *ngFor="let option of controlTypes" [value]="option.id">{{option.text}}</option>
+    </select>
+  </label>
+  <br>
+  <a class="button is-success" (click)="save()">Зберегти</a>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>

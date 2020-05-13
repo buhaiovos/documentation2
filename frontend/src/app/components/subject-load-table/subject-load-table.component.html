@@ -1,0 +1,193 @@
+<div id="container">
+  <div id="radiobuttons">
+    <mat-radio-group
+      [(ngModel)]="semester"
+      (change)="semesterClick($event)">
+      <mat-radio-button color="primary" value="1">Перший семестр</mat-radio-button>
+      <mat-radio-button color="primary" value="2">Другий семестр</mat-radio-button>
+    </mat-radio-group>
+    <br/>
+
+    <mat-radio-group
+      [(ngModel)]="finance"
+      (change)="financeClick($event)">
+      <mat-radio-button color="primary" value="Budgetary">Бюджет</mat-radio-button>
+      <mat-radio-button color="primary" value="Contract">Контракт</mat-radio-button>
+    </mat-radio-group>
+    <br/>
+
+    <mat-radio-group
+      [(ngModel)]="educationForm"
+      (change)="financeClick($event)">
+      <mat-radio-button color="primary" value="INTRAMURAL">Денна</mat-radio-button>
+      <mat-radio-button color="primary" value="EXTRAMURAL">Заочна</mat-radio-button>
+      <mat-radio-button color="primary" value="EVENING">Вечірня</mat-radio-button>
+    </mat-radio-group>
+    <br/>
+  </div>
+
+  <div id="list">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Фільтрувати">
+    </mat-form-field>
+
+    <table mat-table [dataSource]='dataSource' class='mat-elevation-z8' width="80%">
+      <ng-container matColumnDef='id'>
+        <th mat-header-cell *matHeaderCellDef> Id</th>
+        <td mat-cell *matCellDef='let element'>
+          {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef='name'>
+        <th mat-header-cell *matHeaderCellDef> Назва пердмету</th>
+        <td mat-cell
+            *matCellDef='let element'
+            (click)="subjectTitleClicked(element)">
+          {{element.name}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='lectures'>
+        <th mat-header-cell *matHeaderCellDef> Лекції</th>
+        <td mat-cell
+            *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('lectures', element)"
+            [class.selected]="isSelected('lectures', element)">
+          {{element.elements['lectures']}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='practices'>
+        <th mat-header-cell *matHeaderCellDef> Практики</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('practices', element)"
+            [class.selected]="isSelected('practices', element)">
+          {{element.elements['practices']}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='labs'>
+        <th mat-header-cell *matHeaderCellDef> Лабораторні</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('labs', element)"
+            [class.selected]="isSelected('labs', element)">
+          {{element.elements['labs']}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='individuals'>
+        <th mat-header-cell *matHeaderCellDef> Інд. заняття</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('individuals', element)"
+            [class.selected]="isSelected('individuals', element)">
+          {{element.elements['individuals']}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='exams'>
+        <th mat-header-cell *matHeaderCellDef> Екзамени</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('exams', element)"
+            [class.selected]="isSelected('exams', element)">
+          {{element.elements['exams']}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='credits'>
+        <th mat-header-cell *matHeaderCellDef> Заліки</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('credits', element)"
+            [class.selected]="isSelected('credits', element)">
+          {{element.elements['credits']}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='contr_works'>
+        <th mat-header-cell *matHeaderCellDef>Контрольні роботи</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('contr_works', element)"
+            [class.selected]="isSelected('contr_works', element)">
+          {{element.elements['contr_works']}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='course_projs'>
+        <th mat-header-cell *matHeaderCellDef>Курсові проекти</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('course_projs', element)"
+            [class.selected]="isSelected('course_projs', element)">
+          {{element.elements['course_projs']}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='course_works'>
+        <th mat-header-cell *matHeaderCellDef>Курсові роботи</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('course_works', element)"
+            [class.selected]="isSelected('course_works', element)">
+          {{element.elements['course_works']}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='rgr'>
+        <th mat-header-cell *matHeaderCellDef>РГР</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('rgr', element)"
+            [class.selected]="isSelected('rgr', element)">
+          {{element.elements['rgr']}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='dkr'>
+        <th mat-header-cell *matHeaderCellDef>ДКР</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('dkr', element)"
+            [class.selected]="isSelected('dkr', element)">
+          {{element.elements['dkr']}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='referats'>
+        <th mat-header-cell *matHeaderCellDef>Реферати</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('referats', element)"
+            [class.selected]="isSelected('referats', element)">
+          {{element.elements['referats']}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef='consult'>
+        <th mat-header-cell *matHeaderCellDef>Консультації</th>
+        <td mat-cell *matCellDef='let element'
+            class="selectable"
+            (click)="loadItemClicked('consult', element)"
+            [class.selected]="isSelected('consult', element)">
+          {{element.elements['consult']}}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef='displayedColumns; sticky: true'></tr>
+      <tr [class.error]="hasError(row)"
+          [class.done]="isDone(row)"
+          mat-row *matRowDef='let row; columns: displayedColumns;'></tr>
+    </table>
+  </div>
+  <div *ngIf="showDistributor()" id="distributor">
+    <app-load-distributor [objectsOfDistribution]="selectedElements"
+                          [mode]="distributionMode"
+                          (submitted)='reload()'>
+    </app-load-distributor>
+  </div>
+</div>

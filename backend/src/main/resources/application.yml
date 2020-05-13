@@ -1,0 +1,36 @@
+cad:
+  generation:
+    path:
+      curriculum:
+        ~/tmp/genration
+      workplan:
+        ~/tmp/generation
+      k3:
+        ~/tmp/generation
+  allowed-origins:
+    urls:
+      - http://localhost:4200
+      - http://localhost:8088
+      - http://localhost:4200/subject-load
+      - http://localhost:8088/subject-load
+    headers:
+      - content-type
+spring:
+  main:
+    lazy-initialization: false
+  liquibase:
+    change-log: classpath:/db/changelog/changelog-master.xml
+  mvc:
+    dispatch-options-request: true
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER_NAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true

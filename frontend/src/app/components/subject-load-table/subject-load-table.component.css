@@ -1,0 +1,51 @@
+table {
+  width: 100%;
+}
+
+.selectable {
+  cursor: pointer;
+}
+
+.selected {
+  background-color: aquamarine;
+}
+
+.done {
+  background-color: greenyellow;
+}
+
+.error {
+  background-color: lightcoral;
+}
+
+#container {
+  width: 100%;
+}
+
+#list {
+  width: 70%;
+  float: left;
+}
+
+#distributor {
+  margin-top: 87px;
+  margin-left: 30px;
+  width: 28%;
+  float: left;
+}
+
+mat-radio-button {
+  padding: 10px;
+  margin-left: 5px;
+}
+
+.mat-cell {
+  padding: 3px;
+  text-align: center;
+}
+
+.mat-header-cell {
+  text-align: center;
+  padding-left: 3px;
+  padding-right: 3px;
+}
