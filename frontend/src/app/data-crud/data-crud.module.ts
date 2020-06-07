@@ -6,6 +6,7 @@ import { SubjectInfoComponent } from "./subject-info/subject-info.component";
 import { ControlComponent } from "./control/control.component";
 import { SubjectInfoService } from "./subject-info/subject-info.service";
 import { FormsModule } from "@angular/forms";
+import { SubjectSectionComponent } from "./subject-section/subject-section.component";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FormsModule } from "@angular/forms";
     SubjectListComponent,
     SubjectHeaderComponent,
     SubjectInfoComponent,
-    ControlComponent
+    ControlComponent,
+    SubjectSectionComponent
   ],
   imports: [
     CommonModule,

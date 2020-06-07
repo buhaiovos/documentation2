@@ -12,4 +12,8 @@ public record SubjectHeaderDto(
         DropdownOption workingPlanSection,
         Integer subjectTypeId,
         DropdownOption department
-) {}
+) {
+    public SubjectHeaderDto {
+        this.subjectTypeId = 1;
+    }
+}

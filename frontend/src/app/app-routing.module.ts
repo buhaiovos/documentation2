@@ -7,6 +7,7 @@ import { SubjectListComponent } from "./data-crud/subject-list/subject-list.comp
 import { SubjectHeaderComponent } from "./data-crud/subject-header/subject-header.component";
 import { SubjectInfoComponent } from "./data-crud/subject-info/subject-info.component";
 import { ControlComponent } from "./data-crud/control/control.component";
+import { SubjectSectionComponent } from "./data-crud/subject-section/subject-section.component";
 
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'statistics', component: StatisticsComponent},
   {path: 'subject-headers', component: SubjectHeaderComponent},
   {path: 'subject-infos', component: SubjectInfoComponent},
-  {path: 'controls', component: ControlComponent}
+  {path: 'controls', component: ControlComponent},
+  {path: 'sections', component: SubjectSectionComponent}
 ];
 
 @NgModule({

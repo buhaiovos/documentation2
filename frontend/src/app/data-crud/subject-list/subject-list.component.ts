@@ -4,6 +4,7 @@ import { Subject } from "../../models/subject-model";
 import { SubjectHeader } from "../../models/subject-header.model";
 import { Router } from "@angular/router";
 import { Control } from "../../models/control.model";
+import { take } from "rxjs/operators";
 
 @Component({
   selector: 'app-subject-list',
@@ -33,9 +34,12 @@ export class SubjectListComponent implements OnInit {
     this.router.navigate(['/subject-infos', {headerId: headerId}])
   }
 
-  deleteInfo(infoId: number) {
+  deleteInfo(infoId: number, subject: Subject) {
     this.subjectListService.deleteInfo(infoId)
-      .subscribe(() => this.ngOnInit());
+      .pipe(take(1))
+      .subscribe(() => {
+        subject.infos = subject.infos.filter(info => info.id !== infoId);
+      });
   }
 
   editHeader(headerId: number) {
@@ -43,7 +47,11 @@ export class SubjectListComponent implements OnInit {
   }
 
   deleteHeader(header: SubjectHeader) {
-    alert('deleting ' + header);
+    this.subjectListService.deleteHeader(header)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.subjects = this.subjects.filter(subject => subject.header.id !== header.id);
+      });
   }
 
   createHeader() {

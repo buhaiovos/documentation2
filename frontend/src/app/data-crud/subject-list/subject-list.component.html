@@ -48,7 +48,6 @@
         <th>Практики</th>
         <th>Фкт. Практики</th>
         <th>ECTS</th>
-        <th>Предмет</th>
         <th>Контроль</th>
         <th></th>
         <th></th>
@@ -66,10 +65,9 @@
         <td>{{info.practices}}</td>
         <td>{{info.actualPractices}}</td>
         <td>{{info.ects}}</td>
-        <td>{{info.subjectHeaderId}}</td>
         <td>{{renderControls(info.controls)}}</td>
         <td><a class="button is-info is-small" (click)="editInfo(info.id)">Edit</a></td>
-        <td><a class="button is-danger is-small" (click)="deleteInfo(info.id)">Delete</a></td>
+        <td><a class="button is-danger is-small" (click)="deleteInfo(info.id, subject)">Delete</a></td>
       </tr>
       </tbody>
     </table>

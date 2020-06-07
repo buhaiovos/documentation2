@@ -41,7 +41,10 @@ export class SubjectListService {
   }
 
   deleteInfo(infoId: number): Observable<any> {
-    console.log("hey")
-    return this.infoService.deleteById(infoId).pipe(take(1));
+    return this.infoService.deleteById(infoId);
+  }
+
+  deleteHeader(header: SubjectHeader): Observable<any> {
+    return this.http.delete<any>(`${this.subjectHeadersUrl}/${header.id}`);
   }
 }

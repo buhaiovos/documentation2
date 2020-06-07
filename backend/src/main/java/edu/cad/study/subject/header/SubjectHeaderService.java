@@ -59,8 +59,8 @@ public class SubjectHeaderService implements EntityService<SubjectHeader, Intege
         Department department = departmentService.findById(dto.department().id()).orElseThrow();
         entity.setDepartment(department);
 
-        ofNullable(dto.superSubject()).ifPresent(
-                superSubject -> entity.setSuperSubject(repo.findById(superSubject.id()).orElseThrow())
+        ofNullable(dto.superSubject().id()).ifPresent(
+                superSubjectId -> entity.setSuperSubject(repo.findById(superSubjectId).orElseThrow())
         );
         ofNullable(dto.curriculumSection()).ifPresent(
                 section -> entity.setCurriculumSection(sectionService.findById(section.id()).orElseThrow())
