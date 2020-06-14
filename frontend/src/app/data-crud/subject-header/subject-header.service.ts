@@ -11,8 +11,6 @@ export class SubjectHeaderService {
   private headersUrl = 'http://localhost:8080/v2/subject-headers';
   private headersOptions = this.headersUrl + '/enumerated';
 
-  public newDropdownOption: () => DropdownOption = () => new DropdownOption(null, null);
-
   constructor(private http: HttpClient) {
   }
 
@@ -22,10 +20,10 @@ export class SubjectHeaderService {
         sh => new SubjectHeader(
           sh.id,
           sh.denotation,
-          sh.superSubject ? sh.superSubject : this.newDropdownOption(),
-          sh.curriculumSection ? sh.curriculumSection : this.newDropdownOption(),
-          sh.workingPlanSection ? sh.workingPlanSection : this.newDropdownOption(),
-          sh.department ? sh.department : this.newDropdownOption()
+          sh.superSubject ? sh.superSubject : DropdownOption.empty(),
+          sh.curriculumSection ? sh.curriculumSection : DropdownOption.empty(),
+          sh.workingPlanSection ? sh.workingPlanSection : DropdownOption.empty(),
+          sh.department ? sh.department : DropdownOption.empty()
         )
       )
     );
@@ -49,4 +47,14 @@ export class SubjectHeaderService {
     return this.http.get<DropdownOption[]>(this.headersOptions);
   }
 
+  static constructNewHeader(): SubjectHeader {
+    return new SubjectHeader(
+      undefined,
+      'Введіть назву',
+      DropdownOption.empty(),
+      DropdownOption.empty(),
+      DropdownOption.empty(),
+      DropdownOption.empty()
+    );
+  }
 }

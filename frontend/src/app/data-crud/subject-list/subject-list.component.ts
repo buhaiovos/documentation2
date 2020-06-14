@@ -5,6 +5,7 @@ import { SubjectHeader } from "../../models/subject-header.model";
 import { Router } from "@angular/router";
 import { Control } from "../../models/control.model";
 import { take } from "rxjs/operators";
+import { Utils } from "../../util/utils";
 
 @Component({
   selector: 'app-subject-list',
@@ -27,11 +28,11 @@ export class SubjectListComponent implements OnInit {
   }
 
   editInfo(infoId: number) {
-    this.router.navigate(['/subject-infos', {id: infoId}])
+    this.router.navigate(['/subject-infos', {id: infoId}]).then(Utils.noopFunction);
   }
 
   addInfo(headerId: number) {
-    this.router.navigate(['/subject-infos', {headerId: headerId}])
+    this.router.navigate(['/subject-infos', {headerId: headerId}]).then(Utils.noopFunction)
   }
 
   deleteInfo(infoId: number, subject: Subject) {
@@ -43,7 +44,7 @@ export class SubjectListComponent implements OnInit {
   }
 
   editHeader(headerId: number) {
-    this.router.navigate(['/subject-headers', {id: headerId}]);
+    this.router.navigate(['/subject-headers', {id: headerId}]).then(Utils.noopFunction);
   }
 
   deleteHeader(header: SubjectHeader) {
@@ -55,7 +56,7 @@ export class SubjectListComponent implements OnInit {
   }
 
   createHeader() {
-    this.router.navigate(['/subject-headers']);
+    this.router.navigate(['/subject-headers']).then(Utils.noopFunction);
   }
 
   renderControls(controls: Control[]): string {

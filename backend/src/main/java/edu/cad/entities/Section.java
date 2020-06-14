@@ -33,7 +33,7 @@ public class Section extends YearTracked implements IDatabaseEntity<Integer>, Se
     @Column(name = "is_optional")
     private boolean optional;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cycle")
     private Cycle cycle;
 

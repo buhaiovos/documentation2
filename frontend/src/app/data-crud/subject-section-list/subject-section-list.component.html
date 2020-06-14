@@ -1,0 +1,30 @@
+<div id="container">
+  <div>
+    <a class="button is-success column is-three-fifths is-offset-one-fifth"
+       (click)="create()">Створити нову секцію</a>
+  </div>
+
+  <table *ngIf="sections"
+         class="table is-hoverable is-bordered is-fullwidth infos-container">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Назва</th>
+      <th>Опціональний?</th>
+      <th>Цикл</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let section of sections">
+      <td>{{section.id}}</td>
+      <td>{{section.denotation}}</td>
+      <td>{{section.optional}}</td>
+      <td>{{section.cycle?.text}}</td>
+      <td><a class="button is-info is-small" (click)="edit(section.id)">Edit</a></td>
+      <td><a class="button is-danger is-small" (click)="delete(section.id)">Delete</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

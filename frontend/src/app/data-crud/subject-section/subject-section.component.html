@@ -1,0 +1,26 @@
+<div *ngIf="section; else loading">
+  <div><p class="is-size-3">{{section.denotation}}</p></div>
+  <br>
+  <label>id:<br>
+    <input [(ngModel)]="section.id" disabled/>
+  </label>
+  <br>
+  <label>Назва:<br>
+    <input [(ngModel)]="section.denotation" placeholder="Назва"/>
+  </label>
+  <br>
+  <label>Обов'язковий:<br>
+    <input type="checkbox" [(ngModel)]="section.optional"/>
+  </label>
+  <br>
+  <label>Цикл:<br>
+    <select [(ngModel)]="section.cycle.id">
+      <option *ngFor="let option of cycles" [value]="option.id">{{option.text}}</option>
+    </select>
+  </label>
+  <br>
+  <a class="button is-success" (click)="save()">Зберегти</a>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>
