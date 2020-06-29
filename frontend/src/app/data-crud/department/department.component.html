@@ -1,0 +1,16 @@
+<div *ngIf="department; else loading">
+  <div><p class="is-size-3">{{department.denotation}}</p></div>
+  <br>
+  <label>id:<br>
+    <input [(ngModel)]="department.id" disabled/>
+  </label>
+  <br>
+  <label>Назва:<br>
+    <input [(ngModel)]="department.denotation" placeholder="Назва"/>
+  </label>
+  <br>
+  <a class="button is-success" (click)="save()">Зберегти</a>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>

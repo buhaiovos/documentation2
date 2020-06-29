@@ -8,6 +8,8 @@ import { SubjectInfoService } from "./subject-info/subject-info.service";
 import { FormsModule } from "@angular/forms";
 import { SubjectSectionListComponent } from "./subject-section-list/subject-section-list.component";
 import { SubjectSectionComponent } from './subject-section/subject-section.component';
+import { DepartmentListComponent } from './department-list/department-list.component';
+import { DepartmentComponent } from './department/department.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { SubjectSectionComponent } from './subject-section/subject-section.compo
     SubjectInfoComponent,
     ControlComponent,
     SubjectSectionListComponent,
-    SubjectSectionComponent
+    SubjectSectionComponent,
+    DepartmentListComponent,
+    DepartmentComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,26 @@
+<div id="container">
+  <div>
+    <a class="button is-success column is-three-fifths is-offset-one-fifth"
+       (click)="create()">Додати Кафедру</a>
+  </div>
+
+  <table *ngIf="departments"
+         class="table is-hoverable is-bordered is-fullwidth infos-container">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Назва</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let department of departments">
+      <td>{{department.id}}</td>
+      <td>{{department.denotation}}</td>
+      <td><a class="button is-info is-small" (click)="edit(department.id)">Edit</a></td>
+      <td><a class="button is-danger is-small" (click)="delete(department.id)">Delete</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
