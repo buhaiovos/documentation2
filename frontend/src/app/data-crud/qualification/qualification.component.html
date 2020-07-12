@@ -1,0 +1,16 @@
+<div *ngIf="qualification; else loading">
+  <div><p class="is-size-3">{{qualification.denotation}}</p></div>
+  <br>
+  <label>id:<br>
+    <input [(ngModel)]="qualification.id" disabled/>
+  </label>
+  <br>
+  <label>Назва:<br>
+    <input [(ngModel)]="qualification.denotation" placeholder="Назва"/>
+  </label>
+  <br>
+  <a class="button is-success" (click)="save()">Зберегти</a>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>

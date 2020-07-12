@@ -1,12 +1,6 @@
 package edu.cad.study.qualification;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.FieldDefaults;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class QualificationDto {
-    Integer id;
-    String denotation;
-}
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public record QualificationDto(Integer id, String denotation) {}

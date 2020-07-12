@@ -33,7 +33,7 @@ public class QualificationService implements EntityService<Qualification, Intege
         log.info("Creating qualification: {}", qualification);
 
         Qualification newQualification = new Qualification()
-                .setDenotation(qualification.getDenotation());
+                .setDenotation(qualification.denotation());
 
         return repo.save(newQualification);
     }
@@ -41,7 +41,7 @@ public class QualificationService implements EntityService<Qualification, Intege
     @Override
     public Qualification update(Integer id, QualificationDto qualification) {
         Qualification existing = repo.findById(id).orElseThrow();
-        existing.setDenotation(qualification.getDenotation());
+        existing.setDenotation(qualification.denotation());
         return repo.save(existing);
     }
 

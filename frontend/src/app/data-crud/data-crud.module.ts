@@ -12,6 +12,8 @@ import { DepartmentListComponent } from './department-list/department-list.compo
 import { DepartmentComponent } from './department/department.component';
 import { SpecializationListComponent } from './specialization-list/specialization-list.component';
 import { SpecializationComponent } from './specialization/specialization.component';
+import { QualificationComponent } from './qualification/qualification.component';
+import { QualificationListComponent } from './qualification-list/qualification-list.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { SpecializationComponent } from './specialization/specialization.compone
     DepartmentComponent,
     SpecializationListComponent,
     SpecializationComponent,
-    SpecializationComponent
+    SpecializationComponent,
+    QualificationComponent,
+    QualificationListComponent
   ],
   imports: [
     CommonModule,

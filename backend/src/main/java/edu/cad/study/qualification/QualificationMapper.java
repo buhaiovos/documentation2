@@ -8,7 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 class QualificationMapper implements EntityMapper<Qualification, QualificationDto> {
     public QualificationDto toResponse(Qualification q) {
-        return new QualificationDto();
+        return new QualificationDto(
+                q.getId(),
+                q.getDenotation()
+        );
     }
 
     public DropdownOption toOption(Qualification q) {

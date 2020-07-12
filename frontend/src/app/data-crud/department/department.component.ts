@@ -30,7 +30,7 @@ export class DepartmentComponent implements OnInit {
       .subscribe(department => this.department = department);
   }
 
-  save() {
+  save(): void {
     Utils.takeOne$(
       this.service.save(this.department)
     ).subscribe(
