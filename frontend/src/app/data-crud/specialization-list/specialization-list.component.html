@@ -1,0 +1,28 @@
+<div id="container">
+  <div>
+    <a class="button is-success column is-three-fifths is-offset-one-fifth"
+       (click)="create()">Додати Спеціалізацію</a>
+  </div>
+
+  <table *ngIf="specializations"
+         class="table is-hoverable is-bordered is-fullwidth infos-container">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Назва</th>
+      <th>Кафедра</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let specialization of specializations">
+      <td>{{specialization.id}}</td>
+      <td>{{specialization.denotation}}</td>
+      <td>{{specialization.department.text}}</td>
+      <td><a class="button is-info is-small" (click)="edit(specialization.id)">Edit</a></td>
+      <td><a class="button is-danger is-small" (click)="delete(specialization.id)">Delete</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

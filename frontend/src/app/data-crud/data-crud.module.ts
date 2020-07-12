@@ -10,6 +10,8 @@ import { SubjectSectionListComponent } from "./subject-section-list/subject-sect
 import { SubjectSectionComponent } from './subject-section/subject-section.component';
 import { DepartmentListComponent } from './department-list/department-list.component';
 import { DepartmentComponent } from './department/department.component';
+import { SpecializationListComponent } from './specialization-list/specialization-list.component';
+import { SpecializationComponent } from './specialization/specialization.component';
 
 
 @NgModule({
@@ -24,7 +26,10 @@ import { DepartmentComponent } from './department/department.component';
     SubjectSectionListComponent,
     SubjectSectionComponent,
     DepartmentListComponent,
-    DepartmentComponent
+    DepartmentComponent,
+    SpecializationListComponent,
+    SpecializationComponent,
+    SpecializationComponent
   ],
   imports: [
     CommonModule,

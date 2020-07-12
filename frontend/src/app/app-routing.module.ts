@@ -11,6 +11,8 @@ import { SubjectSectionListComponent } from "./data-crud/subject-section-list/su
 import { SubjectSectionComponent } from "./data-crud/subject-section/subject-section.component";
 import { DepartmentListComponent } from "./data-crud/department-list/department-list.component";
 import { DepartmentComponent } from "./data-crud/department/department.component";
+import { SpecializationListComponent } from "./data-crud/specialization-list/specialization-list.component";
+import { SpecializationComponent } from "./data-crud/specialization/specialization.component";
 
 
 const routes: Routes = [
@@ -25,7 +27,9 @@ const routes: Routes = [
   {path: 'sections', component: SubjectSectionListComponent},
   {path: 'section', component: SubjectSectionComponent},
   {path: 'departments', component: DepartmentListComponent},
-  {path: 'department', component: DepartmentComponent}
+  {path: 'department', component: DepartmentComponent},
+  {path: 'specializations', component: SpecializationListComponent},
+  {path: 'specialization', component: SpecializationComponent}
 ];
 
 @NgModule({

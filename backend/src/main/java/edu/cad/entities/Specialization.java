@@ -1,6 +1,5 @@
 package edu.cad.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.cad.entities.interfaces.IDatabaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,9 +24,8 @@ public class Specialization extends YearTracked implements IDatabaseEntity<Integ
     @Column(name = "denotation")
     private String denotation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_department")
-    @JsonIgnore
     private Department department;
 
     @Override

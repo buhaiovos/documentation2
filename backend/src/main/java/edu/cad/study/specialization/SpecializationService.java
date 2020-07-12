@@ -32,7 +32,7 @@ public class SpecializationService implements EntityService<Specialization, Inte
     @Override
     public Specialization create(SpecializationDto specialization) {
         Department department = departmentService
-                .findById(specialization.getDepartment())
+                .findById(specialization.getDepartment().id())
                 .orElseThrow();
 
         var newSpecialization = new Specialization()
@@ -44,7 +44,7 @@ public class SpecializationService implements EntityService<Specialization, Inte
     @Override
     public Specialization update(Integer id, SpecializationDto specialization) {
         var updated = repo.findById(id).orElseThrow();
-        var department = departmentService.findById(specialization.getDepartment())
+        var department = departmentService.findById(specialization.getDepartment().id())
                 .orElseThrow();
         updated.setDenotation(specialization.getDenotation());
         updated.setDepartment(department);

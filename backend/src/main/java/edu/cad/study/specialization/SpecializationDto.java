@@ -1,5 +1,6 @@
 package edu.cad.study.specialization;
 
+import edu.cad.study.DropdownOption;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -11,5 +12,5 @@ import lombok.experimental.FieldDefaults;
 public class SpecializationDto {
     int id;
     String denotation;
-    int department;
+    DropdownOption department;
 }

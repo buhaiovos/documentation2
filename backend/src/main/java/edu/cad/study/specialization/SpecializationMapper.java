@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 class SpecializationMapper implements EntityMapper<Specialization, SpecializationDto> {
     public SpecializationDto toResponse(Specialization spec) {
+        var department = spec.getDepartment();
         return new SpecializationDto()
                 .setId(spec.getId())
                 .setDenotation(spec.getDenotation())
-                .setDepartment(spec.getDepartment().getId());
+                .setDepartment(new DropdownOption(department.getId(), department.getDenotation()));
     }
 
     public DropdownOption toOption(Specialization specialization) {
