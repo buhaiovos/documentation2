@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {Load} from '../models/load.model';
-import {Observable} from 'rxjs';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Load } from '../models/load.model';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class SubjectLoadService {

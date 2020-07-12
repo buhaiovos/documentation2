@@ -10,14 +10,14 @@ import {
   Output,
   SimpleChanges
 } from '@angular/core';
-import {Load} from '../../models/load.model';
-import {Staff} from '../../models/staff.model';
-import {StaffService} from '../../services/staff.service';
-import {Subscription} from 'rxjs';
-import {LoadDistributorComponentService} from './load-distributor-component.service';
-import {FormControl} from '@angular/forms';
-import {SubjectLoadService} from '../../services/subject-load.service';
-import {OtherLoadService} from '../../services/other-load.service';
+import { Load } from '../../models/load.model';
+import { Staff } from '../../models/staff.model';
+import { StaffService } from '../../services/staff.service';
+import { Subscription } from 'rxjs';
+import { LoadDistributorComponentService } from './load-distributor-component.service';
+import { FormControl } from '@angular/forms';
+import { SubjectLoadService } from '../../services/subject-load.service';
+import { OtherLoadService } from '../../services/other-load.service';
 
 @Component({
   selector: 'app-load-distributor',

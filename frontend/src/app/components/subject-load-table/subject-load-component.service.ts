@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Load} from '../../models/load.model';
+import { Injectable } from '@angular/core';
+import { Load } from '../../models/load.model';
 
 @Injectable()
 export class SubjectLoadComponentService {

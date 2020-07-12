@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import {Load} from '../../models/load.model';
-import {OtherLoadService} from '../../services/other-load.service';
-import {SubjectLoadComponentService} from '../subject-load-table/subject-load-component.service';
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { Load } from '../../models/load.model';
+import { OtherLoadService } from '../../services/other-load.service';
+import { SubjectLoadComponentService } from '../subject-load-table/subject-load-component.service';
 
 @Component({
   selector: 'app-other-load-table-component',

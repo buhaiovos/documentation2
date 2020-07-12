@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {SubjectLoadService} from '../../services/subject-load.service';
-import {Load} from '../../models/load.model';
-import {MatRadioChange} from '@angular/material/radio';
-import {MatTableDataSource} from '@angular/material/table';
-import {SubjectLoadComponentService} from './subject-load-component.service';
+import { Component, OnInit } from '@angular/core';
+import { SubjectLoadService } from '../../services/subject-load.service';
+import { Load } from '../../models/load.model';
+import { MatRadioChange } from '@angular/material/radio';
+import { MatTableDataSource } from '@angular/material/table';
+import { SubjectLoadComponentService } from './subject-load-component.service';
 
 @Component({
   selector: 'app-subject-load-table-component',
