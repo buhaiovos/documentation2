@@ -15,6 +15,8 @@ import { SpecializationListComponent } from "./data-crud/specialization-list/spe
 import { SpecializationComponent } from "./data-crud/specialization/specialization.component";
 import { QualificationListComponent } from "./data-crud/qualification-list/qualification-list.component";
 import { QualificationComponent } from "./data-crud/qualification/qualification.component";
+import { StateCertificationListComponent } from "./data-crud/state-certification-list/state-certification-list.component";
+import { StateCertificationComponent } from "./data-crud/state-certification/state-certification.component";
 
 
 const routes: Routes = [
@@ -34,6 +36,8 @@ const routes: Routes = [
   {path: 'specialization', component: SpecializationComponent},
   {path: 'qualifications', component: QualificationListComponent},
   {path: 'qualification', component: QualificationComponent},
+  {path: 'certifications', component: StateCertificationListComponent},
+  {path: 'certification', component: StateCertificationComponent},
 ];
 
 @NgModule({

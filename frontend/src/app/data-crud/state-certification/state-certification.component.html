@@ -1,0 +1,32 @@
+<div *ngIf="certification; else loading">
+  <div><p class="is-size-3">{{certification.form}}</p></div>
+  <br>
+  <label>id:<br>
+    <input [(ngModel)]="certification.id" disabled/>
+  </label>
+  <br>
+  <label>Семестр:<br>
+    <input [(ngModel)]="certification.semester" placeholder="Введіть семестр (1-8)"/>
+  </label>
+  <br>
+  <label>Форма:<br>
+    <input [(ngModel)]="certification.form" placeholder="Форма"/>
+  </label>
+  <br>
+  <label>Початок:<br>
+    <input type="date"
+           [(ngModel]="certification.start"
+           placeholder="початок"/>
+  </label>
+  <br>
+  <label>Кінець:<br>
+    <input type="date"
+           [(ngModel)]="certification.finish"
+           placeholder="кінець"/>
+  </label>
+  <br>
+  <a class="button is-success" (click)="save()">Зберегти</a>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>

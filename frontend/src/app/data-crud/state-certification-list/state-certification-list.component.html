@@ -1,0 +1,32 @@
+<div id="container">
+  <div>
+    <a class="button is-success column is-three-fifths is-offset-one-fifth"
+       (click)="create()">Додати Сертифікацію</a>
+  </div>
+
+  <table *ngIf="certifications"
+         class="table is-hoverable is-bordered is-fullwidth infos-container">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Семестр</th>
+      <th>Форма</th>
+      <th>Початок</th>
+      <th>Кінець</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let certification of certifications">
+      <td>{{certification.id}}</td>
+      <td>{{certification.semester}}</td>
+      <td>{{certification.form}}</td>
+      <td>{{certification.start | date: 'dd-MM-yyyy'}}</td>
+      <td>{{certification.finish | date: 'dd-MM-yyyy'}}</td>
+      <td><a class="button is-info is-small" (click)="edit(certification.id)">Edit</a></td>
+      <td><a class="button is-danger is-small" (click)="delete(certification.id)">Delete</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

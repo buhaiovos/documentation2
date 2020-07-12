@@ -14,6 +14,8 @@ import { SpecializationListComponent } from './specialization-list/specializatio
 import { SpecializationComponent } from './specialization/specialization.component';
 import { QualificationComponent } from './qualification/qualification.component';
 import { QualificationListComponent } from './qualification-list/qualification-list.component';
+import { StateCertificationComponent } from './state-certification/state-certification.component';
+import { StateCertificationListComponent } from './state-certification-list/state-certification-list.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { QualificationListComponent } from './qualification-list/qualification-l
     SpecializationComponent,
     SpecializationComponent,
     QualificationComponent,
-    QualificationListComponent
+    QualificationListComponent,
+    StateCertificationComponent,
+    StateCertificationListComponent
   ],
   imports: [
     CommonModule,
