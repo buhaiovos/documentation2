@@ -1,0 +1,26 @@
+<div id="container">
+  <div>
+    <a class="button is-success column is-three-fifths is-offset-one-fifth"
+       (click)="create()">Додати Тип Роботи</a>
+  </div>
+
+  <table *ngIf="workTypes"
+         class="table is-hoverable is-bordered is-fullwidth infos-container">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Назва</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let workType of workTypes">
+      <td>{{workType.id}}</td>
+      <td>{{workType.denotation}}</td>
+      <td><a class="button is-info is-small" (click)="edit(workType.id)">Edit</a></td>
+      <td><a class="button is-danger is-small" (click)="delete(workType.id)">Delete</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

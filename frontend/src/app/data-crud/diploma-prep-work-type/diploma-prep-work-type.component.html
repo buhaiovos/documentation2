@@ -1,0 +1,16 @@
+<div *ngIf="workType; else loading">
+  <div><p class="is-size-3">{{workType.denotation}}</p></div>
+  <br>
+  <label>id:<br>
+    <input [(ngModel)]="workType.id" disabled/>
+  </label>
+  <br>
+  <label>Назва:<br>
+    <input [(ngModel)]="workType.denotation" placeholder="Назва"/>
+  </label>
+  <br>
+  <a class="button is-success" (click)="save()">Зберегти</a>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>
