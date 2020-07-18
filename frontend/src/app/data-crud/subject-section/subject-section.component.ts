@@ -47,9 +47,7 @@ export class SubjectSectionComponent implements OnInit {
   }
 
   private createOrUpdate(): Observable<SubjectSection> {
-    return (this.section.id)
-      ? this.service.update(this.section)
-      : this.service.create(this.section);
+    return this.service.save(this.section);
   }
 
   private getSection(): Observable<SubjectSection> {

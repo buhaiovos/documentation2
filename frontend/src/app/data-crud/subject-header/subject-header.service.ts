@@ -4,18 +4,22 @@ import { SubjectHeader } from "../../models/subject-header.model";
 import { Observable } from "rxjs";
 import { DropdownOption } from "../../models/dropdown-option.model";
 import { map } from "rxjs/operators";
+import { AbstractCrudService } from "../abstract/abstract-crud.service";
+import { SubjectSectionService } from "../subject-section-list/subject-section.service";
+import { DepartmentService } from "../department/department.service";
 
 @Injectable()
-export class SubjectHeaderService {
-  private headerByIdUrl = id => `http://localhost:8080/v2/subject-headers/${id}`;
-  private headersUrl = 'http://localhost:8080/v2/subject-headers';
-  private headersOptions = this.headersUrl + '/enumerated';
+export class SubjectHeaderService extends AbstractCrudService<SubjectHeader> {
+  baseUrl: () => string = () => 'http://localhost:8080/v2/subject-headers';
 
-  constructor(private http: HttpClient) {
+  constructor(http: HttpClient,
+              private sectionService: SubjectSectionService,
+              private departmentService: DepartmentService) {
+    super(http);
   }
 
   getById(id: number): Observable<SubjectHeader> {
-    return this.http.get<SubjectHeader>(this.headerByIdUrl(id)).pipe(
+    return this.http.get<SubjectHeader>(this.byIdUrl(id)).pipe(
       map(
         sh => new SubjectHeader(
           sh.id,
@@ -29,22 +33,12 @@ export class SubjectHeaderService {
     );
   }
 
-  save(subjectHeader: SubjectHeader): Observable<SubjectHeader> {
-    return (subjectHeader.id)
-      ? this.http.put<SubjectHeader>(this.headerByIdUrl(subjectHeader.id), subjectHeader)
-      : this.http.post<SubjectHeader>(this.headersUrl, subjectHeader);
-  }
-
   getDepartments(): Observable<DropdownOption[]> {
-    return this.http.get<DropdownOption[]>('http://localhost:8080/v2/departments/enumerated');
+    return this.departmentService.getOptions();
   }
 
   getSections(): Observable<DropdownOption[]> {
-    return this.http.get<DropdownOption[]>('http://localhost:8080/v2/sections/enumerated');
-  }
-
-  getSubjectHeaderOptions(): Observable<DropdownOption[]> {
-    return this.http.get<DropdownOption[]>(this.headersOptions);
+    return this.sectionService.getOptions();
   }
 
   static constructNewHeader(): SubjectHeader {

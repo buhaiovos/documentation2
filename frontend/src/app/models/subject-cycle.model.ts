@@ -1,5 +1,5 @@
 export class SubjectCycle {
-  constructor(id: number,
-              denotation: string) {
+  constructor(public id: number,
+              public denotation: string) {
   }
 }

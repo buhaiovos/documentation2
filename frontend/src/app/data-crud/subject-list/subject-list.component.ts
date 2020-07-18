@@ -6,12 +6,22 @@ import { Router } from "@angular/router";
 import { Control } from "../../models/control.model";
 import { take } from "rxjs/operators";
 import { Utils } from "../../util/utils";
+import { SubjectInfoService } from "../subject-info/subject-info.service";
+import { SubjectHeaderService } from "../subject-header/subject-header.service";
+import { SubjectSectionService } from "../subject-section-list/subject-section.service";
+import { DepartmentService } from "../department/department.service";
 
 @Component({
   selector: 'app-subject-list',
   templateUrl: './subject-list.component.html',
   styleUrls: ['./subject-list.component.css'],
-  providers: [SubjectListService]
+  providers: [
+    SubjectListService,
+    SubjectInfoService,
+    SubjectHeaderService,
+    SubjectSectionService,
+    DepartmentService
+  ]
 })
 export class SubjectListComponent implements OnInit {
 

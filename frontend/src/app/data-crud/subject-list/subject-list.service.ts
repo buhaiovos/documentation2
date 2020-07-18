@@ -3,17 +3,14 @@ import { Subject } from "../../models/subject-model";
 import { forkJoin, Observable } from "rxjs";
 import { SubjectInfo } from "../../models/subject-info.model";
 import { SubjectHeader } from "../../models/subject-header.model";
-import { HttpClient } from "@angular/common/http";
 import { map, take } from "rxjs/operators";
 import { SubjectInfoService } from "../subject-info/subject-info.service";
+import { SubjectHeaderService } from "../subject-header/subject-header.service";
 
 @Injectable()
 export class SubjectListService {
-  private subjectHeadersUrl = 'http://localhost:8080/v2/subject-headers'
-  private subjectInfosUrl = 'http://localhost:8080/v2/subject-infos'
-
-  constructor(private http: HttpClient,
-              private infoService: SubjectInfoService) {
+  constructor(private infoService: SubjectInfoService,
+              private headerService: SubjectHeaderService) {
   }
 
   fetchSubjectList(): Observable<Subject[]> {
@@ -26,11 +23,11 @@ export class SubjectListService {
   }
 
   private fetchSubjectInfos(): Observable<SubjectInfo[]> {
-    return this.http.get<SubjectInfo[]>(this.subjectInfosUrl).pipe(take(1));
+    return this.infoService.getAll().pipe(take(1));
   }
 
   private fetchSubjectHeaders(): Observable<SubjectHeader[]> {
-    return this.http.get<SubjectHeader[]>(this.subjectHeadersUrl).pipe(take(1));
+    return this.headerService.getAll().pipe(take(1));
   }
 
   private toSubjects(headers: SubjectHeader[], infos: SubjectInfo[]): Subject[] {
@@ -45,6 +42,6 @@ export class SubjectListService {
   }
 
   deleteHeader(header: SubjectHeader): Observable<any> {
-    return this.http.delete<any>(`${this.subjectHeadersUrl}/${header.id}`);
+    return this.headerService.deleteById(header.id);
   }
 }

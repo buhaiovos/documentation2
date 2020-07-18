@@ -2,7 +2,7 @@ import { Control } from "./control.model";
 
 export class SubjectInfo {
   constructor(public subjectHeaderId: number,
-              public id?: number,
+              public id: number = null,
               public semester?: number,
               public semestersDuration?: number,
               public lectures?: number,

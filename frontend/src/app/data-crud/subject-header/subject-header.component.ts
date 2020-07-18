@@ -6,12 +6,14 @@ import { SubjectHeader } from "../../models/subject-header.model";
 import { forkJoin, Observable } from "rxjs";
 import { DropdownOption } from "../../models/dropdown-option.model";
 import { Utils } from "../../util/utils";
+import { DepartmentService } from "../department/department.service";
+import { SubjectSectionService } from "../subject-section-list/subject-section.service";
 
 @Component({
   selector: 'app-subject-header',
   templateUrl: './subject-header.component.html',
   styleUrls: ['./subject-header.component.css'],
-  providers: [SubjectHeaderService]
+  providers: [SubjectHeaderService, DepartmentService, SubjectSectionService]
 })
 export class SubjectHeaderComponent implements OnInit {
   subjectHeader: SubjectHeader;
@@ -28,7 +30,7 @@ export class SubjectHeaderComponent implements OnInit {
   ngOnInit(): void {
     const subjectHeader$ = Utils.takeOne$(this.getSubjectHeader());
     const departments$ = Utils.takeOne$(this.service.getDepartments());
-    const headers$ = Utils.takeOne$(this.service.getSubjectHeaderOptions());
+    const headers$ = Utils.takeOne$(this.service.getOptions());
     const sections$ = Utils.takeOne$(this.service.getSections());
 
     forkJoin({
