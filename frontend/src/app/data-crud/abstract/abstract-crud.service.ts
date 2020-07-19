@@ -7,7 +7,7 @@ interface Entity {
 }
 
 export abstract class AbstractCrudService<T extends Entity> {
-  abstract baseUrl(): string;
+  protected abstract baseUrl(): string;
 
   protected byIdUrl: (id: number) => string = (id) => `${this.baseUrl()}/${id}`;
   protected enumerated: () => string = () => `${this.baseUrl()}/enumerated`;

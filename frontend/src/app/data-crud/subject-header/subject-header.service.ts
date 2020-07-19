@@ -10,7 +10,7 @@ import { DepartmentService } from "../department/department.service";
 
 @Injectable()
 export class SubjectHeaderService extends AbstractCrudService<SubjectHeader> {
-  baseUrl: () => string = () => 'http://localhost:8080/v2/subject-headers';
+  protected baseUrl: () => string = () => 'http://localhost:8080/v2/subject-headers';
 
   constructor(http: HttpClient,
               private sectionService: SubjectSectionService,

@@ -7,7 +7,7 @@ import { AbstractCrudService } from "../abstract/abstract-crud.service";
 
 @Injectable()
 export class ControlService extends AbstractCrudService<Control> {
-  baseUrl(): string {
+  protected baseUrl(): string {
     return 'http://localhost:8080/v2/controls';
   }
 

@@ -5,7 +5,7 @@ import { AbstractCrudService } from "../abstract/abstract-crud.service";
 
 @Injectable()
 export class SubjectInfoService extends AbstractCrudService<SubjectInfo> {
-  baseUrl: () => string = () => 'http://localhost:8080/v2/subject-infos';
+  protected baseUrl: () => string = () => 'http://localhost:8080/v2/subject-infos';
 
   constructor(http: HttpClient) {
     super(http);

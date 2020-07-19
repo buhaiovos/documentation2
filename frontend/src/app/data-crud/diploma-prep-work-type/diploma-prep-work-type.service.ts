@@ -5,7 +5,7 @@ import { DiplomaPrepWorkType } from "../../models/diploma-prep-work-type.model";
 
 @Injectable()
 export class DiplomaPrepWorkTypeService extends AbstractCrudService<DiplomaPrepWorkType> {
-  baseUrl: () => string = () => 'http://localhost:8080/v2/work-types';
+  protected baseUrl: () => string = () => 'http://localhost:8080/v2/work-types';
 
   constructor(http: HttpClient) {
     super(http);
