@@ -1,5 +1,6 @@
 package edu.cad.study.academicgroup;
 
+import edu.cad.study.DropdownOption;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -11,8 +12,8 @@ public class AcademicGroupDto {
     private int budgetaryStudents;
     private int contractStudents;
     private int startYear;
-    private int specialization;
-    private int qualification;
-    private int educationForm;
-    private int workplan;
+    private DropdownOption specialization;
+    private DropdownOption qualification;
+    private DropdownOption educationForm;
+    private DropdownOption workplan;
 }

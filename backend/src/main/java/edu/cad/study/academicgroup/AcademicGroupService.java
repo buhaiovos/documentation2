@@ -49,13 +49,13 @@ public class AcademicGroupService implements EntityService<AcademicGroup, Intege
         log.info("Creating academic group: {}", academicGroup);
 
         Specialization specialization = specializationService
-                .findById(academicGroup.getSpecialization())
+                .findById(academicGroup.getSpecialization().id())
                 .orElseThrow();
         EducationForm educationForm = educationFormService
-                .findById(academicGroup.getEducationForm())
+                .findById(academicGroup.getEducationForm().id())
                 .orElseThrow();
         Qualification qualification = qualificationService
-                .findById(academicGroup.getQualification())
+                .findById(academicGroup.getQualification().id())
                 .orElseThrow();
 
         AcademicGroup newGroup = new AcademicGroup()
@@ -79,13 +79,13 @@ public class AcademicGroupService implements EntityService<AcademicGroup, Intege
         log.info("Found target group: {}", existingGroup);
 
         final Specialization specialization = specializationService
-                .findById(updatedGroup.getSpecialization())
+                .findById(updatedGroup.getSpecialization().id())
                 .orElseThrow();
         final EducationForm educationForm = educationFormService
-                .findById(updatedGroup.getEducationForm())
+                .findById(updatedGroup.getEducationForm().id())
                 .orElseThrow();
         final Qualification qualification = qualificationService
-                .findById(updatedGroup.getQualification())
+                .findById(updatedGroup.getQualification().id())
                 .orElseThrow();
 
         existingGroup

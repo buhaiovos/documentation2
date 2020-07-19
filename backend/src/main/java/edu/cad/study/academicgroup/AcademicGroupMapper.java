@@ -27,19 +27,23 @@ class AcademicGroupMapper implements EntityMapper<AcademicGroup, AcademicGroupDt
         return new DropdownOption(academicGroup.getId(), academicGroup.getCipher());
     }
 
-    private int getWorkingPlan(AcademicGroup group) {
-        return requireNonNull(group.getWorkingPlan(), "workingPlan").getId();
+    private DropdownOption getWorkingPlan(AcademicGroup group) {
+        var workingPlan = requireNonNull(group.getWorkingPlan(), "workingPlan");
+        return new DropdownOption(workingPlan.getId(), workingPlan.getDenotation());
     }
 
-    private int getSpecialization(AcademicGroup group) {
-        return requireNonNull(group.getSpecialization(), "specialization").getId();
+    private DropdownOption getSpecialization(AcademicGroup group) {
+        var specialization = requireNonNull(group.getSpecialization(), "specialization");
+        return new DropdownOption(specialization.getId(), specialization.getDenotation());
     }
 
-    private int getEducationForm(AcademicGroup group) {
-        return requireNonNull(group.getEducationForm(), "educationForm").getId();
+    private DropdownOption getEducationForm(AcademicGroup group) {
+        var educationForm = requireNonNull(group.getEducationForm(), "educationForm");
+        return new DropdownOption(educationForm.getId(), educationForm.getDenotation());
     }
 
-    private int getQualification(AcademicGroup group) {
-        return requireNonNull(group.getQualification(), "qualification").getId();
+    private DropdownOption getQualification(AcademicGroup group) {
+        var qualification = requireNonNull(group.getQualification(), "qualification");
+        return new DropdownOption(qualification.getId(), qualification.getDenotation());
     }
 }

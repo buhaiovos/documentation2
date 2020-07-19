@@ -1,0 +1,46 @@
+<div *ngIf="group; else loading">
+  <div><p class="is-size-3">{{group.cipher}}</p></div>
+  <br>
+  <label>id:<br>
+    <input [(ngModel)]="group.id" disabled/>
+  </label>
+  <br>
+  <label>Назва:<br>
+    <input [(ngModel)]="group.cipher" placeholder="Назва"/>
+  </label>
+  <br>
+  <label>Бюдж. Студенти:<br>
+    <input [(ngModel)]="group.budgetaryStudents"/>
+  </label>
+  <br>
+  <label>Контр. Студенти:<br>
+    <input [(ngModel)]="group.contractStudents"/>
+  </label>
+  <br>
+  <label>Стартовий рік:<br>
+    <input [(ngModel)]="group.startYear"/>
+  </label>
+  <br>
+  <label>Cпеціалізація:<br>
+    <select [(ngModel)]="group.specialization.id">
+      <option *ngFor="let option of specializations" [value]="option.id">{{option.text}}</option>
+    </select>
+  </label>
+  <br>
+  <label>Кваліфікація:<br>
+    <select [(ngModel)]="group.qualification.id">
+      <option *ngFor="let option of qualifications" [value]="option.id">{{option.text}}</option>
+    </select>
+  </label>
+  <br>
+  <label>Форма навчання:<br>
+    <select [(ngModel)]="group.educationForm.id">
+      <option *ngFor="let option of educationForms" [value]="option.id">{{option.text}}</option>
+    </select>
+  </label>
+  <br>
+  <a class="button is-success" (click)="save()">Зберегти</a>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>

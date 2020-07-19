@@ -18,6 +18,8 @@ import { StateCertificationComponent } from './state-certification/state-certifi
 import { StateCertificationListComponent } from './state-certification-list/state-certification-list.component';
 import { DiplomaPrepWorkTypeComponent } from './diploma-prep-work-type/diploma-prep-work-type.component';
 import { DiplomaPrepWorkTypeListComponent } from './diploma-prep-work-type-list/diploma-prep-work-type-list.component';
+import { GroupsListComponent } from './groups-list/groups-list.component';
+import { GroupComponent } from './group/group.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { DiplomaPrepWorkTypeListComponent } from './diploma-prep-work-type-list/
     StateCertificationComponent,
     StateCertificationListComponent,
     DiplomaPrepWorkTypeComponent,
-    DiplomaPrepWorkTypeListComponent
+    DiplomaPrepWorkTypeListComponent,
+    GroupsListComponent,
+    GroupComponent
   ],
   imports: [
     CommonModule,

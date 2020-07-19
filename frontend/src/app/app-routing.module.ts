@@ -19,6 +19,8 @@ import { StateCertificationListComponent } from "./data-crud/state-certification
 import { StateCertificationComponent } from "./data-crud/state-certification/state-certification.component";
 import { DiplomaPrepWorkTypeComponent } from "./data-crud/diploma-prep-work-type/diploma-prep-work-type.component";
 import { DiplomaPrepWorkTypeListComponent } from "./data-crud/diploma-prep-work-type-list/diploma-prep-work-type-list.component";
+import { GroupsListComponent } from "./data-crud/groups-list/groups-list.component";
+import { GroupComponent } from "./data-crud/group/group.component";
 
 
 const routes: Routes = [
@@ -42,6 +44,8 @@ const routes: Routes = [
   {path: 'certification', component: StateCertificationComponent},
   {path: 'diploma-preparation/work-type', component: DiplomaPrepWorkTypeComponent},
   {path: 'diploma-preparation/work-types', component: DiplomaPrepWorkTypeListComponent},
+  {path: 'groups', component: GroupsListComponent},
+  {path: 'group', component: GroupComponent}
 ];
 
 @NgModule({

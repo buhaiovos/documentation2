@@ -36,22 +36,22 @@ public class AcademicGroup extends YearTracked implements IDatabaseEntity<Intege
     @Column(name = "start_year")
     private int startYear;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "id_specialization")
     @JsonIgnore
     private Specialization specialization;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "id_qualification")
     @JsonIgnore
     private Qualification qualification;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "id_education_form")
     @JsonIgnore
     private EducationForm educationForm;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "id_workplan")
     @JsonIgnore
     private WorkingPlan workingPlan;
