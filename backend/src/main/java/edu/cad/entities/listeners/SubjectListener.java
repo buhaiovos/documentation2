@@ -31,40 +31,55 @@ public class SubjectListener {
             if (curriculum instanceof WorkingPlan) {
                 subjectDetails.getGroups().addAll(((WorkingPlan) curriculum).getGroups());
             }
-            
+
         }
     }
 
     private Set<SubjectInfo> findSubSubjects(SubjectInfo info, Curriculum curriculum) {
-        Set<SubjectInfo> subjectDetails = new HashSet<>();
-        subjectDetails.add(info);
+        if (curriculum instanceof WorkingPlan) {
+            var result = new HashSet<SubjectInfo>();
+            result.add(info);
+            return result;
+        }
+        return findForCurriculum(info, curriculum);
+    }
 
-        if (curriculum instanceof WorkingPlan) return subjectDetails;
-
-        for (SubjectHeader dictionary : info.getSubjectHeader().getSubSubjects()) {
-            boolean contains = false;
-
-            for (SubjectInfo element : dictionary.getSubjectInfo()) {
-                if(curriculum.contains(element)){
-                    subjectDetails.add(element);
-                    if(element.getSubSubjects(curriculum) != null)
-                        subjectDetails.addAll(element.getSubSubjects(curriculum));
-                    contains = true;
-                    break;
-                }  
-            }
-            
-            if(!contains){
-                SubjectInfo appropriate = dictionary.findAppropriate(curriculum);
-
-                if (appropriate == null) continue;
-
-                subjectDetails.add(appropriate);
-                if(appropriate.getSubSubjects(curriculum) != null)
-                    subjectDetails.addAll(appropriate.getSubSubjects(curriculum));
+    private Set<SubjectInfo> findForCurriculum(SubjectInfo info, Curriculum curriculum) {
+        var result = new HashSet<SubjectInfo>();
+        result.add(info);
+        for (SubjectHeader subSubjectHeader : info.getSubjectHeader().getSubSubjects()) {
+            boolean isFound = searchInSubSubjectInfos(curriculum, result, subSubjectHeader);
+            if (!isFound) {
+                searchAcrossAllWithSameQualification(curriculum, result, subSubjectHeader);
             }
         }
+        return result;
+    }
 
-        return subjectDetails;
+    private boolean searchInSubSubjectInfos(Curriculum curriculum,
+                                            HashSet<SubjectInfo> result,
+                                            SubjectHeader subSubjectHeader) {
+        for (SubjectInfo subjectInfo : subSubjectHeader.getSubjectInfo()) {
+            if (curriculum.contains(subjectInfo)) {
+                result.add(subjectInfo);
+                if (subjectInfo.getSubSubjects(curriculum) != null) {
+                    result.addAll(subjectInfo.getSubSubjects(curriculum));
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void searchAcrossAllWithSameQualification(Curriculum curriculum,
+                                                      HashSet<SubjectInfo> result,
+                                                      SubjectHeader subSubjectHeader) {
+        SubjectInfo appropriate = subSubjectHeader.findAppropriate(curriculum);
+
+        if (appropriate == null) return;
+
+        result.add(appropriate);
+        if (appropriate.getSubSubjects(curriculum) != null)
+            result.addAll(appropriate.getSubSubjects(curriculum));
     }
 }

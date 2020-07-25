@@ -20,6 +20,8 @@ import { DiplomaPrepWorkTypeComponent } from './diploma-prep-work-type/diploma-p
 import { DiplomaPrepWorkTypeListComponent } from './diploma-prep-work-type-list/diploma-prep-work-type-list.component';
 import { GroupsListComponent } from './groups-list/groups-list.component';
 import { GroupComponent } from './group/group.component';
+import { CurriculumListComponent } from './curriculum-list/curriculum-list.component';
+import { CurriculumComponent } from './curriculum/curriculum.component';
 
 
 @NgModule({
@@ -45,7 +47,9 @@ import { GroupComponent } from './group/group.component';
     DiplomaPrepWorkTypeComponent,
     DiplomaPrepWorkTypeListComponent,
     GroupsListComponent,
-    GroupComponent
+    GroupComponent,
+    CurriculumListComponent,
+    CurriculumComponent
   ],
   imports: [
     CommonModule,
