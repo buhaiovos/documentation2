@@ -1,8 +1,6 @@
 package edu.cad.study;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -12,13 +10,12 @@ import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @Slf4j
 public abstract class ActionController<Entity, Id, Dto> extends ActionProcessor<Dto, Dto, Id> {
-    final EntityService<Entity, Id, Dto> service;
-    final EntityMapper<Entity, Dto> mapper;
+    private final EntityService<Entity, Id, Dto> service;
+    private final EntityMapper<Entity, Dto> mapper;
 
-    String entityName;
+    private String entityName;
 
     @Override
     public List<Dto> list() {

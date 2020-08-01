@@ -2,14 +2,21 @@ package edu.cad.study.common;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
+import static java.util.Objects.requireNonNull;
+
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public record CipherAndTitledSubjectInfo(
         String cipher,
-        int id,
+        Integer id,
         String denotation,
-        int semester,
-        double ects,
-        double lectures,
-        double practices,
-        double labs
-) {}
+        Integer semester,
+        Double ects,
+        Double lectures,
+        Double practices,
+        Double labs
+) {
+    public CipherAndTitledSubjectInfo {
+        requireNonNull(cipher);
+        requireNonNull(id);
+    }
+}

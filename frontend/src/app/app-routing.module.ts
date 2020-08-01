@@ -22,6 +22,7 @@ import { DiplomaPrepWorkTypeListComponent } from "./data-crud/diploma-prep-work-
 import { GroupsListComponent } from "./data-crud/groups-list/groups-list.component";
 import { GroupComponent } from "./data-crud/group/group.component";
 import { CurriculumListComponent } from "./data-crud/curriculum-list/curriculum-list.component";
+import { CurriculumSubjectSelectorComponent } from "./data-crud/curriculum-subject-selector/curriculum-subject-selector.component";
 
 
 const routes: Routes = [
@@ -47,7 +48,8 @@ const routes: Routes = [
   {path: 'diploma-preparation/work-types', component: DiplomaPrepWorkTypeListComponent},
   {path: 'groups', component: GroupsListComponent},
   {path: 'group', component: GroupComponent},
-  {path: 'curricula', component: CurriculumListComponent}
+  {path: 'curricula', component: CurriculumListComponent},
+  {path: 'curriculum-subject-list-selection', component: CurriculumSubjectSelectorComponent}
 ];
 
 @NgModule({

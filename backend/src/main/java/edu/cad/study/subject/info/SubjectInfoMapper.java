@@ -8,6 +8,10 @@ import edu.cad.study.control.ControlMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
+
 @Component
 @RequiredArgsConstructor
 public class SubjectInfoMapper implements EntityMapper<SubjectInfo, SubjectInfoDto> {
@@ -42,5 +46,24 @@ public class SubjectInfoMapper implements EntityMapper<SubjectInfo, SubjectInfoD
     @Deprecated
     public DropdownOption toOption(SubjectInfo e) {
         throw new UnsupportedOperationException("Unsupported");
+    }
+
+    public List<RichSubjectInfoDto> toEnrichedResponse(List<SubjectInfo> infos) {
+        return infos.stream()
+                .map(si -> new RichSubjectInfoDto(
+                        si.getId(),
+                        si.getSubjectHeader().getDenotation(),
+                        si.getSemester(),
+                        si.getSemestersDuration(),
+                        si.getLectures(),
+                        si.getActualLectures(),
+                        si.getLabs(),
+                        si.getActualLabs(),
+                        si.getPractices(),
+                        si.getActualPractices(),
+                        si.getEcts(),
+                        getControlsIds(si)
+                ))
+                .collect(toList());
     }
 }

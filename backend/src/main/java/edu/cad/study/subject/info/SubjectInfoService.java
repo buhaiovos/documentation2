@@ -125,7 +125,6 @@ public class SubjectInfoService implements EntityService<SubjectInfo, Integer, S
 
     public boolean isCourseWork(SubjectInfo si) {
         ControlDictionary courseWork = controlDictionaryService.findById(COURSE_WORK).orElseThrow();
-
         return si.hasControlOfType(courseWork);
     }
 

@@ -25,13 +25,14 @@ export class ControlComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const types = this.service.getTypes().pipe(take(1));
-    const control = this.route.paramMap.pipe(
+    const types$ = this.service.getTypes().pipe(take(1));
+
+    const control$ = this.route.paramMap.pipe(
       flatMap(param => this.getControl(param)),
       take(1)
     );
 
-    this.initializeFields(types, control);
+    this.initializeFields(types$, control$);
   }
 
   private initializeFields(types: Observable<DropdownOption[]>, control: Observable<Control>) {

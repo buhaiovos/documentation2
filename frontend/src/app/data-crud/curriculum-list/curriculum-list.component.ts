@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CurriculumService } from "../curriculum/curriculum.service";
 import { Curriculum } from "../../models/curriculum.model";
 import { Utils } from "../../util/utils";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-curriculum-list',
@@ -13,7 +14,8 @@ export class CurriculumListComponent implements OnInit {
 
   public curricula: Curriculum[];
 
-  constructor(private service: CurriculumService) {
+  constructor(private service: CurriculumService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -27,6 +29,9 @@ export class CurriculumListComponent implements OnInit {
   delete(c: Curriculum): void {
   }
 
-  addSubject(c: Curriculum) {
+  addSubject(c: Curriculum): void {
+    this.router
+      .navigate(['/curriculum-subject-list-selection', {id: c.id}])
+      .then(Utils.noopFunction);
   }
 }

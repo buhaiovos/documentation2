@@ -49,7 +49,7 @@ public class CurriculumService implements EntityService<Curriculum, Integer, Cur
         curriculum.setDenotation(curriculumDto.getDenotation());
 
         Set<CurriculumSubject> curriculumSubjects =
-                curriculumSubjectService.getCurriculumSubjects(curriculumDto.getSubjectIdsByCiphers(), curriculum);
+                curriculumSubjectService.getCurriculumSubjects(curriculumDto.getSubjectsWithCiphers(), curriculum);
 
         curriculum.setCurriculumSubjects(curriculumSubjects);
 
