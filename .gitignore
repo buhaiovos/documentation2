@@ -72,3 +72,4 @@ testem.log
 Thumbs.db
 /frontend/node/
 /backend/cds/set-env.sh
+/ignored
