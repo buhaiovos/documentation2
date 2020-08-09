@@ -62,11 +62,11 @@ public class SubjectHeaderService implements EntityService<SubjectHeader, Intege
         ofNullable(dto.superSubject().id()).ifPresent(
                 superSubjectId -> entity.setSuperSubject(repo.findById(superSubjectId).orElseThrow())
         );
-        ofNullable(dto.curriculumSection()).ifPresent(
-                section -> entity.setCurriculumSection(sectionService.findById(section.id()).orElseThrow())
+        ofNullable(dto.curriculumSection().id()).ifPresent(
+                id -> entity.setCurriculumSection(sectionService.findById(id).orElseThrow())
         );
-        ofNullable(dto.workingPlanSection()).ifPresent(
-                section -> entity.setWorkingPlanSection(sectionService.findById(section.id()).orElseThrow())
+        ofNullable(dto.workingPlanSection().id()).ifPresent(
+                id -> entity.setWorkingPlanSection(sectionService.findById(id).orElseThrow())
         );
     }
 
