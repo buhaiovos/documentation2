@@ -1,3 +1,68 @@
-<p>curriculum-subject-selector:</p>
-<p>{{curriculum.id}}</p>
-<p>{{subjects.length}}</p>
+<div class="columns" *ngIf="curriculum; else loading">
+  <div class="column">
+    <p class="is-size-3">{{curriculum.denotation}}</p>
+    <table class="table is-hoverable is-bordered is-fullwidth infos-container">
+      <thead>
+      <tr>
+        <th>Шифр</th>
+        <th>id</th>
+        <th>Назва</th>
+        <th>Семестр</th>
+        <th>ECTS</th>
+        <th>Лекції</th>
+        <th>Практики</th>
+        <th>Лаби</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let subject of curriculum.subjectsWithCiphers">
+        <td>{{subject.cipher}}</td>
+        <td>{{subject.id}}</td>
+        <td>{{subject.denotation}}</td>
+        <td>{{subject.semester}}</td>
+        <td>{{subject.ects}}</td>
+        <td>{{subject.lectures}}</td>
+        <td>{{subject.practices}}</td>
+        <td>{{subject.labs}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="column">
+    <p class="is-size-3">Предмети</p>
+    <table class="table is-hoverable is-bordered is-fullwidth infos-container">
+      <thead>
+      <tr>
+        <th></th>
+        <th>id</th>
+        <th>Назва</th>
+        <th>Семестр</th>
+        <th>ECTS</th>
+        <th>Лекції</th>
+        <th>Практики</th>
+        <th>Лаби</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let subject of subjects">
+        <td>
+          <label>
+            <input type="checkbox" (click)="subjectSelected(subject)"/>
+          </label>
+        </td>
+        <td>{{subject.id}}</td>
+        <td>{{subject.denotation}}</td>
+        <td>{{subject.semester}}</td>
+        <td>{{subject.ects}}</td>
+        <td>{{subject.lectures}}</td>
+        <td>{{subject.practices}}</td>
+        <td>{{subject.labs}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>

@@ -40,4 +40,7 @@ export class CurriculumSubjectSelectorComponent implements OnInit {
       });
   }
 
+  subjectSelected(subject: RichSubjectInfo):void {
+    console.log("subject selected: " + subject.denotation);
+  }
 }
