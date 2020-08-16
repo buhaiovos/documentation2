@@ -5,8 +5,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class OtherLoadService {
-  private allOtherLoadUrl = 'http://localhost:8080/other-load';
-  private submitOtherLoadUrl = 'http://localhost:8080/distributed-other-load';
+  private allOtherLoadUrl = '/other-load';
+  private submitOtherLoadUrl = '/distributed-other-load';
 
   constructor(private http: HttpClient) {
   }

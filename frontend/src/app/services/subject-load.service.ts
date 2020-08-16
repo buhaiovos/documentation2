@@ -5,8 +5,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class SubjectLoadService {
-  private subjectLoadApiEndpoint = 'http://localhost:8080/subject-load';
-  private distributedSubjectLoadApiEndpoint = 'http://localhost:8080/distributed-subject-load';
+  private subjectLoadApiEndpoint = '/subject-load';
+  private distributedSubjectLoadApiEndpoint = '/distributed-subject-load';
 
   constructor(private http: HttpClient) {
   }

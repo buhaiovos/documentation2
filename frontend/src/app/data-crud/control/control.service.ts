@@ -8,10 +8,10 @@ import { AbstractCrudService } from "../abstract/abstract-crud.service";
 @Injectable()
 export class ControlService extends AbstractCrudService<Control> {
   protected baseUrl(): string {
-    return 'http://localhost:8080/v2/controls';
+    return '/v2/controls';
   }
 
-  static controlTypes = 'http://localhost:8080/v2/controls/types';
+  static controlTypes = '/v2/controls/types';
 
   constructor(http: HttpClient) {
     super(http);

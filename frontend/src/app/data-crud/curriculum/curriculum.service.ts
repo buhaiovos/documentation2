@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class CurriculumService extends AbstractCrudService<Curriculum> {
-  protected baseUrl: () => string = () => 'http://localhost:8080/v2/curricula';
+  protected baseUrl: () => string = () => '/v2/curricula';
 
   constructor(http: HttpClient) {
     super(http);

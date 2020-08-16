@@ -10,8 +10,8 @@ import { DropdownOption } from "../../models/dropdown-option.model";
 import { DataCrudModule } from "../data-crud.module";
 
 describe('SubjectListService', () => {
-  const SUBJECT_HEADERS_URL = 'http://localhost:8080/v2/subject-headers';
-  const SUBJECT_INFOS_URS = 'http://localhost:8080/v2/subject-infos';
+  const SUBJECT_HEADERS_URL = '/v2/subject-headers';
+  const SUBJECT_INFOS_URS = '/v2/subject-infos';
 
   let service: SubjectListService;
   let httpClient: HttpClient;

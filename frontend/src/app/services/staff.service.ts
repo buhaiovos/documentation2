@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class StaffService {
-  private allStaff = 'http://localhost:8080/staff/all';
+  private allStaff = '/staff/all';
 
   constructor(private http: HttpClient) {
   }

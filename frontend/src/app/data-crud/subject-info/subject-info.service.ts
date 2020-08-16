@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class SubjectInfoService extends AbstractCrudService<SubjectInfo> {
-  protected baseUrl: () => string = () => 'http://localhost:8080/v2/subject-infos';
+  protected baseUrl: () => string = () => '/v2/subject-infos';
   private enriched: string = `${this.baseUrl()}/enriched`;
 
   constructor(http: HttpClient) {
