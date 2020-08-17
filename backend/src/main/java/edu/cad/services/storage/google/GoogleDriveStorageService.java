@@ -1,5 +1,6 @@
-package edu.cad.services.storage;
+package edu.cad.services.storage.google;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -11,12 +12,15 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
+import edu.cad.services.storage.StorageService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collections;
@@ -29,7 +33,8 @@ import static java.lang.String.format;
 @Primary
 @Lazy
 @Slf4j
-public class GoogleDriveStorageService implements StorageService {
+@RequiredArgsConstructor
+class GoogleDriveStorageService implements StorageService {
     /**
      * Be sure to specify the name of your application. If the application name is {@code null} or
      * blank, the application will log a warning. Suggested format is "MyCompany-ProductName/1.0".
@@ -51,6 +56,9 @@ public class GoogleDriveStorageService implements StorageService {
      */
     private Drive drive;
 
+    private final GoogleDriveConfigurationProperties properties;
+    private final ObjectMapper objectMapper;
+
     @PostConstruct
     public void init() {
         log.info("Initializing...");
@@ -71,9 +79,10 @@ public class GoogleDriveStorageService implements StorageService {
      * Authorizes the installed application to access user's protected data.
      */
     private Credential authorize() throws Exception {
+        var credentials = properties.getCredentials();
         return GoogleCredential
                 .fromStream(
-                        GoogleDriveStorageService.class.getResourceAsStream("/kpi-cad-documentation-438eaf836d3f.json")
+                        new ByteArrayInputStream(objectMapper.writeValueAsBytes(credentials))
                 )
                 .createScoped(Collections.singleton(DriveScopes.DRIVE_FILE));
     }

@@ -34,3 +34,17 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+google:
+  drive:
+    credentials:
+      type: ${GD_CRED_TYPE}
+      project-id: ${GD_CRED_PROJ_ID}
+      private-key-id: ${GD_CRED_PRIV_KEY_ID}
+      private-key: ${GD_CRED_PRIV_KEY}
+      client-email: ${GD_CRED_CLIENT_EMAIL}
+      client-id: ${GD_CRED_CLIENT_ID}
+      auth-uri: ${GD_CRED_AUTH_URI}
+      token-uri: ${GD_CRED_TOKEN_URI}
+      auth-provider-x509-cert-url: ${GD_CRED_AUTH_PROVIDER_X509_CERT_URL}
+      client-x509-cert-url: ${GD_CRED_CLIENT_X509_CERT_URL}
