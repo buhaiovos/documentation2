@@ -14,6 +14,6 @@ public record SubjectHeaderDto(
         DropdownOption department
 ) {
     public SubjectHeaderDto {
-        this.subjectTypeId = 1;
+        subjectTypeId = 1;
     }
 }
