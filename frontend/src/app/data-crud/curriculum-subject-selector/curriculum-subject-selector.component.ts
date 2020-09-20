@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Curriculum } from "../../models/curriculum.model";
+import { Curriculum, SubjectWithCipher } from "../../models/curriculum.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CurriculumService } from "../curriculum/curriculum.service";
 import { RichSubjectInfo } from "../../models/rich-subject-info.model";
@@ -18,16 +18,16 @@ export class CurriculumSubjectSelectorComponent implements OnInit {
   curriculum: Curriculum;
   subjects: RichSubjectInfo[];
 
-  constructor(private activeRoute: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private router: Router,
               private curriculumService: CurriculumService,
               private subjectInfoService: SubjectInfoService) {
   }
 
   ngOnInit(): void {
-    const curriculum$ = this.activeRoute.paramMap.pipe(
-      map(paramMap => {console.log('1'); return paramMap.get('id');}),
-      flatMap(id => {console.log('2'); return this.curriculumService.getById(+id)}),
+    const curriculum$ = this.route.paramMap.pipe(
+      map(paramMap => paramMap.get('id')),
+      flatMap(id => this.curriculumService.getById(+id)),
       take(1)
     );
     const subjects$ = this.subjectInfoService.getAllEnriched();
@@ -36,11 +36,55 @@ export class CurriculumSubjectSelectorComponent implements OnInit {
       .subscribe(result => {
         this.curriculum = result.curriculum;
         this.subjects = result.subjects;
-        console.log('Here');
+        this.filterSubjects();
       });
   }
 
-  subjectSelected(subject: RichSubjectInfo):void {
+  subjectSelected(subject: RichSubjectInfo): void {
     console.log("subject selected: " + subject.denotation);
+    this.subjects = this.subjects.filter(
+      subj => subj.id !== subject.id
+    );
+    const subjectWithCipher = new SubjectWithCipher(
+      "",
+      subject.id,
+      subject.denotation,
+      subject.semester,
+      subject.ects,
+      subject.lectures,
+      subject.practices,
+      subject.labs
+    );
+    this.curriculum.subjectsWithCiphers.push(subjectWithCipher)
+  }
+
+  save(): void {
+    console.log("Pushing changes");
+    this.curriculumService
+      .save(this.curriculum)
+      .pipe(take(1))
+      .subscribe(_ => {
+        console.log("Changes accepted")
+        this.ngOnInit()
+      });
+  }
+
+  private filterSubjects(): void {
+    this.subjects =
+      this.subjects.filter(
+        s => !this.isAlreadyIncluded(s)
+      )
+  }
+
+
+  private isAlreadyIncluded(subject: RichSubjectInfo): boolean {
+    const idsOfIncluded = this.curriculum.subjectsWithCiphers.map(s => s.id);
+    return idsOfIncluded.includes(subject.id);
+  }
+
+  delete(id: number): void {
+    console.log("Removing id: " + id);
+    this.curriculum.subjectsWithCiphers =
+      this.curriculum.subjectsWithCiphers.filter(s => s.id !== id);
   }
 }

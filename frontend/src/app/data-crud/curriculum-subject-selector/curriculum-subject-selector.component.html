@@ -1,68 +1,75 @@
-<div class="columns" *ngIf="curriculum; else loading">
-  <div class="column">
-    <p class="is-size-3">{{curriculum.denotation}}</p>
-    <table class="table is-hoverable is-bordered is-fullwidth infos-container">
-      <thead>
-      <tr>
-        <th>Шифр</th>
-        <th>id</th>
-        <th>Назва</th>
-        <th>Семестр</th>
-        <th>ECTS</th>
-        <th>Лекції</th>
-        <th>Практики</th>
-        <th>Лаби</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let subject of curriculum.subjectsWithCiphers">
-        <td>{{subject.cipher}}</td>
-        <td>{{subject.id}}</td>
-        <td>{{subject.denotation}}</td>
-        <td>{{subject.semester}}</td>
-        <td>{{subject.ects}}</td>
-        <td>{{subject.lectures}}</td>
-        <td>{{subject.practices}}</td>
-        <td>{{subject.labs}}</td>
-      </tr>
-      </tbody>
-    </table>
+<div class="container is-fluid">
+  <br>
+  <div class="buttons">
+    <button class="button is-primary" (click)="save()">Зберегти</button>
   </div>
-  <div class="column">
-    <p class="is-size-3">Предмети</p>
-    <table class="table is-hoverable is-bordered is-fullwidth infos-container">
-      <thead>
-      <tr>
-        <th></th>
-        <th>id</th>
-        <th>Назва</th>
-        <th>Семестр</th>
-        <th>ECTS</th>
-        <th>Лекції</th>
-        <th>Практики</th>
-        <th>Лаби</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let subject of subjects">
-        <td>
-          <label>
-            <input type="checkbox" (click)="subjectSelected(subject)"/>
-          </label>
-        </td>
-        <td>{{subject.id}}</td>
-        <td>{{subject.denotation}}</td>
-        <td>{{subject.semester}}</td>
-        <td>{{subject.ects}}</td>
-        <td>{{subject.lectures}}</td>
-        <td>{{subject.practices}}</td>
-        <td>{{subject.labs}}</td>
-      </tr>
-      </tbody>
-    </table>
+  <div class="columns" *ngIf="curriculum; else loading">
+    <div class="column">
+      <p class="is-size-3">{{curriculum.denotation}}</p>
+      <table class="table is-hoverable is-bordered is-fullwidth infos-container">
+        <thead>
+        <tr>
+          <th>Шифр</th>
+          <th>id</th>
+          <th>Назва</th>
+          <th>Семестр</th>
+          <th>ECTS</th>
+          <th>Лекції</th>
+          <th>Практики</th>
+          <th>Лаби</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let subject of curriculum.subjectsWithCiphers">
+          <td><input style="width: 75px" [(ngModel)]="subject.cipher" type="text"/></td>
+          <td>{{subject.id}}</td>
+          <td>{{subject.denotation}}</td>
+          <td>{{subject.semester}}</td>
+          <td>{{subject.ects}}</td>
+          <td>{{subject.lectures}}</td>
+          <td>{{subject.practices}}</td>
+          <td>{{subject.labs}}</td>
+          <td><a class="delete" (click)="delete(subject.id)"></a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="column">
+      <p class="is-size-3">Предмети</p>
+      <table class="table is-hoverable is-bordered is-fullwidth infos-container">
+        <thead>
+        <tr>
+          <th></th>
+          <th>id</th>
+          <th>Назва</th>
+          <th>Семестр</th>
+          <th>ECTS</th>
+          <th>Лекції</th>
+          <th>Практики</th>
+          <th>Лаби</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let subject of subjects">
+          <td>
+            <label>
+              <button (click)="subjectSelected(subject)">+</button>
+            </label>
+          </td>
+          <td>{{subject.id}}</td>
+          <td>{{subject.denotation}}</td>
+          <td>{{subject.semester}}</td>
+          <td>{{subject.ects}}</td>
+          <td>{{subject.lectures}}</td>
+          <td>{{subject.practices}}</td>
+          <td>{{subject.labs}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-
 <ng-template #loading>
   <p>Loading...</p>
 </ng-template>

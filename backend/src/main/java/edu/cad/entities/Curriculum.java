@@ -11,6 +11,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.util.function.Predicate.not;
+import static java.util.stream.Collectors.toSet;
+
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id", callSuper = false)
@@ -37,7 +40,7 @@ public class Curriculum extends YearTracked implements IDatabaseEntity<Integer>,
 
     @OneToMany(
             fetch = FetchType.EAGER, mappedBy = "pk.curriculum",
-            cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE},
+            cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private Set<CurriculumSubject> curriculumSubjects = new HashSet<>();
@@ -52,9 +55,17 @@ public class Curriculum extends YearTracked implements IDatabaseEntity<Integer>,
         this.id = id;
     }
 
-    public Curriculum setCurriculumSubjects(Set<CurriculumSubject> curriculumSubjects) {
-        this.curriculumSubjects.clear();
-        this.curriculumSubjects.addAll(curriculumSubjects);
+    public Curriculum setCurriculumSubjects(Set<CurriculumSubject> newCurriculumSubjects) {
+        Set<CurriculumSubject> forRemoval = this.curriculumSubjects.stream()
+                .filter(cs -> !newCurriculumSubjects.contains(cs))
+                .collect(toSet());
+
+        this.curriculumSubjects.removeAll(forRemoval);
+
+        newCurriculumSubjects.stream()
+                .filter(not(this.curriculumSubjects::contains))
+                .forEach(cs -> this.curriculumSubjects.add(cs));
+
         return this;
     }
 

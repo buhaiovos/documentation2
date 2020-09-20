@@ -104,13 +104,13 @@ public class SubjectInfo extends YearTracked implements IDatabaseEntity<Integer>
         return controls;
     }
 
-    public void setControls(Set<Control> controls) {
+    public void setControls(Set<Control> newControls) {
         Set<Control> forRemoval = this.controls.stream()
-                .filter(control -> !controls.contains(control))
+                .filter(control -> !newControls.contains(control))
                 .collect(toSet());
         forRemoval.forEach(c -> c.setSubjectInfo(null));
         this.controls.removeAll(forRemoval);
-        controls.stream()
+        newControls.stream()
                 .filter(not(this.controls::contains))
                 .forEach(c -> this.controls.add(c));
     }
