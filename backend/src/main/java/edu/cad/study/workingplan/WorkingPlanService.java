@@ -1,6 +1,7 @@
 package edu.cad.study.workingplan;
 
 import edu.cad.entities.WorkingPlan;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityService;
 import edu.cad.study.academicgroup.AcademicGroupService;
 import edu.cad.study.curriculum.CurriculumService;
@@ -20,6 +21,7 @@ import java.util.function.Supplier;
 
 import static java.util.Optional.ofNullable;
 import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -54,43 +56,74 @@ public class WorkingPlanService implements EntityService<WorkingPlan, Integer, W
     }
 
     private void updateFields(final WorkingPlanDto dto, final WorkingPlan newWorkingPlan) {
-        setFieldIfRequested(dto::getCurriculumId, curriculumService::findById, newWorkingPlan::setCurriculum);
-        setFieldIfRequested(dto::getScientificResearchSubjectId, curriculumSubjectService.subjectInfoService()::findById,
-                newWorkingPlan::setScientificResearchSubject);
-        setFieldIfRequested(dto::getStateCertificationId, certificationService::findById, newWorkingPlan::setStateCertification);
-        setFieldIfRequested(dto::getPracticeId, practiceService::findById, newWorkingPlan::setPractice);
-        setFieldIfRequested(dto::getGroupIds, academicGroupService::findAllByIds, this::listToSet, newWorkingPlan::setGroups);
-        setFieldIfRequested(dto::getDiplomaPreparationIds, diplomaPreparationService::findAllByIds,
-                this::listToSet, newWorkingPlan::setDiplomaPreparations);
+        setFieldIfRequested(
+                dto::getCurriculum,
+                curriculumService::findById,
+                newWorkingPlan::setCurriculum
+        );
+        setFieldIfRequested(
+                dto::getScientificResearchSubject,
+                curriculumSubjectService.subjectInfoService()::findById,
+                newWorkingPlan::setScientificResearchSubject
+        );
+        setFieldIfRequested(
+                dto::getStateCertification,
+                certificationService::findById,
+                newWorkingPlan::setStateCertification
+        );
+        setFieldIfRequested(
+                dto::getPractice,
+                practiceService::findById,
+                newWorkingPlan::setPractice
+        );
+        setListFieldIfRequested(
+                dto::getGroups,
+                DropdownOption::id,
+                academicGroupService::findAllByIds,
+                groups -> newWorkingPlan.setGroups(Set.copyOf(groups))
+        );
+        setListFieldIfRequested(
+                dto::getDiplomaPreparations,
+                DropdownOption::id,
+                diplomaPreparationService::findAllByIds,
+                diplomaPreparations ->
+                        newWorkingPlan.setDiplomaPreparations(Set.copyOf(diplomaPreparations))
+        );
 
-        setFieldIfRequested(dto::getSubjectIdsByCiphers,
-                (Map<String, Integer> ciphersIds) -> curriculumSubjectService.getCurriculumSubjects(ciphersIds, newWorkingPlan),
-                identity(), newWorkingPlan::setCurriculumSubjects);
+        setListFieldIfRequested(
+                dto::getSubjectsWithCiphers,
+                identity(),
+                (subjectsWithCiphers) ->
+                        curriculumSubjectService.getCurriculumSubjects(subjectsWithCiphers, newWorkingPlan),
+                (subjects) -> newWorkingPlan.setCurriculumSubjects(Set.copyOf(subjects))
+        );
+
         ofNullable(dto.getDenotation()).ifPresent(newWorkingPlan::setDenotation);
     }
 
-    public <T, I, R> void setFieldIfRequested(Supplier<T> nullable,
-                                              Function<T, I> findFunction,
-                                              Function<I, R> mapper,
-                                              Consumer<R> setter) {
-        ofNullable(nullable.get())
-                .map(findFunction)
-                .map(mapper)
-                .ifPresent(setter);
+    public <T, I, S> void setListFieldIfRequested(Supplier<List<T>> nullable,
+                                                  Function<T, I> idMapper,
+                                                  Function<List<I>, Collection<S>> searchFunction,
+                                                  Consumer<Collection<S>> setter) {
+        List<I> ids = ofNullable(nullable.get())
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .map(idMapper)
+                .collect(toList());
+
+        Collection<S> valuesToBeSet = searchFunction.apply(ids);
+        setter.accept(valuesToBeSet);
     }
 
-    public <T, R> void setFieldIfRequested(Supplier<T> nullable,
-                                           Function<T, Optional<R>> findFunction,
-                                           Consumer<R> setter) {
+    public <R> void setFieldIfRequested(Supplier<DropdownOption> nullable,
+                                        Function<Integer, Optional<R>> findFunction,
+                                        Consumer<R> setter) {
         ofNullable(nullable.get())
+                .map(DropdownOption::id)
                 .map(findFunction)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .ifPresent(setter);
-    }
-
-    private <T> Set<T> listToSet(List<T> list) {
-        return new HashSet<>(list);
     }
 
     @Override

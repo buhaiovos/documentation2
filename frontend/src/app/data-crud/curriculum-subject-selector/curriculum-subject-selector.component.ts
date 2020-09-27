@@ -1,33 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { Curriculum, SubjectWithCipher } from "../../models/curriculum.model";
+import { Curriculum } from "../../models/curriculum.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CurriculumService } from "../curriculum/curriculum.service";
 import { RichSubjectInfo } from "../../models/rich-subject-info.model";
 import { SubjectInfoService } from "../subject-info/subject-info.service";
 import { flatMap, map, take } from "rxjs/operators";
-import { forkJoin } from "rxjs";
+import { forkJoin, Observable } from "rxjs";
+import { WorkingPlanService } from "../working-plan/working-plan.service";
+import { WorkingPlan } from "../../models/working-plan.model";
+import { SubjectWithCipher } from "../../models/subject-with-cipher.model";
 
 @Component({
   selector: 'app-curriculum-subject-selector',
   templateUrl: './curriculum-subject-selector.component.html',
   styleUrls: ['./curriculum-subject-selector.component.css'],
-  providers: [CurriculumService, SubjectInfoService]
+  providers: [CurriculumService, SubjectInfoService, WorkingPlanService]
 })
 export class CurriculumSubjectSelectorComponent implements OnInit {
 
-  curriculum: Curriculum;
+  curriculum: Curriculum | WorkingPlan;
   subjects: RichSubjectInfo[];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private curriculumService: CurriculumService,
+              private workingPlanService: WorkingPlanService,
               private subjectInfoService: SubjectInfoService) {
   }
 
   ngOnInit(): void {
     const curriculum$ = this.route.paramMap.pipe(
-      map(paramMap => paramMap.get('id')),
-      flatMap(id => this.curriculumService.getById(+id)),
+      map(paramMap => new CurriculumSubjectSearchParams(
+        paramMap.get('id'),
+        paramMap.get('type')
+      )),
+      flatMap(params => this.fetchSubjects(params)),
       take(1)
     );
     const subjects$ = this.subjectInfoService.getAllEnriched();
@@ -38,6 +45,14 @@ export class CurriculumSubjectSelectorComponent implements OnInit {
         this.subjects = result.subjects;
         this.filterSubjects();
       });
+  }
+
+  private fetchSubjects(params: CurriculumSubjectSearchParams): Observable<Curriculum | WorkingPlan> {
+    const id = +(params.id);
+    if (params.type) {
+      return this.workingPlanService.getById(id)
+    }
+    return this.curriculumService.getById(id)
   }
 
   subjectSelected(subject: RichSubjectInfo): void {
@@ -86,5 +101,11 @@ export class CurriculumSubjectSelectorComponent implements OnInit {
     console.log("Removing id: " + id);
     this.curriculum.subjectsWithCiphers =
       this.curriculum.subjectsWithCiphers.filter(s => s.id !== id);
+  }
+}
+
+export class CurriculumSubjectSearchParams {
+  constructor(public id: string,
+              public type: string) {
   }
 }

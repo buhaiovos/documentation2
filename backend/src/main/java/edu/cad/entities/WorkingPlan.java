@@ -37,7 +37,7 @@ public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "workingPlan")
     private Set<AcademicGroup> groups = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_scientific_research_subject")
     private SubjectInfo scientificResearchSubject;
 

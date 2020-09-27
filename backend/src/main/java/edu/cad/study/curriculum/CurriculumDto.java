@@ -7,14 +7,12 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 @Accessors(chain = true)
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 public class CurriculumDto {
     int id;
     String denotation;
-    Map<String, Integer> subjectIdsByCiphers;
     List<CipherAndTitledSubjectInfo> subjectsWithCiphers;
 }

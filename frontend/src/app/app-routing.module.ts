@@ -23,6 +23,7 @@ import { GroupsListComponent } from "./data-crud/groups-list/groups-list.compone
 import { GroupComponent } from "./data-crud/group/group.component";
 import { CurriculumListComponent } from "./data-crud/curriculum-list/curriculum-list.component";
 import { CurriculumSubjectSelectorComponent } from "./data-crud/curriculum-subject-selector/curriculum-subject-selector.component";
+import { WorkingPlanListComponent } from "./data-crud/working-plan-list/working-plan-list.component";
 
 
 const routes: Routes = [
@@ -49,6 +50,7 @@ const routes: Routes = [
   {path: 'groups', component: GroupsListComponent},
   {path: 'group', component: GroupComponent},
   {path: 'curricula', component: CurriculumListComponent},
+  {path: 'working-plans', component: WorkingPlanListComponent},
   {path: 'curriculum-subject-list-selection', component: CurriculumSubjectSelectorComponent}
 ];
 

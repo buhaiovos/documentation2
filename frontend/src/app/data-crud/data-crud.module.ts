@@ -23,6 +23,8 @@ import { GroupComponent } from './group/group.component';
 import { CurriculumListComponent } from './curriculum-list/curriculum-list.component';
 import { CurriculumComponent } from './curriculum/curriculum.component';
 import { CurriculumSubjectSelectorComponent } from './curriculum-subject-selector/curriculum-subject-selector.component';
+import { WorkingPlanListComponent } from './working-plan-list/working-plan-list.component';
+import { WorkingPlanComponent } from './working-plan/working-plan.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { CurriculumSubjectSelectorComponent } from './curriculum-subject-selecto
     GroupComponent,
     CurriculumListComponent,
     CurriculumComponent,
-    CurriculumSubjectSelectorComponent
+    CurriculumSubjectSelectorComponent,
+    WorkingPlanListComponent,
+    WorkingPlanComponent
   ],
   imports: [
     CommonModule,

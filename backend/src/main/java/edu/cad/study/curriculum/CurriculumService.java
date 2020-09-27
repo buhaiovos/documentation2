@@ -37,7 +37,7 @@ public class CurriculumService implements EntityService<Curriculum, Integer, Cur
         final var newCurriculum = repo.save(curriculum);
 
         Set<CurriculumSubject> curriculumSubjects =
-                curriculumSubjectService.getCurriculumSubjects(curriculumDto.getSubjectIdsByCiphers(), newCurriculum);
+                curriculumSubjectService.getCurriculumSubjects(curriculumDto.getSubjectsWithCiphers(), newCurriculum);
 
         newCurriculum.setCurriculumSubjects(curriculumSubjects);
         return repo.save(newCurriculum);
