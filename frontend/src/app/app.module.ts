@@ -12,11 +12,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { SubjectLoadTableComponent } from './components/subject-load-table/subject-load-table.component';
-import { OtherLoadTableComponent } from './components/other-load-table/other-load-table.component';
-import { LoadDistributorComponent } from './components/load-distributor/load-distributor.component';
+import { SubjectLoadTableComponent } from './load-distribution/subject-load-table/subject-load-table.component';
+import { OtherLoadTableComponent } from './load-distribution/other-load-table/other-load-table.component';
+import { LoadDistributorComponent } from './load-distribution/load-distributor/load-distributor.component';
 import { AppRoutingModule } from './app-routing.module';
-import { StatisticsComponent } from './components/statistics/statistics.component';
+import { StatisticsComponent } from './load-distribution/statistics/statistics.component';
 import { ChartsModule } from 'ng2-charts';
 import { DataCrudModule } from "./data-crud/data-crud.module";
 
