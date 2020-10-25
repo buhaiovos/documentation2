@@ -38,4 +38,10 @@ public class DiplomaPreparation extends YearTracked implements IDatabaseEntity<I
     public void setIdentifier(Integer id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "%s - %.2f (%s)"
+                .formatted(workType.getDenotation(), norm, department.getDenotation());
+    }
 }

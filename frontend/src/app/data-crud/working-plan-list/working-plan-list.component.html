@@ -8,6 +8,12 @@
   <tr>
     <th>id</th>
     <th>Назва</th>
+    <th>Навчальний план</th>
+    <th>Групи</th>
+    <th>Державна атестація</th>
+    <th>Практика</th>
+    <th>Предмет наукового дослідження</th>
+    <th>Дипломна підготовка</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,9 +23,15 @@
   <tr (click)="workingPlan.displaySubjects = !workingPlan.displaySubjects">
     <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.id}}</td>
     <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.denotation}}</td>
+    <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.curriculum?.text}}</td>
+    <td [class.is-selected]="workingPlan.displaySubjects">{{formatArray(workingPlan.groups)}}</td>
+    <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.stateCertification?.text}}</td>
+    <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.practice?.text}}</td>
+    <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.scientificResearchSubject?.text}}</td>
+    <td [class.is-selected]="workingPlan.displaySubjects">{{formatArray(workingPlan.diplomaPreparations)}}</td>
     <td width="10%"><a class="button is-info" (click)="edit(workingPlan)">Редагувати</a></td>
     <td width="10%"><a class="button is-danger" (click)="delete(workingPlan)">Видалити</a></td>
-    <td width="10%"><a class="button is-primary" (click)="addSubject(workingPlan)">Додати предмет</a></td>
+    <td width="10%"><a class="button is-primary" (click)="addSubject(workingPlan)">Предмети</a></td>
   </tr>
   <tr>
     <td colspan="5">

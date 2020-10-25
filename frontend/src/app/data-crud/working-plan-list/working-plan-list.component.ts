@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { Utils } from "../../util/utils";
 import { WorkingPlan } from "../../models/working-plan.model";
 import { WorkingPlanService } from "../working-plan/working-plan.service";
+import { DropdownOption } from "../../models/dropdown-option.model";
 
 @Component({
   selector: 'app-working-plan-list',
@@ -35,4 +36,7 @@ export class WorkingPlanListComponent implements OnInit {
       .then(Utils.noopFunction);
   }
 
+  formatArray(groups: DropdownOption[]): string {
+    return groups.map(option => option.text).join(', ');
+  }
 }
