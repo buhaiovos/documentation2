@@ -28,12 +28,12 @@ import static java.util.stream.Collectors.toList;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class WorkingPlanService implements EntityService<WorkingPlan, Integer, WorkingPlanDto> {
     WorkingPlanRepositoryWrapper repository;
-    CurriculumService curriculumService;
-    StateCertificationService certificationService;
-    PracticeService practiceService;
-    AcademicGroupService academicGroupService;
-    DiplomaPreparationService diplomaPreparationService;
-    CurriculumSubjectService curriculumSubjectService;
+    CurriculumService curricula;
+    StateCertificationService certifications;
+    PracticeService practices;
+    AcademicGroupService groups;
+    DiplomaPreparationService diplomaPreparations;
+    CurriculumSubjectService curriculumSubjects;
 
     @Override
     public List<WorkingPlan> getAll() {
@@ -55,50 +55,50 @@ public class WorkingPlanService implements EntityService<WorkingPlan, Integer, W
         return repository.save(newWorkingPlan);
     }
 
-    private void updateFields(final WorkingPlanDto dto, final WorkingPlan newWorkingPlan) {
+    private void updateFields(final WorkingPlanDto updates, final WorkingPlan workingPlan) {
         setFieldIfRequested(
-                dto::getCurriculum,
-                curriculumService::findById,
-                newWorkingPlan::setCurriculum
+                updates::getCurriculum,
+                curricula::findById,
+                workingPlan::setCurriculum
         );
         setFieldIfRequested(
-                dto::getScientificResearchSubject,
-                curriculumSubjectService.subjectInfoService()::findById,
-                newWorkingPlan::setScientificResearchSubject
+                updates::getScientificResearchSubject,
+                curriculumSubjects.subjectInfoService()::findById,
+                workingPlan::setScientificResearchSubject
         );
         setFieldIfRequested(
-                dto::getStateCertification,
-                certificationService::findById,
-                newWorkingPlan::setStateCertification
+                updates::getStateCertification,
+                certifications::findById,
+                workingPlan::setStateCertification
         );
         setFieldIfRequested(
-                dto::getPractice,
-                practiceService::findById,
-                newWorkingPlan::setPractice
+                updates::getPractice,
+                practices::findById,
+                workingPlan::setPractice
         );
         setListFieldIfRequested(
-                dto::getGroups,
+                updates::getGroups,
                 DropdownOption::id,
-                academicGroupService::findAllByIds,
-                groups -> newWorkingPlan.setGroups(Set.copyOf(groups))
+                groups::findAllByIds,
+                groups -> workingPlan.setGroups(Set.copyOf(groups))
         );
         setListFieldIfRequested(
-                dto::getDiplomaPreparations,
+                updates::getDiplomaPreparations,
                 DropdownOption::id,
-                diplomaPreparationService::findAllByIds,
+                diplomaPreparations::findAllByIds,
                 diplomaPreparations ->
-                        newWorkingPlan.setDiplomaPreparations(Set.copyOf(diplomaPreparations))
+                        workingPlan.setDiplomaPreparations(Set.copyOf(diplomaPreparations))
         );
 
         setListFieldIfRequested(
-                dto::getSubjectsWithCiphers,
+                updates::getSubjectsWithCiphers,
                 identity(),
                 (subjectsWithCiphers) ->
-                        curriculumSubjectService.getCurriculumSubjects(subjectsWithCiphers, newWorkingPlan),
-                (subjects) -> newWorkingPlan.setCurriculumSubjects(Set.copyOf(subjects))
+                        curriculumSubjects.getCurriculumSubjects(subjectsWithCiphers, workingPlan),
+                (subjects) -> workingPlan.setCurriculumSubjects(Set.copyOf(subjects))
         );
 
-        ofNullable(dto.getDenotation()).ifPresent(newWorkingPlan::setDenotation);
+        ofNullable(updates.getDenotation()).ifPresent(workingPlan::setDenotation);
     }
 
     public <T, I, S> void setListFieldIfRequested(Supplier<List<T>> nullable,
