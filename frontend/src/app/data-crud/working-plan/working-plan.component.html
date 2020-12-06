@@ -1,1 +1,29 @@
-<p>working-plan works!</p>
+<div *ngIf="workingPlan; else loading">
+  <br>
+  <label>id:<br>
+    <input [(ngModel)]="workingPlan.id" disabled/>
+  </label>
+
+  <br>
+  <label>Назва:<br>
+    <input [(ngModel)]="workingPlan.denotation"/>
+  </label>
+
+  <br>
+  <label>Дипломна підготовка:</label>
+  <br>
+  <table class="table is-bordered">
+    <tr *ngFor="let preparation of workingPlan.diplomaPreparations">
+      <td>{{preparation.text}}</td>
+      <td><a class="button is-info" (click)="editPreparation(preparation.id)">&#9998;</a></td>
+      <td><a class="button is-danger" (click)="removePreparation(preparation.id)">X</a></td>
+    </tr>
+  </table>
+  <a class="button is-success" (click)="addDiplomaPreparation(workingPlan.id)">Додати підготовку</a>
+
+  <br>
+  <a class="button is-success" (click)="save()">Зберегти</a>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>

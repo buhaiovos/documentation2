@@ -16,7 +16,6 @@ import java.io.Serializable;
 public class DiplomaPreparation extends YearTracked implements IDatabaseEntity<Integer>, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
     @Column(name = "norm")

@@ -1,5 +1,6 @@
 package edu.cad.study.diplomapreparation;
 
+import edu.cad.study.DropdownOption;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,9 +14,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
 public class DiplomaPreparationDto {
-    int id;
+    Integer id;
     float norm;
-    int workTypeId;
-    int departmentId;
-    int workingPlanId;
+    DropdownOption workType;
+    DropdownOption department;
+    DropdownOption workingPlan;
 }

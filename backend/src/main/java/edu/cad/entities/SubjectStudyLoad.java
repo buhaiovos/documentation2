@@ -10,7 +10,6 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@SuppressWarnings("JpaDataSourceORMInspection")
 @Getter
 @Setter
 @ToString

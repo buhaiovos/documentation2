@@ -3,6 +3,7 @@ package edu.cad.study.diplomapreparation;
 import edu.cad.entities.Department;
 import edu.cad.entities.DiplomaPreparation;
 import edu.cad.entities.WorkType;
+import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityService;
 import edu.cad.study.department.DepartmentService;
 import edu.cad.study.worktype.WorkTypeService;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 
 @Service
 @RequiredArgsConstructor
@@ -34,15 +37,18 @@ public class DiplomaPreparationService implements EntityService<DiplomaPreparati
 
     @Override
     public DiplomaPreparation create(DiplomaPreparationDto dto) {
-        Department department =
-                departmentService.findById(dto.getDepartmentId()).orElseThrow();
-        WorkType workType =
-                workTypeService.findById(dto.getWorkTypeId()).orElseThrow();
-
         var newDiplomaPreparation = new DiplomaPreparation()
-                .setNorm(dto.getNorm())
-                .setDepartment(department)
-                .setWorkType(workType);
+                .setNorm(dto.getNorm());
+
+        ofNullable(dto.getDepartment())
+                .map(DropdownOption::id)
+                .flatMap(departmentService::findById)
+                .ifPresent(newDiplomaPreparation::setDepartment);
+
+        ofNullable(dto.getWorkType())
+                .map(DropdownOption::id)
+                .flatMap(workTypeService::findById)
+                .ifPresent(newDiplomaPreparation::setWorkType);
 
         return repo.save(newDiplomaPreparation);
     }
@@ -51,9 +57,9 @@ public class DiplomaPreparationService implements EntityService<DiplomaPreparati
     public DiplomaPreparation update(Integer id, DiplomaPreparationDto dto) {
         DiplomaPreparation updated = repo.findById(id).orElseThrow();
         Department department =
-                departmentService.findById(dto.getDepartmentId()).orElseThrow();
+                departmentService.findById(dto.getDepartment().id()).orElseThrow();
         WorkType workType =
-                workTypeService.findById(dto.getWorkTypeId()).orElseThrow();
+                workTypeService.findById(dto.getWorkType().id()).orElseThrow();
 
         updated.setNorm(dto.getNorm())
                 .setDepartment(department)

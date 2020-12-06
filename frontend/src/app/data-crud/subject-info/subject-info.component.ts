@@ -5,6 +5,7 @@ import { SubjectInfo } from "../../models/subject-info.model";
 import { flatMap, take } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { Control } from "../../models/control.model";
+import { Utils } from "../../util/utils";
 
 @Component({
   selector: 'app-subject-info',
@@ -45,10 +46,12 @@ export class SubjectInfoComponent implements OnInit {
   }
 
   addControl() {
-    this.router.navigate(['controls', {subjectId: this.subjectInfo.id}]);
+    this.router.navigate(['controls', {subjectId: this.subjectInfo.id}])
+      .then(Utils.noopFunction);
   }
 
   editControl(control: Control) {
-    this.router.navigate(['controls', {id: control.id}]);
+    this.router.navigate(['controls', {id: control.id}])
+      .then(Utils.noopFunction);
   }
 }

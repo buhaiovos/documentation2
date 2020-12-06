@@ -25,6 +25,7 @@ import { CurriculumComponent } from './curriculum/curriculum.component';
 import { CurriculumSubjectSelectorComponent } from './curriculum-subject-selector/curriculum-subject-selector.component';
 import { WorkingPlanListComponent } from './working-plan-list/working-plan-list.component';
 import { WorkingPlanComponent } from './working-plan/working-plan.component';
+import { DiplomaPreparationComponent } from './diploma-preparation/diploma-preparation.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { WorkingPlanComponent } from './working-plan/working-plan.component';
     CurriculumComponent,
     CurriculumSubjectSelectorComponent,
     WorkingPlanListComponent,
-    WorkingPlanComponent
+    WorkingPlanComponent,
+    DiplomaPreparationComponent
   ],
   imports: [
     CommonModule,

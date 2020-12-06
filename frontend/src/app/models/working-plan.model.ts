@@ -15,4 +15,19 @@ export class WorkingPlan extends Curriculum {
               public diplomaPreparations: DropdownOption[]) {
     super(id, denotation, subjectsWithCiphers, displaySubjects);
   }
+
+  public static empty(): WorkingPlan {
+    return new WorkingPlan(
+      null,
+      'Введіть назву',
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    );
+  }
 }
