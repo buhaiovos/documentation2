@@ -1,0 +1,28 @@
+<div *ngIf="diplomaPreparation; else loading">
+  <label>id:<br>
+    <input [(ngModel)]="diplomaPreparation.id" disabled/>
+  </label>
+
+  <br>
+  <label>Вид Роботи:<br>
+    <select [(ngModel)]="diplomaPreparation.workType.id">
+      <option *ngFor="let option of workTypes" [value]="option.id">{{option.text}}</option>
+    </select>
+  </label>
+
+  <br>
+  <label>Норма:<br>
+    <input [(ngModel)]="diplomaPreparation.norm">
+  </label>
+
+  <br>
+  <label>Кафедра:<br>
+    <select [(ngModel)]="diplomaPreparation.department.id">
+      <option *ngFor="let option of departments" [value]="option.id">{{option.text}}</option>
+    </select>
+  </label>
+</div>
+<a class="button is-success" (click)="save()">Зберегти</a>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>

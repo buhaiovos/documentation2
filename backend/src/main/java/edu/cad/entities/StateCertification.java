@@ -37,7 +37,7 @@ public class StateCertification extends YearTracked implements IDatabaseEntity<I
 
     @Override
     public String toString() {
-        return form + " (" + semester + " семестр)";
+        return "(%d) %s (%d семестр)".formatted(id, form, semester);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class Practice extends YearTracked implements IDatabaseEntity<Integer>, S
 
     @Override
     public String toString() {
-        return type + " (" + semester + " семестр/" + weeks + " тижні(в))";
+        return type.getDenotation() + " (" + semester + " семестр/" + weeks + " тижні(в))";
     }
 
     @Override

@@ -1,5 +1,6 @@
 package edu.cad.study.workingplan;
 
+import edu.cad.entities.DiplomaPreparation;
 import edu.cad.entities.WorkingPlan;
 import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityService;
@@ -136,5 +137,15 @@ public class WorkingPlanService implements EntityService<WorkingPlan, Integer, W
     @Override
     public void deleteById(Integer id) {
         repository.deleteById(id);
+    }
+
+    public WorkingPlan addDiplomaPreparation(Integer workingPlanId,
+                                             DropdownOption newDiplomaPreparation) {
+        WorkingPlan wp = repository.findById(workingPlanId).orElseThrow();
+        DiplomaPreparation prep = diplomaPreparations.findById(newDiplomaPreparation.id()).orElseThrow();
+
+        wp.getDiplomaPreparations().add(prep);
+
+        return repository.save(wp);
     }
 }

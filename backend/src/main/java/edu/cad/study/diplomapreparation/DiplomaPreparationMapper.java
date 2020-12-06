@@ -1,9 +1,14 @@
 package edu.cad.study.diplomapreparation;
 
+import edu.cad.entities.Curriculum;
+import edu.cad.entities.Department;
 import edu.cad.entities.DiplomaPreparation;
+import edu.cad.entities.WorkType;
 import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
 import org.springframework.stereotype.Component;
+
+import static java.util.Optional.ofNullable;
 
 @Component
 public class DiplomaPreparationMapper implements EntityMapper<DiplomaPreparation, DiplomaPreparationDto> {
@@ -12,9 +17,15 @@ public class DiplomaPreparationMapper implements EntityMapper<DiplomaPreparation
         return new DiplomaPreparationDto()
                 .setId(e.getId())
                 .setNorm(e.getNorm())
-                .setDepartmentId(e.getDepartment().getId())
-                .setWorkTypeId(e.getWorkType().getId())
-                .setWorkingPlanId(e.getWorkingPlan().getId());
+                .setDepartment(ofNullable(e.getDepartment())
+                        .map(d -> new DropdownOption(d.getId(), d.getDenotation()))
+                        .orElse(DropdownOption.empty()))
+                .setWorkType(ofNullable(e.getWorkType())
+                        .map(wt -> new DropdownOption(wt.getId(), wt.getDenotation()))
+                        .orElse(DropdownOption.empty()))
+                .setWorkingPlan(ofNullable(e.getWorkingPlan())
+                        .map(wp -> new DropdownOption(wp.getId(), wp.getDenotation()))
+                        .orElse(DropdownOption.empty()));
     }
 
     @Override

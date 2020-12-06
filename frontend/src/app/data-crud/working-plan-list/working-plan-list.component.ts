@@ -24,10 +24,14 @@ export class WorkingPlanListComponent implements OnInit {
       .subscribe(c => this.workingPlan = c);
   }
 
-  edit(c: WorkingPlan): void {
+  edit(wp: WorkingPlan): void {
+    this.router
+      .navigate(['/working-plan', {id: wp.id}])
+      .then(Utils.noopFunction)
   }
 
-  delete(c: WorkingPlan): void {
+  delete(wp: WorkingPlan): void {
+    // this.service.deleteById(wp.id)
   }
 
   addSubject(wp: WorkingPlan): void {
