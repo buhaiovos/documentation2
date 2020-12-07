@@ -16,6 +16,6 @@ public class WorkTypeMapper implements EntityMapper<WorkType, WorkTypeDto> {
 
     @Override
     public DropdownOption toOption(WorkType e) {
-        throw new UnsupportedOperationException("Unsupported");
+        return new DropdownOption(e.getId(), e.getDenotation());
     }
 }
