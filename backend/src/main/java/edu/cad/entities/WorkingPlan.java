@@ -31,7 +31,12 @@ public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.curriculum", cascade = CascadeType.MERGE)
     private Set<CurriculumSubject> workplanSubjects = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "workingPlan")
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "workingPlan",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private Set<DiplomaPreparation> diplomaPreparations = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "workingPlan")

@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -139,12 +140,14 @@ public class WorkingPlanService implements EntityService<WorkingPlan, Integer, W
         repository.deleteById(id);
     }
 
+    @Transactional
     public WorkingPlan addDiplomaPreparation(Integer workingPlanId,
                                              DropdownOption newDiplomaPreparation) {
         WorkingPlan wp = repository.findById(workingPlanId).orElseThrow();
         DiplomaPreparation prep = diplomaPreparations.findById(newDiplomaPreparation.id()).orElseThrow();
 
         wp.getDiplomaPreparations().add(prep);
+        prep.setWorkingPlan(wp);
 
         return repository.save(wp);
     }

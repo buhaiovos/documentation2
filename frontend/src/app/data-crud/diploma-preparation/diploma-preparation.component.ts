@@ -30,24 +30,35 @@ export class DiplomaPreparationComponent implements OnInit {
 
   constructor(private diplomaPreparationService: DiplomaPreparationService,
               private departmentService: DepartmentService,
-              private diplomaPreparationWorkTypeService: DiplomaPrepWorkTypeService,
+              private workTypeService: DiplomaPrepWorkTypeService,
               private workingPlanService: WorkingPlanService,
               private route: ActivatedRoute,
               private router: Router) {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(
+    const preparation$ = this.route.paramMap.pipe(
       flatMap(param => this.getDiplomaPreparation(param)),
       take(1)
-    ).subscribe(
-      preparation => this.diplomaPreparation = preparation
+    );
+    const workTypes$ = this.workTypeService.getOptions();
+    const departments$ = this.departmentService.getOptions();
+
+    forkJoin({
+      preparation: preparation$,
+      workTypes: workTypes$,
+      departments: departments$
+    }).subscribe(sources => {
+        this.diplomaPreparation = sources.preparation;
+        this.departments = sources.departments;
+        this.workTypes = sources.workTypes;
+      }
     );
   }
 
   save(): void {
-    const preparation$ = this.diplomaPreparationService.save(this.diplomaPreparation);
-    const workPlanId$ = this.route.paramMap.pipe(flatMap(param => param.get('workingPlanId')), take(1));
+    const preparation$ = Utils.takeOne$(this.diplomaPreparationService.save(this.diplomaPreparation));
+    const workPlanId$ = Utils.takeOne$(this.route.paramMap.pipe(flatMap(param => param.get('workingPlanId'))));
 
     forkJoin({
       workPlanId: workPlanId$,
