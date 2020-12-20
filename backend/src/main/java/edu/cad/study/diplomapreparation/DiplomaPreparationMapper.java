@@ -1,9 +1,6 @@
 package edu.cad.study.diplomapreparation;
 
-import edu.cad.entities.Curriculum;
-import edu.cad.entities.Department;
 import edu.cad.entities.DiplomaPreparation;
-import edu.cad.entities.WorkType;
 import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityMapper;
 import org.springframework.stereotype.Component;
@@ -22,9 +19,6 @@ public class DiplomaPreparationMapper implements EntityMapper<DiplomaPreparation
                         .orElse(DropdownOption.empty()))
                 .setWorkType(ofNullable(e.getWorkType())
                         .map(wt -> new DropdownOption(wt.getId(), wt.getDenotation()))
-                        .orElse(DropdownOption.empty()))
-                .setWorkingPlan(ofNullable(e.getWorkingPlan())
-                        .map(wp -> new DropdownOption(wp.getId(), wp.getDenotation()))
                         .orElse(DropdownOption.empty()));
     }
 

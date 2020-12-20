@@ -64,10 +64,12 @@ public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
         return this;
     }
 
-    public WorkingPlan setDiplomaPreparations(Set<DiplomaPreparation> diplomaPreparations) {
+    public void setDiplomaPreparations(Set<DiplomaPreparation> diplomaPreparations) {
+        this.diplomaPreparations.forEach(dp -> dp.setWorkingPlan(null));
         this.diplomaPreparations.clear();
+
+        diplomaPreparations.forEach(dp -> dp.setWorkingPlan(this));
         this.diplomaPreparations.addAll(diplomaPreparations);
-        return this;
     }
 
     public WorkingPlan setGroups(Set<AcademicGroup> groups) {

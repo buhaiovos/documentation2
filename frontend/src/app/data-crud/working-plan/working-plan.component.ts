@@ -4,7 +4,7 @@ import { WorkingPlanService } from "./working-plan.service";
 import { WorkingPlan } from "../../models/working-plan.model";
 import { CurriculumService } from "../curriculum/curriculum.service";
 import { DropdownOption } from "../../models/dropdown-option.model";
-import { flatMap, take } from "rxjs/operators";
+import { flatMap, map, take } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { Utils } from "../../util/utils";
 
@@ -23,7 +23,6 @@ export class WorkingPlanComponent implements OnInit {
   public practices: DropdownOption[];
   public groups: DropdownOption[];
   public scientificResearchSubjects: DropdownOption[];
-  public diplomaPreparations: DropdownOption[]
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -34,14 +33,22 @@ export class WorkingPlanComponent implements OnInit {
   ngOnInit(): void {
     const workingPlan$ = this.route.paramMap.pipe(
       flatMap(param => this.getWorkingPlan(param)),
-      take(1)
+      take(1),
+      map(wp => WorkingPlanComponent.lightweight(wp))
     ).subscribe(
-      wp => this.workingPlan = wp
+      wp => {
+        this.workingPlan = WorkingPlanComponent.lightweight(wp);
+        console.info(JSON.stringify(this.workingPlan))
+      }
     );
   }
 
   save(): void {
-
+    Utils.takeOne$(
+      this.workingPlanService.save(this.workingPlan)
+    ).subscribe(
+      () => this.router.navigate(['/working-plans'])
+    );
   }
 
   private getWorkingPlan(param: ParamMap): Observable<WorkingPlan> {
@@ -50,15 +57,25 @@ export class WorkingPlanComponent implements OnInit {
   }
 
   editPreparation(preparationId: number) {
-
+    this.router.navigate(['/diploma-preparation', {id: preparationId}])
+      .then(Utils.noopFunction);
   }
 
   removePreparation(preparationId: number) {
-
+    this.workingPlan.diplomaPreparations =
+      this.workingPlan.diplomaPreparations.filter(dp => dp.id !== preparationId);
   }
 
   addDiplomaPreparation(workingPlanId: number) {
     this.router.navigate(['/diploma-preparation', {workingPlanId: workingPlanId}])
       .then(Utils.noopFunction);
+  }
+
+  private static lightweight(wp: WorkingPlan): WorkingPlan {
+    const lightweight = WorkingPlan.empty();
+    lightweight.id = wp.id;
+    lightweight.denotation = wp.denotation;
+    lightweight.diplomaPreparations = wp.diplomaPreparations;
+    return lightweight;
   }
 }
