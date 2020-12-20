@@ -18,5 +18,4 @@ public class DiplomaPreparationDto {
     float norm;
     DropdownOption workType;
     DropdownOption department;
-    DropdownOption workingPlan;
 }

@@ -48,3 +48,9 @@ google:
       token-uri: ${GD_CRED_TOKEN_URI}
       auth-provider-x509-cert-url: ${GD_CRED_AUTH_PROVIDER_X509_CERT_URL}
       client-x509-cert-url: ${GD_CRED_CLIENT_X509_CERT_URL}
+
+logging:
+  level:
+    org:
+      hibernate:
+        stat: debug

@@ -4,8 +4,7 @@ export class DiplomaPreparation {
   constructor(public id: number,
               public workType: DropdownOption,
               public norm: number,
-              public department: DropdownOption,
-              public workingPlan: DropdownOption) {
+              public department: DropdownOption) {
   }
 
   public static empty(): DiplomaPreparation {
@@ -13,7 +12,6 @@ export class DiplomaPreparation {
       null,
       DropdownOption.empty(),
       0.0,
-      DropdownOption.empty(),
       DropdownOption.empty()
     )
   }
