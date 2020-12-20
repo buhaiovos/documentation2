@@ -9,16 +9,20 @@
     <input [(ngModel)]="workingPlan.denotation"/>
   </label>
 
+  <div *ngIf="workingPlan.diplomaPreparations && workingPlan.diplomaPreparations.length > 0">
+    <br>
+    <label>Дипломна підготовка:</label>
+    <br>
+    <table class="table is-bordered">
+      <tr *ngFor="let preparation of workingPlan.diplomaPreparations">
+        <td>{{preparation.text}}</td>
+        <td><a class="button is-info" (click)="editPreparation(preparation.id)">&#9998;</a></td>
+        <td><a class="button is-danger" (click)="removePreparation(preparation.id)">X</a></td>
+      </tr>
+    </table>
+  </div>
+
   <br>
-  <label>Дипломна підготовка:</label>
-  <br>
-  <table class="table is-bordered">
-    <tr *ngFor="let preparation of workingPlan.diplomaPreparations">
-      <td>{{preparation.text}}</td>
-      <td><a class="button is-info" (click)="editPreparation(preparation.id)">&#9998;</a></td>
-      <td><a class="button is-danger" (click)="removePreparation(preparation.id)">X</a></td>
-    </tr>
-  </table>
   <a class="button is-success" (click)="addDiplomaPreparation(workingPlan.id)">Додати підготовку</a>
 
   <br>
