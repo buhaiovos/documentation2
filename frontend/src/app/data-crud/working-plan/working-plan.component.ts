@@ -56,19 +56,27 @@ export class WorkingPlanComponent implements OnInit {
     return id ? this.workingPlanService.getById(+id) : this.workingPlanService.save(WorkingPlan.empty())
   }
 
-  editPreparation(preparationId: number) {
+  editPreparation(preparationId: number): void {
     this.router.navigate(['/diploma-preparation', {id: preparationId}])
       .then(Utils.noopFunction);
   }
 
-  removePreparation(preparationId: number) {
+  removePreparation(preparationId: number): void {
     this.workingPlan.diplomaPreparations =
       this.workingPlan.diplomaPreparations.filter(dp => dp.id !== preparationId);
   }
 
-  addDiplomaPreparation(workingPlanId: number) {
+  addDiplomaPreparation(workingPlanId: number): void {
     this.router.navigate(['/diploma-preparation', {workingPlanId: workingPlanId}])
       .then(Utils.noopFunction);
+  }
+
+  editPractice(): void {
+
+  }
+
+  removePractice(): void {
+
   }
 
   private static lightweight(wp: WorkingPlan): WorkingPlan {

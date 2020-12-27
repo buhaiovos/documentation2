@@ -9,6 +9,19 @@
     <input [(ngModel)]="workingPlan.denotation"/>
   </label>
 
+  <div *ngIf="workingPlan.practice">
+    <br>
+    <label>Практика</label>
+    <br>
+    <table class="table is-bordered">
+      <tr>
+        <td>{{workingPlan.practice.text}}</td>
+        <td><a class="button is-info" (click)="editPractice(workingPlan.practice.id)">&#9998;</a></td>
+        <td><a class="button is-danger" (click)="removePractice(workingPlan.practice.id)">X</a></td>
+      </tr>
+    </table>
+  </div>
+
   <div *ngIf="workingPlan.diplomaPreparations && workingPlan.diplomaPreparations.length > 0">
     <br>
     <label>Дипломна підготовка:</label>
