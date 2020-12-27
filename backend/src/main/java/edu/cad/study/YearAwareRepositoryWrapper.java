@@ -35,6 +35,6 @@ public abstract class YearAwareRepositoryWrapper<T extends YearTracked, ID> {
     }
 
     public void deleteById(ID id) {
-        if (repo.existsById(id)) repo.deleteById(id);
+        repo.deleteById(id);
     }
 }

@@ -1,0 +1,34 @@
+<div id="container">
+  <div>
+    <a class="button is-success column is-three-fifths is-offset-one-fifth"
+       (click)="create()">Додати Практику</a>
+  </div>
+
+  <table *ngIf="practices"
+         class="table is-hoverable is-bordered is-fullwidth infos-container">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Семестр</th>
+      <th>К-сть. тижнів</th>
+      <th>Тип</th>
+      <th>Початок</th>
+      <th>Завершення</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let practice of practices">
+      <td>{{practice.id}}</td>
+      <td>{{practice.semester}}</td>
+      <td>{{practice.weeks}}</td>
+      <td>{{practice.type}}</td>
+      <td>{{practice.start}}</td>
+      <td>{{practice.finish}}</td>
+      <td><a class="button is-info is-small" (click)="edit(practice.id)">Edit</a></td>
+      <td><a class="button is-danger is-small" (click)="delete(practice.id)">Delete</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
