@@ -64,15 +64,17 @@ public class WorkingPlanService implements EntityService<WorkingPlan, Integer, W
                 curricula::findById,
                 workingPlan::setCurriculum
         );
-        setFieldIfRequested(
+        setFieldIfRequestedClearingOtherwise(
                 updates::getScientificResearchSubject,
                 curriculumSubjects.subjectInfoService()::findById,
-                workingPlan::setScientificResearchSubject
+                workingPlan::setScientificResearchSubject,
+                () -> workingPlan.setScientificResearchSubject(null)
         );
-        setFieldIfRequested(
+        setFieldIfRequestedClearingOtherwise(
                 updates::getStateCertification,
                 certifications::findById,
-                workingPlan::setStateCertification
+                workingPlan::setStateCertification,
+                () -> workingPlan.setStateCertification(null)
         );
         setFieldIfRequestedClearingOtherwise(
                 updates::getPractice,
