@@ -14,7 +14,7 @@ export class WorkingPlanService extends AbstractCrudService<WorkingPlan> {
   }
 
   addDiplomaPreparation(workingPlanId: number,
-                               diplomaPreparation: DropdownOption): Observable<WorkingPlan> {
+                        diplomaPreparation: DropdownOption): Observable<WorkingPlan> {
     return this.http.patch<WorkingPlan>(
       `${this.baseUrl()}/${workingPlanId}/diploma-preparations`,
       diplomaPreparation

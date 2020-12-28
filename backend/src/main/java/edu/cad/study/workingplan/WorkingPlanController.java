@@ -5,6 +5,7 @@ import edu.cad.study.ActionController;
 import edu.cad.study.DropdownOption;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,6 +28,10 @@ public class WorkingPlanController extends ActionController<WorkingPlan, Integer
 
     @GetMapping("/{id}/subjects")
     public List<DropdownOption> getWorkingPlanSubjects(@PathVariable Integer id) {
-        return service.getAllWorkingPlanSubjects(id);
+        final List<DropdownOption> subjects = service.getAllWorkingPlanSubjects(id);
+        final List<DropdownOption> subjectsWithEmptyOption = new ArrayList<>(subjects.size() + 1);
+        subjectsWithEmptyOption.add(DropdownOption.empty());
+        subjectsWithEmptyOption.addAll(subjects);
+        return subjectsWithEmptyOption;
     }
 }

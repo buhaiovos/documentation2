@@ -18,6 +18,24 @@
     </label><br>
   </div>
 
+  <div *ngIf="scientificResearchSubjects">
+    <br>
+    <label>Предмет наукового дослідження:<br>
+      <select [(ngModel)]="workingPlan.scientificResearchSubject.id">
+        <option *ngFor="let subject of scientificResearchSubjects" [value]="subject.id">{{subject.text}}</option>
+      </select>
+    </label><br>
+  </div>
+
+  <div *ngIf="stateCertifications">
+    <br>
+    <label>Державна атестація:<br>
+      <select [(ngModel)]="workingPlan.stateCertification.id">
+        <option *ngFor="let cert of stateCertifications" [value]="cert.id">{{cert.text}}</option>
+      </select>
+    </label><br>
+  </div>
+
   <div *ngIf="workingPlan.diplomaPreparations && workingPlan.diplomaPreparations.length > 0">
     <br>
     <label>Дипломна підготовка:</label>

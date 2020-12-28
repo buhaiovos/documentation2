@@ -19,6 +19,6 @@ public class StateCertificationMapper implements EntityMapper<StateCertification
 
     @Override
     public DropdownOption toOption(StateCertification e) {
-        throw new UnsupportedOperationException("Unsupported");
+        return new DropdownOption(e.getId(), e.toString());
     }
 }
