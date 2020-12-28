@@ -20,6 +20,6 @@ public class PracticeMapper implements EntityMapper<Practice, PracticeDto> {
 
     @Override
     public DropdownOption toOption(Practice e) {
-        throw new UnsupportedOperationException();
+        return new DropdownOption(e.getId(), e.toString());
     }
 }

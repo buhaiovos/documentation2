@@ -13,11 +13,16 @@ export class WorkingPlanService extends AbstractCrudService<WorkingPlan> {
     super(http);
   }
 
-  public addDiplomaPreparation(workingPlanId: number,
+  addDiplomaPreparation(workingPlanId: number,
                                diplomaPreparation: DropdownOption): Observable<WorkingPlan> {
     return this.http.patch<WorkingPlan>(
       `${this.baseUrl()}/${workingPlanId}/diploma-preparations`,
       diplomaPreparation
     );
   }
+
+  getWorkingPlanSubjects(workingPlanId: number): Observable<DropdownOption[]> {
+    return this.http.get<DropdownOption[]>(`${this.baseUrl()}/${workingPlanId}/subjects`);
+  }
+
 }

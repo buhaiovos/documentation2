@@ -5,6 +5,8 @@ import edu.cad.study.ActionController;
 import edu.cad.study.DropdownOption;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v2/working-plans")
 public class WorkingPlanController extends ActionController<WorkingPlan, Integer, WorkingPlanDto> {
@@ -21,5 +23,10 @@ public class WorkingPlanController extends ActionController<WorkingPlan, Integer
     public WorkingPlanDto addNewDiplomaPreparation(@PathVariable int id,
                                                    @RequestBody DropdownOption diplomaPreparation) {
         return mapper.toResponse(service.addDiplomaPreparation(id, diplomaPreparation));
+    }
+
+    @GetMapping("/{id}/subjects")
+    public List<DropdownOption> getWorkingPlanSubjects(@PathVariable Integer id) {
+        return service.getAllWorkingPlanSubjects(id);
     }
 }

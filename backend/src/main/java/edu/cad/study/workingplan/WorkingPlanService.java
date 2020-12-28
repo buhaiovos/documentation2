@@ -1,5 +1,6 @@
 package edu.cad.study.workingplan;
 
+import edu.cad.entities.CurriculumSubject;
 import edu.cad.entities.DiplomaPreparation;
 import edu.cad.entities.WorkingPlan;
 import edu.cad.study.DropdownOption;
@@ -14,8 +15,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -73,10 +74,11 @@ public class WorkingPlanService implements EntityService<WorkingPlan, Integer, W
                 certifications::findById,
                 workingPlan::setStateCertification
         );
-        setFieldIfRequested(
+        setFieldIfRequestedClearingOtherwise(
                 updates::getPractice,
                 practices::findById,
-                workingPlan::setPractice
+                workingPlan::setPractice,
+                () -> workingPlan.setPractice(null)
         );
         setListFieldIfRequested(
                 updates::getGroups,
@@ -120,12 +122,26 @@ public class WorkingPlanService implements EntityService<WorkingPlan, Integer, W
     public <R> void setFieldIfRequested(Supplier<DropdownOption> nullable,
                                         Function<Integer, Optional<R>> findFunction,
                                         Consumer<R> setter) {
+        setFieldIfRequestedClearingOtherwise(
+                nullable,
+                findFunction,
+                setter,
+                () -> {}
+        );
+    }
+
+    public <R> void setFieldIfRequestedClearingOtherwise(Supplier<DropdownOption> nullable,
+                                                         Function<Integer, Optional<R>> findFunction,
+                                                         Consumer<R> setter, Runnable clearingAction) {
         ofNullable(nullable.get())
                 .map(DropdownOption::id)
                 .map(findFunction)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .ifPresent(setter);
+                .ifPresentOrElse(
+                        setter,
+                        clearingAction
+                );
     }
 
     @Override
@@ -150,5 +166,16 @@ public class WorkingPlanService implements EntityService<WorkingPlan, Integer, W
         prep.setWorkingPlan(wp);
 
         return repository.save(wp);
+    }
+
+    @Transactional(readOnly = true)
+    public List<DropdownOption> getAllWorkingPlanSubjects(Integer workingPlanId) {
+        return repository.findById(workingPlanId)
+                .stream()
+                .map(WorkingPlan::getCurriculumSubjects)
+                .flatMap(Set::stream)
+                .map(CurriculumSubject::getSubjectInfo)
+                .map(info -> new DropdownOption(info.getId(), info.getSubjectHeader().getDenotation()))
+                .collect(toList());
     }
 }
