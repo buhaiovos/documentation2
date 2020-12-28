@@ -1,1 +1,29 @@
-<p>practice works!</p>
+<div id="container">
+  <label>id:<br>
+    <input [(ngModel)]="practice.id" disabled/>
+  </label><br>
+
+  <label>Семестр:<br>
+    <input [(ngModel)]="practice.semester" type="number"/>
+  </label><br>
+
+  <label>Кількість тижнів:<br>
+    <input [(ngModel)]="practice.weeks" type="number"/>
+  </label><br>
+
+  <label>Тип:<br>
+    <select [(ngModel)]="practice.type">
+      <option *ngFor="let option of practiceTypes">{{option}}</option>
+    </select>
+  </label><br>
+
+  <label>Початок:<br>
+    <input [(ngModel)]="practice.start" type="date"/>
+  </label><br>
+
+  <label>Завершення:<br>
+    <input [(ngModel)]="practice.finish" type="date"/>
+  </label><br>
+
+  <br><a class="button is-success" (click)="save()">Зберегти</a>
+</div>

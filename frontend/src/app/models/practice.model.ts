@@ -6,4 +6,15 @@ export class Practice {
               public start: Date,
               public finish: Date) {
   }
+
+  static empty(): Practice {
+    return new Practice(
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    )
+  }
 }

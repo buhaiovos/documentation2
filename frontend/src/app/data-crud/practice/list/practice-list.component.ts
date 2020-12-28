@@ -32,6 +32,6 @@ export class PracticeListComponent implements OnInit {
 
   delete(id: number): void {
     Utils.takeOne$(this.service.deleteById(id))
-      .subscribe(() => this.router.navigate(['/practices']));
+      .subscribe(() => this.ngOnInit());
   }
 }

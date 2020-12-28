@@ -5,14 +5,15 @@ import { WorkingPlan } from "../../models/working-plan.model";
 import { CurriculumService } from "../curriculum/curriculum.service";
 import { DropdownOption } from "../../models/dropdown-option.model";
 import { flatMap, map, take } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { forkJoin, Observable } from "rxjs";
 import { Utils } from "../../util/utils";
+import { PracticeService } from "../practice/practice.service";
 
 @Component({
   selector: 'app-working-plan',
   templateUrl: './working-plan.component.html',
   styleUrls: ['./working-plan.component.css'],
-  providers: [WorkingPlanService, CurriculumService]
+  providers: [WorkingPlanService, CurriculumService, PracticeService]
 })
 export class WorkingPlanComponent implements OnInit {
 
@@ -27,7 +28,8 @@ export class WorkingPlanComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private workingPlanService: WorkingPlanService,
-              private curriculumService: CurriculumService) {
+              private curriculumService: CurriculumService,
+              private practiceService: PracticeService) {
   }
 
   ngOnInit(): void {
@@ -35,12 +37,19 @@ export class WorkingPlanComponent implements OnInit {
       flatMap(param => this.getWorkingPlan(param)),
       take(1),
       map(wp => WorkingPlanComponent.lightweight(wp))
-    ).subscribe(
-      wp => {
-        this.workingPlan = WorkingPlanComponent.lightweight(wp);
-        console.info(JSON.stringify(this.workingPlan))
-      }
     );
+    const practices$ = Utils.takeOne$(this.practiceService.getOptions());
+
+    forkJoin({
+      workingPlan: workingPlan$,
+      practices: practices$
+    }).subscribe(res => {
+      this.workingPlan = WorkingPlanComponent.lightweight(res.workingPlan);
+      this.practices = res.practices;
+    });
+    //   .subscribe(
+    //   wp => this.workingPlan = WorkingPlanComponent.lightweight(wp)
+    // );
   }
 
   save(): void {
@@ -71,19 +80,12 @@ export class WorkingPlanComponent implements OnInit {
       .then(Utils.noopFunction);
   }
 
-  editPractice(): void {
-
-  }
-
-  removePractice(): void {
-
-  }
-
   private static lightweight(wp: WorkingPlan): WorkingPlan {
     const lightweight = WorkingPlan.empty();
     lightweight.id = wp.id;
     lightweight.denotation = wp.denotation;
     lightweight.diplomaPreparations = wp.diplomaPreparations;
+    lightweight.practice = wp.practice
     return lightweight;
   }
 }
