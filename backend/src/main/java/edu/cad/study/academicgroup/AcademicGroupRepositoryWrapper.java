@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class AcademicGroupRepositoryWrapper extends YearAwareRepositoryWrapper<AcademicGroup, Integer> {
+class AcademicGroupRepositoryWrapper extends YearAwareRepositoryWrapper<AcademicGroup, Integer> {
     private final AcademicGroupRepository repo;
 
     public AcademicGroupRepositoryWrapper(AcademicGroupRepository r, YearProvider p) {

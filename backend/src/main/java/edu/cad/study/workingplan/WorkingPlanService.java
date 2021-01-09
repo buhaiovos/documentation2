@@ -5,7 +5,6 @@ import edu.cad.entities.DiplomaPreparation;
 import edu.cad.entities.WorkingPlan;
 import edu.cad.study.DropdownOption;
 import edu.cad.study.EntityService;
-import edu.cad.study.academicgroup.AcademicGroupService;
 import edu.cad.study.curriculum.CurriculumService;
 import edu.cad.study.curriculum.CurriculumSubjectService;
 import edu.cad.study.diplomapreparation.DiplomaPreparationService;
@@ -34,7 +33,6 @@ public class WorkingPlanService implements EntityService<WorkingPlan, Integer, W
     CurriculumService curricula;
     StateCertificationService certifications;
     PracticeService practices;
-    AcademicGroupService groups;
     DiplomaPreparationService diplomaPreparations;
     CurriculumSubjectService curriculumSubjects;
 
@@ -81,12 +79,6 @@ public class WorkingPlanService implements EntityService<WorkingPlan, Integer, W
                 practices::findById,
                 workingPlan::setPractice,
                 () -> workingPlan.setPractice(null)
-        );
-        setListFieldIfRequested(
-                updates::getGroups,
-                DropdownOption::id,
-                groups::findAllByIds,
-                groups -> workingPlan.setGroups(Set.copyOf(groups))
         );
         setListFieldIfRequested(
                 updates::getDiplomaPreparations,

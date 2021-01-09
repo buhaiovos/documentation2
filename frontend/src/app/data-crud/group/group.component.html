@@ -39,6 +39,13 @@
     </select>
   </label>
   <br>
+  <label>РНП:<br>
+    <select [(ngModel)]="group.workingPlan.id">
+      <option *ngFor="let option of workingPlans" [value]="option.id">{{option.text}}</option>
+    </select>
+  </label>
+  <br>
+  <br>
   <a class="button is-success" (click)="save()">Зберегти</a>
 </div>
 <ng-template #loading>

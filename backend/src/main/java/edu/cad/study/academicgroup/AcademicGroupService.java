@@ -1,13 +1,11 @@
 package edu.cad.study.academicgroup;
 
-import edu.cad.entities.AcademicGroup;
-import edu.cad.entities.EducationForm;
-import edu.cad.entities.Qualification;
-import edu.cad.entities.Specialization;
+import edu.cad.entities.*;
 import edu.cad.study.EntityService;
 import edu.cad.study.educationform.EducationFormService;
 import edu.cad.study.qualification.QualificationService;
 import edu.cad.study.specialization.SpecializationService;
+import edu.cad.study.workingplan.WorkingPlanService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,9 +23,10 @@ import java.util.Optional;
 public class AcademicGroupService implements EntityService<AcademicGroup, Integer, AcademicGroupDto> {
     AcademicGroupRepositoryWrapper repo;
 
-    SpecializationService specializationService;
-    EducationFormService educationFormService;
-    QualificationService qualificationService;
+    SpecializationService specializations;
+    EducationFormService educationForms;
+    QualificationService qualifications;
+    WorkingPlanService workingPlans;
 
     @Override
     public List<AcademicGroup> getAll() {
@@ -48,14 +47,17 @@ public class AcademicGroupService implements EntityService<AcademicGroup, Intege
     public AcademicGroup create(AcademicGroupDto academicGroup) {
         log.info("Creating academic group: {}", academicGroup);
 
-        Specialization specialization = specializationService
+        Specialization specialization = specializations
                 .findById(academicGroup.getSpecialization().id())
                 .orElseThrow();
-        EducationForm educationForm = educationFormService
+        EducationForm educationForm = educationForms
                 .findById(academicGroup.getEducationForm().id())
                 .orElseThrow();
-        Qualification qualification = qualificationService
+        Qualification qualification = qualifications
                 .findById(academicGroup.getQualification().id())
+                .orElseThrow();
+        WorkingPlan workingPlan = workingPlans
+                .findById(academicGroup.getWorkingPlan().id())
                 .orElseThrow();
 
         AcademicGroup newGroup = new AcademicGroup()
@@ -65,7 +67,8 @@ public class AcademicGroupService implements EntityService<AcademicGroup, Intege
                 .setStartYear(academicGroup.getStartYear())
                 .setQualification(qualification)
                 .setEducationForm(educationForm)
-                .setSpecialization(specialization);
+                .setSpecialization(specialization)
+                .setWorkingPlan(workingPlan);
         log.info("Saving academic group: {}", academicGroup);
         return repo.save(newGroup);
     }
@@ -78,15 +81,19 @@ public class AcademicGroupService implements EntityService<AcademicGroup, Intege
         final AcademicGroup existingGroup = findById(id).orElseThrow();
         log.info("Found target group: {}", existingGroup);
 
-        final Specialization specialization = specializationService
+        final Specialization specialization = specializations
                 .findById(updatedGroup.getSpecialization().id())
                 .orElseThrow();
-        final EducationForm educationForm = educationFormService
+        final EducationForm educationForm = educationForms
                 .findById(updatedGroup.getEducationForm().id())
                 .orElseThrow();
-        final Qualification qualification = qualificationService
+        final Qualification qualification = qualifications
                 .findById(updatedGroup.getQualification().id())
                 .orElseThrow();
+        final WorkingPlan workingPlan = workingPlans
+                .findById(updatedGroup.getWorkingPlan().id())
+                .orElseThrow();
+
 
         existingGroup
                 .setBudgetaryStudents(updatedGroup.getBudgetaryStudents())
@@ -95,7 +102,8 @@ public class AcademicGroupService implements EntityService<AcademicGroup, Intege
                 .setStartYear(updatedGroup.getStartYear())
                 .setQualification(qualification)
                 .setEducationForm(educationForm)
-                .setSpecialization(specialization);
+                .setSpecialization(specialization)
+                .setWorkingPlan(workingPlan);
 
         log.info("Saving updated group: {}", existingGroup);
         return repo.save(existingGroup);

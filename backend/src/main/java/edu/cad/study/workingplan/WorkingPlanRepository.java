@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface WorkingPlanRepository extends JpaRepository<WorkingPlan, Integer> {
+interface WorkingPlanRepository extends JpaRepository<WorkingPlan, Integer> {
     @Query(value = """
             select c
             from Curriculum c

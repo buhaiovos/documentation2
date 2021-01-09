@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class WorkingPlanRepositoryWrapper extends YearAwareRepositoryWrapper<WorkingPlan, Integer> {
+class WorkingPlanRepositoryWrapper extends YearAwareRepositoryWrapper<WorkingPlan, Integer> {
     private static final String WORKING_PLAN = "workplan";
 
     private final WorkingPlanRepository repo;

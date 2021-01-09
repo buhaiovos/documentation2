@@ -16,6 +16,7 @@
       <th>Спеціалізація</th>
       <th>Кваліфікація</th>
       <th>Форма навчання</th>
+      <th>Навчальний план</th>
       <th></th>
       <th></th>
     </tr>
@@ -30,6 +31,7 @@
       <td>{{group.specialization.text}}</td>
       <td>{{group.qualification.text}}</td>
       <td>{{group.educationForm.text}}</td>
+      <td>{{group.workingPlan.text}}</td>
       <td><a class="button is-info is-small" (click)="edit(group.id)">Edit</a></td>
       <td><a class="button is-danger is-small" (click)="delete(group.id)">Delete</a></td>
     </tr>

@@ -15,5 +15,5 @@ public class AcademicGroupDto {
     private DropdownOption specialization;
     private DropdownOption qualification;
     private DropdownOption educationForm;
-    private DropdownOption workplan;
+    private DropdownOption workingPlan;
 }
