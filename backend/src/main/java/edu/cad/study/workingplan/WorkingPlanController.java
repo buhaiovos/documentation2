@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v2/working-plans")
-public class WorkingPlanController extends ActionController<WorkingPlan, Integer, WorkingPlanDto> {
+class WorkingPlanController extends ActionController<WorkingPlan, Integer, WorkingPlanDto> {
     private final WorkingPlanService service;
     private final WorkingPlanMapper mapper;
 

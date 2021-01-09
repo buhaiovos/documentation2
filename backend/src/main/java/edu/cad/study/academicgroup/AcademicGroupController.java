@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v2/academic-groups")
 @Slf4j
-public class AcademicGroupController extends ActionController<AcademicGroup, Integer, AcademicGroupDto> {
+class AcademicGroupController extends ActionController<AcademicGroup, Integer, AcademicGroupDto> {
     public AcademicGroupController(AcademicGroupService service, AcademicGroupMapper mapper) {
         super(service, mapper);
     }

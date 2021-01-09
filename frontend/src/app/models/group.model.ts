@@ -8,7 +8,8 @@ export class Group {
                      public startYear: number,
                      public specialization: DropdownOption,
                      public qualification: DropdownOption,
-                     public educationForm: DropdownOption) {
+                     public educationForm: DropdownOption,
+                     public workingPlan: DropdownOption) {
   }
 
   static empty() {
@@ -18,6 +19,7 @@ export class Group {
       0,
       0,
       new Date().getUTCFullYear(),
+      DropdownOption.empty(),
       DropdownOption.empty(),
       DropdownOption.empty(),
       DropdownOption.empty()

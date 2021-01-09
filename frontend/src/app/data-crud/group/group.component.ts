@@ -9,6 +9,7 @@ import { EducationFormService } from "../education-form/education-form.service";
 import { Utils } from "../../util/utils";
 import { forkJoin, Observable } from "rxjs";
 import { flatMap } from "rxjs/operators";
+import { WorkingPlanService } from "../working-plan/working-plan.service";
 
 @Component({
   selector: 'app-group',
@@ -18,7 +19,8 @@ import { flatMap } from "rxjs/operators";
     GroupService,
     SpecializationService,
     QualificationService,
-    EducationFormService
+    EducationFormService,
+    WorkingPlanService
   ]
 })
 export class GroupComponent implements OnInit {
@@ -27,6 +29,7 @@ export class GroupComponent implements OnInit {
   specializations: DropdownOption[];
   qualifications: DropdownOption[];
   educationForms: DropdownOption[];
+  workingPlans: DropdownOption[];
 
 
   constructor(private router: Router,
@@ -34,7 +37,8 @@ export class GroupComponent implements OnInit {
               private service: GroupService,
               private specializationService: SpecializationService,
               private qualificationService: QualificationService,
-              private educationFormService: EducationFormService) {
+              private educationFormService: EducationFormService,
+              private workingPlanService: WorkingPlanService) {
   }
 
   ngOnInit(): void {
@@ -42,18 +46,21 @@ export class GroupComponent implements OnInit {
     const specializations$ = Utils.takeOne$(this.specializationService.getOptions());
     const qualifications$ = Utils.takeOne$(this.qualificationService.getOptions());
     const educationForms$ = Utils.takeOne$(this.educationFormService.getOptions());
+    const workingPlans$ = Utils.takeOne$(this.workingPlanService.getOptions())
 
     forkJoin({
       group: group$,
       specializations: specializations$,
       qualifications: qualifications$,
-      educationForms: educationForms$
+      educationForms: educationForms$,
+      workingPlans: workingPlans$
     }).subscribe(
       aggregate => {
         this.group = aggregate.group;
         this.specializations = aggregate.specializations;
         this.qualifications = aggregate.qualifications;
         this.educationForms = aggregate.educationForms;
+        this.workingPlans = aggregate.workingPlans;
       }
     );
   }

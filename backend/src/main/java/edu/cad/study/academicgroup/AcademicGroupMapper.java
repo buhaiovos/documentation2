@@ -20,7 +20,7 @@ class AcademicGroupMapper implements EntityMapper<AcademicGroup, AcademicGroupDt
                 .setEducationForm(getEducationForm(group))
                 .setQualification(getQualification(group))
                 .setSpecialization(getSpecialization(group))
-                .setWorkplan(getWorkingPlan(group));
+                .setWorkingPlan(getWorkingPlan(group));
     }
 
     public DropdownOption toOption(AcademicGroup academicGroup) {
