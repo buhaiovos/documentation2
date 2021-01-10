@@ -9,6 +9,15 @@
     <input [(ngModel)]="workingPlan.denotation"/>
   </label>
 
+  <div *ngIf="scientificResearchSubjects">
+    <br>
+    <label>Навчальний план:<br>
+      <select [(ngModel)]="workingPlan.curriculum.id">
+        <option *ngFor="let curriculum of curricula" [value]="curriculum.id">{{curriculum.text}}</option>
+      </select>
+    </label><br>
+  </div>
+
   <div *ngIf="practices">
     <br>
     <label>Практика:<br>

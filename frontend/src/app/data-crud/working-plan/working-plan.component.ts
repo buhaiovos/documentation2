@@ -107,6 +107,7 @@ export class WorkingPlanComponent implements OnInit {
     const lightweight = WorkingPlan.empty();
     lightweight.id = wp.id;
     lightweight.denotation = wp.denotation;
+    lightweight.curriculum = wp.curriculum;
     lightweight.diplomaPreparations = wp.diplomaPreparations;
     lightweight.practice = wp.practice;
     lightweight.scientificResearchSubject = wp.scientificResearchSubject;
