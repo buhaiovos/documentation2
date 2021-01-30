@@ -10,6 +10,8 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import java.io.Serializable;
 
+import static edu.cad.entities.ControlDictionary.DIFFERENTIATED_CREDIT_ID;
+
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -50,5 +52,11 @@ public class Control extends YearTracked implements IDatabaseEntity<Integer>, Se
     public void setIdentifier(Integer id) {
         this.id = id;
     }
+
+    public String documentValue() {
+        return type.getId() == DIFFERENTIATED_CREDIT_ID ?
+                semester + "д" : Integer.toString(semester);
+    }
+
 }
 
