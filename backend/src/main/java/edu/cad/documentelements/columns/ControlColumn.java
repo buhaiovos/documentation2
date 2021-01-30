@@ -51,13 +51,12 @@ public class ControlColumn extends AbstractColumn {
     }
 
     private void writeControls(Row row, Set<Control> controls) {
-        if (controls.isEmpty())
-            return;
+        if (controls.isEmpty()) return;
 
         Iterator<Control> iterator = controls.iterator();
 
         StringBuilder value = new StringBuilder();
-        value.append(iterator.next().toString());
+        value.append(iterator.next().documentValue());
 
         if (controls.size() == 1 && Utils.isNumber(value.toString())) {
             fill(row, Integer.parseInt(value.toString()));
@@ -66,7 +65,7 @@ public class ControlColumn extends AbstractColumn {
 
         while (iterator.hasNext()) {
             value.append(",");
-            value.append(iterator.next().toString());
+            value.append(iterator.next().documentValue());
         }
 
         fill(row, value.toString());
