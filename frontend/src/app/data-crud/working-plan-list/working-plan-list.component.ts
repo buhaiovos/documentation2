@@ -4,6 +4,7 @@ import { Utils } from "../../util/utils";
 import { WorkingPlan } from "../../models/working-plan.model";
 import { WorkingPlanService } from "../working-plan/working-plan.service";
 import { DropdownOption } from "../../models/dropdown-option.model";
+import { mergeMap, take } from "rxjs/operators";
 
 @Component({
   selector: 'app-working-plan-list',
@@ -13,7 +14,7 @@ import { DropdownOption } from "../../models/dropdown-option.model";
 })
 export class WorkingPlanListComponent implements OnInit {
 
-  public workingPlan: WorkingPlan[];
+  public workingPlans: WorkingPlan[];
 
   constructor(private service: WorkingPlanService,
               private router: Router) {
@@ -21,7 +22,13 @@ export class WorkingPlanListComponent implements OnInit {
 
   ngOnInit(): void {
     Utils.takeOne$(this.service.getAll())
-      .subscribe(c => this.workingPlan = c);
+      .subscribe(c => this.workingPlans = c);
+  }
+
+  create() {
+    this.router
+      .navigate(['/working-plan'])
+      .then(Utils.noopFunction)
   }
 
   edit(wp: WorkingPlan): void {
@@ -31,7 +38,12 @@ export class WorkingPlanListComponent implements OnInit {
   }
 
   delete(wp: WorkingPlan): void {
-    // this.service.deleteById(wp.id)
+    this.service.deleteById(wp.id).pipe(
+      take(1),
+      mergeMap(() => this.service.getAll())
+    ).subscribe(
+      wps => this.workingPlans = wps
+    )
   }
 
   addSubject(wp: WorkingPlan): void {

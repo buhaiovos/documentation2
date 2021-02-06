@@ -1,63 +1,69 @@
-<table class="table is-bordered is-hoverable is-fullwidth header-container">
-  <thead>
-  <tr>
-    <th>id</th>
-    <th>Назва</th>
-    <th>Навчальний план</th>
-    <th>Групи</th>
-    <th>Державна атестація</th>
-    <th>Практика</th>
-    <th>Предмет наукового дослідження</th>
-    <th>Дипломна підготовка</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody *ngFor="let workingPlan of workingPlan">
-  <tr (click)="workingPlan.displaySubjects = !workingPlan.displaySubjects">
-    <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.id}}</td>
-    <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.denotation}}</td>
-    <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.curriculum?.text}}</td>
-    <td [class.is-selected]="workingPlan.displaySubjects">{{formatArray(workingPlan.groups)}}</td>
-    <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.stateCertification?.text}}</td>
-    <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.practice?.text}}</td>
-    <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.scientificResearchSubject?.text}}</td>
-    <td [class.is-selected]="workingPlan.displaySubjects">{{formatArray(workingPlan.diplomaPreparations)}}</td>
-    <td width="10%"><a class="button is-info" (click)="edit(workingPlan)">Редагувати</a></td>
-    <td width="10%"><a class="button is-danger" (click)="delete(workingPlan)">Видалити</a></td>
-    <td width="10%"><a class="button is-primary" (click)="addSubject(workingPlan)">Предмети</a></td>
-  </tr>
-  <tr>
-    <td colspan="11">
-      <table *ngIf="workingPlan.displaySubjects"
-             class="table is-hoverable is-bordered is-fullwidth infos-container">
-        <thead>
-        <tr>
-          <th>Шифр</th>
-          <th>id</th>
-          <th>Назва</th>
-          <th>Семестр</th>
-          <th>ECTS</th>
-          <th>Лекції</th>
-          <th>Практики</th>
-          <th>Лаби</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let subject of workingPlan.subjectsWithCiphers">
-          <td>{{subject.cipher}}</td>
-          <td>{{subject.id}}</td>
-          <td>{{subject.denotation}}</td>
-          <td>{{subject.semester}}</td>
-          <td>{{subject.ects}}</td>
-          <td>{{subject.lectures}}</td>
-          <td>{{subject.practices}}</td>
-          <td>{{subject.labs}}</td>
-        </tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div id="wp-list">
+  <div>
+    <a class="button is-success column is-three-fifths is-offset-one-fifth"
+       (click)="create()">Додати Робочий План</a>
+  </div>
+  <table class="table is-bordered is-hoverable is-fullwidth header-container">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Назва</th>
+      <th>Навчальний план</th>
+      <th>Групи</th>
+      <th>Державна атестація</th>
+      <th>Практика</th>
+      <th>Предмет наукового дослідження</th>
+      <th>Дипломна підготовка</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let workingPlan of workingPlans">
+    <tr (click)="workingPlan.displaySubjects = !workingPlan.displaySubjects">
+      <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.id}}</td>
+      <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.denotation}}</td>
+      <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.curriculum?.text}}</td>
+      <td [class.is-selected]="workingPlan.displaySubjects">{{formatArray(workingPlan.groups)}}</td>
+      <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.stateCertification?.text}}</td>
+      <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.practice?.text}}</td>
+      <td [class.is-selected]="workingPlan.displaySubjects">{{workingPlan.scientificResearchSubject?.text}}</td>
+      <td [class.is-selected]="workingPlan.displaySubjects">{{formatArray(workingPlan.diplomaPreparations)}}</td>
+      <td width="10%"><a class="button is-info" (click)="edit(workingPlan)">Редагувати</a></td>
+      <td width="10%"><a class="button is-danger" (click)="delete(workingPlan)">Видалити</a></td>
+      <td width="10%"><a class="button is-primary" (click)="addSubject(workingPlan)">Предмети</a></td>
+    </tr>
+    <tr>
+      <td colspan="11">
+        <table *ngIf="workingPlan.displaySubjects"
+               class="table is-hoverable is-bordered is-fullwidth infos-container">
+          <thead>
+          <tr>
+            <th>Шифр</th>
+            <th>id</th>
+            <th>Назва</th>
+            <th>Семестр</th>
+            <th>ECTS</th>
+            <th>Лекції</th>
+            <th>Практики</th>
+            <th>Лаби</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let subject of workingPlan.subjectsWithCiphers">
+            <td>{{subject.cipher}}</td>
+            <td>{{subject.id}}</td>
+            <td>{{subject.denotation}}</td>
+            <td>{{subject.semester}}</td>
+            <td>{{subject.ects}}</td>
+            <td>{{subject.lectures}}</td>
+            <td>{{subject.practices}}</td>
+            <td>{{subject.labs}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
