@@ -1,56 +1,57 @@
-<!--id-->
-<!--denotation-->
-    <!--list of subjects-->
-      <!--id-->
-      <!--denotation-->
-<table class="table is-bordered is-hoverable is-fullwidth header-container">
-  <thead>
-  <tr>
-    <th>id</th>
-    <th>Назва</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody *ngFor="let curriculum of curricula">
-  <tr (click)="curriculum.displaySubjects = !curriculum.displaySubjects">
-    <td [class.is-selected]="curriculum.displaySubjects">{{curriculum.id}}</td>
-    <td [class.is-selected]="curriculum.displaySubjects">{{curriculum.denotation}}</td>
-    <td width="10%"><a class="button is-info" (click)="edit(curriculum)">Редагувати</a></td>
-    <td width="10%"><a class="button is-danger" (click)="delete(curriculum)">Видалити</a></td>
-    <td width="10%"><a class="button is-primary" (click)="addSubject(curriculum)">Предмети</a></td>
-  </tr>
-  <tr>
-    <td colspan="5">
-      <table *ngIf="curriculum.displaySubjects"
-             class="table is-hoverable is-bordered is-fullwidth infos-container">
-        <thead>
-        <tr>
-          <th>Шифр</th>
-          <th>id</th>
-          <th>Назва</th>
-          <th>Семестр</th>
-          <th>ECTS</th>
-          <th>Лекції</th>
-          <th>Практики</th>
-          <th>Лаби</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let subject of curriculum.subjectsWithCiphers">
-          <td>{{subject.cipher}}</td>
-          <td>{{subject.id}}</td>
-          <td>{{subject.denotation}}</td>
-          <td>{{subject.semester}}</td>
-          <td>{{subject.ects}}</td>
-          <td>{{subject.lectures}}</td>
-          <td>{{subject.practices}}</td>
-          <td>{{subject.labs}}</td>
-        </tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div id="curricula-list">
+  <div>
+    <a class="button is-success column is-three-fifths is-offset-one-fifth"
+       (click)="create()">Додати Навчальний План</a>
+  </div>
+  <table class="table is-bordered is-hoverable is-fullwidth header-container">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Назва</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let curriculum of curricula">
+    <tr (click)="curriculum.displaySubjects = !curriculum.displaySubjects">
+      <td [class.is-selected]="curriculum.displaySubjects">{{curriculum.id}}</td>
+      <td [class.is-selected]="curriculum.displaySubjects">{{curriculum.denotation}}</td>
+      <td width="10%"><a class="button is-info" (click)="edit(curriculum)">Редагувати</a></td>
+      <td width="10%"><a class="button is-danger" (click)="delete(curriculum)">Видалити</a></td>
+      <td width="10%"><a class="button is-primary" (click)="addSubject(curriculum)">Предмети</a></td>
+    </tr>
+    <tr>
+      <td colspan="5">
+        <table *ngIf="curriculum.displaySubjects"
+               class="table is-hoverable is-bordered is-fullwidth infos-container">
+          <thead>
+          <tr>
+            <th>Шифр</th>
+            <th>id</th>
+            <th>Назва</th>
+            <th>Семестр</th>
+            <th>ECTS</th>
+            <th>Лекції</th>
+            <th>Практики</th>
+            <th>Лаби</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let subject of curriculum.subjectsWithCiphers">
+            <td>{{subject.cipher}}</td>
+            <td>{{subject.id}}</td>
+            <td>{{subject.denotation}}</td>
+            <td>{{subject.semester}}</td>
+            <td>{{subject.ects}}</td>
+            <td>{{subject.lectures}}</td>
+            <td>{{subject.practices}}</td>
+            <td>{{subject.labs}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

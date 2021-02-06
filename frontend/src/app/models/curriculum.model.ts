@@ -6,4 +6,13 @@ export class Curriculum {
               public subjectsWithCiphers: SubjectWithCipher[],
               public displaySubjects: boolean) {
   }
+
+  public static empty() {
+    return new Curriculum(
+      null,
+      'Введіть назву',
+      [],
+      null
+    )
+  }
 }

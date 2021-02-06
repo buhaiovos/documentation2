@@ -7,7 +7,9 @@ import edu.cad.study.common.CipherAndTitledSubjectInfo;
 import edu.cad.study.subject.info.SubjectInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,6 +43,11 @@ public class CurriculumSubjectService {
 
     public Set<CurriculumSubject> getCurriculumSubjects(List<CipherAndTitledSubjectInfo> subjectsWithCiphers,
                                                         Curriculum curriculum) {
+        return CollectionUtils.isEmpty(subjectsWithCiphers) ?
+                new HashSet<>() : toCurriculumSubjectEntities(subjectsWithCiphers, curriculum);
+    }
+
+    private Set<CurriculumSubject> toCurriculumSubjectEntities(List<CipherAndTitledSubjectInfo> subjectsWithCiphers, Curriculum curriculum) {
         record CipherAndSubjectInfo(String cipher, SubjectInfo subjectInfo) {}
 
         return subjectsWithCiphers.stream()

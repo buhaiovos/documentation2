@@ -1,1 +1,17 @@
-<p>curriculum works!</p>
+<div *ngIf="curriculum; else loading">
+  <br>
+  <label>id:<br>
+    <input [(ngModel)]="curriculum.id" disabled/>
+  </label>
+
+  <br>
+  <label>Назва:<br>
+    <input [(ngModel)]="curriculum.denotation"/>
+  </label>
+
+  <br>
+  <a class="button is-success" (click)="save()">Зберегти</a>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>

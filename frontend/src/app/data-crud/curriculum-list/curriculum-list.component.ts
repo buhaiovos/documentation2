@@ -3,6 +3,7 @@ import { CurriculumService } from "../curriculum/curriculum.service";
 import { Curriculum } from "../../models/curriculum.model";
 import { Utils } from "../../util/utils";
 import { Router } from "@angular/router";
+import { mergeMap, take } from "rxjs/operators";
 
 @Component({
   selector: 'app-curriculum-list',
@@ -27,11 +28,23 @@ export class CurriculumListComponent implements OnInit {
   }
 
   delete(c: Curriculum): void {
+    Utils.takeOne$(this.service.deleteById(c.id)).pipe(
+      mergeMap(() => this.service.getAll()),
+      take(1)
+    ).subscribe(
+      curricula => this.curricula = curricula
+    )
   }
 
   addSubject(c: Curriculum): void {
     this.router
       .navigate(['/curriculum-subject-list-selection', {id: c.id}])
+      .then(Utils.noopFunction);
+  }
+
+  create() {
+    this.router
+      .navigate(['/curriculum'])
       .then(Utils.noopFunction);
   }
 }

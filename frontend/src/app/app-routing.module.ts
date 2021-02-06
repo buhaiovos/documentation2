@@ -28,6 +28,7 @@ import { WorkingPlanComponent } from "./data-crud/working-plan/working-plan.comp
 import { DiplomaPreparationComponent } from "./data-crud/diploma-preparation/diploma-preparation.component";
 import { PracticeComponent } from "./data-crud/practice/single/practice.component";
 import { PracticeListComponent } from "./data-crud/practice/list/practice-list.component";
+import { CurriculumComponent } from "./data-crud/curriculum/curriculum.component";
 
 
 const routes: Routes = [
@@ -59,7 +60,8 @@ const routes: Routes = [
   {path: 'working-plan', component: WorkingPlanComponent},
   {path: 'diploma-preparation', component: DiplomaPreparationComponent},
   {path: 'practice', component: PracticeComponent},
-  {path: 'practices', component: PracticeListComponent}
+  {path: 'practices', component: PracticeListComponent},
+  {path: 'curriculum', component: CurriculumComponent}
 ];
 
 @NgModule({
