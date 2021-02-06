@@ -28,7 +28,7 @@ public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
     @JoinColumn(name = "id_curriculum")
     private Curriculum curriculum;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.curriculum", cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.curriculum", cascade = CascadeType.ALL)
     private Set<CurriculumSubject> workplanSubjects = new HashSet<>();
 
     @OneToMany(
@@ -61,6 +61,7 @@ public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
     public WorkingPlan setCurriculumSubjects(Set<CurriculumSubject> workplanSubjects) {
         this.workplanSubjects.clear();
         this.workplanSubjects.addAll(workplanSubjects);
+        workplanSubjects.forEach(cs -> cs.setCurriculum(this));
         return this;
     }
 
