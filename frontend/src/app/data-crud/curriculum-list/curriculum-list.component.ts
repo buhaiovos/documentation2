@@ -25,6 +25,9 @@ export class CurriculumListComponent implements OnInit {
   }
 
   edit(c: Curriculum): void {
+    this.router
+      .navigate(['curriculum', {id: c.id}])
+      .then(Utils.noopFunction);
   }
 
   delete(c: Curriculum): void {
