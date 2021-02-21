@@ -19,6 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { StatisticsComponent } from './load-distribution/statistics/statistics.component';
 import { ChartsModule } from 'ng2-charts';
 import { DataCrudModule } from "./data-crud/data-crud.module";
+import { SystemModule } from "./system/system.module";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { DataCrudModule } from "./data-crud/data-crud.module";
     AppRoutingModule,
     ChartsModule,
     ReactiveFormsModule,
-    DataCrudModule
+    DataCrudModule,
+    SystemModule
   ],
   providers: [],
   bootstrap: [AppComponent]

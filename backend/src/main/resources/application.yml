@@ -54,3 +54,8 @@ logging:
     org:
       hibernate:
         stat: debug
+
+years-of-information:
+    list:
+      - 2020
+      - 2016

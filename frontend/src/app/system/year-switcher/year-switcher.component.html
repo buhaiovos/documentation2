@@ -1,0 +1,7 @@
+<div id="year-selector">
+  <label>Рік:
+    <select [(ngModel)]="current" (ngModelChange)="selectYear()">
+      <option *ngFor="let year of years" [value]="year">{{year}}</option>
+    </select>
+  </label>
+</div>

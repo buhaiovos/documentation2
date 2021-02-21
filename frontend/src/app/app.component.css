@@ -36,6 +36,7 @@
 .left {
   float: left;
   padding-left: 15px;
+  display: flex;
 }
 
 
