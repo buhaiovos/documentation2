@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Curriculum } from "../../models/curriculum.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CurriculumService } from "../curriculum/curriculum.service";
@@ -14,7 +14,8 @@ import { SubjectWithCipher } from "../../models/subject-with-cipher.model";
   selector: 'app-curriculum-subject-selector',
   templateUrl: './curriculum-subject-selector.component.html',
   styleUrls: ['./curriculum-subject-selector.component.css'],
-  providers: [CurriculumService, SubjectInfoService, WorkingPlanService]
+  providers: [CurriculumService, SubjectInfoService, WorkingPlanService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CurriculumSubjectSelectorComponent implements OnInit {
 
@@ -25,10 +26,12 @@ export class CurriculumSubjectSelectorComponent implements OnInit {
               private router: Router,
               private curriculumService: CurriculumService,
               private workingPlanService: WorkingPlanService,
-              private subjectInfoService: SubjectInfoService) {
+              private subjectInfoService: SubjectInfoService,
+              private changeDetector: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
+    console.info('on init')
     const curriculum$ = this.route.paramMap.pipe(
       map(paramMap => new CurriculumSubjectSearchParams(
         paramMap.get('id'),
@@ -44,6 +47,7 @@ export class CurriculumSubjectSelectorComponent implements OnInit {
         this.curriculum = result.curriculum;
         this.subjects = result.subjects;
         this.filterSubjects();
+        this.changeDetector.detectChanges();
       });
   }
 
@@ -56,7 +60,7 @@ export class CurriculumSubjectSelectorComponent implements OnInit {
   }
 
   subjectSelected(subject: RichSubjectInfo): void {
-    console.log("subject selected: " + subject.denotation);
+    console.info("subject selected: " + subject.denotation);
     this.subjects = this.subjects.filter(
       subj => subj.id !== subject.id
     );
@@ -74,12 +78,12 @@ export class CurriculumSubjectSelectorComponent implements OnInit {
   }
 
   save(): void {
-    console.log("Pushing changes");
+    console.info("Saving changes to backend");
     this.curriculumService
       .save(this.curriculum)
       .pipe(take(1))
       .subscribe(_ => {
-        console.log("Changes accepted")
+        console.info("Changes accepted (http 200)")
         this.ngOnInit()
       });
   }
@@ -91,14 +95,13 @@ export class CurriculumSubjectSelectorComponent implements OnInit {
       )
   }
 
-
   private isAlreadyIncluded(subject: RichSubjectInfo): boolean {
     const idsOfIncluded = this.curriculum.subjectsWithCiphers.map(s => s.id);
     return idsOfIncluded.includes(subject.id);
   }
 
   delete(id: number): void {
-    console.log("Removing id: " + id);
+    console.info("Removing id: " + id);
     this.curriculum.subjectsWithCiphers =
       this.curriculum.subjectsWithCiphers.filter(s => s.id !== id);
   }
