@@ -8,6 +8,9 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.util.function.Predicate.not;
+import static java.util.stream.Collectors.toSet;
+
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Getter
 @Setter
@@ -28,7 +31,12 @@ public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
     @JoinColumn(name = "id_curriculum")
     private Curriculum curriculum;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.curriculum", cascade = CascadeType.ALL)
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "pk.curriculum",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private Set<CurriculumSubject> workplanSubjects = new HashSet<>();
 
     @OneToMany(
@@ -58,11 +66,18 @@ public class WorkingPlan extends Curriculum implements Comparable<WorkingPlan> {
     }
 
     @Override
-    public WorkingPlan setCurriculumSubjects(Set<CurriculumSubject> workplanSubjects) {
-        this.workplanSubjects.clear();
-        this.workplanSubjects.addAll(workplanSubjects);
-        workplanSubjects.forEach(cs -> cs.setCurriculum(this));
-        return this;
+    public WorkingPlan setCurriculumSubjects(Set<CurriculumSubject> newWorkplanSubjects) {
+        Set<CurriculumSubject> forRemoval = this.workplanSubjects.stream()
+                .filter(cs -> !newWorkplanSubjects.contains(cs))
+                .collect(toSet());
+
+        this.workplanSubjects.removeAll(forRemoval);
+
+        newWorkplanSubjects.stream()
+                .filter(not(this.workplanSubjects::contains))
+                .forEach(cs -> this.workplanSubjects.add(cs));
+
+            return this;
     }
 
     public void setDiplomaPreparations(Set<DiplomaPreparation> diplomaPreparations) {

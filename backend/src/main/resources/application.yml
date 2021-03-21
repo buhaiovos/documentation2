@@ -57,5 +57,5 @@ logging:
 
 years-of-information:
     list:
-      - 2020
+#      - 2020
       - 2016
