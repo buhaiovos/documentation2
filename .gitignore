@@ -73,5 +73,6 @@ Thumbs.db
 /frontend/node/
 /backend/cds/set-env.sh
 /ignored
+/database
 
 documentation.log
